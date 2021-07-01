@@ -12,3 +12,8 @@ C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Ent
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.CoreCompileInputs.cache
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.dll
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Model.Entity.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Model.Entity.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.CoreCompileInputs.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.pdb

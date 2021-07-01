@@ -97,7 +97,7 @@ namespace WebFacturaMvc.Controllers
         {
             string mensaje = "";
             double iva = 18;           
-            string idVendedor = "321";
+            string idVendedor = "1";
             int codigoPago = 0;
             long codigoCliente = 0;
             double total = 0;

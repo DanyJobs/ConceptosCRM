@@ -41,6 +41,7 @@ namespace Model.Neg
                 }
                 catch (Exception e)
                 {
+
                     objDetalleVenta.Estado = 100;
                     return;
                 }

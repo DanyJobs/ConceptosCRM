@@ -27,3 +27,14 @@ C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CopyComplete
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.dll
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Neg.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Neg.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CoreCompileInputs.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CopyComplete
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csprojAssemblyReference.cache

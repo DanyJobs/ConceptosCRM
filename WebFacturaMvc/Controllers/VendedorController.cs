@@ -96,7 +96,7 @@ namespace WebFacturaMvc.Controllers
 
         public void mensajeInicioRegistrar()
         {
-            ViewBag.MensajeInicio = "Ingrese Datos Del Cliente y Click en Guardar";
+            ViewBag.MensajeInicio = "Ingrese Datos Del Vendedor y Click en Guardar";
         }
 
         [HttpGet]
