@@ -27,28 +27,9 @@ C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CopyComplete
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.dll
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Neg.dll.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Neg.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Neg.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CoreCompileInputs.cache
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CopyComplete
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csprojAssemblyReference.cache
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Neg.dll.config
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.SqlServer.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.Core.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.SqlServer.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.Core.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.dll.config
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.dll.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\roslyn\csc.exe
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\roslyn\csc.exe.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\roslyn\csc.rsp
@@ -75,5 +56,24 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\roslyn\vbc.exe.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\roslyn\vbc.rsp
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\roslyn\VBCSCompiler.exe
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\roslyn\VBCSCompiler.exe.config
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.SqlServer.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\EntityFramework.SqlServer.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.dll.config
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.dll.config
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csprojAssemblyReference.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CoreCompileInputs.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CopyComplete
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.pdb

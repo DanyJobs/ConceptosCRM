@@ -21,25 +21,11 @@ C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CopyComplete
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.dll
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.pdb
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csprojAssemblyReference.cache
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CoreCompileInputs.cache
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CopyComplete
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.pdb
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.dll.config
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.SqlServer.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.Core.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.SqlServer.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.Core.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.dll.config
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.pdb
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\roslyn\csc.exe
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\roslyn\csc.exe.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\roslyn\csc.rsp
@@ -66,5 +52,19 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\roslyn\vbc.exe.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\roslyn\vbc.rsp
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\roslyn\VBCSCompiler.exe
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\roslyn\VBCSCompiler.exe.config
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.SqlServer.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\EntityFramework.SqlServer.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.dll.config
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CopyComplete
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.pdb

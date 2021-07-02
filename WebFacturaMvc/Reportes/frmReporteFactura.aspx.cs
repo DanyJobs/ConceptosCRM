@@ -21,7 +21,7 @@ namespace WebFacturaMvc.Reportes
 
         protected void Page_Load(object sender, EventArgs e)
         {           
-            con = new SqlConnection("Data Source=.;Initial Catalog=ventas;Integrated Security=True");
+            con = new SqlConnection("Data Source=den1.mssql8.gear.host;Initial Catalog=crmconceptose;User ID=crmconceptose;Password=Cj999l~!3ZA2;");
             if (!IsPostBack)
             {
                 renderReport();
@@ -55,7 +55,7 @@ namespace WebFacturaMvc.Reportes
         public DataTable cargar(string codigoventa)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection cn=new SqlConnection("Data Source=.;Initial Catalog=ventas;Integrated Security=True"))
+            using (SqlConnection cn=new SqlConnection("Data Source=den1.mssql8.gear.host;Initial Catalog=crmconceptose;User ID=crmconceptose;Password=Cj999l~!3ZA2;"))
             {
                 
                 SqlCommand cmd = new SqlCommand("sp_reporte_venta",con);
