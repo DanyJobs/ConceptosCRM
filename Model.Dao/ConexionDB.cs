@@ -16,7 +16,7 @@ namespace Model.Dao
 
         private ConexionDB()
         {
-            con = new SqlConnection("Data Source=.;Initial Catalog=ventas;Integrated Security=True");
+            con = new SqlConnection("Data Source=den1.mssql8.gear.host; Initial Catalog=crmconceptose; User ID=crmconceptose; Password=Cj999l~!3ZA2;");
         }
 
         public static ConexionDB saberEstado()

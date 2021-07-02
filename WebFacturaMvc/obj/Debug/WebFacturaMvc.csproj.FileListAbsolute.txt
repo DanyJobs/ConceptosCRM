@@ -416,3 +416,5 @@ E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.pdb
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.cache
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.compiled
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\EntityFramework.dll
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\EntityFramework.xml
