@@ -11,11 +11,11 @@ namespace Model.Neg
    public class FacturaNeg
     {
         private FacturaDao objFacturaDao;
-        private DetalleVentaDao objDetalleFacturaDao;
+        private DetalleCotizacionDao objDetalleFacturaDao;
         public FacturaNeg()
         {
             objFacturaDao = new FacturaDao();
-            objDetalleFacturaDao = new DetalleVentaDao();
+            objDetalleFacturaDao = new DetalleCotizacionDao();
         }
 
         public string create(Factura objFactura)
@@ -293,7 +293,7 @@ namespace Model.Neg
             }
 
             //verificaicon de existencia de Detalle
-            DetalleVenta objDetalleVenta = new DetalleVenta();
+            DetalleCotizacion objDetalleVenta = new DetalleCotizacion();
             objDetalleVenta.NumFacura = objFactura.NumFactura;
             verificacion = !objDetalleFacturaDao.findPorNumFactura(objDetalleVenta);
             if (!verificacion)

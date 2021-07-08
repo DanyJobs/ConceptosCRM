@@ -67,11 +67,12 @@
     <Compile Include="CategoriaDao.cs" />
     <Compile Include="ClienteDao.cs" />
     <Compile Include="ConexionDB.cs" />
-    <Compile Include="DetalleVentaDao.cs" />
+    <Compile Include="DetalleCotizacionDao.cs" />
     <Compile Include="FacturaDao.cs" />
+    <Compile Include="MarcaDao.cs" />
     <Compile Include="ModoPagoDao.cs" />
     <Compile Include="Obligatorio.cs" />
-    <Compile Include="VentaDao.cs" />
+    <Compile Include="CotizacionDao.cs" />
     <Compile Include="ProductoDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VendedorDao.cs" />

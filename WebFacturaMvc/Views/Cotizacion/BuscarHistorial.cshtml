@@ -1,0 +1,22 @@
+﻿@model List<Model.Entity.Historial>
+@{
+    ViewBag.Title = "BuscarCotizacion";
+}
+
+<table class="table">
+    <tr class="bg-primary">
+        <th>Cliente</th>
+        <th>Numero de Cotizacion</th>
+        <th>Producto</th>
+        <th>Precio Unitario</th>        
+    </tr>
+    @foreach (var objHistorial in Model)
+    {
+        <tr>
+            <th>@objHistorial.Cliente</th>
+            <th>@objHistorial.NumCotizacion</th>
+            <th>@objHistorial.Producto</th>
+            <th>@objHistorial.Producto</th>          
+        </tr>
+    }
+</table>

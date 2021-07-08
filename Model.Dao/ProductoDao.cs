@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Model.Entity;
+using System.Data;
 
 namespace Model.Dao
 {
@@ -19,7 +20,7 @@ namespace Model.Dao
         }
         public void create(Producto objProducto)
         {
-            string create = "insert into producto values('" + objProducto.IdProducto + "','" + objProducto.Nombre + "','" + objProducto.PrecioUnitario + "','" + objProducto.Categoria + "')";
+            string create = "insert into producto values('" + objProducto.IdProducto + "','" + objProducto.Nombre + "'," + objProducto.PrecioUnitario + ",'" + objProducto.Categoria + "','"+ objProducto.Marca + "','" + objProducto.BandaAncha + "'," + objProducto.Channels+")";
             try
             {
                 comando = new SqlCommand(create, objConexionDB.getCon());
@@ -72,7 +73,8 @@ namespace Model.Dao
                     objProducto.Nombre = reader[1].ToString();
                     objProducto.PrecioUnitario =Convert.ToDouble(reader[2].ToString());
                     objProducto.Categoria = reader[3].ToString();
-                    
+                    objProducto.Marca = reader[4].ToString();
+                    objProducto.BandaAncha = reader[5].ToString();
                     objProducto.Estado = 99;
                 }
                 else
@@ -93,13 +95,15 @@ namespace Model.Dao
             return hayRegistros;
         }
 
-        public List<Producto> findAll()
-        {
+        public List<Producto> findAll(){    
+         
+
             List<Producto> listaVendedores = new List<Producto>();
-            string find = "select*from producto order by nombre asc";
+            //string find = "select*from producto order by nombre asc";
             try
             {
-                comando = new SqlCommand(find, objConexionDB.getCon());
+                comando = new SqlCommand("SP_PRODUCTO_CONSULTA", objConexionDB.getCon());
+                comando.CommandType = CommandType.StoredProcedure;
                 objConexionDB.getCon().Open();
                 reader = comando.ExecuteReader();
                 while (reader.Read())
@@ -109,6 +113,8 @@ namespace Model.Dao
                     objProducto.Nombre = reader[1].ToString();
                     objProducto.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
                     objProducto.Categoria = reader[3].ToString();
+                    objProducto.Marca = reader[4].ToString();
+                    objProducto.BandaAncha = reader[5].ToString();
                     listaVendedores.Add(objProducto);
                 }
 
@@ -179,6 +185,39 @@ namespace Model.Dao
             return hayRegistros;
         }
 
+        public bool findProductoPorMarcaId(Producto objProducto)
+        {
+            bool hayRegistros;
+            string find = "select*from producto where IdMarca='" + objProducto.Marca+ "'";
+            try
+            {
+                comando = new SqlCommand(find, objConexionDB.getCon());
+                objConexionDB.getCon().Open();
+                SqlDataReader reader = comando.ExecuteReader();
+                hayRegistros = reader.Read();
+                if (hayRegistros)
+                {
+                    objProducto.Estado = 99;
+                }
+                else
+                {
+                    objProducto.Estado = 1;
+                }
+            }
+            catch (Exception u)
+            {
+                throw;
+            }
+            finally
+            {
+                objConexionDB.getCon().Close();
+                objConexionDB.closeDB();
+            }
+            return hayRegistros;
+        }
+
+
+
         public List<Producto> findAllProductos(Producto objProducto)
         {
             List<Producto> listaProductos = new List<Producto>();
@@ -196,6 +235,8 @@ namespace Model.Dao
                     objProductos.Nombre = reader[1].ToString();
                     objProductos.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
                     objProductos.Categoria = reader[3].ToString();
+                    objProducto.Marca = reader[4].ToString();
+                    objProducto.BandaAncha = reader[5].ToString();
                     listaProductos.Add(objProductos);
 
                 }
@@ -232,7 +273,8 @@ namespace Model.Dao
                     objProductos.Nombre = reader[1].ToString();
                     objProductos.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
                     objProductos.Categoria = reader[3].ToString();
-
+                    objProducto.Marca = reader[4].ToString();
+                    objProducto.BandaAncha = reader[5].ToString();
                     listaProductos.Add(objProductos);
 
                 }
@@ -268,6 +310,8 @@ namespace Model.Dao
                     objProducto.Nombre = reader[1].ToString();
                     objProducto.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
                     objProducto.Categoria = reader[3].ToString();
+                    objProducto.Marca = reader[4].ToString();
+                    objProducto.BandaAncha = reader[5].ToString();
                     listaVendedores.Add(objProducto);
                 }
 

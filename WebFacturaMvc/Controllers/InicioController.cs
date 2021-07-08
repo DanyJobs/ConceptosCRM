@@ -13,8 +13,8 @@ namespace WebFacturaMvc.Controllers
         // GET: Inicio
         public ActionResult Index()
         {
-            VentaNeg objVentaNeg = new VentaNeg();
-            List<Venta> lista = objVentaNeg.findAll();
+            CotizacionNeg objVentaNeg = new CotizacionNeg();
+            List<Cotizacion> lista = objVentaNeg.findAll();
             return View(lista);
         }
     }

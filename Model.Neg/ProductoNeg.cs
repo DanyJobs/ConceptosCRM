@@ -11,11 +11,11 @@ namespace Model.Neg
     public class ProductoNeg
     {
         private ProductoDao objProductoDao;
-        private DetalleVentaDao objDetalleVentaDao;
+        private DetalleCotizacionDao objDetalleVentaDao;
         public ProductoNeg()
         {
             objProductoDao = new ProductoDao();
-            objDetalleVentaDao = new DetalleVentaDao();
+            objDetalleVentaDao = new DetalleCotizacionDao();
         }
         public void create(Producto objProducto)
         {
@@ -214,7 +214,7 @@ namespace Model.Neg
             }
             //fin verificacion de existencia
             //verificacion de existecia de DetalleVenta estado=34
-            DetalleVenta objDetalleVenta = new DetalleVenta();
+            DetalleCotizacion objDetalleVenta = new DetalleCotizacion();
             objDetalleVenta.IdProducto = objProducto.IdProducto;
             verificacion = !objDetalleVentaDao.findDetalleVentaPorProductoId(objDetalleVenta);
             if (!verificacion)

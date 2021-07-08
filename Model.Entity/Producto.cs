@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace Model.Entity
         private double precioUnitario;
         private string categoria;
         private int estado;
+        public string marca;
+        public string bandaAncha;
+        public int channels;
 
         public int Estado
         {
@@ -52,6 +56,7 @@ namespace Model.Entity
             }
         }
 
+        [Display(Name = "Precio Unitario:")]
         public double PrecioUnitario
         {
             get
@@ -78,6 +83,46 @@ namespace Model.Entity
             }
         }
 
+
+        public string Marca
+        {
+            get
+            {
+                return marca;
+            }
+            set
+            {
+                marca = value;
+            }
+        }
+
+
+        [Display (Name = "Banda Ancha:")]
+        public string BandaAncha
+        {
+            get
+            {
+                return bandaAncha;
+            }
+            set
+            {
+                bandaAncha = value;
+            }
+        }
+
+        public int Channels
+        {
+            get
+            {
+                return channels;
+            }
+            set
+            {
+                channels = value;
+            }
+        }
+
+
         public Producto()
         {
             
@@ -86,12 +131,15 @@ namespace Model.Entity
         {
             this.idProducto = idProducto;
         }
-        public Producto(string idProducto, string nombre, double precioUnitario, string categoria)
+        public Producto(string idProducto, string nombre, double precioUnitario, string categoria, string marca, string bandaAncha, int channels)
         {
             this.idProducto = idProducto;
             this.Nombre = nombre;
             this.PrecioUnitario = precioUnitario;
             this.Categoria = categoria;
+            this.Marca = marca;
+            this.BandaAncha = bandaAncha;
+            this.Channels = channels;
         }
     }
 }

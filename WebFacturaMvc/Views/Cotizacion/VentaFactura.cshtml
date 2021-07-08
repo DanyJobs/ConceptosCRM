@@ -1,0 +1,38 @@
+﻿
+@model List<Model.Entity.Cotizacion>
+
+@{
+    ViewBag.Title = "ReporteVentas";
+}
+<h2>Reporte de Ventas</h2>
+
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>Id Venta</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Vendedor</th>
+            <th>IVA</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCotizacion in Model)
+            {
+            <tr>
+                <td>@objCotizacion.IdVenta</td>
+                <td>@objCotizacion.IdCliente</td>
+                <td>@objCotizacion.Fecha</td>
+                <td>@objCotizacion.IdVendedor</td>
+                <td>@objCotizacion.Iva</td>
+                <td>@objCotizacion.Total</td>
+
+                <td><a class="btn btn-success" href="~/Reportes/frmReporteFactura.aspx?IdVenta=@objCotizacion.IdVenta" target="_blank" rel="noopener noreferrer"><span class="glyphicon glyphicon-eye-open"></span>|Imprimir Factura</a></td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>

@@ -69,11 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoriaNeg.cs" />
+    <Compile Include="MarcaNeg.cs" />
     <Compile Include="ClienteNeg.cs" />
-    <Compile Include="DetalleVentaNeg.cs" />
+    <Compile Include="DetalleCotizacionNeg.cs" />
     <Compile Include="FacturaNeg.cs" />
     <Compile Include="ModoPagoNeg.cs" />
-    <Compile Include="VentaNeg.cs" />
+    <Compile Include="CotizacionNeg.cs" />
     <Compile Include="ProductoNeg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VendedorNeg.cs" />

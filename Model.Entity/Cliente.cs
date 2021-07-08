@@ -18,7 +18,7 @@ namespace Model.Entity
         private string dni;
         private string direccion;
         private string telefono;
-        private List<Venta> ventas;
+        private List<Cotizacion> ventas;
         private int estado;
 
         public int Estado
@@ -130,7 +130,7 @@ namespace Model.Entity
             }
         }
         [Required(ErrorMessage = "Este Campo es Requerido")]
-        public List<Venta> Ventas
+        public List<Cotizacion> Ventas
         {
             get
             {

@@ -34,6 +34,13 @@ namespace WebFacturaMvc.Controllers
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList lista = new SelectList(data, "idCategoria", "nombre");
             ViewBag.ListaCategorias = lista;
+
+            MarcaNeg objMarcaNeg = new MarcaNeg();
+            List<Marca> dataMarca = objMarcaNeg.findAll();
+            SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion");
+            ViewBag.ListaMarcas = ListaMarca;
+
+
             mensajeInicioRegistrar();
             return View();
         }
@@ -45,6 +52,12 @@ namespace WebFacturaMvc.Controllers
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList lista = new SelectList(data, "idCategoria", "nombre");
             ViewBag.ListaCategorias = lista;
+
+            MarcaNeg objMarcaNeg = new MarcaNeg();
+            List<Marca> dataMarca = objMarcaNeg.findAll();
+            SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion");
+            ViewBag.ListaMarcas = ListaMarca;
+
             objProductoNeg.create(objProducto);
             MensajeErrorRegistrar(objProducto);
             return View("Create");

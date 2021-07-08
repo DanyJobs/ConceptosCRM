@@ -48,7 +48,7 @@ namespace Model.Dao
             }
             catch (Exception)
             {
-objCategoria.Estado = 1000;
+                objCategoria.Estado = 1000;
             }
             finally
             {

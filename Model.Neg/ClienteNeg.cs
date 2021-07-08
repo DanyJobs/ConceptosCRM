@@ -11,11 +11,11 @@ namespace Model.Neg
     public class ClienteNeg
     {
         private ClienteDao objClienteDao;
-        private VentaDao objVentaDao;
+        private CotizacionDao objVentaDao;
         public ClienteNeg()
         {
             objClienteDao = new ClienteDao();
-            objVentaDao = new VentaDao();
+            objVentaDao = new CotizacionDao();
         }
 
         public void create(Cliente objCliente)
@@ -384,7 +384,7 @@ namespace Model.Neg
             }
 
             //verificaicon de existencia de Ventas
-            Venta objVenta = new Venta();
+            Cotizacion objVenta = new Cotizacion();
             objVenta.IdCliente = objCliente.IdCliente;
             verificacion = !objVentaDao.findVentaPorClienteId(objVenta);
             if (!verificacion)
