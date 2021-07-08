@@ -8,6 +8,7 @@ namespace Model.Entity
 {
     public class Historial
     {
+        private string idProducto;
         private string cliente;
         private string numCotizacion;
         private string producto;
@@ -15,7 +16,18 @@ namespace Model.Entity
         private int estado;
 
 
+        public string IdProducto
+        {
+            get
+            {
+                return idProducto;
+            }
 
+            set
+            {
+                idProducto = value;
+            }
+        }
 
         public string Cliente
         {
@@ -84,8 +96,9 @@ namespace Model.Entity
         {
 
         }
-        public Historial(string cliente , string numCotizacion, string producto, string precioUnitario)
+        public Historial(string idProducto,string cliente , string numCotizacion, string producto, string precioUnitario)
         {
+            this.idProducto = idProducto;
             this.cliente = cliente;
             this.numCotizacion = numCotizacion;
             this.producto = producto;

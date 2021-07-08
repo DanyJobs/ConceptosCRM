@@ -8,6 +8,7 @@ using Model.Entity;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class ModoPagoController : Controller
     {
         private ModoPagoNeg objModoPagoNeg;

@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class CotizacionController : Controller
     {
         private CotizacionNeg objCotizacionNeg;
@@ -186,14 +187,12 @@ namespace WebFacturaMvc.Controllers
             List<Cotizacion> lista = objCotizacionNeg.findAll();
             return View(lista);
         }
-
-
-        [HttpPost]
-        public ActionResult BuscarHistorial(Historial idProducto)
-        {
-            List<Historial> Cotizacion = objCotizacionNeg.findHistorial(idProducto);
-
-            return View(Cotizacion);
+ 
+        public ActionResult BuscarHistorial(string idProducto) {
+            Historial objHistorial= new Historial();
+            objHistorial.IdProducto = idProducto;      
+            List<Historial> Cotizacion = objCotizacionNeg.findHistorial(objHistorial);
+            return View(Cotizacion);          
         }
 
     }

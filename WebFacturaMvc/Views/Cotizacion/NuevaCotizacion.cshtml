@@ -95,8 +95,9 @@
         x = $("#precio").val();
         des = $("#descuento").val();
         subtotal=(x*y)-des;
-        cadena = cadena + "<td>" + subtotal + "</td>"        
-        cadena = cadena +   "<td><a class='btn btn-info' href='BuscarHistorial/" + $("#idproducto").val()+"'"+ "><span class='fa fa-edit'></span>Ver</a></td>"
+        cadena = cadena + "<td>" + subtotal + "</td>"
+
+        cadena = cadena +  "<td><a class='ver' href='BuscarHistorial/" + $("#idproducto").val()+"'"+ "><span class='fa fa-edit'></span>Ver</a></td>"
         cadena=cadena+"<td><a class ='elimina'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td>";
         $("#detalle tbody").append(cadena);
         sumar();
@@ -141,6 +142,31 @@
             });
         });
     };
+    function ver() {
+     fetch("@Url.Content("~/People/Delete")", {
+            method: "POST",
+            body: JSON.stringify({
+                Id: Id
+            }),
+            headers: {
+                'Accept': "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text()
+            else
+                alert("Error al ejecutar :(")
+        }).then(function (Data) {
+            if (Data != "1") {
+                alert(Data)
+            } else {
+                Get();
+            }
+        })
+    };
+
+
 </script>
 
 <a style="float:right;" class="btn btn-success" href="~/Cotizacion/VentaFactura" target="_blank" rel="noopener noreferrer">Mas Facturas</a>

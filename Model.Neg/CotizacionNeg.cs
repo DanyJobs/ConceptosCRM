@@ -171,10 +171,16 @@ namespace Model.Neg
         {
             return objCotizacionDao.findAll();
         }
-        public List<Historial> findHistorial(Historial idProducto)
+        public List<Historial> findHistorial(Historial historial)
         {
-            return objDetalleCotizacionDao.findHistorial(idProducto);
+            return objDetalleCotizacionDao.findHistorial(historial);
         }
+
+        public List<Historial> findAllHistorial()
+        {
+            return objDetalleCotizacionDao.findAllHistorial();
+        }
+
 
     }
 }

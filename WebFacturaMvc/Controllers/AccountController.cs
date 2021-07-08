@@ -17,7 +17,7 @@ using WebFacturaMvc.Datos;
 
 namespace WebFacturaMvc.Controllers
 {
-    [Authorize]
+   
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -27,7 +27,7 @@ namespace WebFacturaMvc.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -39,9 +39,9 @@ namespace WebFacturaMvc.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -62,6 +62,9 @@ namespace WebFacturaMvc.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (Request.IsAuthenticated) {
+                return RedirectToAction("Index", "Inicio");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -125,7 +128,7 @@ namespace WebFacturaMvc.Controllers
             // Si un usuario introduce códigos incorrectos durante un intervalo especificado de tiempo, la cuenta del usuario 
             // se bloqueará durante un período de tiempo especificado. 
             // Puede configurar el bloqueo de la cuenta en IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -143,37 +146,45 @@ namespace WebFacturaMvc.Controllers
         //
         // GET: /Account/Register
         //
-        // GET: /Account/Register
+        // GET: /Account/Register        
         [AllowAnonymous]
         public ActionResult Register()
         {
-            List<cOpcion> lista = null;
-            using (crmconceptoseEntities db = new crmconceptoseEntities())
+            if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
             {
-                lista = (from d in db.AspNetRoles
-                         select new cOpcion
-                         {
-                             Id = d.Id,
-                             Name = d.Name
-                         }).ToList();
-
+                return RedirectToAction("Index", "Inicio");
             }
-            List<SelectListItem> items = lista.ConvertAll(d =>
+            else
             {
-                return new SelectListItem()
+                List<cOpcion> lista = null;
+                using (crmconceptoseEntities db = new crmconceptoseEntities())
                 {
-                    Text = d.Name.ToString(),
-                    Value = d.Name.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.items = items;
+                    lista = (from d in db.AspNetRoles
+                             select new cOpcion
+                             {
+                                 Id = d.Id,
+                                 Name = d.Name
+                             }).ToList();
+
+                }
+                IEnumerable<SelectListItem> items = lista.ConvertAll(d =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = d.Name.ToString(),
+                        Value = d.Name.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.items = items;
+            }
 
             return View();
         }
 
         //
         // POST: /Account/Register
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -209,8 +220,9 @@ namespace WebFacturaMvc.Controllers
                     return RedirectToAction("Index", "Inicio");
                 }
                 AddErrors(result);
-            }
 
+            }
+            Register();
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             return View(model);
         }

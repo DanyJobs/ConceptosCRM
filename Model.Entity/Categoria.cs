@@ -13,6 +13,7 @@ namespace Model.Entity
         private string descripcion;
         private int estado;
 
+        
         public string IdCategoria
         {
             get

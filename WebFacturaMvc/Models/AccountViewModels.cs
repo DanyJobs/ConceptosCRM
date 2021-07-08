@@ -1,6 +1,7 @@
 ﻿using WebFacturaMvc.Utilidades;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace WebFacturaMvc.Models
 {
@@ -69,6 +70,7 @@ namespace WebFacturaMvc.Models
         public bool RememberMe { get; set; }
     }
 
+    
     public class RegisterViewModel
     {
         [Required]
@@ -79,6 +81,7 @@ namespace WebFacturaMvc.Models
         [Required]
         [Display(Name = "Rol")]
         public string Rol { get; set; }
+
 
 
         [Required]
@@ -94,7 +97,7 @@ namespace WebFacturaMvc.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar contraseña")]
-        [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -113,7 +116,7 @@ namespace WebFacturaMvc.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar contraseña")]
-        [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

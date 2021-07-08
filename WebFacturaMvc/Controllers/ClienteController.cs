@@ -8,6 +8,7 @@ using Model.Entity;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class ClienteController : Controller
     {
         ClienteNeg objClienteNeg;

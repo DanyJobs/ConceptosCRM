@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class CategoriaController : Controller
     {
         private CategoriaNeg objCategoriaNeg;

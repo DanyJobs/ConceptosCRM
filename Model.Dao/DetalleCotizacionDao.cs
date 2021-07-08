@@ -271,13 +271,46 @@ namespace Model.Dao
 
             return lista ;
         }
-        public List<Historial> findHistorial(Historial idProducto)
-        {
+        public List<Historial> findHistorial(Historial historial)
+        {                         
             List<Historial> listaHistorial = new List<Historial>();
             //string find = "select*from producto order by nombre asc";
             try
             {
                 comando = new SqlCommand("SP_COTIZACION_HISTORIAL", objConexionDB.getCon());
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.Add("@idProducto", SqlDbType.VarChar).Value = historial.IdProducto;
+            objConexionDB.getCon().Open();
+                reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    Historial objHistorial = new Historial();
+                    objHistorial.Cliente = reader[0].ToString();
+                    objHistorial.NumCotizacion = reader[1].ToString();
+                    objHistorial.Producto = reader[2].ToString();
+                    objHistorial.PrecioUnitario = reader[3].ToString();
+                    listaHistorial.Add(objHistorial);
+                }
+            }
+            catch (Exception)
+            {
+                Historial objHistorial2 = new Historial();
+                objHistorial2.Estado = 1000;
+            }
+            finally
+            {
+                objConexionDB.getCon().Close();
+                objConexionDB.closeDB();
+            }
+            return listaHistorial;
+        }
+        public List<Historial> findAllHistorial()
+        {
+            List<Historial> listaHistorial = new List<Historial>();
+            //string find = "select*from producto order by nombre asc";
+            try
+            {
+                comando = new SqlCommand("SP_COTIZACION_HISTORIAL_TODO", objConexionDB.getCon());
                 comando.CommandType = CommandType.StoredProcedure;
                 objConexionDB.getCon().Open();
                 reader = comando.ExecuteReader();

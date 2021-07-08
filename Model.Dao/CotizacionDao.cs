@@ -127,7 +127,7 @@ namespace Model.Dao
         public List<Cotizacion> findAll()
         {
             List<Cotizacion> listaVentas = new List<Cotizacion>();
-            string findAll = "select*from cotizacion";
+            string findAll = "select*from cotizacion order by idVenta desc";
             try
             {
                 comando = new SqlCommand(findAll, objConexinDB.getCon());

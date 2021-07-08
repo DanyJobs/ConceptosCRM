@@ -68,3 +68,4 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csprojAssemblyReferenc
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CopyComplete
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll

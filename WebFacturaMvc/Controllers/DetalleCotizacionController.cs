@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class DetalleCotizacionController : Controller
     {
         private DetalleCotizacionNeg objDetalleVentaNeg;
