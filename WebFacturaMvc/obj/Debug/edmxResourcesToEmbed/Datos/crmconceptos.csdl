@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="crmconceptoseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
@@ -48,6 +58,7 @@
     <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
     <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
     <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="empleado" Relationship="Self.usuario_vendedor" FromRole="AspNetUsers" ToRole="empleado" />
   </EntityType>
   <EntityType Name="categoria">
     <Key>
@@ -83,7 +94,7 @@
     <Property Name="IVA" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <NavigationProperty Name="cliente" Relationship="Self.FK_venta_cliente" FromRole="cotizacion" ToRole="cliente" />
     <NavigationProperty Name="detalleCotizacion" Relationship="Self.FK__detalleFa__idPed__239E4DCF" FromRole="cotizacion" ToRole="detalleCotizacion" />
-    <NavigationProperty Name="vendedor" Relationship="Self.FK_venta_vendedor" FromRole="cotizacion" ToRole="vendedor" />
+    <NavigationProperty Name="empleado" Relationship="Self.FK_venta_vendedor" FromRole="cotizacion" ToRole="empleado" />
   </EntityType>
   <EntityType Name="detalleCotizacion">
     <Key>
@@ -100,6 +111,21 @@
     <NavigationProperty Name="cotizacion" Relationship="Self.FK__detalleFa__idPed__239E4DCF" FromRole="detalleCotizacion" ToRole="cotizacion" />
     <NavigationProperty Name="factura" Relationship="Self.FK_detalleFactura_factura" FromRole="detalleCotizacion" ToRole="factura" />
     <NavigationProperty Name="producto" Relationship="Self.FK_detalleFactura_producto" FromRole="detalleCotizacion" ToRole="producto" />
+  </EntityType>
+  <EntityType Name="empleado">
+    <Key>
+      <PropertyRef Name="idEmpleado" />
+    </Key>
+    <Property Name="idEmpleado" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="apPaterno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="apMaterno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dni" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="idTipo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="cotizacion" Relationship="Self.FK_venta_vendedor" FromRole="empleado" ToRole="cotizacion" />
+    <NavigationProperty Name="tipoEmpleado" Relationship="Self.fkidTipoVendedor" FromRole="empleado" ToRole="tipoEmpleado" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.usuario_vendedor" FromRole="empleado" ToRole="AspNetUsers" />
   </EntityType>
   <EntityType Name="factura">
     <Key>
@@ -144,17 +170,13 @@
     <NavigationProperty Name="categoria" Relationship="Self.FK__producto__idCate__164452B1" FromRole="producto" ToRole="categoria" />
     <NavigationProperty Name="detalleCotizacion" Relationship="Self.FK_detalleFactura_producto" FromRole="producto" ToRole="detalleCotizacion" />
   </EntityType>
-  <EntityType Name="vendedor">
+  <EntityType Name="tipoEmpleado">
     <Key>
-      <PropertyRef Name="idVendedor" />
+      <PropertyRef Name="idTipo" />
     </Key>
-    <Property Name="idVendedor" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="apPaterno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="apMaterno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="dni" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="cotizacion" Relationship="Self.FK_venta_vendedor" FromRole="vendedor" ToRole="cotizacion" />
+    <Property Name="idTipo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="empleado" Relationship="Self.fkidTipoVendedor" FromRole="tipoEmpleado" ToRole="empleado" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -221,11 +243,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_venta_vendedor">
-    <End Role="vendedor" Type="Self.vendedor" Multiplicity="1" />
+    <End Role="empleado" Type="Self.empleado" Multiplicity="1" />
     <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="vendedor">
-        <PropertyRef Name="idVendedor" />
+      <Principal Role="empleado">
+        <PropertyRef Name="idEmpleado" />
       </Principal>
       <Dependent Role="cotizacion">
         <PropertyRef Name="idVendedor" />
@@ -256,6 +278,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkidTipoVendedor">
+    <End Role="tipoEmpleado" Type="Self.tipoEmpleado" Multiplicity="1" />
+    <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipoEmpleado">
+        <PropertyRef Name="idTipo" />
+      </Principal>
+      <Dependent Role="empleado">
+        <PropertyRef Name="idTipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_factura_modoPago">
     <End Role="modoPago" Type="Self.modoPago" Multiplicity="1" />
     <End Role="factura" Type="Self.factura" Multiplicity="*" />
@@ -272,7 +306,12 @@
     <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="crmconceptoseEntities" annotation:LazyLoadingEnabled="true">
+  <Association Name="usuario_vendedor">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+    <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="crmconceptoseEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
@@ -281,11 +320,12 @@
     <EntitySet Name="cliente" EntityType="Self.cliente" />
     <EntitySet Name="cotizacion" EntityType="Self.cotizacion" />
     <EntitySet Name="detalleCotizacion" EntityType="Self.detalleCotizacion" />
+    <EntitySet Name="empleado" EntityType="Self.empleado" />
     <EntitySet Name="factura" EntityType="Self.factura" />
     <EntitySet Name="marca" EntityType="Self.marca" />
     <EntitySet Name="modoPago" EntityType="Self.modoPago" />
     <EntitySet Name="producto" EntityType="Self.producto" />
-    <EntitySet Name="vendedor" EntityType="Self.vendedor" />
+    <EntitySet Name="tipoEmpleado" EntityType="Self.tipoEmpleado" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -307,7 +347,7 @@
       <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
     </AssociationSet>
     <AssociationSet Name="FK_venta_vendedor" Association="Self.FK_venta_vendedor">
-      <End Role="vendedor" EntitySet="vendedor" />
+      <End Role="empleado" EntitySet="empleado" />
       <End Role="cotizacion" EntitySet="cotizacion" />
     </AssociationSet>
     <AssociationSet Name="FK_detalleFactura_factura" Association="Self.FK_detalleFactura_factura">
@@ -318,6 +358,10 @@
       <End Role="producto" EntitySet="producto" />
       <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
     </AssociationSet>
+    <AssociationSet Name="fkidTipoVendedor" Association="Self.fkidTipoVendedor">
+      <End Role="tipoEmpleado" EntitySet="tipoEmpleado" />
+      <End Role="empleado" EntitySet="empleado" />
+    </AssociationSet>
     <AssociationSet Name="FK_factura_modoPago" Association="Self.FK_factura_modoPago">
       <End Role="modoPago" EntitySet="modoPago" />
       <End Role="factura" EntitySet="factura" />
@@ -326,12 +370,17 @@
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <AssociationSet Name="usuario_vendedor" Association="Self.usuario_vendedor">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="empleado" EntitySet="empleado" />
+    </AssociationSet>
     <FunctionImport Name="reporte_factura">
       <Parameter Name="idPedido" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_COTIZACION_HISTORIAL" ReturnType="Collection(crmconceptoseModel.SP_COTIZACION_HISTORIAL_Result)">
       <Parameter Name="idProducto" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="SP_COTIZACION_HISTORIAL_TODO" />
     <FunctionImport Name="sp_lista_clientes" ReturnType="Collection(crmconceptoseModel.sp_lista_clientes_Result)">
       <Parameter Name="pageIndex" Mode="In" Type="Int32" />
       <Parameter Name="pageSize" Mode="In" Type="Int32" />
@@ -341,11 +390,12 @@
       <Parameter Name="idCategoria" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="SP_PRODUCTO_CONSULTA" ReturnType="Collection(crmconceptoseModel.SP_PRODUCTO_CONSULTA_Result)" />
-    <FunctionImport Name="sp_reporte_venta" ReturnType="Collection(crmconceptoseModel.sp_reporte_venta_Result)">
+    <FunctionImport Name="sp_reporte_venta">
       <Parameter Name="idVenta" Mode="In" Type="Decimal" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SP_COTIZACION_HISTORIAL_Result">
+    <Property Type="DateTime" Name="fechaCotizacion" Nullable="false" />
     <Property Type="String" Name="Cliente" Nullable="false" MaxLength="30" />
     <Property Type="Decimal" Name="NumCotizacion" Nullable="false" Precision="18" Scale="0" />
     <Property Type="String" Name="Producto" Nullable="false" MaxLength="50" />
@@ -380,23 +430,5 @@
     <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
     <Property Type="String" Name="Marca" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="bandaAncha" Nullable="true" MaxLength="10" />
-  </ComplexType>
-  <ComplexType Name="sp_reporte_venta_Result">
-    <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
-    <Property Type="String" Name="Trabajador" Nullable="false" MaxLength="92" />
-    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="92" />
-    <Property Type="String" Name="direccion" Nullable="false" MaxLength="50" />
-    <Property Type="Decimal" Name="dni" Nullable="false" Precision="8" Scale="0" />
-    <Property Type="String" Name="telefono" Nullable="false" MaxLength="30" />
-    <Property Type="DateTime" Name="fecha" Nullable="false" />
-    <Property Type="Single" Name="total" Nullable="false" />
-    <Property Type="Decimal" Name="IVA" Nullable="false" Precision="19" />
-    <Property Type="Decimal" Name="descuento" Nullable="false" Precision="19" />
-    <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
-    <Property Type="Single" Name="precioUnitario" Nullable="true" />
-    <Property Type="Int32" Name="cantidad" Nullable="false" />
-    <Property Type="Decimal" Name="numFactura" Nullable="false" Precision="18" Scale="0" />
-    <Property Type="Single" Name="subTotal" Nullable="false" />
-    <Property Type="Single" Name="total_parcial" Nullable="true" />
   </ComplexType>
 </Schema>

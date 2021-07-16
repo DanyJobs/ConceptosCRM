@@ -14,11 +14,12 @@ namespace WebFacturaMvc.Datos
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
-    public partial class crmconceptoseEntities : DbContext
+    using Model.Entity;
+
+    public partial class crmconceptoseEntities1 : DbContext
     {
-        public crmconceptoseEntities()
-            : base("name=crmconceptoseEntities")
+        public crmconceptoseEntities1()
+            : base("name=crmconceptoseEntities1")
         {
         }
     
@@ -27,6 +28,7 @@ namespace WebFacturaMvc.Datos
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
@@ -35,12 +37,13 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<cliente> cliente { get; set; }
         public virtual DbSet<cotizacion> cotizacion { get; set; }
         public virtual DbSet<detalleCotizacion> detalleCotizacion { get; set; }
+        public virtual DbSet<empleado> empleado { get; set; }
         public virtual DbSet<factura> factura { get; set; }
         public virtual DbSet<marca> marca { get; set; }
         public virtual DbSet<modoPago> modoPago { get; set; }
         public virtual DbSet<producto> producto { get; set; }
-        public virtual DbSet<vendedor> vendedor { get; set; }
-    
+        public virtual DbSet<tipoEmpleado> tipoEmpleado { get; set; }   
+
         public virtual int reporte_factura(string idPedido)
         {
             var idPedidoParameter = idPedido != null ?
@@ -57,6 +60,11 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("idProducto", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COTIZACION_HISTORIAL_Result>("SP_COTIZACION_HISTORIAL", idProductoParameter);
+        }
+    
+        public virtual int SP_COTIZACION_HISTORIAL_TODO()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_COTIZACION_HISTORIAL_TODO");
         }
     
         public virtual ObjectResult<sp_lista_clientes_Result> sp_lista_clientes(Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter pageCount)
@@ -86,13 +94,13 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCTO_CONSULTA_Result>("SP_PRODUCTO_CONSULTA");
         }
     
-        public virtual ObjectResult<sp_reporte_venta_Result> sp_reporte_venta(Nullable<decimal> idVenta)
+        public virtual int sp_reporte_venta(Nullable<decimal> idVenta)
         {
             var idVentaParameter = idVenta.HasValue ?
                 new ObjectParameter("idVenta", idVenta) :
                 new ObjectParameter("idVenta", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_reporte_venta_Result>("sp_reporte_venta", idVentaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_reporte_venta", idVentaParameter);
         }
     }
 }

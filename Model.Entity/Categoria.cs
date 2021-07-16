@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Lenguaje;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Model.Entity
 {
@@ -13,11 +16,10 @@ namespace Model.Entity
         private string descripcion;
         private int estado;
 
-        
+        [Display(ResourceType = typeof(Recurso), Name = "IdCategoria")]
         public string IdCategoria
         {
-            get
-            {
+            get{
                 return idCategoria;
             }
 
@@ -26,7 +28,7 @@ namespace Model.Entity
                 idCategoria = value;
             }
         }
-
+        [Display(ResourceType = typeof(Recurso), Name = "Nombre_Texto")]
         public string Nombre
         {
             get
@@ -39,7 +41,7 @@ namespace Model.Entity
                 nombre = value;
             }
         }
-
+        [Display(ResourceType = typeof(Recurso), Name = "Descripcion")]
         public string Descripcion
         {
             get

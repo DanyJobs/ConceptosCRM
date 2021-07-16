@@ -57,3 +57,8 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.CopyCompl
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.pdb
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.resources
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.GenerateResource.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\en\Model.Entity.resources.dll
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.en.resources
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\en\Model.Entity.resources.dll

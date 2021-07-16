@@ -12,22 +12,18 @@ namespace WebFacturaMvc.Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class vendedor
+    public partial class tipoEmpleado
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public vendedor()
+        public tipoEmpleado()
         {
-            this.cotizacion = new HashSet<cotizacion>();
+            this.empleado = new HashSet<empleado>();
         }
     
-        public string idVendedor { get; set; }
-        public string nombre { get; set; }
-        public string apPaterno { get; set; }
-        public string apMaterno { get; set; }
-        public string dni { get; set; }
-        public string telefono { get; set; }
+        public string idTipo { get; set; }
+        public string descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cotizacion> cotizacion { get; set; }
+        public virtual ICollection<empleado> empleado { get; set; }
     }
 }

@@ -277,7 +277,7 @@ namespace Model.Dao
             //string find = "select*from producto order by nombre asc";
             try
             {
-                comando = new SqlCommand("SP_COTIZACION_HISTORIAL", objConexionDB.getCon());
+            comando = new SqlCommand("SP_COTIZACION_HISTORIAL", objConexionDB.getCon());
             comando.CommandType = CommandType.StoredProcedure;
             comando.Parameters.Add("@idProducto", SqlDbType.VarChar).Value = historial.IdProducto;
             objConexionDB.getCon().Open();
@@ -285,10 +285,11 @@ namespace Model.Dao
                 while (reader.Read())
                 {
                     Historial objHistorial = new Historial();
-                    objHistorial.Cliente = reader[0].ToString();
-                    objHistorial.NumCotizacion = reader[1].ToString();
-                    objHistorial.Producto = reader[2].ToString();
-                    objHistorial.PrecioUnitario = reader[3].ToString();
+                    objHistorial.FechaCotizacion = reader.GetDateTime(0);
+                    objHistorial.Cliente = reader[1].ToString();
+                    objHistorial.NumCotizacion = reader[2].ToString();
+                    objHistorial.Producto = reader[3].ToString();
+                    objHistorial.PrecioUnitario = reader[4].ToString(); 
                     listaHistorial.Add(objHistorial);
                 }
             }

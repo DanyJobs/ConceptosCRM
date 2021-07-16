@@ -1,4 +1,5 @@
-﻿using Model.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Model.Entity;
 using Model.Neg;
 using System;
 using System.Collections.Generic;
@@ -98,7 +99,7 @@ namespace WebFacturaMvc.Controllers
         {
             string mensaje = "";
             double iva = 18;           
-            string idVendedor = "1";
+            string idVendedor = User.Identity.GetUserId();
             int codigoPago = 0;
             long codigoCliente = 0;
             double total = 0;
@@ -115,6 +116,8 @@ namespace WebFacturaMvc.Controllers
                 codigoPago = Convert.ToInt32(modoPago);
                 codigoCliente = Convert.ToInt64(IdCliente);
                 total = Convert.ToDouble(Total);
+
+
 
                 //REGISTRO DE VENTA
                 Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva);

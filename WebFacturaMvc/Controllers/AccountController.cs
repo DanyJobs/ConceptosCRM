@@ -22,6 +22,7 @@ namespace WebFacturaMvc.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private crmconceptoseEntities1 db = new crmconceptoseEntities1();
 
         public AccountController()
         {
@@ -152,12 +153,13 @@ namespace WebFacturaMvc.Controllers
         {
             if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
             {
-                return RedirectToAction("Index", "Inicio");
+                return RedirectToAction("Login", "Account");
             }
             else
             {
+                ViewBag.idTipoEmpleado = new SelectList(db.tipoEmpleado, "idTipo", "descripcion");
                 List<cOpcion> lista = null;
-                using (crmconceptoseEntities db = new crmconceptoseEntities())
+                using (crmconceptoseEntities1 db = new crmconceptoseEntities1())
                 {
                     lista = (from d in db.AspNetRoles
                              select new cOpcion
@@ -193,7 +195,7 @@ namespace WebFacturaMvc.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email , idTipoEmpleado=model.idTipoEmpleado, Nombre=model.Nombre};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -440,15 +442,21 @@ namespace WebFacturaMvc.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+ 
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Inicio");
+            return RedirectToAction("Login", "Account");
         }
+        //
+        // POST: /Account/LogOff
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult LogOff(int id)
+        //{
+        //    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+        //    return RedirectToAction("Login", "Account");
+        //}
 
         //
         // GET: /Account/ExternalLoginFailure

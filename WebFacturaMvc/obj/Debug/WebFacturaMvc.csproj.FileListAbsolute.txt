@@ -460,3 +460,5 @@ E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Microsoft.Owin.Security.Twitter.dl
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Microsoft.Owin.Security.Facebook.xml
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Microsoft.Owin.Security.Twitter.xml
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.Migrations.Test4.resources
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\en\Model.Entity.resources.dll

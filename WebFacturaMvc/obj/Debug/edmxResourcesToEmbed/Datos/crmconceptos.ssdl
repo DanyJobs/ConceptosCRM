@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="crmconceptoseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
@@ -95,6 +105,18 @@
     <Property Name="descuento" Type="money" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="empleado">
+    <Key>
+      <PropertyRef Name="idEmpleado" />
+    </Key>
+    <Property Name="idEmpleado" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="apPaterno" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="apMaterno" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="dni" Type="nvarchar" MaxLength="8" Nullable="false" />
+    <Property Name="telefono" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="idTipo" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
   <EntityType Name="factura">
     <Key>
       <PropertyRef Name="numFactura" />
@@ -133,16 +155,20 @@
     <Property Name="bandaAncha" Type="varchar" MaxLength="10" />
     <Property Name="channels" Type="int" />
   </EntityType>
-  <EntityType Name="vendedor">
+  <EntityType Name="tipoEmpleado">
     <Key>
+      <PropertyRef Name="idTipo" />
+    </Key>
+    <Property Name="idTipo" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="usuario_vendedor">
+    <Key>
+      <PropertyRef Name="idUsuario" />
       <PropertyRef Name="idVendedor" />
     </Key>
+    <Property Name="idUsuario" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="idVendedor" Type="nvarchar" MaxLength="5" Nullable="false" />
-    <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
-    <Property Name="apPaterno" Type="nvarchar" MaxLength="30" Nullable="false" />
-    <Property Name="apMaterno" Type="nvarchar" MaxLength="30" Nullable="false" />
-    <Property Name="dni" Type="nvarchar" MaxLength="8" Nullable="false" />
-    <Property Name="telefono" Type="nvarchar" MaxLength="20" Nullable="false" />
   </EntityType>
   <Association Name="FK__detalleFa__idPed__239E4DCF">
     <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="1" />
@@ -273,13 +299,49 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_venta_vendedor">
-    <End Role="vendedor" Type="Self.vendedor" Multiplicity="1" />
+    <End Role="empleado" Type="Self.empleado" Multiplicity="1" />
     <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="vendedor">
-        <PropertyRef Name="idVendedor" />
+      <Principal Role="empleado">
+        <PropertyRef Name="idEmpleado" />
       </Principal>
       <Dependent Role="cotizacion">
+        <PropertyRef Name="idVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkidTipoVendedor">
+    <End Role="tipoEmpleado" Type="Self.tipoEmpleado" Multiplicity="1" />
+    <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipoEmpleado">
+        <PropertyRef Name="idTipo" />
+      </Principal>
+      <Dependent Role="empleado">
+        <PropertyRef Name="idTipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkidUsuarioVendedor">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="usuario_vendedor" Type="Self.usuario_vendedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="usuario_vendedor">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkidVendedorVendedor">
+    <End Role="empleado" Type="Self.empleado" Multiplicity="1" />
+    <End Role="usuario_vendedor" Type="Self.usuario_vendedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="empleado">
+        <PropertyRef Name="idEmpleado" />
+      </Principal>
+      <Dependent Role="usuario_vendedor">
         <PropertyRef Name="idVendedor" />
       </Dependent>
     </ReferentialConstraint>
@@ -290,6 +352,7 @@
   <Function Name="SP_COTIZACION_HISTORIAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idProducto" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="SP_COTIZACION_HISTORIAL_TODO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_lista_clientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="pageIndex" Type="int" Mode="In" />
     <Parameter Name="pageSize" Type="int" Mode="In" />
@@ -303,6 +366,7 @@
     <Parameter Name="idVenta" Type="numeric" Mode="In" />
   </Function>
   <EntityContainer Name="crmconceptoseModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -312,11 +376,13 @@
     <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cotizacion" EntityType="Self.cotizacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="detalleCotizacion" EntityType="Self.detalleCotizacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="empleado" EntityType="Self.empleado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="factura" EntityType="Self.factura" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="marca" EntityType="Self.marca" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="modoPago" EntityType="Self.modoPago" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="vendedor" EntityType="Self.vendedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipoEmpleado" EntityType="Self.tipoEmpleado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuario_vendedor" EntityType="Self.usuario_vendedor" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__detalleFa__idPed__239E4DCF" Association="Self.FK__detalleFa__idPed__239E4DCF">
       <End Role="cotizacion" EntitySet="cotizacion" />
       <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
@@ -358,8 +424,20 @@
       <End Role="cotizacion" EntitySet="cotizacion" />
     </AssociationSet>
     <AssociationSet Name="FK_venta_vendedor" Association="Self.FK_venta_vendedor">
-      <End Role="vendedor" EntitySet="vendedor" />
+      <End Role="empleado" EntitySet="empleado" />
       <End Role="cotizacion" EntitySet="cotizacion" />
+    </AssociationSet>
+    <AssociationSet Name="fkidTipoVendedor" Association="Self.fkidTipoVendedor">
+      <End Role="tipoEmpleado" EntitySet="tipoEmpleado" />
+      <End Role="empleado" EntitySet="empleado" />
+    </AssociationSet>
+    <AssociationSet Name="fkidUsuarioVendedor" Association="Self.fkidUsuarioVendedor">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="usuario_vendedor" EntitySet="usuario_vendedor" />
+    </AssociationSet>
+    <AssociationSet Name="fkidVendedorVendedor" Association="Self.fkidVendedorVendedor">
+      <End Role="empleado" EntitySet="empleado" />
+      <End Role="usuario_vendedor" EntitySet="usuario_vendedor" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

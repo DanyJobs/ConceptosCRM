@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspNetCore.Identity.UI.props" Condition="Exists('..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspNetCore.Identity.UI.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -234,6 +234,7 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Img\logo conceptos.png" />
+    <Content Include="Img\user.jpeg" />
     <Content Include="Js\alertify.js" />
     <Content Include="Js\alertify.min.js" />
     <Content Include="Js\Categoria.js" />
@@ -289,13 +290,6 @@
     <Content Include="Content\bootstrap-reboot.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
-    <EntityDeploy Include="Datos\crmconceptos.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>crmconceptos.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Datos\crmconceptos.edmx.diagram">
-      <DependentUpon>crmconceptos.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Identity\Views\Web.config" />
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css.map" />
@@ -305,6 +299,13 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Datos\crmconceptos.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>crmconceptos.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Datos\crmconceptos.edmx.diagram">
+      <DependentUpon>crmconceptos.edmx</DependentUpon>
+    </Content>
     <None Include="dbventasDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dbventasDataSet.Designer.cs</LastGenOutput>
@@ -400,11 +401,11 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\DetalleCotizacionController.cs" />
+    <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModoPagoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
-    <Compile Include="Controllers\VendedorController.cs" />
     <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Datos\AspNetRoles.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
@@ -442,7 +443,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>crmconceptos.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Datos\C__MigrationHistory.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\detalleCotizacion.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\empleado.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\factura.cs">
@@ -469,13 +476,10 @@
     <Compile Include="Datos\SP_PRODUCTO_CONSULTA_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Datos\sp_reporte_venta_Result.cs">
+    <Compile Include="Datos\tipoEmpleado.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\Usuario.cs" />
-    <Compile Include="Datos\vendedor.cs">
-      <DependentUpon>crmconceptos.tt</DependentUpon>
-    </Compile>
     <Compile Include="dbventasDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -484,6 +488,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107142154133_Test4.cs" />
+    <Compile Include="Migrations\202107142154133_Test4.designer.cs">
+      <DependentUpon>202107142154133_Test4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -520,11 +529,6 @@
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Inicio\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutMy.cshtml" />
-    <Content Include="Views\Vendedor\Index.cshtml" />
-    <Content Include="Views\Vendedor\Create.cshtml" />
-    <Content Include="Views\Vendedor\Update.cshtml" />
-    <Content Include="Views\Vendedor\Delete.cshtml" />
-    <Content Include="Views\Vendedor\Find.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Producto\Update.cshtml" />
     <Content Include="Views\Producto\Delete.cshtml" />
@@ -580,6 +584,12 @@
     <Content Include="Views\Manager\ManageLogins.cshtml" />
     <Content Include="Views\Manager\SetPassword.cshtml" />
     <Content Include="Views\Manager\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Empleado\Create.cshtml" />
+    <Content Include="Views\Empleado\Delete.cshtml" />
+    <Content Include="Views\Empleado\Details.cshtml" />
+    <Content Include="Views\Empleado\Edit.cshtml" />
+    <Content Include="Views\Empleado\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -591,6 +601,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\202107142154133_Test4.resx">
+      <DependentUpon>202107142154133_Test4.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\rptFactura.rdlc" />
     <EmbeddedResource Include="Traducciones\textos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -648,10 +661,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspNetCore.Identity.UI.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspNetCore.Identity.UI.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />

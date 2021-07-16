@@ -30,6 +30,6 @@ namespace WebFacturaMvc.Datos
         public virtual cliente cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
-        public virtual vendedor vendedor { get; set; }
+        public virtual empleado empleado { get; set; }
     }
 }

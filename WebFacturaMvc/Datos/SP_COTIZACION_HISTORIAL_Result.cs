@@ -13,6 +13,7 @@ namespace WebFacturaMvc.Datos
     
     public partial class SP_COTIZACION_HISTORIAL_Result
     {
+        public System.DateTime fechaCotizacion { get; set; }
         public string Cliente { get; set; }
         public decimal NumCotizacion { get; set; }
         public string Producto { get; set; }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Model.Entity;
+using System.Data;
 
 namespace Model.Dao
 {
@@ -127,21 +128,22 @@ namespace Model.Dao
         public List<Cotizacion> findAll()
         {
             List<Cotizacion> listaVentas = new List<Cotizacion>();
-            string findAll = "select*from cotizacion order by idVenta desc";
+      
             try
             {
-                comando = new SqlCommand(findAll, objConexinDB.getCon());
+                comando = new SqlCommand("SP_Buscar_Cotizacion", objConexinDB.getCon());
+                comando.CommandType = CommandType.StoredProcedure;
                 objConexinDB.getCon().Open();
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
                     Cotizacion objVenta = new Cotizacion();
                     objVenta.IdVenta= Convert.ToInt64(reader[0].ToString());
-                    objVenta.Total = Convert.ToDouble(reader[1].ToString());
-                    objVenta.IdCliente = Convert.ToInt64(reader[2].ToString());
-                    objVenta.IdVendedor = reader[3].ToString();
-                    objVenta.Fecha = reader[4].ToString();
-                    objVenta.Iva = Convert.ToDouble(reader[5].ToString());
+                    objVenta.NombreCliente = reader[1].ToString(); 
+                    objVenta.IdVendedor = reader[2].ToString();
+                    objVenta.Iva = Convert.ToDouble(reader[3].ToString());
+                    objVenta.Total = Convert.ToDouble(reader[4].ToString()); 
+                    objVenta.FechaCotizacion = reader.GetDateTime(5);
                     listaVentas.Add(objVenta);
 
                 }
@@ -158,7 +160,6 @@ namespace Model.Dao
             }
 
             return listaVentas;
-
         }        
         public bool findVentaPorClienteId(Cotizacion objVenta)
         {

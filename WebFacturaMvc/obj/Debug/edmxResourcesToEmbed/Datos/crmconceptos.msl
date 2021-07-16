@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="crmconceptoseModelStoreContainer" CdmEntityContainer="crmconceptoseEntities">
+  <EntityContainerMapping StorageEntityContainer="crmconceptoseModelStoreContainer" CdmEntityContainer="crmconceptoseEntities1">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="crmconceptoseModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="AspNetRoles">
       <EntityTypeMapping TypeName="crmconceptoseModel.AspNetRoles">
         <MappingFragment StoreEntitySet="AspNetRoles">
@@ -93,6 +103,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="empleado">
+      <EntityTypeMapping TypeName="crmconceptoseModel.empleado">
+        <MappingFragment StoreEntitySet="empleado">
+          <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apPaterno" ColumnName="apPaterno" />
+          <ScalarProperty Name="apMaterno" ColumnName="apMaterno" />
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="idTipo" ColumnName="idTipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="factura">
       <EntityTypeMapping TypeName="crmconceptoseModel.factura">
         <MappingFragment StoreEntitySet="factura">
@@ -135,15 +158,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vendedor">
-      <EntityTypeMapping TypeName="crmconceptoseModel.vendedor">
-        <MappingFragment StoreEntitySet="vendedor">
-          <ScalarProperty Name="idVendedor" ColumnName="idVendedor" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="apPaterno" ColumnName="apPaterno" />
-          <ScalarProperty Name="apMaterno" ColumnName="apMaterno" />
-          <ScalarProperty Name="dni" ColumnName="dni" />
-          <ScalarProperty Name="telefono" ColumnName="telefono" />
+    <EntitySetMapping Name="tipoEmpleado">
+      <EntityTypeMapping TypeName="crmconceptoseModel.tipoEmpleado">
+        <MappingFragment StoreEntitySet="tipoEmpleado">
+          <ScalarProperty Name="idTipo" ColumnName="idTipo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -155,10 +174,19 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="usuario_vendedor" TypeName="crmconceptoseModel.usuario_vendedor" StoreEntitySet="usuario_vendedor">
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="idUsuario" />
+      </EndProperty>
+      <EndProperty Name="empleado">
+        <ScalarProperty Name="idEmpleado" ColumnName="idVendedor" />
+      </EndProperty>
+    </AssociationSetMapping>
     <FunctionImportMapping FunctionImportName="reporte_factura" FunctionName="crmconceptoseModel.Store.reporte_factura" />
     <FunctionImportMapping FunctionImportName="SP_COTIZACION_HISTORIAL" FunctionName="crmconceptoseModel.Store.SP_COTIZACION_HISTORIAL">
       <ResultMapping>
         <ComplexTypeMapping TypeName="crmconceptoseModel.SP_COTIZACION_HISTORIAL_Result">
+          <ScalarProperty Name="fechaCotizacion" ColumnName="fechaCotizacion" />
           <ScalarProperty Name="Cliente" ColumnName="Cliente" />
           <ScalarProperty Name="NumCotizacion" ColumnName="NumCotizacion" />
           <ScalarProperty Name="Producto" ColumnName="Producto" />
@@ -166,6 +194,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_COTIZACION_HISTORIAL_TODO" FunctionName="crmconceptoseModel.Store.SP_COTIZACION_HISTORIAL_TODO" />
     <FunctionImportMapping FunctionImportName="sp_lista_clientes" FunctionName="crmconceptoseModel.Store.sp_lista_clientes">
       <ResultMapping>
         <ComplexTypeMapping TypeName="crmconceptoseModel.sp_lista_clientes_Result">
@@ -208,27 +237,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_reporte_venta" FunctionName="crmconceptoseModel.Store.sp_reporte_venta">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_reporte_venta_Result">
-          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
-          <ScalarProperty Name="Trabajador" ColumnName="Trabajador" />
-          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
-          <ScalarProperty Name="direccion" ColumnName="direccion" />
-          <ScalarProperty Name="dni" ColumnName="dni" />
-          <ScalarProperty Name="telefono" ColumnName="telefono" />
-          <ScalarProperty Name="fecha" ColumnName="fecha" />
-          <ScalarProperty Name="total" ColumnName="total" />
-          <ScalarProperty Name="IVA" ColumnName="IVA" />
-          <ScalarProperty Name="descuento" ColumnName="descuento" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
-          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-          <ScalarProperty Name="numFactura" ColumnName="numFactura" />
-          <ScalarProperty Name="subTotal" ColumnName="subTotal" />
-          <ScalarProperty Name="total_parcial" ColumnName="total_parcial" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_reporte_venta" FunctionName="crmconceptoseModel.Store.sp_reporte_venta" />
   </EntityContainerMapping>
 </Mapping>

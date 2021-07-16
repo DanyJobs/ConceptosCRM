@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Lenguaje;
 
 namespace WebFacturaMvc.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required]     
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
     }
@@ -66,7 +67,7 @@ namespace WebFacturaMvc.Models
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
-        [Display(Name = "¿Recordar cuenta?")]
+        [Display(ResourceType = typeof(Recurso), Name = "Recordar")]       
         public bool RememberMe { get; set; }
     }
 
@@ -77,11 +78,22 @@ namespace WebFacturaMvc.Models
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
+        [Required]
+        [Display(Name = "Nombre")]
+        public string Nombre { get; set; }
+
+        [Required]
+        [Display(Name = "Direccion")]
+        public string Direccion { get; set; }
 
         [Required]
         [Display(Name = "Rol")]
         public string Rol { get; set; }
 
+
+        [Required]
+        [Display(Name = "Empleado")]
+        public string idTipoEmpleado { get; set; }
 
 
         [Required]
