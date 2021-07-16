@@ -48,13 +48,13 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-home fa-fw"></i> INICIO
+                        <i class="fa fa-home fa-fw"></i> @Lenguaje.Recurso.INICIO
                     </a>
                     <!-- /.dropdown-tasks -->
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-home fa-fw"></i> QUIENES SOMOS
+                        <i class="fa fa-home fa-fw"></i> @Lenguaje.Recurso.QUIENES_SOMOS
                     </a>
                     <!-- /.dropdown-tasks -->
                 </li>
@@ -62,13 +62,13 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i>SERVICIOS <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-bell fa-fw"></i>@Lenguaje.Recurso.SERVICIOS <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="~/Cliente/BuscarClientes">
                                 <div>
-                                    <i class="fa fa-users fa-fw"></i>Registro Clientes
+                                    <i class="fa fa-users fa-fw"></i>@Lenguaje.Recurso.Registro_Clientes
                                 </div>
                             </a>
                         </li>
@@ -76,7 +76,7 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-users fa-fw"></i> 3 Registro Vendedores
+                                    <i class="fa fa-users fa-fw"></i>@Lenguaje.Recurso.Registro_Vendedores
                                 </div>
                             </a>
                         </li>
@@ -84,7 +84,7 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-book fa-fw"></i> Reporte Facturas
+                                    <i class="fa fa-book fa-fw"></i> @Lenguaje.Recurso.Reporte_Facturas
                                 </div>
                             </a>
                         </li>
@@ -92,7 +92,7 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-tv fa-fw"></i> Reporte Artículos
+                                    <i class="fa fa-tv fa-fw"></i> @Lenguaje.Recurso.Reporte_Artículos
                                 </div>
                             </a>
                         </li>
@@ -100,7 +100,7 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-shopping-cart fa-fw"></i>Reporte Cotizacion
+                                    <i class="fa fa-shopping-cart fa-fw"></i>@Lenguaje.Recurso.Reporte_Cotizacion
                                 </div>
                             </a>
                         </li>
@@ -120,14 +120,14 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
-                                <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                <a href="#"><i class="fa fa-user fa-fw"></i> @Lenguaje.Recurso.Perfil_del_usuario</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                <a href="#"><i class="fa fa-gear fa-fw"></i> @Lenguaje.Recurso.Ajustes</a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                @Html.ActionLink("Cerrar sesion", "LogOff","Account")
+                                @Html.ActionLink(@Lenguaje.Recurso.Cerrar_sesion, "LogOff","Account")
                             </li>
                         </ul>
                         @*/.dropdown-user*@

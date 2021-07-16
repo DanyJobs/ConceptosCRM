@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Ajustes" xml:space="preserve">
+    <value>Ajustes</value>
+  </data>
+  <data name="Cerrar sesion" xml:space="preserve">
+    <value>Cerrar sesion</value>
+  </data>
   <data name="Clientes" xml:space="preserve">
     <value>Clientes</value>
   </data>
@@ -132,17 +138,41 @@
   <data name="IdCategoria" xml:space="preserve">
     <value>IdCategoria</value>
   </data>
+  <data name="Ingresar" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="INICIO" xml:space="preserve">
+    <value>INICIO</value>
+  </data>
   <data name="Inicio de sesion" xml:space="preserve">
     <value>Inicio de sesión</value>
   </data>
   <data name="Nombre_Texto" xml:space="preserve">
     <value>Nombre</value>
   </data>
+  <data name="Perfil del usuario" xml:space="preserve">
+    <value>Perfil del usuario</value>
+  </data>
   <data name="Productos" xml:space="preserve">
     <value>Productos</value>
   </data>
+  <data name="QUIENES SOMOS" xml:space="preserve">
+    <value>QUIENES SOMOS</value>
+  </data>
   <data name="Recordar" xml:space="preserve">
     <value>¿Recordar cuenta?</value>
+  </data>
+  <data name="Registro Clientes" xml:space="preserve">
+    <value>Registro Clientes</value>
+  </data>
+  <data name="Registro Vendedores" xml:space="preserve">
+    <value>Registro Vendedores</value>
+  </data>
+  <data name="Reporte Artículos" xml:space="preserve">
+    <value>Reporte Artículos</value>
+  </data>
+  <data name="Reporte Cotizacion" xml:space="preserve">
+    <value>Reporte Cotizacion</value>
   </data>
   <data name="Reporte de Clientes" xml:space="preserve">
     <value>Reporte de Clientes</value>
@@ -155,6 +185,12 @@
   </data>
   <data name="Reporte de Vendedores" xml:space="preserve">
     <value>Reporte de Vendedores</value>
+  </data>
+  <data name="Reporte Facturas" xml:space="preserve">
+    <value>Reporte Facturas</value>
+  </data>
+  <data name="SERVICIOS" xml:space="preserve">
+    <value>SERVICIOS</value>
   </data>
   <data name="Vendedores" xml:space="preserve">
     <value>Vendedores</value>
