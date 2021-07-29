@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebFacturaMvc.Datos.sucursal>
+
+@{
+ 
+}
+
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.calle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numExt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.colonia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.telefono)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.calle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numExt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.colonia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.telefono)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.idSucursal }) |
+                @Html.ActionLink("Details", "Details", new { id=item.idSucursal }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.idSucursal })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

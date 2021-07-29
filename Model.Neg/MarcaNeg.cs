@@ -1,10 +1,6 @@
 ﻿using Model.Dao;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model.Entity;
+using System.Collections.Generic;
 
 
 namespace Model.Neg
@@ -41,7 +37,7 @@ namespace Model.Neg
                     return;
                 }
             }
-      
+
 
             //inicio verificacion descripcion retorna estado=3
             string descripcion = objMarca.Descripcion;

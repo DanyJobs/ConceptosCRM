@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model.Dao;
 using Model.Entity;
-using Model.Dao;
+using System;
+using System.Collections.Generic;
 
 namespace Model.Neg
 {
@@ -49,7 +46,7 @@ namespace Model.Neg
             else
             {
                 nombre = objProducto.Nombre.Trim();
-                verificacion = nombre.Length > 0 && nombre.Length <= 30;
+                verificacion = nombre.Length > 0 && nombre.Length <= 50;
                 if (!verificacion)
                 {
                     objProducto.Estado = 2;

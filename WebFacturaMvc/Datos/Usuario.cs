@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entidad.Seguridad
 {
     public class Usuario
     {
-        public Usuario(int id, String user, String password){
+        public Usuario(int id, String user, String password)
+        {
             this.id = id;
             this.user = user;
             this.password = password;

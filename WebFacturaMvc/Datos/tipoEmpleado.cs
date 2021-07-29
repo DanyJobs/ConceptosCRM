@@ -14,16 +14,7 @@ namespace WebFacturaMvc.Datos
     
     public partial class tipoEmpleado
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tipoEmpleado()
-        {
-            this.empleado = new HashSet<empleado>();
-        }
-    
         public string idTipo { get; set; }
         public string descripcion { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<empleado> empleado { get; set; }
     }
 }

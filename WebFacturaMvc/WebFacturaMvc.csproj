@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -52,16 +51,16 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
@@ -217,6 +216,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Css\alertify.bootstrap.css" />
     <Content Include="Css\alertify.core.css" />
     <Content Include="Css\alertify.default.css" />
@@ -232,6 +233,7 @@
       <DependentUpon>crmconceptos.edmx</DependentUpon>
       <LastGenOutput>crmconceptos.cs</LastGenOutput>
     </Content>
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Img\logo conceptos.png" />
     <Content Include="Img\user.jpeg" />
@@ -241,7 +243,6 @@
     <Content Include="Js\modernizr-2.6.2.js" />
     <Content Include="Js\sb-admin-2.js" />
     <Content Include="Js\sb-admin-2.min.js" />
-    <Content Include="Reportes\frmReporteFactura.aspx" />
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -314,8 +315,37 @@
     <Content Include="dbventasDataSet.xss">
       <DependentUpon>dbventasDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Reportes\Espanol\frmReporteEs.aspx" />
+    <Content Include="Reportes\Ingles\frmReporteEn.aspx" />
     <Content Include="RPTDataset\dsPrincipal.xsc">
       <DependentUpon>dsPrincipal.xsd</DependentUpon>
+    </Content>
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="ReporteDataSet.xsc">
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="ProcDataSet.xsc">
+      <DependentUpon>ProcDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="ProcDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProcDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ProcDataSet.xss">
+      <DependentUpon>ProcDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="ReporteDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReporteDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ReporteDataSet.xss">
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
     </Content>
     <None Include="RPTDataset\dsPrincipal.xsd">
       <SubType>Designer</SubType>
@@ -401,12 +431,14 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\DetalleCotizacionController.cs" />
-    <Compile Include="Controllers\EmpleadoController.cs" />
+    <Compile Include="Controllers\ExistenciaController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModoPagoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CotizacionController.cs" />
+    <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Datos\AspNetRoles.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -423,6 +455,12 @@
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\cliente.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\compra.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\compraDetalle.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\cotizacion.cs">
@@ -449,7 +487,7 @@
     <Compile Include="Datos\detalleCotizacion.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Datos\empleado.cs">
+    <Compile Include="Datos\existencia.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\factura.cs">
@@ -464,7 +502,22 @@
     <Compile Include="Datos\producto.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\proveedor.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\spusuario_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\SP_Buscar_Cotizacion_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\SP_COTIZACION_HISTORIAL_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_helpdiagrams_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_lista_clientes_Result.cs">
@@ -474,6 +527,12 @@
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\SP_PRODUCTO_CONSULTA_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sucursal.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sysdiagrams.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\tipoEmpleado.cs">
@@ -488,21 +547,38 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202107142154133_Test4.cs" />
-    <Compile Include="Migrations\202107142154133_Test4.designer.cs">
-      <DependentUpon>202107142154133_Test4.cs</DependentUpon>
+    <Compile Include="Migrations\202107202100101_Test.cs" />
+    <Compile Include="Migrations\202107202100101_Test.Designer.cs">
+      <DependentUpon>202107202100101_Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ProcDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProcDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reportes\frmReporteFactura.aspx.cs">
-      <DependentUpon>frmReporteFactura.aspx</DependentUpon>
+    <Compile Include="ReporteDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Espanol\frmReporteEs.aspx.cs">
+      <DependentUpon>frmReporteEs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reportes\frmReporteFactura.aspx.designer.cs">
-      <DependentUpon>frmReporteFactura.aspx</DependentUpon>
+    <Compile Include="Reportes\Espanol\frmReporteEs.aspx.designer.cs">
+      <DependentUpon>frmReporteEs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Ingles\frmReporteEn.aspx.cs">
+      <DependentUpon>frmReporteEn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes\Ingles\frmReporteEn.aspx.designer.cs">
+      <DependentUpon>frmReporteEn.aspx</DependentUpon>
     </Compile>
     <Compile Include="RPTDataset\dsPrincipal.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -584,12 +660,23 @@
     <Content Include="Views\Manager\ManageLogins.cshtml" />
     <Content Include="Views\Manager\SetPassword.cshtml" />
     <Content Include="Views\Manager\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Empleado\Create.cshtml" />
-    <Content Include="Views\Empleado\Delete.cshtml" />
-    <Content Include="Views\Empleado\Details.cshtml" />
-    <Content Include="Views\Empleado\Edit.cshtml" />
-    <Content Include="Views\Empleado\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Existencia\Create.cshtml" />
+    <Content Include="Views\Existencia\Delete.cshtml" />
+    <Content Include="Views\Existencia\Details.cshtml" />
+    <Content Include="Views\Existencia\Edit.cshtml" />
+    <Content Include="Views\Existencia\Index.cshtml" />
+    <Content Include="Views\Sucursal\Create.cshtml" />
+    <Content Include="Views\Sucursal\Delete.cshtml" />
+    <Content Include="Views\Sucursal\Details.cshtml" />
+    <Content Include="Views\Sucursal\Edit.cshtml" />
+    <Content Include="Views\Sucursal\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Proveedor\Create.cshtml" />
+    <Content Include="Views\Proveedor\Delete.cshtml" />
+    <Content Include="Views\Proveedor\Details.cshtml" />
+    <Content Include="Views\Proveedor\Edit.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -601,10 +688,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202107142154133_Test4.resx">
-      <DependentUpon>202107142154133_Test4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107202100101_Test.resx">
+      <DependentUpon>202107202100101_Test.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptFactura.rdlc" />
+    <EmbeddedResource Include="Reportes\Ingles\rptFacturaEn.rdlc" />
+    <EmbeddedResource Include="Reportes\Espanol\rptFactura.rdlc" />
     <EmbeddedResource Include="Traducciones\textos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>textos.Designer.cs</LastGenOutput>
@@ -663,11 +751,8 @@
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Identity.UI.5.0.7\build\Microsoft.AspnetCore.Identity.UI.targets')" />
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

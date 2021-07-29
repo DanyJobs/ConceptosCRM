@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Dao;
+﻿using Model.Dao;
 using Model.Entity;
+using System;
+using System.Collections.Generic;
 
 namespace Model.Neg
 {
@@ -20,7 +17,7 @@ namespace Model.Neg
 
         public string create(Cotizacion objCotizacion)
         {
-            bool verificacion = true;           
+            bool verificacion = true;
 
             //inicio verificacion total estado=2
             string total = objCotizacion.Total.ToString();
@@ -28,8 +25,9 @@ namespace Model.Neg
             if (total == null)
             {
                 objCotizacion.Estado = 20;
-                
-            }else
+
+            }
+            else
             {
                 try
                 {
@@ -39,45 +37,46 @@ namespace Model.Neg
                     if (!verificacion)
                     {
                         objCotizacion.Estado = 2;
-                        
+
                     }
                 }
                 catch (Exception e)
                 {
                     objCotizacion.Estado = 200;
-                    
+
                 }
             }
             //inicio verificacion total            
 
             //inicio verificacion fecha estado=4
             string fecha = objCotizacion.Fecha.ToString();
-            
+
             if (fecha == null)
             {
                 objCotizacion.Estado = 40;
-                
-            }else
+
+            }
+            else
             {
                 fecha = objCotizacion.Fecha.Trim();
-                verificacion = fecha.Length > 0 && fecha.Length < 30;          
+                verificacion = fecha.Length > 0 && fecha.Length < 30;
                 if (!verificacion)
                 {
                     objCotizacion.Estado = 4;
-                    
+
                 }
             }
             //fin verificacion de fecha
 
             //todo bien
             objCotizacion.Estado = 99;
-           return  objCotizacionDao.create(objCotizacion);
-           
+            return objCotizacionDao.create(objCotizacion);
+
         }
 
         public void update(Cotizacion objCotizacion)
         {
-            bool verificacion = true;           
+            bool verificacion = true;
 
             //inicio verificacion total estado=2
             string total = objCotizacion.Total.ToString();
@@ -135,7 +134,7 @@ namespace Model.Neg
         }
 
         public void delete(Cotizacion objCotizacion)
-        { 
+        {
             bool verificacion = true;
             //inicio verificacion de existencia
             Cotizacion objCotizacionAux = new Cotizacion();
@@ -147,7 +146,7 @@ namespace Model.Neg
                 return;
             }
             //fin verificaicon de existencia de Cotizacion
-           
+
             //verificaicon de existencia de Detalle
             DetalleCotizacion objDetalleCotizacion = new DetalleCotizacion();
             objDetalleCotizacion.IdVenta = objCotizacion.IdVenta;

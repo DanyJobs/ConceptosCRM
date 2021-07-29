@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Entity;
 using System.Data.SqlClient;
 
 namespace Model.Dao
-{    
+{
     public class ClienteDao : Obligatorio<Cliente>
     {
         private ConexionDB objConexinDB;
@@ -15,12 +12,12 @@ namespace Model.Dao
 
         public ClienteDao()
         {
-            objConexinDB =ConexionDB.saberEstado();
+            objConexinDB = ConexionDB.saberEstado();
 
         }
         public void create1(Cliente objCliente)
         {
-            string create = "insert into cliente(nombre,apPaterno,apMaterno,dni,direccion,telefono) values('" + objCliente.Nombre + "','" + objCliente.Appaterno + "','" + objCliente.Apmaterno + "','" + objCliente.Dni + "','" + objCliente.Direccion + "','" + objCliente.Telefono + "')";
+            string create = "insert into cliente(nombre,apellido,direccion,telefono,email) values('" + objCliente.Nombre + "','" + objCliente.Apellido + "','" + objCliente.Direccion + "','" + objCliente.Telefono + "','" + objCliente.Email + "')";
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
@@ -30,7 +27,7 @@ namespace Model.Dao
             }
             catch (Exception e)
             {
-                objCliente.Estado = 1;                
+                objCliente.Estado = 1;
             }
             finally
             {
@@ -41,10 +38,10 @@ namespace Model.Dao
         }
         public void create(Cliente objCliente)
         {
-            string create = "sp_cliente_adc " + objCliente.IdCliente + "," + objCliente.Nombre + "," + objCliente.Appaterno + "," + objCliente.Apmaterno + "," + objCliente.Dni + "," + objCliente.Direccion + "," + objCliente.Telefono + "";
+            //string create = "sp_cliente_adc " + objCliente.IdCliente + "," + objCliente.Nombre + "," + objCliente.Appaterno + "," + objCliente.Apmaterno + "," + objCliente.Dni + "," + objCliente.Direccion + "," + objCliente.Telefono + "";
             try
             {
-                comando = new SqlCommand(create, objConexinDB.getCon());
+                //comando = new SqlCommand(create, objConexinDB.getCon());
                 objConexinDB.getCon().Open();
                 comando.ExecuteNonQuery();
 
@@ -72,7 +69,7 @@ namespace Model.Dao
             }
             catch (Exception)
             {
-                objCliente.Estado=1;
+                objCliente.Estado = 1;
             }
             finally
             {
@@ -96,14 +93,11 @@ namespace Model.Dao
                 if (hayRegistros)
                 {
                     objCliente.Nombre = reader[1].ToString();
-                    objCliente.Appaterno = reader[2].ToString();
-                    objCliente.Apmaterno = reader[3].ToString();                    
-                    objCliente.Direccion = reader[4].ToString();
-                    objCliente.Telefono = reader[5].ToString();
-                    objCliente.Dni = reader[6].ToString();
-
+                    objCliente.Apellido = reader[2].ToString();
+                    objCliente.Direccion = reader[3].ToString();
+                    objCliente.Telefono = reader[4].ToString();
+                    objCliente.Email = reader[5].ToString();
                     objCliente.Estado = 99;
-
                 }
                 else
                 {
@@ -115,18 +109,18 @@ namespace Model.Dao
 
                 throw;
             }
-           finally
+            finally
             {
                 objConexinDB.getCon().Close();
                 objConexinDB.closeDB();
             }
             return hayRegistros;
         }
-      
+
         public List<Cliente> findAll()
         {
             List<Cliente> listaClientes = new List<Cliente>();
-            string findAll = "select*from cliente order by nombre asc, apPaterno asc,apMaterno asc";
+            string findAll = "select*from cliente order by nombre asc, apellido asc";
             try
             {
                 comando = new SqlCommand(findAll, objConexinDB.getCon());
@@ -137,11 +131,10 @@ namespace Model.Dao
                     Cliente objCliente = new Cliente();
                     objCliente.IdCliente = Convert.ToInt64(reader[0].ToString());
                     objCliente.Nombre = reader[1].ToString();
-                    objCliente.Appaterno = reader[2].ToString();
-                    objCliente.Apmaterno = reader[3].ToString();
-                    objCliente.Direccion = reader[4].ToString();
-                    objCliente.Telefono = reader[5].ToString();
-                    objCliente.Dni = reader[6].ToString();
+                    objCliente.Apellido = reader[2].ToString();
+                    objCliente.Direccion = reader[3].ToString();
+                    objCliente.Telefono = reader[4].ToString();
+                    objCliente.Email = reader[5].ToString();
                     listaClientes.Add(objCliente);
 
                 }
@@ -157,23 +150,23 @@ namespace Model.Dao
                 objConexinDB.closeDB();
             }
 
-            return listaClientes;           
-           
+            return listaClientes;
+
         }
 
         public void update(Cliente objCliente)
         {
-            string update = "update cliente set nombre='" + objCliente.Nombre + "',apPaterno='" + objCliente.Appaterno + "',apMaterno='" + objCliente.Apmaterno + "',dni='" + objCliente.Dni + "',direccion='" + objCliente.Direccion + "',telefono='" + objCliente.Telefono + "' where idCliente='" + objCliente.IdCliente + "'";
+            string update = "update cliente set nombre='" + objCliente.Nombre + "',apellido='" + objCliente.Apellido + "',direccion='" + objCliente.Direccion + "',telefono='" + objCliente.Telefono + "',email='" + objCliente.Email + "' where idCliente='" + objCliente.IdCliente + "'";
             try
             {
                 comando = new SqlCommand(update, objConexinDB.getCon());
                 objConexinDB.getCon().Open();
-                comando.ExecuteNonQuery();                
+                comando.ExecuteNonQuery();
             }
             catch (Exception e)
             {
 
-                objCliente.Estado=1;
+                objCliente.Estado = 1;
             }
             finally
             {
@@ -182,10 +175,10 @@ namespace Model.Dao
             }
         }
 
-        public bool findClientePorDni(Cliente objCliente)
+        public bool findClientePorEmail(Cliente objCliente)
         {
             bool hayRegistros;
-            string find = "select*from cliente where dni='"+objCliente.Dni+"'" ;
+            string find = "select*from cliente where Email='" + objCliente.Email + "'";
             try
             {
                 comando = new SqlCommand(find, objConexinDB.getCon());
@@ -196,12 +189,11 @@ namespace Model.Dao
                 if (hayRegistros)
                 {
                     objCliente.Nombre = reader[1].ToString();
-                    objCliente.Appaterno = reader[2].ToString();
-                    objCliente.Apmaterno = reader[3].ToString();
-                    
-                    objCliente.Direccion = reader[4].ToString();
-                    objCliente.Telefono = reader[5].ToString();
-                    objCliente.Dni = reader[6].ToString();
+                    objCliente.Apellido = reader[2].ToString();
+                    objCliente.Direccion = reader[3].ToString();
+
+                    objCliente.Telefono = reader[4].ToString();
+                    objCliente.Email = reader[5].ToString();
 
                     objCliente.Estado = 99;
 
@@ -227,7 +219,7 @@ namespace Model.Dao
         {
             List<Cliente> listaClientes = new List<Cliente>();
             //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
-            string findAll = "select* from cliente where nombre like '%" + objCLiente.Nombre + "%' or dni like '%" + objCLiente.Dni + "%' or idCliente like '%" + objCLiente.IdCliente + "%' or apPaterno like '%" + objCLiente.Appaterno + "%'";
+            string findAll = "select* from cliente where nombre like '%" + objCLiente.Nombre + "%' or email like '%" + objCLiente.Email + "%' or idCliente like '%" + objCLiente.IdCliente + "%' or apPaterno like '%" + objCLiente.Apellido + "%'";
             try
             {
                 comando = new SqlCommand(findAll, objConexinDB.getCon());
@@ -238,11 +230,10 @@ namespace Model.Dao
                     Cliente objCliente = new Cliente();
                     objCliente.IdCliente = Convert.ToInt64(reader[0].ToString());
                     objCliente.Nombre = reader[1].ToString();
-                    objCliente.Appaterno = reader[2].ToString();
-                    objCliente.Apmaterno = reader[3].ToString();
-                    objCliente.Direccion = reader[4].ToString();
-                    objCliente.Telefono = reader[5].ToString();
-                    objCliente.Dni = reader[6].ToString();
+                    objCliente.Apellido = reader[2].ToString();
+                    objCliente.Direccion = reader[3].ToString();
+                    objCliente.Telefono = reader[4].ToString();
+                    objCliente.Email = reader[5].ToString();
                     listaClientes.Add(objCliente);
 
                 }

@@ -4,27 +4,27 @@
 }
 
 <ol class="breadcrumb">
-    <li><a href="~/">Categorias</a></li>
+    <li><a href="~/">@Lenguaje.Recurso.Categorias</a></li>
     <li class="active">@(Model.Nombre)</li>
 
 </ol>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Informacion</div>
+    <div class="panel-heading">@Lenguaje.Recurso.Informacion</div>
     <div class="panel-body">
         <dl class="dl-horizontal">
-            <dt>Código</dt>
+            <dt>@Lenguaje.Recurso.Codigo</dt>
             <dd>@Model.NumPago</dd>
 
-            <dt>Nombre</dt>
+            <dt>@Lenguaje.Recurso.ModoPago_nombre</dt>
             <dd>@Model.Nombre</dd>
 
-            <dt>Descripcion</dt>
+            <dt>@Lenguaje.Recurso.Descripcion</dt>
             <dd>@Model.Otros</dd>
         </dl>
     </div>
     <div class="form-actions">
-        |@Html.ActionLink("Regresar al Listado", "Index")
+        |@Html.ActionLink(Lenguaje.Recurso.Regresar_al_Listado, "Index")
     </div>
 </div>
 @*<div class="panel panel-default">

@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using Model.Entity;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Model.Dao
 {
@@ -19,11 +16,11 @@ namespace Model.Dao
             objConexinDB = ConexionDB.saberEstado();
 
         }
-       
+
         public string create(Cotizacion objVenta)
         {
             string idVenta = "";
-            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','"+objVenta.Iva+ "') SELECT SCOPE_IDENTITY();";
+            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','" + objVenta.Iva + "') SELECT SCOPE_IDENTITY();";
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
@@ -51,7 +48,7 @@ namespace Model.Dao
         }
         public void update(Cotizacion objVenta)
         {
-            string update = "update cotizacion set total='" + objVenta.Total + "',idCliente='" + objVenta.IdCliente + "',idVendedor='" + objVenta.IdVendedor + "',fecha='" + objVenta.Fecha + "',IVA='"+objVenta.Iva+"' where idVenta='" + objVenta.IdVenta + "'";
+            string update = "update cotizacion set total='" + objVenta.Total + "',idCliente='" + objVenta.IdCliente + "',idVendedor='" + objVenta.IdVendedor + "',fecha='" + objVenta.Fecha + "',IVA='" + objVenta.Iva + "' where idVenta='" + objVenta.IdVenta + "'";
             try
             {
                 comando = new SqlCommand(update, objConexinDB.getCon());
@@ -124,11 +121,11 @@ namespace Model.Dao
                 objConexinDB.closeDB();
             }
             return hayRegistros;
-        }       
+        }
         public List<Cotizacion> findAll()
         {
             List<Cotizacion> listaVentas = new List<Cotizacion>();
-      
+
             try
             {
                 comando = new SqlCommand("SP_Buscar_Cotizacion", objConexinDB.getCon());
@@ -138,11 +135,11 @@ namespace Model.Dao
                 while (reader.Read())
                 {
                     Cotizacion objVenta = new Cotizacion();
-                    objVenta.IdVenta= Convert.ToInt64(reader[0].ToString());
-                    objVenta.NombreCliente = reader[1].ToString(); 
+                    objVenta.IdVenta = Convert.ToInt64(reader[0].ToString());
+                    objVenta.NombreCliente = reader[1].ToString();
                     objVenta.IdVendedor = reader[2].ToString();
                     objVenta.Iva = Convert.ToDouble(reader[3].ToString());
-                    objVenta.Total = Convert.ToDouble(reader[4].ToString()); 
+                    objVenta.Total = Convert.ToDouble(reader[4].ToString());
                     objVenta.FechaCotizacion = reader.GetDateTime(5);
                     listaVentas.Add(objVenta);
 
@@ -160,7 +157,7 @@ namespace Model.Dao
             }
 
             return listaVentas;
-        }        
+        }
         public bool findVentaPorClienteId(Cotizacion objVenta)
         {
             bool hayRegistros;
@@ -172,7 +169,7 @@ namespace Model.Dao
                 SqlDataReader reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
-                {                   
+                {
                     objVenta.Estado = 99;
                 }
                 else
@@ -191,7 +188,7 @@ namespace Model.Dao
                 objConexinDB.closeDB();
             }
             return hayRegistros;
-        }       
+        }
         public bool findVentaPorVendedorId(Cotizacion objVenta)
         {
             bool hayRegistros;

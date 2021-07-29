@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Model.Neg;
 using Model.Entity;
+using Model.Neg;
 
 namespace WebFacturaMvc.Controllers
 {
@@ -24,7 +24,7 @@ namespace WebFacturaMvc.Controllers
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList lista = new SelectList(data, "idCategoria", "nombre");
             ViewBag.ListaCategorias = lista;
-            
+
             List<Producto> listaProductos = objProductoNeg.findAll();
             return View(listaProductos);
         }
@@ -104,7 +104,7 @@ namespace WebFacturaMvc.Controllers
 
                 case 4://error de Apellido Paterno
                     ViewBag.MensajeError = "INgrese una categoria válida";
-                    break;                
+                    break;
                 case 8://error de duplicidad
                     ViewBag.MensajeError = "Producto [" + objProducto.IdProducto + "] ya esta Registrado en el Sistema";
                     break;
@@ -186,7 +186,7 @@ namespace WebFacturaMvc.Controllers
                 case 4://error de Apellido Paterno
                     ViewBag.MensajeError = "INgrese una categoria válida";
                     break;
-                
+
                 case 99://carrera registrada con exito
                     ViewBag.MensajeExito = "Datos del Producto [" + objProducto.IdProducto + "] Fueron Actualizados";
                     break;
@@ -320,7 +320,7 @@ namespace WebFacturaMvc.Controllers
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList lista = new SelectList(data, "idCategoria", "nombre");
             ViewBag.ListaCategorias = lista;
-            List<Producto> Producto = objProductoNeg.findAll();            
+            List<Producto> Producto = objProductoNeg.findAll();
             return View(Producto);
         }
 
@@ -337,7 +337,7 @@ namespace WebFacturaMvc.Controllers
             List<Producto> Producto = objProductoNeg.findAllProductosPorCategoria(objProducto);
             mensajeErrorServidor(objProducto);
             return View(Producto);
-        }       
+        }
 
     }
 }

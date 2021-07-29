@@ -66,9 +66,9 @@
 
     });
     //variables
-    var total=0;
-    var valor=0;
-    var subtotal=0;
+    var total = 0;
+    var valor = 0;
+    var subtotal = 0;
     function obtenerCliente(Cliente) {
 
         var watchclose = setInterval(function () {
@@ -81,10 +81,10 @@
 
     function fn_agregar() {
 
-        cadena="<tr>"
-        cadena=cadena+"<td>"+$("#idproducto").val()+"</td>";
-        cadena=cadena+"<td>"+$("#nombreproducto").val()+"</td>";
-        cadena=cadena+"<td>"+$("#cantidad").val()+"</td>";
+        cadena = "<tr>"
+        cadena = cadena + "<td>" + $("#idproducto").val() + "</td>";
+        cadena = cadena + "<td>" + $("#nombreproducto").val() + "</td>";
+        cadena = cadena + "<td>" + $("#cantidad").val() + "</td>";
         cadena = cadena + "<td>" + $("#precio").val() + "</td>";
         cadena = cadena + "<td>" + $("#descuento").val() + "</td>";
 
@@ -94,10 +94,10 @@
         y = $("#cantidad").val();
         x = $("#precio").val();
         des = $("#descuento").val();
-        subtotal=(x*y)-des;
+        subtotal = (x * y) - des;
         cadena = cadena + "<td>" + subtotal + "</td>"
         cadena = cadena + "<td><a class='ver' href='BuscarHistorial?idproducto=" + $("#idproducto").val() + "' target='_blank' " + "><span class='fa fa-edit'></span>Ver</a></td>"
-        cadena=cadena+"<td><a class ='elimina'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td>";
+        cadena = cadena + "<td><a class ='elimina'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td>";
         $("#detalle tbody").append(cadena);
         sumar();
         fn_dar_eliminar();
@@ -122,39 +122,40 @@
         $("#detalle tbody tr").val("");
     }
     function sumar() {
-        total=total+subtotal;
+        total = total + subtotal;
         console.info(total);
         $("#TotalaPagar").val(total);
 
     }
     function restar() {
-        total=total-valor;
+        total = total - valor;
         $("#TotalaPagar").val(total);
     }
-    function fn_dar_eliminar(){
+    function fn_dar_eliminar() {
         $("a.elimina").click(function () {
             valor = $(this).parents("tr").find("td").eq(5).html();
 
-            $(this).parents("tr").fadeOut("normal",function(){
+            $(this).parents("tr").fadeOut("normal", function () {
                 $(this).remove();
                 restar();
             });
         });
-    };   
+    };
 
 
 </script>
 
 <a style="float:right;" class="btn btn-success" href="~/Cotizacion/VentaFactura" target="_blank" rel="noopener noreferrer">Mas Facturas</a>
-    
-<a style="float:right;" class="btn btn-success" href="~/Cotizacion/reporteActual" target="_blank" rel="noopener noreferrer">Imprimir Factura</a>
-    
+
+<a style="float:right;" class="btn btn-success" href="~/Cotizacion/reporteActual" target="_blank" rel="noopener noreferrer"> Español</a>
+
+<a style="float:right;" class="btn btn-success" href="~/Cotizacion/reporteActualIngles" target="_blank" rel="noopener noreferrer">Ingles</a>
 <table id="encabezado" class="table">
     <thead>
         <tr style="font-size:20px;">
-            <th>Id Venta <input style="color:red; font-size:12px;" class="form-control" type="text" id="id_venta" readonly /></th>
+            <th>@Lenguaje.Recurso.Cotizacion_idVenta <input style="color:red; font-size:12px;" class="form-control" type="text" id="id_venta" readonly /></th>
             <th>
-                Fecha
+                @Lenguaje.Recurso.Cotizacion_fecha
                 <input style="color:red;font-size:20px;" class="form-control" type="text" id="id_fecha" readonly value="@DateTime.Now.Year-@DateTime.Now.Month-@DateTime.Now.Day @DateTime.Now.Hour:@DateTime.Now.Minute:@DateTime.Now.Second" />
 
             </th>
@@ -163,29 +164,29 @@
     <tbody>
         <tr style="font-size:20px;">
             <td>
-                Detalles del Cliente
+                @Lenguaje.Recurso.Cotizacion_detalleCliente
                 <a href="~/Cotizacion/ObtenerClientes" rel="pop-up">
-                    <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="Obtener Cliente" />
+                    <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="@Lenguaje.Recurso.Cotizacion_obtenerCliente" />
                 </a>
             </td>
             <td>
-                Modo de Pago
+                @Lenguaje.Recurso.Cotizacion_modoPago
                 <div class="col-md-12 dropdown">
-                    @Html.DropDownList("modoPago", ViewBag.ListaModoPago as SelectList, "Seleccione Modo Pago", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.DropDownList("modoPago", ViewBag.ListaModoPago as SelectList, Lenguaje.Recurso.Cotizacion_errorMP, htmlAttributes: new { @class = "form-control", @required = "required" })
                 </div>
             </td>
         </tr>
         <tr style="font-size:20px;">
 
-            <td>Nombre Cliente <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtnombre" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_nombreCliente <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtnombre" readonly required /></td>
             <td>
                 DNI
                 <input type="hidden" id="codigoCliente">
-                <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="idCliente" readonly required />               
+                <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="idCliente" readonly required />
             </td>
         </tr>
         <tr style="font-size:20px;">
-            <td style="float:right; vertical-align:middle;">Detalles del Producto</td>
+            <td style="float:right; vertical-align:middle;">@Lenguaje.Recurso.Cotizacion_detalleProducto</td>
             <td>
                 @*<a class="btn_productos btn btn-primary" href="#">
                        Obtener Productos
@@ -193,10 +194,10 @@
 
                 <div class="form-group col-md-12">
                     <div class="col-md-9 dropdown">
-                        @Html.DropDownList("ListaProducto", ViewBag.ListaProducto as SelectList, "Seleccione un Producto", htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("ListaProducto", ViewBag.ListaProducto as SelectList, Lenguaje.Recurso.Cotizacion_selectProducto, htmlAttributes: new { @class = "form-control" })
                     </div>
                     <div class="col-md-3">
-                        <button class="btn btn-warning btn-lg" name="btnproductos" id="btnproductos">Seleccionar</button>
+                        <button class="btn btn-warning btn-lg" name="btnproductos" id="btnproductos">@Lenguaje.Recurso.Cotizacion_seleccionar</button>
                     </div>
                 </div>
 
@@ -208,27 +209,27 @@
 <form action="javascript:fn_agregar()" ; method="post" id="frm_usu" class="form-horizontal">
     <table class="table">
         <tr style="font-size:20px;">
-            <td>Nombre del Producto <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_nombreProducto <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
             <td>Id <input style="font-size:20px; font-weight:700;" type="text" id="idproducto" class="form-control" readonly required /></td>
-            <td>Marca <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
-            <td>Precio <input style="font-size:20px; font-weight:700;" type="text" id="precio" class="form-control"  /></td>
-            <td>Descuento <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="descuento" value="0" onfocus="this.value = '';" required /></td>
-            <td>Cantidad <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="cantidad" value="0" onfocus="this.value = '';" required /></td>
-            <td colspan="2"><input class="btn btn-primary btn-lg" type="submit" name="agregar" id="agregar" value="Agregar" /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:20px; font-weight:700;" type="text" id="precio" class="form-control" /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="descuento" value="0" onfocus="this.value = '';" required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="cantidad" value="0" onfocus="this.value = '';" required /></td>
+            <td colspan="2"><input class="btn btn-primary btn-lg" type="submit" name="agregar" id="agregar" value=@Lenguaje.Recurso.Cotizacion_agregar /></td>
         </tr>
     </table>
 </form>
 <table id="detalle" class="lista table" border="1">
     <thead style="font-size:18px;">
         <tr class="bg-success">
-            <td>Detalle de la Compra</td>
+            <td>@Lenguaje.Recurso.Cotizacion_detalleCompra</td>
         </tr>
         <tr class="bg-danger">
             <th>Id</th>
-            <th>Descripcion del Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Descuento</th>
+            <th>@Lenguaje.Recurso.Cotizacion_detalleProducto</th>
+            <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
+            <th>@Lenguaje.Recurso.Cotizacion_precio</th>
+            <th>@Lenguaje.Recurso.Cotizacion_descuento</th>
             <th>Total</th>
         </tr>
     </thead>
@@ -237,13 +238,13 @@
 </table>
 <table class="table">
     <tr>
-        <td style="float:right;font-size:20px;">Total a Pagar</td>
+        <td style="float:right;font-size:20px;">@Lenguaje.Recurso.Cotizacion_totalPagar</td>
         <th></th>
         <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly /></td>
     </tr>
 </table>
-<input class="btn btn-success btn-lg" type="button" id="finalizar" value="Guardar Cotización" />
-<input class="btn btn-success btn-lg" type="button" id="txtnueva" value="Nueva" />
+<input class="btn btn-success btn-lg" type="button" id="finalizar" value=@Lenguaje.Recurso.Cotizacion_guardar />
+<input class="btn btn-success btn-lg" type="button" id="txtnueva" value=@Lenguaje.Recurso.Nuevo />
 
 <script>
     $(document).ready(function () {
@@ -253,7 +254,7 @@
                     //alertify.alert("exito");
                     window.location.reload().ajax();
                 }
-            });            
+            });
         });
     });
 </script>
@@ -270,7 +271,7 @@
                     $(mensaje).each(function (index, item) {
                         //recibir datos json
                         $("#nombreproducto").val(item.Nombre),
-                        $("#idproducto").val(item.IdProducto),
+                            $("#idproducto").val(item.IdProducto),
                             $("#precio").val(item.PrecioUnitario),
                             $("#marca").val(item.Marca)
                     });

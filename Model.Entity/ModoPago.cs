@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lenguaje;
+using System.ComponentModel.DataAnnotations;
 
 namespace Model.Entity
 {
@@ -12,7 +14,8 @@ namespace Model.Entity
         private string nombre;
         private string otros;
         private int estado;
-
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "ModoPago_numero")]
         public Int32 NumPago
         {
             get
@@ -25,7 +28,8 @@ namespace Model.Entity
                 numPago = value;
             }
         }
-
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "ModoPago_nombre")]
         public string Nombre
         {
             get
@@ -38,7 +42,8 @@ namespace Model.Entity
                 nombre = value;
             }
         }
-
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "Otros_detalles")]
         public string Otros
         {
             get

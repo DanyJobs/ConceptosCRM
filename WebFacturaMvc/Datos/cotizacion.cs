@@ -27,9 +27,9 @@ namespace WebFacturaMvc.Datos
         public System.DateTime fecha { get; set; }
         public decimal IVA { get; set; }
     
-        public virtual cliente cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
-        public virtual empleado empleado { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual cliente cliente { get; set; }
     }
 }

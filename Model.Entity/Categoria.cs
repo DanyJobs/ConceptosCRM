@@ -1,10 +1,5 @@
 ﻿using Lenguaje;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Model.Entity
@@ -19,7 +14,8 @@ namespace Model.Entity
         [Display(ResourceType = typeof(Recurso), Name = "IdCategoria")]
         public string IdCategoria
         {
-            get{
+            get
+            {
                 return idCategoria;
             }
 
@@ -70,7 +66,7 @@ namespace Model.Entity
 
         public Categoria()
         {
-       
+
         }
         public Categoria(string idCategoria, string nombre, string descripcion)
         {
@@ -81,7 +77,7 @@ namespace Model.Entity
         public Categoria(string idCategoria)
         {
             this.idCategoria = idCategoria;
-            
+
         }
     }
 }

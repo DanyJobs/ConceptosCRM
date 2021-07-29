@@ -38,43 +38,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AspNetUsers">
-      <EntityTypeMapping TypeName="crmconceptoseModel.AspNetUsers">
-        <MappingFragment StoreEntitySet="AspNetUsers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="categoria">
       <EntityTypeMapping TypeName="crmconceptoseModel.categoria">
         <MappingFragment StoreEntitySet="categoria">
           <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
           <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="cliente">
-      <EntityTypeMapping TypeName="crmconceptoseModel.cliente">
-        <MappingFragment StoreEntitySet="cliente">
-          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="apPaterno" ColumnName="apPaterno" />
-          <ScalarProperty Name="apMaterno" ColumnName="apMaterno" />
-          <ScalarProperty Name="direccion" ColumnName="direccion" />
-          <ScalarProperty Name="telefono" ColumnName="telefono" />
-          <ScalarProperty Name="dni" ColumnName="dni" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -100,19 +69,6 @@
           <ScalarProperty Name="idProducto" ColumnName="idProducto" />
           <ScalarProperty Name="descuento" ColumnName="descuento" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="empleado">
-      <EntityTypeMapping TypeName="crmconceptoseModel.empleado">
-        <MappingFragment StoreEntitySet="empleado">
-          <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="apPaterno" ColumnName="apPaterno" />
-          <ScalarProperty Name="apMaterno" ColumnName="apMaterno" />
-          <ScalarProperty Name="dni" ColumnName="dni" />
-          <ScalarProperty Name="telefono" ColumnName="telefono" />
-          <ScalarProperty Name="idTipo" ColumnName="idTipo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -145,19 +101,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="producto">
-      <EntityTypeMapping TypeName="crmconceptoseModel.producto">
-        <MappingFragment StoreEntitySet="producto">
-          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
-          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
-          <ScalarProperty Name="idMarca" ColumnName="idMarca" />
-          <ScalarProperty Name="bandaAncha" ColumnName="bandaAncha" />
-          <ScalarProperty Name="channels" ColumnName="channels" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tipoEmpleado">
       <EntityTypeMapping TypeName="crmconceptoseModel.tipoEmpleado">
         <MappingFragment StoreEntitySet="tipoEmpleado">
@@ -166,22 +109,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="AspNetUserRoles" TypeName="crmconceptoseModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-      <EndProperty Name="AspNetRoles">
-        <ScalarProperty Name="Id" ColumnName="RoleId" />
-      </EndProperty>
-      <EndProperty Name="AspNetUsers">
-        <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="usuario_vendedor" TypeName="crmconceptoseModel.usuario_vendedor" StoreEntitySet="usuario_vendedor">
-      <EndProperty Name="AspNetUsers">
-        <ScalarProperty Name="Id" ColumnName="idUsuario" />
-      </EndProperty>
-      <EndProperty Name="empleado">
-        <ScalarProperty Name="idEmpleado" ColumnName="idVendedor" />
-      </EndProperty>
-    </AssociationSetMapping>
     <FunctionImportMapping FunctionImportName="reporte_factura" FunctionName="crmconceptoseModel.Store.reporte_factura" />
     <FunctionImportMapping FunctionImportName="SP_COTIZACION_HISTORIAL" FunctionName="crmconceptoseModel.Store.SP_COTIZACION_HISTORIAL">
       <ResultMapping>
@@ -238,5 +165,182 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_reporte_venta" FunctionName="crmconceptoseModel.Store.sp_reporte_venta" />
+    <EntitySetMapping Name="compra">
+      <EntityTypeMapping TypeName="crmconceptoseModel.compra">
+        <MappingFragment StoreEntitySet="compra">
+          <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+          <ScalarProperty Name="fechaCompra" ColumnName="fechaCompra" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="compraDetalle">
+      <EntityTypeMapping TypeName="crmconceptoseModel.compraDetalle">
+        <MappingFragment StoreEntitySet="compraDetalle">
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+          <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="existencia">
+      <EntityTypeMapping TypeName="crmconceptoseModel.existencia">
+        <MappingFragment StoreEntitySet="existencia">
+          <ScalarProperty Name="seccion" ColumnName="seccion" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="crmconceptoseModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="crmconceptoseModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="SP_Buscar_Cotizacion" FunctionName="crmconceptoseModel.Store.SP_Buscar_Cotizacion">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.SP_Buscar_Cotizacion_Result">
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="crmconceptoseModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="crmconceptoseModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="crmconceptoseModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="crmconceptoseModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="crmconceptoseModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="crmconceptoseModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="spAgregarCompra" FunctionName="crmconceptoseModel.Store.spAgregarCompra" />
+    <FunctionImportMapping FunctionImportName="spAgregarCompraDetalle" FunctionName="crmconceptoseModel.Store.spAgregarCompraDetalle" />
+    <FunctionImportMapping FunctionImportName="spAgregarProveedor" FunctionName="crmconceptoseModel.Store.spAgregarProveedor" />
+    <FunctionImportMapping FunctionImportName="spAgregarSucursal" FunctionName="crmconceptoseModel.Store.spAgregarSucursal" />
+    <EntitySetMapping Name="sucursal">
+      <EntityTypeMapping TypeName="crmconceptoseModel.sucursal">
+        <MappingFragment StoreEntitySet="sucursal">
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="cp" ColumnName="cp" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="numExt" ColumnName="numExt" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spusuario" FunctionName="crmconceptoseModel.Store.spusuario">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.spusuario_Result">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="idTipoEmpleado" ColumnName="idTipoEmpleado" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="crmconceptoseModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="idTipoEmpleado" ColumnName="idTipoEmpleado" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="crmconceptoseModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="proveedor">
+      <EntityTypeMapping TypeName="crmconceptoseModel.proveedor">
+        <MappingFragment StoreEntitySet="proveedor">
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="cp" ColumnName="cp" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="numExt" ColumnName="numExt" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cliente">
+      <EntityTypeMapping TypeName="crmconceptoseModel.cliente">
+        <MappingFragment StoreEntitySet="cliente">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="producto">
+      <EntityTypeMapping TypeName="crmconceptoseModel.producto">
+        <MappingFragment StoreEntitySet="producto">
+          <ScalarProperty Name="channels" ColumnName="channels" />
+          <ScalarProperty Name="bandaAncha" ColumnName="bandaAncha" />
+          <ScalarProperty Name="idMarca" ColumnName="idMarca" />
+          <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

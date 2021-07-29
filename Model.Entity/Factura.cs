@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Entity
 {
@@ -92,25 +88,25 @@ namespace Model.Entity
                 estado = value;
             }
         }
-        
+
 
         public Factura(string fecha, double iva, double total, Int32 numPago)
-        {            
+        {
             this.fecha = fecha;
             this.iva = iva;
             this.total = total;
             this.numPago = numPago;
-           
+
         }
 
 
         public Factura()
         {
-            
+
         }
         public Factura(long numFactura)
         {
-            this.NumFactura = numFactura;            
+            this.NumFactura = numFactura;
         }
     }
 }

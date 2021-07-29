@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using Model.Entity;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Model.Dao
 {
@@ -41,7 +38,7 @@ namespace Model.Dao
         }
         public void delete(DetalleCotizacion objDetalleVenta)
         {
-            string delete = "delete from detalleCotizacion where idVenta='" + objDetalleVenta.IdVenta+ "'and numFactura='"+ objDetalleVenta.NumFacura+ "'";
+            string delete = "delete from detalleCotizacion where idVenta='" + objDetalleVenta.IdVenta + "'and numFactura='" + objDetalleVenta.NumFacura + "'";
             try
             {
                 comando = new SqlCommand(delete, objConexionDB.getCon());
@@ -50,7 +47,7 @@ namespace Model.Dao
             }
             catch (Exception e)
             {
-                objDetalleVenta.Estado=1000;
+                objDetalleVenta.Estado = 1000;
             }
             finally
             {
@@ -103,19 +100,20 @@ namespace Model.Dao
                 hayRegistros = reader.Read();
                 if (hayRegistros)
                 {
-                    objDetalleVenta.NumFacura=Convert.ToInt64(reader[1].ToString());
-                    objDetalleVenta.IdVenta= Convert.ToInt64(reader[2].ToString());
+                    objDetalleVenta.NumFacura = Convert.ToInt64(reader[1].ToString());
+                    objDetalleVenta.IdVenta = Convert.ToInt64(reader[2].ToString());
                     objDetalleVenta.SubTotal = Convert.ToDouble(reader[3].ToString());
                     objDetalleVenta.IdProducto = reader[4].ToString();
                     objDetalleVenta.Descuento = Convert.ToDouble(reader[5].ToString());
                     objDetalleVenta.Cantidad = Convert.ToInt32(reader[6].ToString());
 
                     objDetalleVenta.Estado = 99;
-                }else
+                }
+                else
                 {
                     objDetalleVenta.Estado = 1;
                 }
-               
+
             }
             catch (Exception)
             {
@@ -139,7 +137,7 @@ namespace Model.Dao
                 comando = new SqlCommand(findAll, objConexionDB.getCon());
                 objConexionDB.getCon().Open();
                 reader = comando.ExecuteReader();
-               
+
                 while (reader.Read())
                 {
                     DetalleCotizacion objDetalleVenta = new DetalleCotizacion();
@@ -152,7 +150,7 @@ namespace Model.Dao
                     objDetalleVenta.Cantidad = Convert.ToInt32(reader[6].ToString());
                     lista.Add(objDetalleVenta);
                 }
-                
+
             }
             catch (Exception)
             {
@@ -241,9 +239,9 @@ namespace Model.Dao
                 comando = new SqlCommand(find, objConexionDB.getCon());
                 objConexionDB.getCon().Open();
                 reader = comando.ExecuteReader();
-                
+
                 while (reader.Read())
-                {                    
+                {
                     DetalleCotizacion objDetalleVentas = new DetalleCotizacion();
                     objDetalleVentas.IdDetalleVenta = Convert.ToInt64(reader[0].ToString());
                     objDetalleVentas.NumFacura = Convert.ToInt64(reader[1].ToString());
@@ -254,9 +252,9 @@ namespace Model.Dao
                     objDetalleVentas.Cantidad = Convert.ToInt32(reader[6].ToString());
 
                     lista.Add(objDetalleVentas);
-                    
+
                 }
-               
+
             }
             catch (Exception)
             {
@@ -269,18 +267,18 @@ namespace Model.Dao
                 objConexionDB.closeDB();
             }
 
-            return lista ;
+            return lista;
         }
         public List<Historial> findHistorial(Historial historial)
-        {                         
+        {
             List<Historial> listaHistorial = new List<Historial>();
             //string find = "select*from producto order by nombre asc";
             try
             {
-            comando = new SqlCommand("SP_COTIZACION_HISTORIAL", objConexionDB.getCon());
-            comando.CommandType = CommandType.StoredProcedure;
-            comando.Parameters.Add("@idProducto", SqlDbType.VarChar).Value = historial.IdProducto;
-            objConexionDB.getCon().Open();
+                comando = new SqlCommand("SP_COTIZACION_HISTORIAL", objConexionDB.getCon());
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@idProducto", SqlDbType.VarChar).Value = historial.IdProducto;
+                objConexionDB.getCon().Open();
                 reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
@@ -289,7 +287,7 @@ namespace Model.Dao
                     objHistorial.Cliente = reader[1].ToString();
                     objHistorial.NumCotizacion = reader[2].ToString();
                     objHistorial.Producto = reader[3].ToString();
-                    objHistorial.PrecioUnitario = reader[4].ToString(); 
+                    objHistorial.PrecioUnitario = reader[4].ToString();
                     listaHistorial.Add(objHistorial);
                 }
             }

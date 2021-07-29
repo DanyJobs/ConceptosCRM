@@ -3,10 +3,7 @@ using Model.Entity;
 using Model.Neg;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 
 namespace WebFacturaMvc.Controllers
 {
@@ -18,6 +15,7 @@ namespace WebFacturaMvc.Controllers
         private ProductoNeg objProductoNeg;
         private ModoPagoNeg objModoPagoNeg;
         private FacturaNeg objFacturaNeg;
+        private static int Paso=0;
         private DetalleCotizacionNeg objDetalleVentaNeg;
         public CotizacionController()
         {
@@ -36,7 +34,7 @@ namespace WebFacturaMvc.Controllers
         }
 
         [HttpPost]//para buscar clientes
-        public ActionResult ObtenerClientes(string txtnombre, string txtappaterno, string txtdni, long txtcliente = -1)
+        public ActionResult ObtenerClientes(string txtnombre, string txtappaterno, string txtemail, long txtcliente = -1)
         {
             if (txtnombre == "")
             {
@@ -46,31 +44,31 @@ namespace WebFacturaMvc.Controllers
             {
                 txtappaterno = "-1";
             }
-            if (txtdni == "")
+            if (txtemail == "")
             {
-                txtdni = "-1";
+                txtemail = "-1";
             }
             Cliente objCliente = new Cliente();
             objCliente.Nombre = txtnombre;
             objCliente.IdCliente = txtcliente;
-            objCliente.Appaterno = txtappaterno;
-            objCliente.Dni = txtdni;
+            objCliente.Apellido = txtappaterno;
+            objCliente.Email = txtemail;
 
             List<Cliente> cliente = objClienteNeg.findAllClientes(objCliente);
             return View(cliente);
         }
-       
+
         [HttpPost]
         public ActionResult Seleccionar(string idProducto)
         {
             Producto objProducto = new Producto(idProducto);
-            objProductoNeg.find(objProducto);            
+            objProductoNeg.find(objProducto);
             return Json(objProducto, JsonRequestBehavior.AllowGet);
-            
-        }     
+
+        }
         public ActionResult PruebaJson()
         {  // escribir la url directa  para ver el formato      
-            List<Producto>lista=objProductoNeg.findAll();
+            List<Producto> lista = objProductoNeg.findAll();
             return Json(lista, JsonRequestBehavior.AllowGet);
 
         }
@@ -95,10 +93,10 @@ namespace WebFacturaMvc.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult GuardarCotizacion(string Fecha, string modoPago,string IdCliente,string Total, List<DetalleCotizacion> ListadoDetalle)
+        public ActionResult GuardarCotizacion(string Fecha, string modoPago, string IdCliente, string Total, List<DetalleCotizacion> ListadoDetalle)
         {
             string mensaje = "";
-            double iva = 18;           
+            double iva = 18;
             string idVendedor = User.Identity.GetUserId();
             int codigoPago = 0;
             long codigoCliente = 0;
@@ -113,6 +111,7 @@ namespace WebFacturaMvc.Controllers
             }
             else
             {
+                Paso = 1;
                 codigoPago = Convert.ToInt32(modoPago);
                 codigoCliente = Convert.ToInt64(IdCliente);
                 total = Convert.ToDouble(Total);
@@ -125,51 +124,86 @@ namespace WebFacturaMvc.Controllers
                 if (codigoVenta == "" || codigoVenta == null)
                 {
                     mensaje = "ERROR AL REGISTRAR LA VENTA";
-                }else
+                }
+                else
                 {
+                   
                     Session["idVenta"] = codigoVenta;
                     //REGISTRO DE FACTURA
                     Factura objFactura = new Factura(Fecha, iva, total, codigoPago);
                     string codigoFactura = objFacturaNeg.create(objFactura);
-                    if(codigoFactura == "" || codigoFactura == null)
+                    if (codigoFactura == "" || codigoFactura == null)
                     {
-                            mensaje = "ERROR AL REGISTRAR LA FACTURA";
+                        mensaje = "ERROR AL REGISTRAR LA FACTURA";
                     }
                     else
                     {
-                        
+
                         foreach (var data in ListadoDetalle)
                         {
                             string idProducto = data.IdProducto.ToString();
                             int cantidad = Convert.ToInt32(data.Cantidad.ToString());
                             double descuento = Convert.ToDouble(data.Descuento.ToString());
                             double subtotal = Convert.ToDouble(data.SubTotal.ToString());
-                            DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal,descuento, cantidad);
+                            DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
                             objDetalleVentaNeg.create(objDetalleVenta);
 
                         }
                         mensaje = "VENTA GUARDADA CON EXITO...";
                     }
                 }
-                
+
             }
-            
+
             return Json(mensaje);
         }
 
         public ActionResult reporteActual()
         {
-            if (Session["idVenta"].ToString() != null)
+            if (Paso == 1)
             {
-                string idVenta = Session["idVenta"].ToString();
-                return Redirect("~/Reportes/frmReporteFactura.aspx?IdVenta="+ idVenta);
+                if (Session["idVenta"].ToString() != null)
+                {
+                    string idVenta = Session["idVenta"].ToString();
+                    return Redirect("~/Reportes/Espanol/frmReporteEs.aspx?IdVenta=" + idVenta);
+                }
+                else
+                {
+                    cargarModoPagocmb();
+                    cargarProductocmb();
+                    return View();
+                }
             }
-            else
-            {
-                return View ("GuardarVenta");
+            else {
+                cargarModoPagocmb();
+                cargarProductocmb();
+                return View();
             }
-            
+           
         }
+
+        public ActionResult reporteActualIngles()
+        {
+            if (Paso == 1)
+            {
+                if (Session["idVenta"].ToString() != null)
+                {
+                    string idVenta = Session["idVenta"].ToString();
+                    return Redirect("~/Reportes/Ingles/frmReporteEn.aspx?IdVenta=" + idVenta);
+                }
+                else
+                {
+                    cargarModoPagocmb();
+                    cargarProductocmb();
+                    return View();
+                }
+            } else{
+                cargarModoPagocmb();
+                cargarProductocmb();
+                return View();
+            }
+        }
+            
 
         public ActionResult ReporteCotizacion()
         {
@@ -185,17 +219,18 @@ namespace WebFacturaMvc.Controllers
             return View(lista);
         }
 
-       public ActionResult VentaFactura()
+        public ActionResult VentaFactura()
         {
             List<Cotizacion> lista = objCotizacionNeg.findAll();
             return View(lista);
         }
- 
-        public ActionResult BuscarHistorial(string idProducto) {
-            Historial objHistorial= new Historial();
-            objHistorial.IdProducto = idProducto;      
+
+        public ActionResult BuscarHistorial(string idProducto)
+        {
+            Historial objHistorial = new Historial();
+            objHistorial.IdProducto = idProducto;
             List<Historial> Cotizacion = objCotizacionNeg.findHistorial(objHistorial);
-            return View(Cotizacion);          
+            return View(Cotizacion);
         }
 
     }

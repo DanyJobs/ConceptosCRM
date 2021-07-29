@@ -117,8 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account_error1" xml:space="preserve">
+    <value>Intento de inicio de sesión no válido.</value>
+  </data>
+  <data name="Account_error2" xml:space="preserve">
+    <value>Código no válido</value>
+  </data>
   <data name="Ajustes" xml:space="preserve">
     <value>Ajustes</value>
+  </data>
+  <data name="ApellidoS" xml:space="preserve">
+    <value>Apellidos</value>
+  </data>
+  <data name="Apellido_Materno" xml:space="preserve">
+    <value>Apellido Materno</value>
+  </data>
+  <data name="Apellido_Paterno" xml:space="preserve">
+    <value>Apellido Paterno</value>
+  </data>
+  <data name="Buscar" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="Buscar_titulo" xml:space="preserve">
+    <value>Buscar Clientes en el Sistema</value>
+  </data>
+  <data name="Buscar_titulo2" xml:space="preserve">
+    <value>Buscar Cliente por: </value>
+  </data>
+  <data name="Categoria" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="Categorias" xml:space="preserve">
+    <value>Categorías</value>
+  </data>
+  <data name="Categorias_mensaje" xml:space="preserve">
+    <value>Seleccione una Categoria</value>
+  </data>
+  <data name="Categorias_mensaje2" xml:space="preserve">
+    <value>Seleccione una Marca</value>
   </data>
   <data name="Cerrar sesion" xml:space="preserve">
     <value>Cerrar sesion</value>
@@ -126,17 +162,194 @@
   <data name="Clientes" xml:space="preserve">
     <value>Clientes</value>
   </data>
+  <data name="Clientes_apellidoP" xml:space="preserve">
+    <value>Apellido Paterno</value>
+  </data>
+  <data name="Clientes_apellidos" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Clientes_codigo" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Clientes_direccion" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Clientes_nombre" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Clientes_operaciones" xml:space="preserve">
+    <value>Operaciones</value>
+  </data>
+  <data name="Clientes_telefono" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="Codigo" xml:space="preserve">
+    <value>Codigo</value>
+  </data>
   <data name="Cotizaciones" xml:space="preserve">
+    <value>Cotizaciones</value>
+  </data>
+  <data name="Cotizaciones_recientes" xml:space="preserve">
+    <value>Cotizaciones Recientes</value>
+  </data>
+  <data name="Cotizacion_agregar" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="Cotizacion_cantidad" xml:space="preserve">
+    <value>Cantidad</value>
+  </data>
+  <data name="Cotizacion_cliente" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="Cotizacion_descuento" xml:space="preserve">
+    <value>Descuento</value>
+  </data>
+  <data name="Cotizacion_detalleCliente" xml:space="preserve">
+    <value>Detalles del cliente</value>
+  </data>
+  <data name="Cotizacion_detalleCompra" xml:space="preserve">
+    <value>Detalle de la Compra</value>
+  </data>
+  <data name="Cotizacion_detalleProducto" xml:space="preserve">
+    <value>Detalles del Producto</value>
+  </data>
+  <data name="Cotizacion_errorCC" xml:space="preserve">
+    <value>ERROR CON EL CODIGO DEL CLIENTE</value>
+  </data>
+  <data name="Cotizacion_errorCF" xml:space="preserve">
+    <value>ERROR EN EL CAMPO FECHA</value>
+  </data>
+  <data name="Cotizacion_errorCT" xml:space="preserve">
+    <value>ERROR EN EL CAMPO TOTAL</value>
+  </data>
+  <data name="Cotizacion_errorFactura" xml:space="preserve">
+    <value>ERROR AL REGISTRAR LA FACTURA</value>
+  </data>
+  <data name="Cotizacion_errorMP" xml:space="preserve">
+    <value>SELECCIONE UN MODO DE PAGO</value>
+  </data>
+  <data name="Cotizacion_errorVenta" xml:space="preserve">
+    <value>ERROR AL REGISTRAR LA VENTA</value>
+  </data>
+  <data name="Cotizacion_fecha" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="Cotizacion_fechaCotizacion" xml:space="preserve">
+    <value>Fecha Cotizacion</value>
+  </data>
+  <data name="Cotizacion_guardar" xml:space="preserve">
+    <value>Guardar Cotización</value>
+  </data>
+  <data name="Cotizacion_guardarVenta" xml:space="preserve">
+    <value>VENTA GUARDADA CON EXITO...</value>
+  </data>
+  <data name="Cotizacion_idDetalle" xml:space="preserve">
+    <value>Id Detalle</value>
+  </data>
+  <data name="Cotizacion_idProducto" xml:space="preserve">
+    <value>Id Producto</value>
+  </data>
+  <data name="Cotizacion_idVenta" xml:space="preserve">
+    <value>Id Venta</value>
+  </data>
+  <data name="Cotizacion_impFactura" xml:space="preserve">
+    <value>Imprimir Factura</value>
+  </data>
+  <data name="Cotizacion_IVA" xml:space="preserve">
+    <value>IVA</value>
+  </data>
+  <data name="Cotizacion_marca" xml:space="preserve">
+    <value>Marca</value>
+  </data>
+  <data name="Cotizacion_masFacturas" xml:space="preserve">
+    <value>Mas Facturas</value>
+  </data>
+  <data name="Cotizacion_modoPago" xml:space="preserve">
+    <value>Modo de Pago</value>
+  </data>
+  <data name="Cotizacion_nombreCliente" xml:space="preserve">
+    <value>Nombre Cliente</value>
+  </data>
+  <data name="Cotizacion_nombreProducto" xml:space="preserve">
+    <value>Nombre del Producto</value>
+  </data>
+  <data name="Cotizacion_numeroCotizacion" xml:space="preserve">
+    <value>Número de Cotización</value>
+  </data>
+  <data name="Cotizacion_obtenerCliente" xml:space="preserve">
+    <value>Obtener Cliente</value>
+  </data>
+  <data name="Cotizacion_precio" xml:space="preserve">
+    <value>Precio</value>
+  </data>
+  <data name="Cotizacion_precioUnitario" xml:space="preserve">
+    <value>Precio Unitario</value>
+  </data>
+  <data name="Cotizacion_producto" xml:space="preserve">
+    <value>Producto</value>
+  </data>
+  <data name="Cotizacion_seleccionar" xml:space="preserve">
+    <value>Seleccionar</value>
+  </data>
+  <data name="Cotizacion_selectProducto" xml:space="preserve">
+    <value>Seleccione un Producto</value>
+  </data>
+  <data name="Cotizacion_subTotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="Cotizacion_totalPagar" xml:space="preserve">
+    <value>Total a pagar</value>
+  </data>
+  <data name="Cotizacion_vendedor" xml:space="preserve">
+    <value>Vendedor</value>
+  </data>
+  <data name="Cotizacion_ventaFactura" xml:space="preserve">
+    <value>Reporte de Ventas</value>
+  </data>
+  <data name="Cotizacion_ver" xml:space="preserve">
     <value>Cotizaciones</value>
   </data>
   <data name="Cuenta Local" xml:space="preserve">
     <value>Utilice una cuenta local para iniciar sesión.</value>
   </data>
+  <data name="DCotizacion_idDetalle" xml:space="preserve">
+    <value>Id Detalle</value>
+  </data>
+  <data name="DCotizacion_numeroFactura" xml:space="preserve">
+    <value>Número Factura</value>
+  </data>
   <data name="Descripcion" xml:space="preserve">
     <value>Descripcion</value>
   </data>
+  <data name="Dirección" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="DNI" xml:space="preserve">
+    <value>DNI</value>
+  </data>
+  <data name="Editar" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Eliminar" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="Eliminar_mensaje" xml:space="preserve">
+    <value>Venta Eliminada con éxito</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo electronico</value>
+  </data>
+  <data name="Find_titulo" xml:space="preserve">
+    <value>Información Personal</value>
+  </data>
+  <data name="Guardar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
   <data name="IdCategoria" xml:space="preserve">
     <value>IdCategoria</value>
+  </data>
+  <data name="Informacion" xml:space="preserve">
+    <value>Información</value>
   </data>
   <data name="Ingresar" xml:space="preserve">
     <value>Ingresar</value>
@@ -147,14 +360,269 @@
   <data name="Inicio de sesion" xml:space="preserve">
     <value>Inicio de sesión</value>
   </data>
+  <data name="Listado_categorias" xml:space="preserve">
+    <value>Listado de categorías</value>
+  </data>
+  <data name="Listado_clientes" xml:space="preserve">
+    <value>Listado de clientes</value>
+  </data>
+  <data name="MensajeA_CC" xml:space="preserve">
+    <value>Ingrese el Código del Cliente</value>
+  </data>
+  <data name="MensajeA_CCE" xml:space="preserve">
+    <value>No se permiten más de 5 caracteres en el campo Codigo</value>
+  </data>
+  <data name="MensajeA_dup1" xml:space="preserve">
+    <value>Datos del Cliente [</value>
+  </data>
+  <data name="MensajeA_dup2" xml:space="preserve">
+    <value>] Fueron actualizados</value>
+  </data>
+  <data name="MensajeA_inicial" xml:space="preserve">
+    <value>Formulario para Actualizar Datos del Cliente</value>
+  </data>
+  <data name="MensajeA_NC" xml:space="preserve">
+    <value>Ingrese el Nombre del Cliente</value>
+  </data>
+  <data name="MensajeA_NCE" xml:space="preserve">
+    <value>No se permiten mas de 30 caracteres en el campo Nombre</value>
+  </data>
+  <data name="MensajeE_1" xml:space="preserve">
+    <value>Cliente [</value>
+  </data>
+  <data name="MensajeE_2" xml:space="preserve">
+    <value>] No Esta Registrado en el Sistema</value>
+  </data>
+  <data name="MensajeE_3" xml:space="preserve">
+    <value>] Ya Fue Eliminado</value>
+  </data>
+  <data name="MensajeE_4" xml:space="preserve">
+    <value>No se Puede Eliminar al Cliente [</value>
+  </data>
+  <data name="MensajeE_5" xml:space="preserve">
+    <value>] Tiene Ventas Registrados en el Sistema!!!</value>
+  </data>
+  <data name="MensajeE_6" xml:space="preserve">
+    <value>] Fue Eliminado!!!</value>
+  </data>
+  <data name="MensajeE_inicial" xml:space="preserve">
+    <value>Formulario de Eliminación</value>
+  </data>
+  <data name="MensajeInicio_cliente" xml:space="preserve">
+    <value>Ingrese Datos Del Cliente y Click en Guardar</value>
+  </data>
+  <data name="Mensaje_AM" xml:space="preserve">
+    <value>Ingrese Apellido Materno del Cliente</value>
+  </data>
+  <data name="Mensaje_AME" xml:space="preserve">
+    <value>No se permiten mas de 30 caracteres en el campo Apellido Materno</value>
+  </data>
+  <data name="Mensaje_AP" xml:space="preserve">
+    <value>Ingrese Apellido Paterno del Cliente</value>
+  </data>
+  <data name="Mensaje_APE" xml:space="preserve">
+    <value>No se permiten mas de 30 caracteres en el campo Apellido Paterno</value>
+  </data>
+  <data name="Mensaje_DC" xml:space="preserve">
+    <value>Ingrese la Dirección del Cliente</value>
+  </data>
+  <data name="Mensaje_DCE" xml:space="preserve">
+    <value>No se permiten mas de 50 caracteres en el campo Direccion</value>
+  </data>
+  <data name="Mensaje_DNI" xml:space="preserve">
+    <value>Ingrese DNI del Cliente</value>
+  </data>
+  <data name="Mensaje_DNIE" xml:space="preserve">
+    <value>Error DNI, ha ingresado letras</value>
+  </data>
+  <data name="Mensaje_DNIE2" xml:space="preserve">
+    <value>Ingrese un Numero de DNI válido</value>
+  </data>
+  <data name="Mensaje_dup1" xml:space="preserve">
+    <value>Cliente [</value>
+  </data>
+  <data name="Mensaje_dup2" xml:space="preserve">
+    <value>] ya esta Registrado en el Sistema</value>
+  </data>
+  <data name="Mensaje_dup3" xml:space="preserve">
+    <value>Numero de DNI [</value>
+  </data>
+  <data name="Mensaje_dup4" xml:space="preserve">
+    <value>] ya esta asignado a un Cliente</value>
+  </data>
+  <data name="Mensaje_dup5" xml:space="preserve">
+    <value>Cliente [</value>
+  </data>
+  <data name="Mensaje_dup6" xml:space="preserve">
+    <value>] fue Registrado en el Sistema</value>
+  </data>
+  <data name="Mensaje_NC" xml:space="preserve">
+    <value>Ingrese Nombre del Cliente</value>
+  </data>
+  <data name="Mensaje_NCE" xml:space="preserve">
+    <value>No se permiten mas de 30 caracteres en el campo Nombre</value>
+  </data>
+  <data name="Mensaje_requerido" xml:space="preserve">
+    <value>Este campo es requerido</value>
+  </data>
+  <data name="Mensaje_TC" xml:space="preserve">
+    <value>Ingrese el Telefóno del Cliente</value>
+  </data>
+  <data name="Mensaje_TCE" xml:space="preserve">
+    <value>Ingrese un número de Teléfono válido</value>
+  </data>
+  <data name="ModoPago_codigo" xml:space="preserve">
+    <value>Ingrese el código del Modo Pago</value>
+  </data>
+  <data name="ModoPago_detalles" xml:space="preserve">
+    <value>Ingrese Detalles del Modo Pago</value>
+  </data>
+  <data name="ModoPago_detallesError" xml:space="preserve">
+    <value>No se permiten mas de 50 caracteres en el campo detalles</value>
+  </data>
+  <data name="ModoPago_eliminar" xml:space="preserve">
+    <value>Error!!! Revise la instruccion de Eliminar</value>
+  </data>
+  <data name="ModoPago_eliminarMensaje" xml:space="preserve">
+    <value>No se Puede Eliminar la ModoPago [</value>
+  </data>
+  <data name="ModoPago_eliminarMensaje2" xml:space="preserve">
+    <value>] Tiene  factura asignada!!!</value>
+  </data>
+  <data name="ModoPago_ingrese" xml:space="preserve">
+    <value>Ingrese Nombre del Modo Pago</value>
+  </data>
+  <data name="ModoPago_m1" xml:space="preserve">
+    <value>Modo Pago [</value>
+  </data>
+  <data name="ModoPago_m2" xml:space="preserve">
+    <value>] ya esta en el Sistema</value>
+  </data>
+  <data name="ModoPago_m3" xml:space="preserve">
+    <value>] fue Registrado en el Sistema</value>
+  </data>
+  <data name="ModoPago_m4" xml:space="preserve">
+    <value>Datos de la ModoPago [</value>
+  </data>
+  <data name="ModoPago_m5" xml:space="preserve">
+    <value>] Fueron Actualizados</value>
+  </data>
+  <data name="ModoPago_mensajeInicio" xml:space="preserve">
+    <value>Ingrese Datos Del ModoPago y Click en Guardar</value>
+  </data>
+  <data name="ModoPago_nombre" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="ModoPago_numero" xml:space="preserve">
+    <value>Numero de modo de pago</value>
+  </data>
+  <data name="Nombre" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
   <data name="Nombre_Texto" xml:space="preserve">
     <value>Nombre</value>
+  </data>
+  <data name="Nuevo" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+  <data name="Nuevo_Cliente" xml:space="preserve">
+    <value>Nuevo Cliente</value>
+  </data>
+  <data name="OtroApellido" xml:space="preserve">
+    <value>Apellidos</value>
+  </data>
+  <data name="Otros_detalles" xml:space="preserve">
+    <value>Otros detalles</value>
   </data>
   <data name="Perfil del usuario" xml:space="preserve">
     <value>Perfil del usuario</value>
   </data>
+  <data name="ProductoM_categoria" xml:space="preserve">
+    <value>Ingrese Categoria</value>
+  </data>
+  <data name="ProductoM_categoriaError" xml:space="preserve">
+    <value>Ingrese una categoria válida</value>
+  </data>
+  <data name="ProductoM_codigoError" xml:space="preserve">
+    <value>No se permiten mas de 5 caracteres en al campo Codigo</value>
+  </data>
+  <data name="ProductoM_codigoVacio" xml:space="preserve">
+    <value>Ingrese Código del Producto</value>
+  </data>
+  <data name="ProductoM_dup1" xml:space="preserve">
+    <value>Producto [</value>
+  </data>
+  <data name="ProductoM_dup2" xml:space="preserve">
+    <value>] ya esta Registrado en el Sistema</value>
+  </data>
+  <data name="ProductoM_dup3" xml:space="preserve">
+    <value>] fue Registrado en el Sistema</value>
+  </data>
+  <data name="ProductoM_error1" xml:space="preserve">
+    <value>Error!!! Revise la instruccion Insertar</value>
+  </data>
+  <data name="ProductoM_error2" xml:space="preserve">
+    <value>Error!!! Revise la instruccion de actualizar</value>
+  </data>
+  <data name="ProductoM_error3" xml:space="preserve">
+    <value>Error!!! Revise la instruccion de Eliminar</value>
+  </data>
+  <data name="ProductoM_errorSQL" xml:space="preserve">
+    <value>ERROR DE SERVIDOR DE SQL SERVER</value>
+  </data>
+  <data name="ProductoM_mensaje2" xml:space="preserve">
+    <value>Ingrese Datos Del Producto y Clic en Guardar</value>
+  </data>
+  <data name="ProductoM_mensajeA1" xml:space="preserve">
+    <value>Datos del Producto [</value>
+  </data>
+  <data name="ProductoM_mensajeA2" xml:space="preserve">
+    <value>] Fueron Actualizados</value>
+  </data>
+  <data name="ProductoM_mensajeE1" xml:space="preserve">
+    <value>] No Esta Registrado en el Sistema</value>
+  </data>
+  <data name="ProductoM_mensajeE2" xml:space="preserve">
+    <value>]Ya Fue Eliminado</value>
+  </data>
+  <data name="ProductoM_mensajeE3" xml:space="preserve">
+    <value>No se Puede Eliminar al Producto [</value>
+  </data>
+  <data name="ProductoM_mensajeE4" xml:space="preserve">
+    <value>] Tiene  Ventas asignadas!!!</value>
+  </data>
+  <data name="ProductoM_mensajeE5" xml:space="preserve">
+    <value>] Fue Eliminado!!!</value>
+  </data>
+  <data name="ProductoM_mensajeInicio" xml:space="preserve">
+    <value>Ingrese Datos Del Producto y Click en Guardar</value>
+  </data>
+  <data name="ProductoM_nombreError" xml:space="preserve">
+    <value>No se permiten mas de 30 caracteres en el campo Nombre</value>
+  </data>
+  <data name="ProductoM_nombreVacio" xml:space="preserve">
+    <value>Ingrese Nombre del Producto</value>
+  </data>
+  <data name="ProductoM_precio" xml:space="preserve">
+    <value>Ingrese un Precio Válido</value>
+  </data>
+  <data name="ProductoM_precioUnitario" xml:space="preserve">
+    <value>Ingrese Precio Unitario del Producto</value>
+  </data>
+  <data name="ProductoM_precioUnitarioError" xml:space="preserve">
+    <value>Precio unitario no válido</value>
+  </data>
   <data name="Productos" xml:space="preserve">
     <value>Productos</value>
+  </data>
+  <data name="Productos_descripcion" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Producto_bandaAncha" xml:space="preserve">
+    <value>Banda Ancha:</value>
+  </data>
+  <data name="Producto_productoUnitario" xml:space="preserve">
+    <value>Precio Unitario</value>
   </data>
   <data name="QUIENES SOMOS" xml:space="preserve">
     <value>QUIENES SOMOS</value>
@@ -162,11 +630,20 @@
   <data name="Recordar" xml:space="preserve">
     <value>¿Recordar cuenta?</value>
   </data>
+  <data name="Registrarse" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
   <data name="Registro Clientes" xml:space="preserve">
     <value>Registro Clientes</value>
   </data>
   <data name="Registro Vendedores" xml:space="preserve">
     <value>Registro Vendedores</value>
+  </data>
+  <data name="Regresar_al_Listado" xml:space="preserve">
+    <value>Regresar al Listado</value>
+  </data>
+  <data name="Reporte" xml:space="preserve">
+    <value>Reporte</value>
   </data>
   <data name="Reporte Artículos" xml:space="preserve">
     <value>Reporte Artículos</value>
@@ -192,7 +669,13 @@
   <data name="SERVICIOS" xml:space="preserve">
     <value>SERVICIOS</value>
   </data>
+  <data name="Telefóno" xml:space="preserve">
+    <value>Telefóno</value>
+  </data>
   <data name="Vendedores" xml:space="preserve">
     <value>Vendedores</value>
+  </data>
+  <data name="Ver_detalles" xml:space="preserve">
+    <value>Ver Detalles</value>
   </data>
 </root>

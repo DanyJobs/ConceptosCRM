@@ -1,9 +1,6 @@
 ﻿using Model.Entity;
 using Model.Neg;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace WebFacturaMvc.Controllers
@@ -27,7 +24,7 @@ namespace WebFacturaMvc.Controllers
             return View(lista);
         }
 
-        public ActionResult Eliminar(long idVenta,long idFactura)
+        public ActionResult Eliminar(long idVenta, long idFactura)
         {
             DetalleCotizacion objDetalleVenta = new DetalleCotizacion();
             objDetalleVenta.IdVenta = idVenta;

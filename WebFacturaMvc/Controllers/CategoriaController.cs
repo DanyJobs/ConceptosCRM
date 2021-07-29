@@ -69,7 +69,7 @@ namespace WebFacturaMvc.Controllers
                 case 3://error de Apellido Paterno
                     ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo Categoria";
                     break;
-                                    
+
                 case 8://error de duplicidad
                     ViewBag.MensajeError = "Categoria [" + objCategoria.IdCategoria + "] ya esta Registrada en el Sistema";
                     break;
@@ -158,7 +158,7 @@ namespace WebFacturaMvc.Controllers
         {
             mensajeInicialEliminar();
             objCategoriaNeg.delete(objCategoria);
-            mostrarMensajeEliminar(objCategoria);            
+            mostrarMensajeEliminar(objCategoria);
             return View();
             //return RedirectToAction("Index");
         }

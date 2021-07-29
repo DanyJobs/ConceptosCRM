@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Dao;
+﻿using Model.Dao;
 using Model.Entity;
+using System;
+using System.Collections.Generic;
 
 namespace Model.Neg
 {
@@ -60,7 +57,7 @@ namespace Model.Neg
             else
             {
                 nombre = objCliente.Nombre.Trim();
-                verificacion = nombre.Length <=30 && nombre.Length > 0;
+                verificacion = nombre.Length <= 30 && nombre.Length > 0;
                 if (!verificacion)
                 {
                     objCliente.Estado = 2;
@@ -71,125 +68,95 @@ namespace Model.Neg
             //end validar nombre
 
             //begin validar apPaterno retorna estado=3
-            string apPaterno = objCliente.Appaterno;
-            if (apPaterno == null)
-            {
-                objCliente.Estado = 30;
-                return;
-            }
-            else
-            {
-                apPaterno = objCliente.Appaterno.Trim();
-                verificacion = apPaterno.Length <= 30 && apPaterno.Length > 0;
-                if (!verificacion)
-                {
-                    objCliente.Estado = 3;
-                    return;
-                }
 
-            }
+
+
             //end validar apPaterno
 
             //begin validar apMaterno retorna estado=4
-            string apMaterno = objCliente.Apmaterno;
-            if (apMaterno == null)
-            {
-                objCliente.Estado = 40;
-                return;
-            }
-            else
-            {
-                apMaterno = objCliente.Apmaterno.Trim();
-                verificacion = apMaterno.Length <= 30 && apMaterno.Length > 0;
-                if (!verificacion)
-                {
-                    objCliente.Estado = 3;
-                    return;
-                }
 
-            }
             //end validar apMaterno
 
             //begin validar dni retorna estado=5
-            string dni = objCliente.Dni;
-            if (dni == null)
-            {
-                objCliente.Estado = 50;
-                return;
-            }
-            else
-            {
-                dni = objCliente.Dni.Trim();
-                verificacion = dni.Length < 9 && dni.Length > 7;
-                if (!verificacion)
-                {
-                    objCliente.Estado = 5;
-                    return;
-                }
+            //string dni = objCliente.Email;
+            //if (dni == null)
+            //{
+            //    objCliente.Estado = 50;
+            //    return;
+            //}
+            //else
+            //{
+            //    dni = objCliente.Dni.Trim();
+            //    verificacion = dni.Length < 9 && dni.Length > 7;
+            //    if (!verificacion)
+            //    {
+            //        objCliente.Estado = 5;
+            //        return;
+            //    }
 
-            }
+            //}
             //end validar dni
 
             //begin validar direccion retorna estado=6
-            string direccion = objCliente.Direccion;
-            if (direccion == null)
-            {
-                objCliente.Estado = 60;
-                return;
-            }
-            else
-            {
-                direccion = objCliente.Direccion.Trim();
-                verificacion = direccion.Length <= 50 && direccion.Length > 0;
-                if (!verificacion)
-                {
-                    objCliente.Estado = 6;
-                    return;
-                }
+            //string direccion = objCliente.Direccion;
+            //if (direccion == null)
+            //{
+            //    objCliente.Estado = 60;
+            //    return;
+            //}
+            //else
+            //{
+            //    direccion = objCliente.Direccion.Trim();
+            //    verificacion = direccion.Length <= 50 && direccion.Length > 0;
+            //    if (!verificacion)
+            //    {
+            //        objCliente.Estado = 6;
+            //        return;
+            //    }
 
-            }
-            //end validar direccion
+            //}
+            ////end validar direccion
 
-            //begin validar telefono retorna estado=7
-            string telefono = objCliente.Telefono;
-            if (telefono == null)
-            {
-                objCliente.Estado = 70;
-                return;
-            }
-            else
-            {
-                telefono = objCliente.Telefono.Trim();
-                verificacion = telefono.Length <= 15 && telefono.Length > 6;
-                if (!verificacion)
-                {
-                    objCliente.Estado = 7;
-                    return;
-                }
+            ////begin validar telefono retorna estado=7
+            //string telefono = objCliente.Telefono;
+            //if (telefono == null)
+            //{
+            //    objCliente.Estado = 70;
+            //    return;
+            //}
+            //else
+            //{
+            //    telefono = objCliente.Telefono.Trim();
+            //    verificacion = telefono.Length <= 15 && telefono.Length > 6;
+            //    if (!verificacion)
+            //    {
+            //        objCliente.Estado = 7;
+            //        return;
+            //    }
 
-            }
-            //end validar telefono
+            //}
+            ////end validar telefono
 
-            //begin verificar duplicidad retorna estado=8
-            Cliente objClienteAux = new Cliente();
-            objClienteAux.IdCliente = objCliente.IdCliente;
-            verificacion = !objClienteDao.find(objClienteAux);
-            if (!verificacion)
-            {
-                objCliente.Estado = 8;
-                return;
-            }
-            //end validar duplicidad
+            ////begin verificar duplicidad retorna estado=8
+            //Cliente objClienteAux = new Cliente();
+            //objClienteAux.IdCliente = objCliente.IdCliente;
+            //verificacion = !objClienteDao.find(objClienteAux);
+            //if (!verificacion)
+            //{
+            //    objCliente.Estado = 8;
+            //    return;
+            //}
+            ////end validar duplicidad
 
-            //begin verificar duplicidad dni retorna estado=8
-            Cliente objCliente1 = new Cliente();
-            objCliente1.Dni = objCliente.Dni;
-            verificacion = !objClienteDao.findClientePorDni(objCliente1);
-            if (!verificacion)
-            {
-                objCliente.Estado = 9;
-                return;
-            }
+            ////begin verificar duplicidad dni retorna estado=8
+            //Cliente objCliente1 = new Cliente();
+            //objCliente1.Dni = objCliente.Dni;
+            //verificacion = !objClienteDao.findClientePorDni(objCliente1);
+            //if (!verificacion)
+            //{
+            //    objCliente.Estado = 9;
+            //    return;
+            //}
             //end validar duplicidad
 
             //si no hay error
@@ -254,27 +221,27 @@ namespace Model.Neg
             //end validar nombre
 
             //begin validar apPaterno retorna estado=3
-            string apPaterno = objCliente.Appaterno;
-            if (apPaterno == null)
-            {
-                objCliente.Estado = 30;
-                return;
-            }
-            else
-            {
-                apPaterno = objCliente.Appaterno.Trim();
-                verificacion = apPaterno.Length <= 30 && apPaterno.Length > 0;
-                if (!verificacion)
-                {
-                    objCliente.Estado = 3;
-                    return;
-                }
+            //string apPaterno = objCliente.Appaterno;
+            //if (apPaterno == null)
+            //{
+            //    objCliente.Estado = 30;
+            //    return;
+            //}
+            //else
+            //{
+            //    apPaterno = objCliente.Appaterno.Trim();
+            //    verificacion = apPaterno.Length <= 30 && apPaterno.Length > 0;
+            //    if (!verificacion)
+            //    {
+            //        objCliente.Estado = 3;
+            //        return;
+            //    }
 
-            }
+            //}
             //end validar apPaterno
 
             //begin validar apMaterno retorna estado=4
-            string apMaterno = objCliente.Apmaterno;
+            string apMaterno = objCliente.Apellido;
             if (apMaterno == null)
             {
                 objCliente.Estado = 40;
@@ -282,8 +249,8 @@ namespace Model.Neg
             }
             else
             {
-                apMaterno = objCliente.Apmaterno.Trim();
-                verificacion = apMaterno.Length <= 30 && apMaterno.Length > 0;
+                apMaterno = objCliente.Apellido.Trim();
+                verificacion = apMaterno.Length <= 50 && apMaterno.Length > 0;
                 if (!verificacion)
                 {
                     objCliente.Estado = 3;
@@ -294,23 +261,23 @@ namespace Model.Neg
             //end validar apMaterno
 
             //begin validar dni retorna estado=5
-            string dni = objCliente.Dni;
-            if (dni == null)
-            {
-                objCliente.Estado = 50;
-                return;
-            }
-            else
-            {
-                dni = objCliente.Dni.Trim();
-                verificacion = dni.Length <= 8 && dni.Length > 7;
-                if (!verificacion)
-                {
-                    objCliente.Estado = 5;
-                    return;
-                }
+            //string dni = objCliente.Dni;
+            //if (dni == null)
+            //{
+            //    objCliente.Estado = 50;
+            //    return;
+            //}
+            //else
+            //{
+            //    dni = objCliente.Dni.Trim();
+            //    verificacion = dni.Length <= 8 && dni.Length > 7;
+            //    if (!verificacion)
+            //    {
+            //        objCliente.Estado = 5;
+            //        return;
+            //    }
 
-            }
+            //}
             //end validar dni
 
             //begin validar direccion retorna estado=6
@@ -355,8 +322,8 @@ namespace Model.Neg
 
             //begin verificar duplicidad dni retorna estado=8
             Cliente objCliente1 = new Cliente();
-            objCliente1.Dni = objCliente.Dni;
-            verificacion = !objClienteDao.findClientePorDni(objCliente1);
+            objCliente1.Email = objCliente.Email;
+            verificacion = !objClienteDao.findClientePorEmail(objCliente1);
             if (!verificacion)
             {
                 objCliente.Estado = 9;
@@ -399,9 +366,9 @@ namespace Model.Neg
 
         public bool find(Cliente objCliente)
         {
-           return objClienteDao.find(objCliente);
+            return objClienteDao.find(objCliente);
         }
-        
+
         public List<Cliente> findAll()
         {
             return objClienteDao.findAll();

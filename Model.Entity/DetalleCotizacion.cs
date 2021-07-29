@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model.Entity
+﻿namespace Model.Entity
 {
     public class DetalleCotizacion
     {
@@ -127,9 +121,9 @@ namespace Model.Entity
         public DetalleCotizacion(long idDetalleVenta)
         {
             this.idDetalleVenta = idDetalleVenta;
-            
+
         }
-        public DetalleCotizacion(long numFacura, long idVenta, string idProducto,double subTotal,double descuento,int cantidad)
+        public DetalleCotizacion(long numFacura, long idVenta, string idProducto, double subTotal, double descuento, int cantidad)
         {
             this.numFacura = numFacura;
             this.idVenta = idVenta;

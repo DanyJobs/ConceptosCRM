@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace WebFacturaMvc.Utilidades
 {
     public class UsuarioValidator : ValidationAttribute
     {
-      
+
         //protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         //{
         //    using (crmconceptoseEntities db = new crmconceptoseEntities())

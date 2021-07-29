@@ -11,18 +11,16 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
     $(document).ready(function () {
-
         $("#tbcliente tbody tr").dblclick(function () {
             var Cliente = {};
-            var n, a,m;
+            var n, a, m;
             n = Cliente.Codigo = $(this).children().eq('0').text();
             a = Cliente.DatosPersonales = $(this).children().eq('1').text() + " " + $(this).children().eq('2').text();
             m = Cliente.Identificacion = $(this).children().eq('3').text();
-            console.info(a, n,m);
+            console.info(a, n, m);
             window.opener.obtenerCliente(Cliente);
             window.close();
-            
-          
+
 
         });
     });
@@ -32,7 +30,7 @@
     <div class="panel-heading">Buscar Clientes en el Sistema</div>
     <div class="panel-body">
         @using (Html.BeginForm())
-            {
+        {
             <div class="form-horizontal">
                 <h2 style="text-align:center; font-family:Arial; font-weight:700;">Buscar Cliente por:</h2>
                 <fieldset>
@@ -65,7 +63,7 @@
                 </fieldset>
             </div>
 
-                <input type="submit" value="Buscar" />
+            <input type="submit" value="Buscar" />
         }
     </div>
 </div>
@@ -76,8 +74,7 @@
         <tr>
             <th>Codigo</th>
             <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Dni</th>
+            <th>Apellidos</th>           
             <th>Direccion</th>
             <th>Telefono</th>
         </tr>
@@ -88,13 +85,12 @@
             <tr>
                 <td>@objCliente.IdCliente</td>
                 <td>@objCliente.Nombre</td>
-                <td>@objCliente.Appaterno @objCliente.Apmaterno</td>
-                <td>@objCliente.Dni</td>
+                <td>@objCliente.Apellido</td>              
                 <td>@objCliente.Direccion</td>
-                <td>@objCliente.Telefono</td>               
+                <td>@objCliente.Telefono</td>
             </tr>
         }
-    </tbody> 
+    </tbody>
 </table>
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>

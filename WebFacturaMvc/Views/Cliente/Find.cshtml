@@ -4,36 +4,36 @@
 }
 
 <ol class="breadcrumb">
-    <li><a href="~/">Clientes</a></li>
+    <li><a href="~/">@Lenguaje.Recurso.Clientes</a></li>
     <li class="active">@(Model.Nombre + ' ' + Model.Appaterno)</li>
 
 </ol>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Informacion Personal</div>
+    <div class="panel-heading">@Lenguaje.Recurso.Find_titulo</div>
     <div class="panel-body">
         <dl class="dl-horizontal">
-            <dt>Código</dt>
+            <dt>@Lenguaje.Recurso.Clientes_codigo</dt>
             <dd>@Model.IdCliente</dd>
 
-            <dt>Nombre</dt>
+            <dt>@Lenguaje.Recurso.Clientes_nombre</dt>
             <dd>@Model.Nombre</dd>
 
-            <dt>Apellidos</dt>
+            <dt>@Lenguaje.Recurso.Clientes_apellidos</dt>
             <dd>@(Model.Appaterno+' '+Model.Apmaterno)</dd>
 
             <dt>DNI</dt>
             <dd>@Model.Dni</dd>
 
-            <dt>Direccion</dt>
+            <dt>@Lenguaje.Recurso.Clientes_direccion</dt>
             <dd>@Model.Direccion</dd>
 
-            <dt>Teléfono</dt>
+            <dt>@Lenguaje.Recurso.Clientes_telefono</dt>
             <dd>@Model.Telefono</dd>
         </dl>
     </div>
     <div class="form-actions">
-        |@Html.ActionLink("Regresar al Listado", "Index")
+        |@Html.ActionLink(Lenguaje.Recurso.Regresar_al_Listado, "Index")
     </div>
 </div>
 @*<div class="panel panel-default">

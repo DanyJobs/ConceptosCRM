@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
-using Model.Entity;
 
 namespace Model.Dao
 {
-    public class ModoPagoDao:Obligatorio<ModoPago>
+    public class ModoPagoDao : Obligatorio<ModoPago>
     {
         private ConexionDB objConexionDB;
         private SqlCommand comando;
@@ -28,7 +25,7 @@ namespace Model.Dao
             }
             catch (Exception)
             {
-                objModoPago.Estado = 1000; 
+                objModoPago.Estado = 1000;
             }
             finally
             {

@@ -1,23 +1,20 @@
-﻿using System;
-using System.Globalization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Model.Entity;
+using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using WebFacturaMvc.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using WebFacturaMvc.Utilidades;
-using System.Collections.Generic;
 using WebFacturaMvc.Datos;
-
+using WebFacturaMvc.Models;
+using WebFacturaMvc.Utilidades;
 
 namespace WebFacturaMvc.Controllers
 {
-   
+
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -63,11 +60,34 @@ namespace WebFacturaMvc.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (Request.IsAuthenticated) {
+            if (Request.IsAuthenticated)
+            {
                 return RedirectToAction("Index", "Inicio");
             }
             ViewBag.ReturnUrl = returnUrl;
             return View();
+        }
+
+
+
+
+        public ActionResult Index()
+        {
+            List<Usuario> obJ;
+            if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                using (db)
+                {
+                    var Usuarios = db.Database.SqlQuery<Usuario>("spusuario").ToList();
+                    obJ = Usuarios;
+                }
+
+            }
+            return View(obJ);
         }
 
         //
@@ -84,7 +104,7 @@ namespace WebFacturaMvc.Controllers
 
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -195,7 +215,7 @@ namespace WebFacturaMvc.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email , idTipoEmpleado=model.idTipoEmpleado, Nombre=model.Nombre};
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, idTipoEmpleado = model.idTipoEmpleado, Nombre = model.Nombre, PhoneNumber = model.PhoneNumber, Direccion = model.Direccion };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -207,7 +227,6 @@ namespace WebFacturaMvc.Controllers
                     //    if (!UserManager.IsInRole(UserTemp.Id, RoleName))
                     //    {                        
                     UserManager.AddToRole(UserTemp.Id, model.Rol);
-
                     //}
                     //}
 
@@ -442,7 +461,7 @@ namespace WebFacturaMvc.Controllers
             return View(model);
         }
 
- 
+
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

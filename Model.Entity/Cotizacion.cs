@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Entity
 {
     public class Cotizacion
     {
         private long idVenta;
-        private double total;        
+        private double total;
         private long idCliente;
-        private string idVendedor;        
+        private string idVendedor;
         private string fecha;
         private double iva;
         private int estado;
@@ -32,7 +28,7 @@ namespace Model.Entity
             }
         }
 
-       
+
 
         public double Total
         {
@@ -46,7 +42,7 @@ namespace Model.Entity
                 total = value;
             }
         }
-        
+
 
         public long IdCliente
         {
@@ -74,7 +70,7 @@ namespace Model.Entity
             }
         }
 
-       
+
         public string Fecha
         {
             get
@@ -116,11 +112,11 @@ namespace Model.Entity
 
         public Cotizacion()
         {
-            
+
         }
-        public Cotizacion(double total, long idCliente, string idVendedor, string fecha,double iva)
-        {            
-            this.total = total;           
+        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva)
+        {
+            this.total = total;
             this.idCliente = idCliente;
             this.idVendedor = idVendedor;
             this.iva = iva;
@@ -128,7 +124,7 @@ namespace Model.Entity
         }
         public Cotizacion(long idVenta)
         {
-            this.idVenta = idVenta;          
+            this.idVenta = idVenta;
         }
     }
 }

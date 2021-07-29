@@ -19,16 +19,18 @@
     <!-- Custom CSS -->
     <link href="~/Css/sb-admin-2.css" rel="stylesheet" />
     <!-- Morris Charts CSS -->
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
     <link href="~/Assets/morrisjs/morris.css" rel="stylesheet" />
     <!-- Custom Fonts -->
     <link href="~/Assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-   
+
 </head>
 <body>
     <div id="wrapper">
@@ -132,12 +134,11 @@
                         </ul>
                         @*/.dropdown-user*@
                     </li>
-
                 }
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
+                        <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Registrarse</a>
                     </li>
                 }
 
@@ -196,15 +197,38 @@
                                 <li>
                                     <a href="~/Cotizacion/ReporteCotizacion"><i class="fa fa-book fa-fw" style="color:#f0ad4e"></i>Reportes</a>
                                 </li>
-
                             </ul>
                         </li>
                         <li>
                             <a href="~/Cliente/Index"><i class="fa fa-user fa-fw"></i> Clientes</a>
                         </li>
                         <li>
-                            <a href="~/Empleado/Index"><i class="fa fa-user fa-fw"></i> Empledos</a>
+                            <a href="~/Account/Index"><i class="fa fa-user fa-fw"></i> Empledos</a>
+                            @*<ul class="nav nav-second-level">
+                <li>
+                    <a href="~/ModoPago/Index"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Modos de Pago</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Pagos</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Cobros</a>
+                </li>
+            </ul>*@
                         </li>
+                        <li>
+                            <a href="~/Sucursal/Index"><i class="far fa-trash-alt"></i> Sucursal<span class="fa arrow"></span></a>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href="~/Proveedor/Index"><i class="far fa-trash-alt"></i> Proveedor<span class="fa arrow"></span></a>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+
+
+
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Cobros y Pagos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -217,7 +241,6 @@
                                 <li>
                                     <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Cobros</a>
                                 </li>
-
                             </ul>
                         </li>
 

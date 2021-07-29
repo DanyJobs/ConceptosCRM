@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Dao;
+﻿using Model.Dao;
 using Model.Entity;
+using System;
+using System.Collections.Generic;
 
 namespace Model.Neg
 {
-   public class FacturaNeg
+    public class FacturaNeg
     {
         private FacturaDao objFacturaDao;
         private DetalleCotizacionDao objDetalleFacturaDao;
@@ -28,7 +25,8 @@ namespace Model.Neg
             if (numf == null)
             {
                 objFactura.Estado = 10;
-            }else
+            }
+            else
             {
                 try
                 {
@@ -49,20 +47,20 @@ namespace Model.Neg
 
             //inicio verificacion fecha estado=2
             string fecha = objFactura.Fecha;
-            
+
             if (fecha == null)
             {
                 objFactura.Estado = 20;
-               
+
             }
             else
             {
-                fecha=objFactura.Fecha.Trim();
-                verificacion = fecha.Length>0&&fecha.Length<30;
+                fecha = objFactura.Fecha.Trim();
+                verificacion = fecha.Length > 0 && fecha.Length < 30;
                 if (!verificacion)
                 {
                     objFactura.Estado = 2;
-                   
+
                 }
             }
             //fin verificacion de fecha
@@ -73,12 +71,13 @@ namespace Model.Neg
             if (iva == null)
             {
                 objFactura.Estado = 30;
-            }else
+            }
+            else
             {
                 try
                 {
                     ivas = Convert.ToDouble(objFactura.Iva);
-                    verificacion = ivas > 0 &&ivas< 99;
+                    verificacion = ivas > 0 && ivas < 99;
                     if (!verificacion)
                     {
                         objFactura.Estado = 3;
@@ -87,7 +86,7 @@ namespace Model.Neg
                 catch (Exception)
                 {
 
-                    objFactura.Estado=300;
+                    objFactura.Estado = 300;
                 }
             }
             //fin verificacion iva
@@ -98,8 +97,9 @@ namespace Model.Neg
             if (total == null)
             {
                 objFactura.Estado = 40;
-                
-            }else
+
+            }
+            else
             {
                 try
                 {
@@ -108,14 +108,14 @@ namespace Model.Neg
                     if (!verificacion)
                     {
                         objFactura.Estado = 4;
-                       
+
                     }
                 }
                 catch (Exception)
                 {
 
                     objFactura.Estado = 400;
-                   
+
                 }
             }
             //fin verificacion total
@@ -126,7 +126,7 @@ namespace Model.Neg
             if (nump == null)
             {
                 objFactura.Estado = 50;
-                
+
             }
             else
             {
@@ -137,14 +137,14 @@ namespace Model.Neg
                     if (!verificacion)
                     {
                         objFactura.Estado = 5;
-                       
+
                     }
                 }
                 catch (Exception)
                 {
 
                     objFactura.Estado = 500;
-                   
+
                 }
             }
             //fin verificacion total
@@ -156,13 +156,13 @@ namespace Model.Neg
             if (!verificacion)
             {
                 objFactura.Estado = 6;
-                
+
             }
 
             //todo bien
             objFactura.Estado = 99;
             return objFacturaDao.create(objFactura);
-            
+
         }
 
         public void update(Factura objFactura)
@@ -272,7 +272,7 @@ namespace Model.Neg
             }
             //fin verificacion total
 
-            
+
             //todo bien
             objFactura.Estado = 99;
             objFacturaDao.update(objFactura);
@@ -305,7 +305,7 @@ namespace Model.Neg
             objFacturaDao.delete(objFactura);
             return;
         }
-      
+
         public bool find(Factura objFactura)
         {
             return objFacturaDao.find(objFactura);

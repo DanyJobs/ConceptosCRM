@@ -22,11 +22,10 @@ namespace WebFacturaMvc.Datos
     
         public decimal idCliente { get; set; }
         public string nombre { get; set; }
-        public string apPaterno { get; set; }
-        public string apMaterno { get; set; }
+        public string apellido { get; set; }
         public string direccion { get; set; }
         public string telefono { get; set; }
-        public decimal dni { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cotizacion> cotizacion { get; set; }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Dao;
+﻿using Model.Dao;
 using Model.Entity;
+using System.Collections.Generic;
 
 namespace Model.Neg
 {
@@ -53,7 +49,8 @@ namespace Model.Neg
             if (nombre == null)
             {
                 objModoPago.Estado = 20;
-            }else
+            }
+            else
             {
                 nombre = objModoPago.Nombre.Trim();
                 verificacion = nombre.Length > 0 && nombre.Length < 30;
@@ -96,7 +93,7 @@ namespace Model.Neg
         public void update(ModoPago objModoPago)
         {
             bool verificacion = true;
-            
+
 
             //inicio validar nombre estado=2
             string nombre = objModoPago.Nombre;

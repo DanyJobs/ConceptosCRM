@@ -1,0 +1,58 @@
+﻿@model WebFacturaMvc.Datos.existencia
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>existencia</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cantidad)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.seccion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.seccion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.producto.nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.producto.nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.sucursal.calle)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.sucursal.calle)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

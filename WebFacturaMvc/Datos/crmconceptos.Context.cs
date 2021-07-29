@@ -14,8 +14,7 @@ namespace WebFacturaMvc.Datos
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using Model.Entity;
-
+    
     public partial class crmconceptoseEntities1 : DbContext
     {
         public crmconceptoseEntities1()
@@ -32,18 +31,23 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<categoria> categoria { get; set; }
-        public virtual DbSet<cliente> cliente { get; set; }
         public virtual DbSet<cotizacion> cotizacion { get; set; }
         public virtual DbSet<detalleCotizacion> detalleCotizacion { get; set; }
-        public virtual DbSet<empleado> empleado { get; set; }
         public virtual DbSet<factura> factura { get; set; }
         public virtual DbSet<marca> marca { get; set; }
         public virtual DbSet<modoPago> modoPago { get; set; }
+        public virtual DbSet<tipoEmpleado> tipoEmpleado { get; set; }
+        public virtual DbSet<compra> compra { get; set; }
+        public virtual DbSet<compraDetalle> compraDetalle { get; set; }
+        public virtual DbSet<existencia> existencia { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<sucursal> sucursal { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<proveedor> proveedor { get; set; }
+        public virtual DbSet<cliente> cliente { get; set; }
         public virtual DbSet<producto> producto { get; set; }
-        public virtual DbSet<tipoEmpleado> tipoEmpleado { get; set; }   
-
+    
         public virtual int reporte_factura(string idPedido)
         {
             var idPedidoParameter = idPedido != null ?
@@ -101,6 +105,243 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("idVenta", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_reporte_venta", idVentaParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual ObjectResult<SP_Buscar_Cotizacion_Result> SP_Buscar_Cotizacion()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Buscar_Cotizacion_Result>("SP_Buscar_Cotizacion");
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int spAgregarCompra(Nullable<int> idCompra, Nullable<decimal> total, Nullable<System.DateTime> fechaCompra, Nullable<int> idSucursal, Nullable<int> idProveedor)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("idCompra", idCompra) :
+                new ObjectParameter("idCompra", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("total", total) :
+                new ObjectParameter("total", typeof(decimal));
+    
+            var fechaCompraParameter = fechaCompra.HasValue ?
+                new ObjectParameter("fechaCompra", fechaCompra) :
+                new ObjectParameter("fechaCompra", typeof(System.DateTime));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("idSucursal", idSucursal) :
+                new ObjectParameter("idSucursal", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("idProveedor", idProveedor) :
+                new ObjectParameter("idProveedor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAgregarCompra", idCompraParameter, totalParameter, fechaCompraParameter, idSucursalParameter, idProveedorParameter);
+        }
+    
+        public virtual int spAgregarCompraDetalle(Nullable<int> idCompra, Nullable<int> idProducto, Nullable<int> cantidad, Nullable<int> precio)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("idCompra", idCompra) :
+                new ObjectParameter("idCompra", typeof(int));
+    
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("precio", precio) :
+                new ObjectParameter("precio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAgregarCompraDetalle", idCompraParameter, idProductoParameter, cantidadParameter, precioParameter);
+        }
+    
+        public virtual int spAgregarProveedor(Nullable<int> idProveedor, string nombre, string calle, string numExt, string colonia, string cp, string email, string telefono, string app, string apm)
+        {
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("idProveedor", idProveedor) :
+                new ObjectParameter("idProveedor", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var calleParameter = calle != null ?
+                new ObjectParameter("calle", calle) :
+                new ObjectParameter("calle", typeof(string));
+    
+            var numExtParameter = numExt != null ?
+                new ObjectParameter("numExt", numExt) :
+                new ObjectParameter("numExt", typeof(string));
+    
+            var coloniaParameter = colonia != null ?
+                new ObjectParameter("colonia", colonia) :
+                new ObjectParameter("colonia", typeof(string));
+    
+            var cpParameter = cp != null ?
+                new ObjectParameter("cp", cp) :
+                new ObjectParameter("cp", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("telefono", telefono) :
+                new ObjectParameter("telefono", typeof(string));
+    
+            var appParameter = app != null ?
+                new ObjectParameter("app", app) :
+                new ObjectParameter("app", typeof(string));
+    
+            var apmParameter = apm != null ?
+                new ObjectParameter("apm", apm) :
+                new ObjectParameter("apm", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAgregarProveedor", idProveedorParameter, nombreParameter, calleParameter, numExtParameter, coloniaParameter, cpParameter, emailParameter, telefonoParameter, appParameter, apmParameter);
+        }
+    
+        public virtual int spAgregarSucursal(Nullable<int> idSucursal, string calle, string numExt, string colonia, string cp, string email, string telefono)
+        {
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var calleParameter = calle != null ?
+                new ObjectParameter("Calle", calle) :
+                new ObjectParameter("Calle", typeof(string));
+    
+            var numExtParameter = numExt != null ?
+                new ObjectParameter("NumExt", numExt) :
+                new ObjectParameter("NumExt", typeof(string));
+    
+            var coloniaParameter = colonia != null ?
+                new ObjectParameter("Colonia", colonia) :
+                new ObjectParameter("Colonia", typeof(string));
+    
+            var cpParameter = cp != null ?
+                new ObjectParameter("Cp", cp) :
+                new ObjectParameter("Cp", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAgregarSucursal", idSucursalParameter, calleParameter, numExtParameter, coloniaParameter, cpParameter, emailParameter, telefonoParameter);
+        }
+    
+        public virtual ObjectResult<spusuario_Result> spusuario()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spusuario_Result>("spusuario");
         }
     }
 }

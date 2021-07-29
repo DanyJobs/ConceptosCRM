@@ -2,19 +2,19 @@
 @{
     ViewBag.Title = "Lista de Clientes";
 }
-<a href="~/Reportes/wfReport.aspx">Reporte</a>
-<h2 class="text-center text-success">Listado de Clientes</h2>
-<div class="well well-sm"><a class="btn btn-primary" href="~/Cliente/Create">Nuevo</a></div>
+<a href="~/Reportes/wfReport.aspx">@Lenguaje.Recurso.Reporte</a>
+<h2 class="text-center text-success">@Lenguaje.Recurso.Listado_clientes</h2>
+<div class="well well-sm"><a class="btn btn-primary" href="~/Cliente/Create">@Lenguaje.Recurso.Nuevo</a></div>
 <table class="table table-hover table-striped">
     <thead >
         <tr class="bg-primary">
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
+            <th>@Lenguaje.Recurso.Clientes_codigo</th>
+            <th>@Lenguaje.Recurso.Clientes_nombre</th>
+            <th>@Lenguaje.Recurso.Clientes_apellidos</th>
             <th>DNI</th>
-            <th>Direccion</th>
-            <th>Teléfono</th>
-            <th colspan="3">Operaciones</th>
+            <th>@Lenguaje.Recurso.Clientes_direccion</th>
+            <th>@Lenguaje.Recurso.Clientes_telefono</th>
+            <th colspan="3">@Lenguaje.Recurso.Clientes_operaciones</th>
         </tr>
     </thead>
     <tbody>
@@ -24,8 +24,8 @@
 
                 <td>@objCliente.IdCliente</td>
                 <td>@objCliente.Nombre</td>
-                <td>@objCliente.Appaterno @objCliente.Apmaterno</td>
-                <td>@objCliente.Dni</td>
+                <td>@objCliente.Apellido</td>
+                <td>@objCliente.Email</td>
                 <td>@objCliente.Direccion</td>
                 <td>@objCliente.Telefono</td>
                 <td><a class="btn btn-success" href="~/Cliente/Find/@objCliente.IdCliente"><span class="glyphicon glyphicon-eye-open"></span></a></td>

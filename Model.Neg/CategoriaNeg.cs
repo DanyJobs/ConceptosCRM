@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Dao;
+﻿using Model.Dao;
 using Model.Entity;
+using System.Collections.Generic;
 
 namespace Model.Neg
 {
@@ -25,11 +21,12 @@ namespace Model.Neg
 
             //inicio verificacion codigo retorna estado=1
             string codigo = objCategoria.IdCategoria;
-            if (codigo==null)
+            if (codigo == null)
             {
                 objCategoria.Estado = 10;
                 return;
-            }else
+            }
+            else
             {
                 codigo = objCategoria.IdCategoria.Trim();
                 verificacion = codigo.Length > 0 && codigo.Length <= 5;
@@ -43,7 +40,7 @@ namespace Model.Neg
 
             //inicio verificacion nombre retorna estado=2
             string nombre = objCategoria.Nombre;
-            if (nombre==null)
+            if (nombre == null)
             {
                 objCategoria.Estado = 20;
                 return;
@@ -100,7 +97,7 @@ namespace Model.Neg
         {
             bool verificacion = true;
 
-            
+
             //inicio verificacion nombre retorna estado=2
             string nombre = objCategoria.Nombre;
             if (nombre == null)
@@ -139,7 +136,7 @@ namespace Model.Neg
             }
             //fin verificacion de descripcion
 
-            
+
             //todo bien
             objCategoria.Estado = 99;
             objCategoriaDao.update(objCategoria);

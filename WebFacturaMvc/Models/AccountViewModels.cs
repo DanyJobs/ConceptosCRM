@@ -1,14 +1,13 @@
-﻿using WebFacturaMvc.Utilidades;
+﻿using Lenguaje;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using Lenguaje;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebFacturaMvc.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]     
+        [Required]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
     }
@@ -49,10 +48,11 @@ namespace WebFacturaMvc.Models
         public string Email { get; set; }
     }
 
+    [NotMapped]
     public class LoginViewModel
     {
 
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
@@ -62,16 +62,16 @@ namespace WebFacturaMvc.Models
         //[EmailAddress]
         //public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
-        [Display(ResourceType = typeof(Recurso), Name = "Recordar")]       
+        [Display(ResourceType = typeof(Recurso), Name = "Recordar")]
         public bool RememberMe { get; set; }
     }
 
-    
+
     public class RegisterViewModel
     {
         [Required]
@@ -94,6 +94,11 @@ namespace WebFacturaMvc.Models
         [Required]
         [Display(Name = "Empleado")]
         public string idTipoEmpleado { get; set; }
+
+        [Required]
+        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
+        [Display(Name = "PhoneNumber")]
+        public string PhoneNumber { get; set; }
 
 
         [Required]

@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Entity;
 using System.Data.SqlClient;
 
 namespace Model.Dao
 {
-    public class CategoriaDao:Obligatorio<Categoria>
+    public class CategoriaDao : Obligatorio<Categoria>
     {
         private ConexionDB objConexionDB;
         private SqlCommand comando;
@@ -95,7 +92,7 @@ namespace Model.Dao
 
         public List<Categoria> findAll()
         {
-            
+
             List<Categoria> listaCategorias = new List<Categoria>();
             string find = "select*from categoria";
             try

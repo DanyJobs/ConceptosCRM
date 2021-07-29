@@ -1,15 +1,12 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Entity;
 using System.Data.SqlClient;
 
 
 namespace Model.Dao
 {
-    public class MarcaDao:Obligatorio<Marca>
+    public class MarcaDao : Obligatorio<Marca>
     {
         private ConexionDB objConexionDB;
         private SqlCommand comando;
@@ -60,7 +57,7 @@ namespace Model.Dao
 
         public bool find(Marca objMarca)
         {
-            bool hayRegistros; 
+            bool hayRegistros;
             string find = "select * from Marca where idMarca='" + objMarca.IdMarca + "'";
             try
             {

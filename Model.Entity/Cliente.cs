@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Lenguaje;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Entity
 {
@@ -11,11 +8,9 @@ namespace Model.Entity
     {
         private long idCliente;
         private string nombre;
-        [Display(Name = "Apelido Materno")]
-        private string apmaterno;
-        
-        private string appaterno;
-        private string dni;
+        [Display(ResourceType = typeof(Recurso), Name = "Apellido_Materno")]
+        private string apellido;
+        private string email;
         private string direccion;
         private string telefono;
         private List<Cotizacion> ventas;
@@ -32,7 +27,7 @@ namespace Model.Entity
                 estado = value;
             }
         }
-        [Display(Name="Codigo")]
+        [Display(ResourceType = typeof(Recurso), Name = "Codigo")]
         public long IdCliente
         {
             get
@@ -45,8 +40,9 @@ namespace Model.Entity
                 idCliente = value;
             }
         }
-        [Required(ErrorMessage ="Este Campo es Requerido")]
-        [Display(Name = "Nombre")]
+        //[Required(ErrorMessage ="Este Campo es Requerido")]
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "Nombre")]
         public string Nombre
         {
             get
@@ -59,50 +55,37 @@ namespace Model.Entity
                 nombre = value;
             }
         }
-        [Required(ErrorMessage = "Este Campo es Requerido")]
-        [Display(Name = "Apelido Materno")]
-        public string Apmaterno
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "OtroApellido")]
+        public string Apellido
         {
             get
             {
-                return apmaterno;
+                return apellido;
             }
 
             set
             {
-                apmaterno = value;
+                apellido = value;
             }
         }
-        [Required(ErrorMessage = "Este Campo es Requerido")]
-        [Display(Name = "Aoellido Paterno")]
-        public string Appaterno
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "Email")]
+        public string Email
         {
             get
             {
-                return appaterno;
+                return email;
             }
 
             set
             {
-                appaterno = value;
+                email = value;
             }
         }
-        [Required(ErrorMessage = "Este Campo es Requerido")]
-        [Display(Name = "DNI")]
-        public string Dni
-        {
-            get
-            {
-                return dni;
-            }
 
-            set
-            {
-                dni = value;
-            }
-        }
-        [Required(ErrorMessage = "Este Campo es Requerido")]
-        [Display(Name = "Dirección")]
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "Dirección")]
         public string Direccion
         {
             get
@@ -115,8 +98,8 @@ namespace Model.Entity
                 direccion = value;
             }
         }
-        [Required(ErrorMessage = "Este Campo es Requerido")]
-        [Display(Name = "Telefóno")]
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
+        [Display(ResourceType = typeof(Recurso), Name = "Telefóno")]
         public string Telefono
         {
             get
@@ -129,7 +112,7 @@ namespace Model.Entity
                 telefono = value;
             }
         }
-        [Required(ErrorMessage = "Este Campo es Requerido")]
+        [Required(ErrorMessageResourceType = typeof(Recurso), ErrorMessageResourceName = "Mensaje_requerido")]
         public List<Cotizacion> Ventas
         {
             get
@@ -152,16 +135,15 @@ namespace Model.Entity
             this.idCliente = idCliente;
         }
 
-        public Cliente(long idCliente, string nombre, string apmaterno, string appaterno, string dni, string direccion, string telefono)
+        public Cliente(long idCliente, string nombre, string apellido, string email, string dni, string direccion, string telefono)
         {
             this.idCliente = idCliente;
             this.Nombre = nombre;
-            this.Apmaterno = apmaterno;
-            this.Appaterno = appaterno;
-            this.Dni = dni;
+            this.Apellido = apellido;
+            this.Email = email;
             this.Direccion = direccion;
             this.Telefono = telefono;
         }
-       
+
     }
 }

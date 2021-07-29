@@ -17,11 +17,14 @@ namespace WebFacturaMvc.Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public producto()
         {
+            this.compraDetalle = new HashSet<compraDetalle>();
             this.detalleCotizacion = new HashSet<detalleCotizacion>();
+            this.existencia = new HashSet<existencia>();
         }
     
         public string idProducto { get; set; }
         public string nombre { get; set; }
+        public string descripcion { get; set; }
         public decimal precioUnitario { get; set; }
         public string idCategoria { get; set; }
         public string idMarca { get; set; }
@@ -30,6 +33,10 @@ namespace WebFacturaMvc.Datos
     
         public virtual categoria categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<compraDetalle> compraDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<existencia> existencia { get; set; }
     }
 }

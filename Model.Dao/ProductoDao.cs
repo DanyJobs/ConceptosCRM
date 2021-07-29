@@ -1,15 +1,12 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using Model.Entity;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Model.Dao
 {
-    public class ProductoDao:Obligatorio<Producto>
+    public class ProductoDao : Obligatorio<Producto>
     {
         private ConexionDB objConexionDB;
         private SqlCommand comando;
@@ -20,7 +17,7 @@ namespace Model.Dao
         }
         public void create(Producto objProducto)
         {
-            string create = "insert into producto values('" + objProducto.IdProducto + "','" + objProducto.Nombre + "'," + objProducto.PrecioUnitario + ",'" + objProducto.Categoria + "','"+ objProducto.Marca + "','" + objProducto.BandaAncha + "'," + objProducto.Channels+")";
+            string create = "insert into producto values('" + objProducto.IdProducto + "','" + objProducto.Nombre + "','" + objProducto.Descripcion + "'," + objProducto.PrecioUnitario + ",'" + objProducto.Categoria + "','" + objProducto.Marca + "','" + objProducto.BandaAncha + "'," + objProducto.Channels + ")";
             try
             {
                 comando = new SqlCommand(create, objConexionDB.getCon());
@@ -29,7 +26,7 @@ namespace Model.Dao
             }
             catch (Exception)
             {
-                objProducto.Estado = 1000;                
+                objProducto.Estado = 1000;
             }
             finally
             {
@@ -71,10 +68,11 @@ namespace Model.Dao
                 if (hayRegistros)
                 {
                     objProducto.Nombre = reader[1].ToString();
-                    objProducto.PrecioUnitario =Convert.ToDouble(reader[2].ToString());
-                    objProducto.Categoria = reader[3].ToString();
-                    objProducto.Marca = reader[4].ToString();
-                    objProducto.BandaAncha = reader[5].ToString();
+                    objProducto.Descripcion = reader[2].ToString();
+                    objProducto.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
+                    objProducto.Categoria = reader[4].ToString();
+                    objProducto.Marca = reader[5].ToString();
+                    objProducto.BandaAncha = reader[6].ToString();
                     objProducto.Estado = 99;
                 }
                 else
@@ -95,8 +93,9 @@ namespace Model.Dao
             return hayRegistros;
         }
 
-        public List<Producto> findAll(){    
-         
+        public List<Producto> findAll()
+        {
+
 
             List<Producto> listaVendedores = new List<Producto>();
             //string find = "select*from producto order by nombre asc";
@@ -135,7 +134,7 @@ namespace Model.Dao
 
         public void update(Producto objProducto)
         {
-            string update = "update producto set  nombre='" + objProducto.Nombre + "',precioUnitario='" + objProducto.PrecioUnitario + "',idCategoria='" + objProducto.Categoria + "' where idProducto='" + objProducto.IdProducto + "'";
+            string update = "update producto set  nombre='" + objProducto.Nombre + "',descripcion='" + objProducto.Descripcion + "' precioUnitario='" + objProducto.PrecioUnitario + "',idCategoria='" + objProducto.Categoria + "' where idProducto='" + objProducto.IdProducto + "'";
             try
             {
                 comando = new SqlCommand(update, objConexionDB.getCon());
@@ -188,7 +187,7 @@ namespace Model.Dao
         public bool findProductoPorMarcaId(Producto objProducto)
         {
             bool hayRegistros;
-            string find = "select*from producto where IdMarca='" + objProducto.Marca+ "'";
+            string find = "select*from producto where IdMarca='" + objProducto.Marca + "'";
             try
             {
                 comando = new SqlCommand(find, objConexionDB.getCon());
@@ -297,7 +296,7 @@ namespace Model.Dao
         public List<Producto> findPrecioProducto(Producto objProductos)
         {
             List<Producto> listaVendedores = new List<Producto>();
-            string find = "select*from producto where idProducto='"+ objProductos.IdProducto + "'";
+            string find = "select*from producto where idProducto='" + objProductos.IdProducto + "'";
             try
             {
                 comando = new SqlCommand(find, objConexionDB.getCon());

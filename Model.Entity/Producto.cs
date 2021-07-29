@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Model.Entity
 {
-   public class Producto
+    public class Producto
     {
         private string idProducto;
         private string nombre;
+        public string Descripcion { get; set; }
         private double precioUnitario;
         private string categoria;
         private int estado;
         public string marca;
         public string bandaAncha;
         public int channels;
+
 
         public int Estado
         {
@@ -97,7 +94,7 @@ namespace Model.Entity
         }
 
 
-        [Display (Name = "Banda Ancha:")]
+        [Display(Name = "Banda Ancha:")]
         public string BandaAncha
         {
             get
@@ -125,7 +122,7 @@ namespace Model.Entity
 
         public Producto()
         {
-            
+
         }
         public Producto(string idProducto)
         {

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model.Entity
+﻿namespace Model.Entity
 {
     public class Marca
     {
         private string idMarca;
         private string descripcion;
         private int estado;
-        
+
 
 
         public string IdMarca
@@ -25,7 +19,7 @@ namespace Model.Entity
             {
                 idMarca = value;
             }
-        }    
+        }
 
         public string Descripcion
         {
@@ -59,7 +53,7 @@ namespace Model.Entity
         }
         public Marca(string idMarca, string descripcion)
         {
-            this.idMarca = idMarca;      
+            this.idMarca = idMarca;
             this.descripcion = descripcion;
         }
         public Marca(string idMarca)

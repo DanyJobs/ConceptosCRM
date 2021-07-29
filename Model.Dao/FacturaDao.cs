@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Model.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Entity;
 using System.Data.SqlClient;
 
 namespace Model.Dao
@@ -57,7 +54,7 @@ namespace Model.Dao
             catch (Exception)
             {
                 objFactura.Estado = 1;
-               
+
             }
             finally
             {
@@ -74,11 +71,11 @@ namespace Model.Dao
             {
                 comando = new SqlCommand(find, objConexionDB.getCon());
                 objConexionDB.getCon().Open();
-                reader= comando.ExecuteReader();
+                reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
                 {
-                    objFactura.Fecha =  reader[1].ToString();
+                    objFactura.Fecha = reader[1].ToString();
                     objFactura.Iva = Convert.ToDouble(reader[2].ToString());
                     objFactura.Total = Convert.ToDouble(reader[3].ToString());
                     objFactura.NumPago = Convert.ToInt32(reader[4].ToString());
@@ -111,11 +108,11 @@ namespace Model.Dao
             {
                 comando = new SqlCommand(findAll, objConexionDB.getCon());
                 objConexionDB.getCon().Open();
-                reader = comando.ExecuteReader();                
+                reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
                     Factura objFactura = new Factura();
-                    objFactura.NumFactura= Convert.ToInt64(reader[0].ToString());
+                    objFactura.NumFactura = Convert.ToInt64(reader[0].ToString());
                     objFactura.Fecha = reader[1].ToString();
                     objFactura.Iva = Convert.ToDouble(reader[2].ToString());
                     objFactura.Total = Convert.ToDouble(reader[3].ToString());

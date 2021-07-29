@@ -66,37 +66,23 @@
     <Compile Include="DetalleCotizacion.cs" />
     <Compile Include="Factura.cs" />
     <Compile Include="Historial.cs" />
-    <Compile Include="Lenguaje\Recurso.Designer.cs">
-      <DependentUpon>Recurso.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Lenguaje\Recurso.en.Designer.cs">
-      <DependentUpon>Recurso.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <Compile Include="Lenguaje\Recurso.Designer.cs" />
+    <Compile Include="Lenguaje\Recurso.en.Designer.cs" />
     <Compile Include="Marca.cs" />
     <Compile Include="ModoPago.cs" />
     <Compile Include="Cotizacion.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vendedor.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Lenguaje\Recurso.en.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Recurso.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Lenguaje\Recurso.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Recurso.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Lenguaje</CustomToolNamespace>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Lenguaje\Recurso.en.resx" />
+    <EmbeddedResource Include="Lenguaje\Recurso.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

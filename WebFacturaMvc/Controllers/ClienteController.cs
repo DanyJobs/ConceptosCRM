@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using Model.Entity;
 using Model.Neg;
-using Model.Entity;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace WebFacturaMvc.Controllers
 {
@@ -52,58 +49,58 @@ namespace WebFacturaMvc.Controllers
                 //    ViewBag.MensajeError = "No se permiten mas de 5 caracteres en al campo Codigo";
                 //    break;
                 case 1000://campo nombre vacio
-                    ViewBag.MensajeError = "Error DNI, ha ingresado letras";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = "Ingrese Nombre del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_NC;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo Nombre";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_NCE;
                     break;
 
                 case 30://campo Apellido Paterno vacio
-                    ViewBag.MensajeError = "Ingrese Apellido Paterno del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AP;
                     break;
 
                 case 3://error de Apellido Paterno
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo apPaterno";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_APE;
                     break;
 
-                case 40://campo Apellido Paterno vacio
-                    ViewBag.MensajeError = "Ingrese Apellido Materno del Cliente";
+                case 40://campo Apellido Materno vacio
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AM;
                     break;
 
-                case 4://error de Apellido Paterno
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo apMaterno";
+                case 4://error de Apellido Materno
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AME;
                     break;
 
                 case 50://campo dni vacio
-                    ViewBag.MensajeError = "Ingrese DNI del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNI;
                     break;
                 case 5://error de dni
-                    ViewBag.MensajeError = "Ingrese un Numero de DNI válido";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE2;
                     break;
-                case 60://campod direccion vacio
-                    ViewBag.MensajeError = "Ingrese Dirección del Cliente";
+                case 60://campo de direccion vacio
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DC;
                     break;
                 case 6://error de direccion
-                    ViewBag.MensajeError = "No se permiten mas de 50 caracteres en al campo Direccion";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DCE;
                     break;
                 case 70://campo telefono vacio
-                    ViewBag.MensajeError = "Ingrese Telefóno del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TC;
                     break;
                 case 7://error de direccion
-                    ViewBag.MensajeError = "ingrese un numero de Teléfono válido";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TCE;
                     break;
                 case 8://error de duplicidad
-                    ViewBag.MensajeError = "Cliente [" + objCliente.IdCliente + "] ya esta Registrado en el Sistema";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_dup1 + objCliente.IdCliente + Lenguaje.Recurso.Mensaje_dup2;
                     break;
                 case 9://error de duplicidad
-                    ViewBag.MensajeError = "Numero de DNI [" + objCliente.Dni + "] ya esta asignado a un Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_dup3 + objCliente.Email + Lenguaje.Recurso.Mensaje_dup4;
                     break;
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = "Cliente [" + objCliente.Nombre + " "+ objCliente.Appaterno + "] fue Registrado en el Sistema";
+                    ViewBag.MensajeExito = Lenguaje.Recurso.Mensaje_dup5 + objCliente.Nombre + " " + objCliente.Apellido + Lenguaje.Recurso.Mensaje_dup6;
                     break;
 
             }
@@ -112,7 +109,7 @@ namespace WebFacturaMvc.Controllers
 
         public void mensajeInicioRegistrar()
         {
-            ViewBag.MensajeInicio = "Ingrese Datos Del Cliente y Click en Guardar";
+            ViewBag.MensajeInicio = Lenguaje.Recurso.MensajeInicio_cliente;
         }
 
 
@@ -126,7 +123,7 @@ namespace WebFacturaMvc.Controllers
         }
         [HttpPost]
         public ActionResult Update(Cliente objCliente)
-        {            
+        {
             mensajeInicialActualizar();
             objClienteNeg.update(objCliente);
             MensajeErrorActualizar(objCliente);
@@ -141,59 +138,59 @@ namespace WebFacturaMvc.Controllers
             switch (objCliente.Estado)
             {
                 case 10://campo codigo vacio
-                    ViewBag.MensajeError = "Ingrese Código del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_CC;
                     break;
                 case 1://error campo cadigo
-                    ViewBag.MensajeError = "No se permiten mas de 5 caracteres en al campo Codigo";
+                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_CCE;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = "Ingrese Nombre del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_NC;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo Nombre";
+                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_NCE;
                     break;
 
                 case 30://campo Apellido Paterno vacio
-                    ViewBag.MensajeError = "Ingrese Apellido Paterno del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AP;
                     break;
 
                 case 3://error de Apellido Paterno
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo apPaterno";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_APE;
                     break;
 
-                case 40://campo Apellido Paterno vacio
-                    ViewBag.MensajeError = "Ingrese Apellido Materno del Cliente";
+                case 40://campo Apellido Materno vacio
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AM;
                     break;
 
-                case 4://error de Apellido Paterno
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo apMaterno";
+                case 4://error de Apellido Materno
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AME;
                     break;
 
                 case 50://campo dni vacio
-                    ViewBag.MensajeError = "Ingrese DNI del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNI;
                     break;
                 case 5://error de dni
-                    ViewBag.MensajeError = "Ingrese un DNI Válido";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE2;
                     break;
-                case 60://campod direccion vacio
-                    ViewBag.MensajeError = "Ingrese Dirección del Cliente";
+                case 60://campo de direccion vacio
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DC;
                     break;
                 case 6://error de direccion
-                    ViewBag.MensajeError = "No se permiten mas de 50 caracteres en al campo Direccion";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DCE;
                     break;
                 case 70://campo telefono vacio
-                    ViewBag.MensajeError = "Ingrese Telefóno del Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TC;
                     break;
-                case 7://error de telefono
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en al campo Teléfono";
+                case 7://error de direccion
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TCE;
                     break;
                 case 9://error de duplicidad
-                    ViewBag.MensajeError = "Numero de DNI [" + objCliente.Dni + "] ya esta asignado a un Cliente";
+                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_dup3 + objCliente.Email + Lenguaje.Recurso.Mensaje_dup4;
                     break;
 
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = "Datos del Cliente [" + objCliente.IdCliente + "] Fueron actualizados";
+                    ViewBag.MensajeExito = Lenguaje.Recurso.MensajeA_dup1 + objCliente.IdCliente + Lenguaje.Recurso.MensajeA_dup2;
                     break;
 
             }
@@ -202,7 +199,7 @@ namespace WebFacturaMvc.Controllers
         //mensjae inicial actualizar
         public void mensajeInicialActualizar()
         {
-            ViewBag.MensajeInicialActualizar = "Formulario para Actualizar Datos del Cliente";
+            ViewBag.MensajeInicialActualizar = Lenguaje.Recurso.MensajeA_inicial;
         }
 
         [HttpGet]
@@ -213,8 +210,8 @@ namespace WebFacturaMvc.Controllers
             objClienteNeg.find(objCliente);
             return View(objCliente);
         }
-        
-        [HttpPost,ActionName("Delete")]
+
+        [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
             mensajeInicialEliminar();
@@ -251,17 +248,17 @@ namespace WebFacturaMvc.Controllers
             switch (objCliente.Estado)
             {
                 case 1: //ERROR DE EXISTENCIA
-                    ViewBag.MensajeError = "Cliente [" + objCliente.IdCliente + "] No Esta Registrado en el Sistema ";
+                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeE_1 + objCliente.IdCliente + Lenguaje.Recurso.MensajeE_2;
                     break;
 
                 case 33://CLIENTE NO EXISTE
-                    ViewBag.MensajeError = "El Cliente: ["+objCliente.Appaterno+" "+objCliente.Apmaterno+", "+objCliente.Nombre+" ]Ya Fue Eliminado";
+                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeE_1 + objCliente.Apellido + ", " + objCliente.Nombre + Lenguaje.Recurso.MensajeE_3;
                     break;
                 case 34:
-                    ViewBag.MensajeError = "No se Puede Eliminar al Cliente [" + objCliente.Appaterno + " " + objCliente.Apmaterno + ", " + objCliente.Nombre + "] Tiene Ventas Registrados en el Sistema!!!";
+                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeE_4 + objCliente.Apellido + ", " + objCliente.Nombre + Lenguaje.Recurso.MensajeE_5;
                     break;
                 case 99: //EXITO
-                    ViewBag.MensajeExito = "Cliente [" + objCliente.Appaterno + " " + objCliente.Apmaterno + ", " + objCliente.Nombre + "] Fue Eliminado!!!";
+                    ViewBag.MensajeExito = Lenguaje.Recurso.MensajeE_1 + objCliente.Apellido + ", " + objCliente.Nombre + Lenguaje.Recurso.MensajeE_6;
                     break;
 
                 default:
@@ -271,7 +268,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicialEliminar()
         {
-            ViewBag.MensajeInicialEliminar = "Formulario de Eliminacion";
+            ViewBag.MensajeInicialEliminar = Lenguaje.Recurso.MensajeE_inicial;
         }
 
         public ActionResult Find(long id)
@@ -289,28 +286,29 @@ namespace WebFacturaMvc.Controllers
             return View(lista);
         }
         [HttpPost]
-        public ActionResult BuscarClientes(string txtnombre, string txtappaterno, string txtdni, long txtcliente = -1)
+        public ActionResult BuscarClientes(string txtnombre, string txtappaterno, string txtemail, long txtcliente = -1)
         {
-             
-            if (txtnombre == "") 
+
+            if (txtnombre == "")
             {
-                txtnombre = "-1";                
+                txtnombre = "-1";
             }
-            if (txtappaterno == "") {
+            if (txtappaterno == "")
+            {
                 txtappaterno = "-1";
             }
-            if(txtdni == "")
+            if (txtemail == "")
             {
-                txtdni = "-1";
+                txtemail = "-1";
             }
             Cliente objCliente = new Cliente();
             objCliente.Nombre = txtnombre;
             objCliente.IdCliente = txtcliente;
-            objCliente.Appaterno = txtappaterno;
-            objCliente.Dni = txtdni;         
-            
+            objCliente.Apellido = txtappaterno;
+            objCliente.Email = txtemail;
+
             List<Cliente> cliente = objClienteNeg.findAllClientes(objCliente);
             return View(cliente);
-        }       
+        }
     }
 }

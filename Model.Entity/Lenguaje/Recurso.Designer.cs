@@ -61,11 +61,110 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Intento de inicio de sesión no válido..
+        /// </summary>
+        public static string Account_error1 {
+            get {
+                return ResourceManager.GetString("Account_error1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Código no válido.
+        /// </summary>
+        public static string Account_error2 {
+            get {
+                return ResourceManager.GetString("Account_error2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ajustes.
         /// </summary>
         public static string Ajustes {
             get {
                 return ResourceManager.GetString("Ajustes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Apellido Materno.
+        /// </summary>
+        public static string Apellido_Materno {
+            get {
+                return ResourceManager.GetString("Apellido_Materno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Apellido Paterno.
+        /// </summary>
+        public static string Apellido_Paterno {
+            get {
+                return ResourceManager.GetString("Apellido_Paterno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Buscar.
+        /// </summary>
+        public static string Buscar {
+            get {
+                return ResourceManager.GetString("Buscar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Buscar Clientes en el Sistema.
+        /// </summary>
+        public static string Buscar_titulo {
+            get {
+                return ResourceManager.GetString("Buscar_titulo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Buscar Cliente por: .
+        /// </summary>
+        public static string Buscar_titulo2 {
+            get {
+                return ResourceManager.GetString("Buscar_titulo2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Categoría.
+        /// </summary>
+        public static string Categoria {
+            get {
+                return ResourceManager.GetString("Categoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Categorías.
+        /// </summary>
+        public static string Categorias {
+            get {
+                return ResourceManager.GetString("Categorias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seleccione una Categoria.
+        /// </summary>
+        public static string Categorias_mensaje {
+            get {
+                return ResourceManager.GetString("Categorias_mensaje", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seleccione una Marca.
+        /// </summary>
+        public static string Categorias_mensaje2 {
+            get {
+                return ResourceManager.GetString("Categorias_mensaje2", resourceCulture);
             }
         }
         
@@ -88,11 +187,443 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Apellido Paterno.
+        /// </summary>
+        public static string Clientes_apellidoP {
+            get {
+                return ResourceManager.GetString("Clientes_apellidoP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Last Name.
+        /// </summary>
+        public static string Clientes_apellidos {
+            get {
+                return ResourceManager.GetString("Clientes_apellidos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Código.
+        /// </summary>
+        public static string Clientes_codigo {
+            get {
+                return ResourceManager.GetString("Clientes_codigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Address.
+        /// </summary>
+        public static string Clientes_direccion {
+            get {
+                return ResourceManager.GetString("Clientes_direccion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre.
+        /// </summary>
+        public static string Clientes_nombre {
+            get {
+                return ResourceManager.GetString("Clientes_nombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Operaciones.
+        /// </summary>
+        public static string Clientes_operaciones {
+            get {
+                return ResourceManager.GetString("Clientes_operaciones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Teléfono.
+        /// </summary>
+        public static string Clientes_telefono {
+            get {
+                return ResourceManager.GetString("Clientes_telefono", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Codigo.
+        /// </summary>
+        public static string Codigo {
+            get {
+                return ResourceManager.GetString("Codigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Agregar.
+        /// </summary>
+        public static string Cotizacion_agregar {
+            get {
+                return ResourceManager.GetString("Cotizacion_agregar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cantidad.
+        /// </summary>
+        public static string Cotizacion_cantidad {
+            get {
+                return ResourceManager.GetString("Cotizacion_cantidad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cliente.
+        /// </summary>
+        public static string Cotizacion_cliente {
+            get {
+                return ResourceManager.GetString("Cotizacion_cliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Descuento.
+        /// </summary>
+        public static string Cotizacion_descuento {
+            get {
+                return ResourceManager.GetString("Cotizacion_descuento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Detalles del cliente.
+        /// </summary>
+        public static string Cotizacion_detalleCliente {
+            get {
+                return ResourceManager.GetString("Cotizacion_detalleCliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Detalle de la Compra.
+        /// </summary>
+        public static string Cotizacion_detalleCompra {
+            get {
+                return ResourceManager.GetString("Cotizacion_detalleCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Detalles del Producto.
+        /// </summary>
+        public static string Cotizacion_detalleProducto {
+            get {
+                return ResourceManager.GetString("Cotizacion_detalleProducto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR CON EL CODIGO DEL CLIENTE.
+        /// </summary>
+        public static string Cotizacion_errorCC {
+            get {
+                return ResourceManager.GetString("Cotizacion_errorCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR EN EL CAMPO FECHA.
+        /// </summary>
+        public static string Cotizacion_errorCF {
+            get {
+                return ResourceManager.GetString("Cotizacion_errorCF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR EN EL CAMPO TOTAL.
+        /// </summary>
+        public static string Cotizacion_errorCT {
+            get {
+                return ResourceManager.GetString("Cotizacion_errorCT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR AL REGISTRAR LA FACTURA.
+        /// </summary>
+        public static string Cotizacion_errorFactura {
+            get {
+                return ResourceManager.GetString("Cotizacion_errorFactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SELECCIONE UN MODO DE PAGO.
+        /// </summary>
+        public static string Cotizacion_errorMP {
+            get {
+                return ResourceManager.GetString("Cotizacion_errorMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR AL REGISTRAR LA VENTA.
+        /// </summary>
+        public static string Cotizacion_errorVenta {
+            get {
+                return ResourceManager.GetString("Cotizacion_errorVenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fecha.
+        /// </summary>
+        public static string Cotizacion_fecha {
+            get {
+                return ResourceManager.GetString("Cotizacion_fecha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fecha Cotizacion.
+        /// </summary>
+        public static string Cotizacion_fechaCotizacion {
+            get {
+                return ResourceManager.GetString("Cotizacion_fechaCotizacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Guardar Cotización.
+        /// </summary>
+        public static string Cotizacion_guardar {
+            get {
+                return ResourceManager.GetString("Cotizacion_guardar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a VENTA GUARDADA CON EXITO....
+        /// </summary>
+        public static string Cotizacion_guardarVenta {
+            get {
+                return ResourceManager.GetString("Cotizacion_guardarVenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Id Detalle.
+        /// </summary>
+        public static string Cotizacion_idDetalle {
+            get {
+                return ResourceManager.GetString("Cotizacion_idDetalle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Id Producto.
+        /// </summary>
+        public static string Cotizacion_idProducto {
+            get {
+                return ResourceManager.GetString("Cotizacion_idProducto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Id Venta.
+        /// </summary>
+        public static string Cotizacion_idVenta {
+            get {
+                return ResourceManager.GetString("Cotizacion_idVenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Imprimir Factura.
+        /// </summary>
+        public static string Cotizacion_impFactura {
+            get {
+                return ResourceManager.GetString("Cotizacion_impFactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a IVA.
+        /// </summary>
+        public static string Cotizacion_IVA {
+            get {
+                return ResourceManager.GetString("Cotizacion_IVA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Marca.
+        /// </summary>
+        public static string Cotizacion_marca {
+            get {
+                return ResourceManager.GetString("Cotizacion_marca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mas Facturas.
+        /// </summary>
+        public static string Cotizacion_masFacturas {
+            get {
+                return ResourceManager.GetString("Cotizacion_masFacturas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Modo de Pago.
+        /// </summary>
+        public static string Cotizacion_modoPago {
+            get {
+                return ResourceManager.GetString("Cotizacion_modoPago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre Cliente.
+        /// </summary>
+        public static string Cotizacion_nombreCliente {
+            get {
+                return ResourceManager.GetString("Cotizacion_nombreCliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre del Producto.
+        /// </summary>
+        public static string Cotizacion_nombreProducto {
+            get {
+                return ResourceManager.GetString("Cotizacion_nombreProducto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Número de Cotización.
+        /// </summary>
+        public static string Cotizacion_numeroCotizacion {
+            get {
+                return ResourceManager.GetString("Cotizacion_numeroCotizacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Obtener Cliente.
+        /// </summary>
+        public static string Cotizacion_obtenerCliente {
+            get {
+                return ResourceManager.GetString("Cotizacion_obtenerCliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Precio.
+        /// </summary>
+        public static string Cotizacion_precio {
+            get {
+                return ResourceManager.GetString("Cotizacion_precio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Precio Unitario.
+        /// </summary>
+        public static string Cotizacion_precioUnitario {
+            get {
+                return ResourceManager.GetString("Cotizacion_precioUnitario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Producto.
+        /// </summary>
+        public static string Cotizacion_producto {
+            get {
+                return ResourceManager.GetString("Cotizacion_producto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seleccionar.
+        /// </summary>
+        public static string Cotizacion_seleccionar {
+            get {
+                return ResourceManager.GetString("Cotizacion_seleccionar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seleccione un Producto.
+        /// </summary>
+        public static string Cotizacion_selectProducto {
+            get {
+                return ResourceManager.GetString("Cotizacion_selectProducto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Subtotal.
+        /// </summary>
+        public static string Cotizacion_subTotal {
+            get {
+                return ResourceManager.GetString("Cotizacion_subTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Total a pagar.
+        /// </summary>
+        public static string Cotizacion_totalPagar {
+            get {
+                return ResourceManager.GetString("Cotizacion_totalPagar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Vendedor.
+        /// </summary>
+        public static string Cotizacion_vendedor {
+            get {
+                return ResourceManager.GetString("Cotizacion_vendedor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Reporte de Ventas.
+        /// </summary>
+        public static string Cotizacion_ventaFactura {
+            get {
+                return ResourceManager.GetString("Cotizacion_ventaFactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cotizaciones.
+        /// </summary>
+        public static string Cotizacion_ver {
+            get {
+                return ResourceManager.GetString("Cotizacion_ver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cotizaciones.
         /// </summary>
         public static string Cotizaciones {
             get {
                 return ResourceManager.GetString("Cotizaciones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cotizaciones Recientes.
+        /// </summary>
+        public static string Cotizaciones_recientes {
+            get {
+                return ResourceManager.GetString("Cotizaciones_recientes", resourceCulture);
             }
         }
         
@@ -106,6 +637,24 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Id Detalle.
+        /// </summary>
+        public static string DCotizacion_idDetalle {
+            get {
+                return ResourceManager.GetString("DCotizacion_idDetalle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Número Factura.
+        /// </summary>
+        public static string DCotizacion_numeroFactura {
+            get {
+                return ResourceManager.GetString("DCotizacion_numeroFactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descripcion.
         /// </summary>
         public static string Descripcion {
@@ -115,11 +664,83 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Dirección.
+        /// </summary>
+        public static string Dirección {
+            get {
+                return ResourceManager.GetString("Dirección", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a DNI.
+        /// </summary>
+        public static string DNI {
+            get {
+                return ResourceManager.GetString("DNI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Editar.
+        /// </summary>
+        public static string Editar {
+            get {
+                return ResourceManager.GetString("Editar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Eliminar.
+        /// </summary>
+        public static string Eliminar {
+            get {
+                return ResourceManager.GetString("Eliminar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Venta Eliminada con éxito.
+        /// </summary>
+        public static string Eliminar_mensaje {
+            get {
+                return ResourceManager.GetString("Eliminar_mensaje", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Información Personal.
+        /// </summary>
+        public static string Find_titulo {
+            get {
+                return ResourceManager.GetString("Find_titulo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Guardar.
+        /// </summary>
+        public static string Guardar {
+            get {
+                return ResourceManager.GetString("Guardar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a IdCategoria.
         /// </summary>
         public static string IdCategoria {
             get {
                 return ResourceManager.GetString("IdCategoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Información.
+        /// </summary>
+        public static string Informacion {
+            get {
+                return ResourceManager.GetString("Informacion", resourceCulture);
             }
         }
         
@@ -151,11 +772,515 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listado de categorías.
+        /// </summary>
+        public static string Listado_categorias {
+            get {
+                return ResourceManager.GetString("Listado_categorias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Listado de clientes.
+        /// </summary>
+        public static string Listado_clientes {
+            get {
+                return ResourceManager.GetString("Listado_clientes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Apellido Materno del Cliente.
+        /// </summary>
+        public static string Mensaje_AM {
+            get {
+                return ResourceManager.GetString("Mensaje_AM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 30 caracteres en el campo Apellido Materno.
+        /// </summary>
+        public static string Mensaje_AME {
+            get {
+                return ResourceManager.GetString("Mensaje_AME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Apellido Paterno del Cliente.
+        /// </summary>
+        public static string Mensaje_AP {
+            get {
+                return ResourceManager.GetString("Mensaje_AP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 30 caracteres en el campo Apellido Paterno.
+        /// </summary>
+        public static string Mensaje_APE {
+            get {
+                return ResourceManager.GetString("Mensaje_APE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese la Dirección del Cliente.
+        /// </summary>
+        public static string Mensaje_DC {
+            get {
+                return ResourceManager.GetString("Mensaje_DC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 50 caracteres en el campo Direccion.
+        /// </summary>
+        public static string Mensaje_DCE {
+            get {
+                return ResourceManager.GetString("Mensaje_DCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese DNI del Cliente.
+        /// </summary>
+        public static string Mensaje_DNI {
+            get {
+                return ResourceManager.GetString("Mensaje_DNI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error DNI, ha ingresado letras.
+        /// </summary>
+        public static string Mensaje_DNIE {
+            get {
+                return ResourceManager.GetString("Mensaje_DNIE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese un Numero de DNI válido.
+        /// </summary>
+        public static string Mensaje_DNIE2 {
+            get {
+                return ResourceManager.GetString("Mensaje_DNIE2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cliente [.
+        /// </summary>
+        public static string Mensaje_dup1 {
+            get {
+                return ResourceManager.GetString("Mensaje_dup1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] ya esta Registrado en el Sistema.
+        /// </summary>
+        public static string Mensaje_dup2 {
+            get {
+                return ResourceManager.GetString("Mensaje_dup2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Numero de DNI [.
+        /// </summary>
+        public static string Mensaje_dup3 {
+            get {
+                return ResourceManager.GetString("Mensaje_dup3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] ya esta asignado a un Cliente.
+        /// </summary>
+        public static string Mensaje_dup4 {
+            get {
+                return ResourceManager.GetString("Mensaje_dup4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cliente [.
+        /// </summary>
+        public static string Mensaje_dup5 {
+            get {
+                return ResourceManager.GetString("Mensaje_dup5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] fue Registrado en el Sistema.
+        /// </summary>
+        public static string Mensaje_dup6 {
+            get {
+                return ResourceManager.GetString("Mensaje_dup6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Nombre del Cliente.
+        /// </summary>
+        public static string Mensaje_NC {
+            get {
+                return ResourceManager.GetString("Mensaje_NC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 30 caracteres en el campo Nombre.
+        /// </summary>
+        public static string Mensaje_NCE {
+            get {
+                return ResourceManager.GetString("Mensaje_NCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Este campo es requerido.
+        /// </summary>
+        public static string Mensaje_requerido {
+            get {
+                return ResourceManager.GetString("Mensaje_requerido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el Telefóno del Cliente.
+        /// </summary>
+        public static string Mensaje_TC {
+            get {
+                return ResourceManager.GetString("Mensaje_TC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese un número de Teléfono válido.
+        /// </summary>
+        public static string Mensaje_TCE {
+            get {
+                return ResourceManager.GetString("Mensaje_TCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el Código del Cliente.
+        /// </summary>
+        public static string MensajeA_CC {
+            get {
+                return ResourceManager.GetString("MensajeA_CC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten más de 5 caracteres en el campo Codigo.
+        /// </summary>
+        public static string MensajeA_CCE {
+            get {
+                return ResourceManager.GetString("MensajeA_CCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Datos del Cliente [.
+        /// </summary>
+        public static string MensajeA_dup1 {
+            get {
+                return ResourceManager.GetString("MensajeA_dup1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Fueron actualizados.
+        /// </summary>
+        public static string MensajeA_dup2 {
+            get {
+                return ResourceManager.GetString("MensajeA_dup2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Formulario para Actualizar Datos del Cliente.
+        /// </summary>
+        public static string MensajeA_inicial {
+            get {
+                return ResourceManager.GetString("MensajeA_inicial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el Nombre del Cliente.
+        /// </summary>
+        public static string MensajeA_NC {
+            get {
+                return ResourceManager.GetString("MensajeA_NC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 30 caracteres en el campo Nombre.
+        /// </summary>
+        public static string MensajeA_NCE {
+            get {
+                return ResourceManager.GetString("MensajeA_NCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cliente [.
+        /// </summary>
+        public static string MensajeE_1 {
+            get {
+                return ResourceManager.GetString("MensajeE_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] No Esta Registrado en el Sistema.
+        /// </summary>
+        public static string MensajeE_2 {
+            get {
+                return ResourceManager.GetString("MensajeE_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Ya Fue Eliminado.
+        /// </summary>
+        public static string MensajeE_3 {
+            get {
+                return ResourceManager.GetString("MensajeE_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se Puede Eliminar al Cliente [.
+        /// </summary>
+        public static string MensajeE_4 {
+            get {
+                return ResourceManager.GetString("MensajeE_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Tiene Ventas Registrados en el Sistema!!!.
+        /// </summary>
+        public static string MensajeE_5 {
+            get {
+                return ResourceManager.GetString("MensajeE_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Fue Eliminado!!!.
+        /// </summary>
+        public static string MensajeE_6 {
+            get {
+                return ResourceManager.GetString("MensajeE_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Formulario de Eliminación.
+        /// </summary>
+        public static string MensajeE_inicial {
+            get {
+                return ResourceManager.GetString("MensajeE_inicial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Datos Del Cliente y Click en Guardar.
+        /// </summary>
+        public static string MensajeInicio_cliente {
+            get {
+                return ResourceManager.GetString("MensajeInicio_cliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el código del Modo Pago.
+        /// </summary>
+        public static string ModoPago_codigo {
+            get {
+                return ResourceManager.GetString("ModoPago_codigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Detalles del Modo Pago.
+        /// </summary>
+        public static string ModoPago_detalles {
+            get {
+                return ResourceManager.GetString("ModoPago_detalles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 50 caracteres en el campo detalles.
+        /// </summary>
+        public static string ModoPago_detallesError {
+            get {
+                return ResourceManager.GetString("ModoPago_detallesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error!!! Revise la instruccion de Eliminar.
+        /// </summary>
+        public static string ModoPago_eliminar {
+            get {
+                return ResourceManager.GetString("ModoPago_eliminar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se Puede Eliminar la ModoPago [.
+        /// </summary>
+        public static string ModoPago_eliminarMensaje {
+            get {
+                return ResourceManager.GetString("ModoPago_eliminarMensaje", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Tiene  factura asignada!!!.
+        /// </summary>
+        public static string ModoPago_eliminarMensaje2 {
+            get {
+                return ResourceManager.GetString("ModoPago_eliminarMensaje2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Nombre del Modo Pago.
+        /// </summary>
+        public static string ModoPago_ingrese {
+            get {
+                return ResourceManager.GetString("ModoPago_ingrese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Modo Pago [.
+        /// </summary>
+        public static string ModoPago_m1 {
+            get {
+                return ResourceManager.GetString("ModoPago_m1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] ya esta en el Sistema.
+        /// </summary>
+        public static string ModoPago_m2 {
+            get {
+                return ResourceManager.GetString("ModoPago_m2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] fue Registrado en el Sistema.
+        /// </summary>
+        public static string ModoPago_m3 {
+            get {
+                return ResourceManager.GetString("ModoPago_m3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Datos de la ModoPago [.
+        /// </summary>
+        public static string ModoPago_m4 {
+            get {
+                return ResourceManager.GetString("ModoPago_m4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Fueron Actualizados.
+        /// </summary>
+        public static string ModoPago_m5 {
+            get {
+                return ResourceManager.GetString("ModoPago_m5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Datos Del ModoPago y Click en Guardar.
+        /// </summary>
+        public static string ModoPago_mensajeInicio {
+            get {
+                return ResourceManager.GetString("ModoPago_mensajeInicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre.
+        /// </summary>
+        public static string ModoPago_nombre {
+            get {
+                return ResourceManager.GetString("ModoPago_nombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Numero de modo de pago.
+        /// </summary>
+        public static string ModoPago_numero {
+            get {
+                return ResourceManager.GetString("ModoPago_numero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre.
+        /// </summary>
+        public static string Nombre {
+            get {
+                return ResourceManager.GetString("Nombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nombre.
         /// </summary>
         public static string Nombre_Texto {
             get {
                 return ResourceManager.GetString("Nombre_Texto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nuevo.
+        /// </summary>
+        public static string Nuevo {
+            get {
+                return ResourceManager.GetString("Nuevo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nuevo Cliente.
+        /// </summary>
+        public static string Nuevo_Cliente {
+            get {
+                return ResourceManager.GetString("Nuevo_Cliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Otros detalles.
+        /// </summary>
+        public static string Otros_detalles {
+            get {
+                return ResourceManager.GetString("Otros_detalles", resourceCulture);
             }
         }
         
@@ -169,11 +1294,263 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Banda Ancha:.
+        /// </summary>
+        public static string Producto_bandaAncha {
+            get {
+                return ResourceManager.GetString("Producto_bandaAncha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Precio Unitario.
+        /// </summary>
+        public static string Producto_productoUnitario {
+            get {
+                return ResourceManager.GetString("Producto_productoUnitario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Categoria.
+        /// </summary>
+        public static string ProductoM_categoria {
+            get {
+                return ResourceManager.GetString("ProductoM_categoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese una categoria válida.
+        /// </summary>
+        public static string ProductoM_categoriaError {
+            get {
+                return ResourceManager.GetString("ProductoM_categoriaError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 5 caracteres en al campo Codigo.
+        /// </summary>
+        public static string ProductoM_codigoError {
+            get {
+                return ResourceManager.GetString("ProductoM_codigoError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Código del Producto.
+        /// </summary>
+        public static string ProductoM_codigoVacio {
+            get {
+                return ResourceManager.GetString("ProductoM_codigoVacio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Producto [.
+        /// </summary>
+        public static string ProductoM_dup1 {
+            get {
+                return ResourceManager.GetString("ProductoM_dup1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] ya esta Registrado en el Sistema.
+        /// </summary>
+        public static string ProductoM_dup2 {
+            get {
+                return ResourceManager.GetString("ProductoM_dup2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] fue Registrado en el Sistema.
+        /// </summary>
+        public static string ProductoM_dup3 {
+            get {
+                return ResourceManager.GetString("ProductoM_dup3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error!!! Revise la instruccion Insertar.
+        /// </summary>
+        public static string ProductoM_error1 {
+            get {
+                return ResourceManager.GetString("ProductoM_error1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error!!! Revise la instruccion de actualizar.
+        /// </summary>
+        public static string ProductoM_error2 {
+            get {
+                return ResourceManager.GetString("ProductoM_error2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error!!! Revise la instruccion de Eliminar.
+        /// </summary>
+        public static string ProductoM_error3 {
+            get {
+                return ResourceManager.GetString("ProductoM_error3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR DE SERVIDOR DE SQL SERVER.
+        /// </summary>
+        public static string ProductoM_errorSQL {
+            get {
+                return ResourceManager.GetString("ProductoM_errorSQL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Datos Del Producto y Clic en Guardar.
+        /// </summary>
+        public static string ProductoM_mensaje2 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensaje2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Datos del Producto [.
+        /// </summary>
+        public static string ProductoM_mensajeA1 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeA1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Fueron Actualizados.
+        /// </summary>
+        public static string ProductoM_mensajeA2 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeA2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] No Esta Registrado en el Sistema.
+        /// </summary>
+        public static string ProductoM_mensajeE1 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeE1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ]Ya Fue Eliminado.
+        /// </summary>
+        public static string ProductoM_mensajeE2 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeE2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se Puede Eliminar al Producto [.
+        /// </summary>
+        public static string ProductoM_mensajeE3 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeE3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Tiene  Ventas asignadas!!!.
+        /// </summary>
+        public static string ProductoM_mensajeE4 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeE4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ] Fue Eliminado!!!.
+        /// </summary>
+        public static string ProductoM_mensajeE5 {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeE5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Datos Del Producto y Click en Guardar.
+        /// </summary>
+        public static string ProductoM_mensajeInicio {
+            get {
+                return ResourceManager.GetString("ProductoM_mensajeInicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se permiten mas de 30 caracteres en el campo Nombre.
+        /// </summary>
+        public static string ProductoM_nombreError {
+            get {
+                return ResourceManager.GetString("ProductoM_nombreError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Nombre del Producto.
+        /// </summary>
+        public static string ProductoM_nombreVacio {
+            get {
+                return ResourceManager.GetString("ProductoM_nombreVacio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese un Precio Válido.
+        /// </summary>
+        public static string ProductoM_precio {
+            get {
+                return ResourceManager.GetString("ProductoM_precio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese Precio Unitario del Producto.
+        /// </summary>
+        public static string ProductoM_precioUnitario {
+            get {
+                return ResourceManager.GetString("ProductoM_precioUnitario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Precio unitario no válido.
+        /// </summary>
+        public static string ProductoM_precioUnitarioError {
+            get {
+                return ResourceManager.GetString("ProductoM_precioUnitarioError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Productos.
         /// </summary>
         public static string Productos {
             get {
                 return ResourceManager.GetString("Productos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Descripción.
+        /// </summary>
+        public static string Productos_descripcion {
+            get {
+                return ResourceManager.GetString("Productos_descripcion", resourceCulture);
             }
         }
         
@@ -196,6 +1573,15 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Registrarse.
+        /// </summary>
+        public static string Registrarse {
+            get {
+                return ResourceManager.GetString("Registrarse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Registro Clientes.
         /// </summary>
         public static string Registro_Clientes {
@@ -210,6 +1596,24 @@ namespace Lenguaje {
         public static string Registro_Vendedores {
             get {
                 return ResourceManager.GetString("Registro Vendedores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Regresar al Listado.
+        /// </summary>
+        public static string Regresar_al_Listado {
+            get {
+                return ResourceManager.GetString("Regresar_al_Listado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Reporte.
+        /// </summary>
+        public static string Reporte {
+            get {
+                return ResourceManager.GetString("Reporte", resourceCulture);
             }
         }
         
@@ -286,11 +1690,51 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Telefóno.
+        /// </summary>
+        public static string Telefóno {
+            get {
+                return ResourceManager.GetString("Telefóno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Vendedores.
         /// </summary>
         public static string Vendedores {
             get {
                 return ResourceManager.GetString("Vendedores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ver Detalles.
+        /// </summary>
+        public static string Ver_detalles {
+            get {
+                return ResourceManager.GetString("Ver_detalles", resourceCulture);
+            }
+        }
+
+        public static string ApellidoS
+        {
+            get
+            {
+                return ResourceManager.GetString("ApellidoS", resourceCulture);
+            }
+        }
+        public static string OtroApellido
+        {
+            get
+            {
+                return ResourceManager.GetString("OtroApellido", resourceCulture);
+            }
+        }
+        public static string Email
+        {
+            get
+            {
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
     }

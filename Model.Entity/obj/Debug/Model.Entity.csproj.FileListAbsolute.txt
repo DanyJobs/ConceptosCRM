@@ -15,6 +15,7 @@ C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Ent
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Model.Entity.dll.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Model.Entity.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Model.Entity.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\en\Model.Entity.resources.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\roslyn\csc.exe
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\roslyn\csc.exe.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\roslyn\csc.rsp
@@ -51,14 +52,11 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\EntityFramework.SqlServer.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csprojAssemblyReference.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.resources
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.en.resources
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.GenerateResource.cache
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.CoreCompileInputs.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\en\Model.Entity.resources.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.CopyComplete
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.resources
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.GenerateResource.cache
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\en\Model.Entity.resources.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.en.resources
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\en\Model.Entity.resources.dll

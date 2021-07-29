@@ -45,7 +45,7 @@ namespace WebFacturaMvc.Controllers
             switch (objModoPago.Estado)
             {
                 case 1000://campo codigo vacio
-                    ViewBag.MensajeError = "Error!!! Revise la instruccion Insertar";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_error1;
                     break;
                 //case 10://campo codigo vacio
                 //    ViewBag.MensajeError = "Ingrese Código del ModoPago";
@@ -54,29 +54,29 @@ namespace WebFacturaMvc.Controllers
                 //    ViewBag.MensajeError = "Ingrese solo numeros";
                 //    break;
                 //case 1://error campo cadigo
-                    ViewBag.MensajeError = "No se permiten mas de 5 caracteres en al campo Codigo";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_codigoError;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = "Ingrese Nombre del ModoPago";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_ingrese;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo Nombre";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_nombreError;
                     break;
 
                 case 30://campo descripcion vacio
-                    ViewBag.MensajeError = "Ingrese Detalles del ModoPago";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detalles;
                     break;
 
                 case 3://error de Apellido Paterno
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo detalles";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detallesError;
                     break;
 
                 case 8://error de duplicidad
-                    ViewBag.MensajeError = "ModoPago [" + objModoPago.NumPago + "] ya esta Registrada en el Sistema";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_m1 + objModoPago.NumPago + Lenguaje.Recurso.ModoPago_m2;
                     break;
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = "ModoPago [" + objModoPago.Nombre + "] fue Registrado en el Sistema";
+                    ViewBag.MensajeExito = Lenguaje.Recurso.ModoPago_m1 + objModoPago.Nombre + Lenguaje.Recurso.ModoPago_m3;
                     break;
 
             }
@@ -84,7 +84,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicioRegistrar()
         {
-            ViewBag.MensajeInicio = "Ingrese Datos Del ModoPago y Click en Guardar";
+            ViewBag.MensajeInicio = Lenguaje.Recurso.ModoPago_mensajeInicio;
         }
 
         public ActionResult Update(int id)
@@ -110,32 +110,32 @@ namespace WebFacturaMvc.Controllers
             switch (objModoPago.Estado)
             {
                 case 1000://campo codigo vacio
-                    ViewBag.MensajeError = "Error!!! Revise la instruccion de actualizar";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_error2;
                     break;
                 case 10://campo codigo vacio
-                    ViewBag.MensajeError = "Ingrese Código del ModoPago";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_codigo;
                     break;
                 case 1://error campo cadigo
-                    ViewBag.MensajeError = "No se permiten mas de 5 caracteres en al campo Codigo";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_codigoError;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = "Ingrese Nombre del ModoPago";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_ingrese;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = "No se permiten mas de 30 caracteres en el campo Nombre";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_nombreError;
                     break;
 
                 case 30://campo descripcion vacio
-                    ViewBag.MensajeError = "Ingrese Detalles del modo Pago";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detalles;
                     break;
 
                 case 3://error de precio Unitario
-                    ViewBag.MensajeError = "No se permiten mas de 50 caracteres en el campo detalles";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detallesError;
                     break;
 
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = "Datos de la ModoPago [" + objModoPago.NumPago + "] Fueron Actualizados";
+                    ViewBag.MensajeExito = Lenguaje.Recurso.ModoPago_m4 + objModoPago.NumPago + Lenguaje.Recurso.ModoPago_m5;
                     break;
 
             }
@@ -143,7 +143,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicioActualizar()
         {
-            ViewBag.MensajeInicio = "Ingrese Datos Del ModoPago y Click en Guardar";
+            ViewBag.MensajeInicio = Lenguaje.Recurso.ModoPago_mensajeInicio;
         }
 
         [HttpGet]
@@ -172,20 +172,20 @@ namespace WebFacturaMvc.Controllers
             switch (objModoPago.Estado)
             {
                 case 1000://campo codigo vacio
-                    ViewBag.MensajeError = "Error!!! Revise la instruccion de Eliminar";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_eliminar;
                     break;
                 case 1: //ERROR DE EXISTENCIA
-                    ViewBag.MensajeError = "ModoPago [" + objModoPago.NumPago + "] No Esta Registrado en el Sistema ";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_m1 + objModoPago.NumPago + Lenguaje.Recurso.ProductoM_mensajeE1;
                     break;
 
                 case 33://CLIENTE NO EXISTE
-                    ViewBag.MensajeError = "ModoPago: [" + objModoPago.Nombre + "]Ya Fue Eliminada";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_m1 + objModoPago.Nombre + Lenguaje.Recurso.ProductoM_mensajeE2;
                     break;
                 case 34:
-                    ViewBag.MensajeError = "No se Puede Eliminar la ModoPago [" + objModoPago.Nombre + "] Tiene  factura asignada!!!";
+                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_eliminarMensaje + objModoPago.Nombre + Lenguaje.Recurso.ModoPago_eliminarMensaje2;
                     break;
                 case 99: //EXITO
-                    ViewBag.MensajeExito = "ModoPago [" + objModoPago.Nombre + "] Fue Eliminado!!!";
+                    ViewBag.MensajeExito = Lenguaje.Recurso.ModoPago_m1 + objModoPago.Nombre + Lenguaje.Recurso.ProductoM_mensajeE5;
                     break;
 
                 default:
@@ -195,7 +195,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicialEliminar()
         {
-            ViewBag.MensajeInicialEliminar = "Formulario de Eliminacion";
+            ViewBag.MensajeInicialEliminar = Lenguaje.Recurso.MensajeE_inicial;
         }
         public ActionResult Find(int id)
         {

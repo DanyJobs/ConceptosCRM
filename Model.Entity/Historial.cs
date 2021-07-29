@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Entity
 {
@@ -14,8 +10,8 @@ namespace Model.Entity
         private string numCotizacion;
         private string producto;
         private string precioUnitario;
-        [DisplayFormat(DataFormatString ="{MM-dd-yyyy}", ApplyFormatInEditMode =true)]
-        public DateTime FechaCotizacion{ get; set; }
+        [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime FechaCotizacion { get; set; }
 
         private int estado;
 
@@ -84,7 +80,7 @@ namespace Model.Entity
             }
         }
 
-       
+
 
 
 
@@ -104,7 +100,7 @@ namespace Model.Entity
         {
 
         }
-        public Historial(string idProducto,string cliente , string numCotizacion, string producto, string precioUnitario, DateTime fechaCotizacion)
+        public Historial(string idProducto, string cliente, string numCotizacion, string producto, string precioUnitario, DateTime fechaCotizacion)
         {
             this.idProducto = idProducto;
             this.cliente = cliente;

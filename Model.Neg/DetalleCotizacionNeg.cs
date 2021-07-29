@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model.Dao;
 using Model.Entity;
-using Model.Dao;
+using System;
+using System.Collections.Generic;
 
 namespace Model.Neg
 {
-   public class DetalleCotizacionNeg
+    public class DetalleCotizacionNeg
     {
         private DetalleCotizacionDao objDetalleCotizacionDao;
         public DetalleCotizacionNeg()
@@ -59,7 +56,7 @@ namespace Model.Neg
             return objDetalleCotizacionDao.detallesPorIdVenta(objDetalleCotizacion);
         }
         public void delete(DetalleCotizacion objDetalleCotizacion)
-        {            
+        {
             objDetalleCotizacionDao.delete(objDetalleCotizacion);
         }
         public List<DetalleCotizacion> findAll()
