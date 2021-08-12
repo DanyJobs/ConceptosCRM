@@ -327,6 +327,10 @@ namespace WebFacturaMvc {
             
             private global::System.Data.DataColumn columntotal_Producto;
             
+            private global::System.Data.DataColumn columnabreviatura;
+            
+            private global::System.Data.DataColumn columnSimbolo;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public sp_reporte_ventaDataTable() {
@@ -554,6 +558,22 @@ namespace WebFacturaMvc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn abreviaturaColumn {
+                get {
+                    return this.columnabreviatura;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SimboloColumn {
+                get {
+                    return this.columnSimbolo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -612,7 +632,9 @@ namespace WebFacturaMvc {
                         decimal Taxas1, 
                         decimal TotalPagar1, 
                         decimal total_parcial1, 
-                        float total_Producto) {
+                        float total_Producto, 
+                        string abreviatura, 
+                        string Simbolo) {
                 sp_reporte_ventaRow rowsp_reporte_ventaRow = ((sp_reporte_ventaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -638,7 +660,9 @@ namespace WebFacturaMvc {
                         Taxas1,
                         TotalPagar1,
                         total_parcial1,
-                        total_Producto};
+                        total_Producto,
+                        abreviatura,
+                        Simbolo};
                 rowsp_reporte_ventaRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowsp_reporte_ventaRow);
                 return rowsp_reporte_ventaRow;
@@ -685,6 +709,8 @@ namespace WebFacturaMvc {
                 this.columnTotalPagar1 = base.Columns["TotalPagar1"];
                 this.columntotal_parcial1 = base.Columns["total_parcial1"];
                 this.columntotal_Producto = base.Columns["total_Producto"];
+                this.columnabreviatura = base.Columns["abreviatura"];
+                this.columnSimbolo = base.Columns["Simbolo"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -738,6 +764,10 @@ namespace WebFacturaMvc {
                 base.Columns.Add(this.columntotal_parcial1);
                 this.columntotal_Producto = new global::System.Data.DataColumn("total_Producto", typeof(float), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntotal_Producto);
+                this.columnabreviatura = new global::System.Data.DataColumn("abreviatura", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnabreviatura);
+                this.columnSimbolo = new global::System.Data.DataColumn("Simbolo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSimbolo);
                 this.columnidVenta.AutoIncrement = true;
                 this.columnidVenta.AllowDBNull = false;
                 this.columnidVenta.ReadOnly = true;
@@ -772,6 +802,9 @@ namespace WebFacturaMvc {
                 this.columntotal_parcial1.ReadOnly = true;
                 this.columntotal_parcial1.Caption = "total_parcial";
                 this.columntotal_Producto.ReadOnly = true;
+                this.columnabreviatura.AllowDBNull = false;
+                this.columnabreviatura.MaxLength = 3;
+                this.columnSimbolo.MaxLength = 4;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1242,6 +1275,33 @@ namespace WebFacturaMvc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string abreviatura {
+                get {
+                    return ((string)(this[this.tablesp_reporte_venta.abreviaturaColumn]));
+                }
+                set {
+                    this[this.tablesp_reporte_venta.abreviaturaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Simbolo {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_reporte_venta.SimboloColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Simbolo\' de la tabla \'sp_reporte_venta\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_reporte_venta.SimboloColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsTrabajadorNull() {
                 return this.IsNull(this.tablesp_reporte_venta.TrabajadorColumn);
             }
@@ -1382,6 +1442,18 @@ namespace WebFacturaMvc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void Settotal_ProductoNull() {
                 this[this.tablesp_reporte_venta.total_ProductoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSimboloNull() {
+                return this.IsNull(this.tablesp_reporte_venta.SimboloColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSimboloNull() {
+                this[this.tablesp_reporte_venta.SimboloColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1565,6 +1637,8 @@ namespace WebFacturaMvc.ProcDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("TotalPagar", "TotalPagar1");
             tableMapping.ColumnMappings.Add("total_parcial", "total_parcial1");
             tableMapping.ColumnMappings.Add("total_Producto", "total_Producto");
+            tableMapping.ColumnMappings.Add("abreviatura", "abreviatura");
+            tableMapping.ColumnMappings.Add("Simbolo", "Simbolo");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

@@ -167,12 +167,12 @@ namespace WebFacturaMvc.Controllers
                     ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AME;
                     break;
 
-                case 50://campo dni vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNI;
-                    break;
-                case 5://error de dni
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE2;
-                    break;
+                //case 50://campo dni vacio
+                //    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNI;
+                //    break;
+                //case 5://error de dni
+                //    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE2;
+                //    break;
                 case 60://campo de direccion vacio
                     ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DC;
                     break;

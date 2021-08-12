@@ -87,7 +87,7 @@
     <Key>
       <PropertyRef Name="idCompra" />
     </Key>
-    <Property Name="idCompra" Type="int" Nullable="false" />
+    <Property Name="idCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="total" Type="money" Nullable="false" />
     <Property Name="fechaCompra" Type="date" Nullable="false" />
     <Property Name="idSucursal" Type="int" />
@@ -103,6 +103,21 @@
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="precio" Type="money" Nullable="false" />
   </EntityType>
+  <EntityType Name="configuracion">
+    <Key>
+      <PropertyRef Name="idConfiguracion" />
+    </Key>
+    <Property Name="idConfiguracion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="moneda" Type="nvarchar" MaxLength="3" />
+    <Property Name="requerir" Type="char" MaxLength="1" />
+    <Property Name="impuesto" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="usuario" Type="nvarchar" MaxLength="128" />
+    <Property Name="servidorSmtp" Type="nvarchar" MaxLength="20" />
+    <Property Name="puerto" Type="int" />
+    <Property Name="contrasena" Type="nvarchar(max)" />
+    <Property Name="displayName" Type="nvarchar" MaxLength="30" />
+    <Property Name="email" Type="nvarchar" MaxLength="256" />
+  </EntityType>
   <EntityType Name="cotizacion">
     <Key>
       <PropertyRef Name="idVenta" />
@@ -113,6 +128,8 @@
     <Property Name="idVendedor" Type="nvarchar" MaxLength="128" />
     <Property Name="fecha" Type="date" Nullable="false" />
     <Property Name="IVA" Type="money" Nullable="false" />
+    <Property Name="notas" Type="nvarchar" MaxLength="200" />
+    <Property Name="notasCompras" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="detalleCotizacion">
     <Key>
@@ -126,6 +143,8 @@
     <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="descuento" Type="money" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="notas" Type="varchar" MaxLength="200" />
+    <Property Name="notasCompras" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="existencia">
     <Key>
@@ -162,6 +181,13 @@
     <Property Name="numPago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nombre" Type="nvarchar" MaxLength="25" Nullable="false" />
     <Property Name="otroDetalles" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Moneda">
+    <Key>
+      <PropertyRef Name="abreviatura" />
+    </Key>
+    <Property Name="abreviatura" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="simbolo" Type="nvarchar" MaxLength="4" />
   </EntityType>
   <EntityType Name="producto">
     <Key>
@@ -213,6 +239,14 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="texto">
+    <Key>
+      <PropertyRef Name="idTexto" />
+    </Key>
+    <Property Name="idTexto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcionCorta" Type="nvarchar" MaxLength="20" />
+    <Property Name="texto" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="tipoEmpleado">
     <Key>
       <PropertyRef Name="idTipo" />
@@ -241,6 +275,30 @@
       </Principal>
       <Dependent Role="producto">
         <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConfiguracionMoneda">
+    <End Role="Moneda" Type="Self.Moneda" Multiplicity="0..1" />
+    <End Role="configuracion" Type="Self.configuracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moneda">
+        <PropertyRef Name="abreviatura" />
+      </Principal>
+      <Dependent Role="configuracion">
+        <PropertyRef Name="moneda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConfiguracionUsuario">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="configuracion" Type="Self.configuracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="configuracion">
+        <PropertyRef Name="usuario" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -443,6 +501,29 @@
     <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
   </Function>
   <Function Name="SP_Buscar_Cotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_CompraAlta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="total" Type="money" Mode="In" />
+    <Parameter Name="fechaCompra" Type="date" Mode="In" />
+    <Parameter Name="idSucursal" Type="int" Mode="In" />
+    <Parameter Name="idProveedor" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CompraDetalleAlta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idcompra" Type="int" Mode="In" />
+    <Parameter Name="precio" Type="money" Mode="In" />
+    <Parameter Name="idproducto" Type="nvarchar" Mode="In" />
+    <Parameter Name="cantidad" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaEmailCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idVenta" Type="numeric" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaExistencias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_consultaExistenciasSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idSucursal" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idSucursal" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaSucursales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SP_COTIZACION_HISTORIAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idProducto" Type="varchar" Mode="In" />
   </Function>
@@ -470,10 +551,23 @@
     <Parameter Name="pageSize" Type="int" Mode="In" />
     <Parameter Name="pageCount" Type="int" Mode="InOut" />
   </Function>
+  <Function Name="sp_obtenercliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo" Type="numeric" Mode="In" />
+    <Parameter Name="nombre" Type="varchar" Mode="In" />
+    <Parameter Name="apellido" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_obtenerexistencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="producto" Type="varchar" Mode="In" />
+    <Parameter Name="sucursal" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_producto_categoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCategoria" Type="varchar" Mode="In" />
   </Function>
   <Function Name="SP_PRODUCTO_CONSULTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_PRODUCTO_CONSULTA_cotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -529,16 +623,19 @@
     <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="compra" EntityType="Self.compra" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="compraDetalle" EntityType="Self.compraDetalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="configuracion" EntityType="Self.configuracion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cotizacion" EntityType="Self.cotizacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="detalleCotizacion" EntityType="Self.detalleCotizacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="existencia" EntityType="Self.existencia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="factura" EntityType="Self.factura" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="marca" EntityType="Self.marca" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="modoPago" EntityType="Self.modoPago" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Moneda" EntityType="Self.Moneda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="proveedor" EntityType="Self.proveedor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sucursal" EntityType="Self.sucursal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="texto" EntityType="Self.texto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tipoEmpleado" EntityType="Self.tipoEmpleado" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__detalleFa__idPed__239E4DCF" Association="Self.FK__detalleFa__idPed__239E4DCF">
       <End Role="cotizacion" EntitySet="cotizacion" />
@@ -547,6 +644,14 @@
     <AssociationSet Name="FK__producto__idCate__164452B1" Association="Self.FK__producto__idCate__164452B1">
       <End Role="categoria" EntitySet="categoria" />
       <End Role="producto" EntitySet="producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConfiguracionMoneda" Association="Self.FK_ConfiguracionMoneda">
+      <End Role="Moneda" EntitySet="Moneda" />
+      <End Role="configuracion" EntitySet="configuracion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConfiguracionUsuario" Association="Self.FK_ConfiguracionUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="configuracion" EntitySet="configuracion" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

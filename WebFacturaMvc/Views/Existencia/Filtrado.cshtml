@@ -1,0 +1,77 @@
+﻿
+<link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+
+@using Model.Entity
+@model List<Model.Entity.ExistenciaT>
+@{
+    ViewBag.Title = "BuscarPorCodigo";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tbcliente tbody tr").dblclick(function () {
+            var ExistenciaT = {};
+            var n, a, m;
+            n = ExistenciaT.Codigo = $(this).children().eq('0').text();
+            a = ExistenciaT.DatosPersonales = $(this).children().eq('1').text() + " " + $(this).children().eq('2').text();
+            m = ExistenciaT.Identificacion = $(this).children().eq('5').text();
+            console.info(a, n, m);
+            window.opener.Filtrado(ExistenciaT);
+            window.close();
+        });
+    });
+</script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Buscar Clientes en el Sistema</div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-horizontal">
+                <h2 style="text-align:center; font-family:Arial; font-weight:700;">Buscar Cliente por:</h2>
+                <fieldset>
+                    <div class="row" style="padding-bottom:8px;">
+                        <div class="form-group col-md-3">
+                            @Html.Label("Producto", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBox("txtproducto", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            @Html.Label("Sucursal", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownList("txtsucursal", ViewBag.ListaSucursal as IEnumerable<SelectListItem>, "Seleccione sucursal", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>                       
+                    </div>
+                </fieldset>
+            </div>
+            <input type="submit" value="Buscar" />
+        }
+    </div>
+</div>
+
+<table class="table table-striped" id="tbcliente">
+    <thead>
+        <tr class="bg-primary">
+            <th>Nombre de producto</th>
+            <th>Sucursal</th>
+            <th>Cantidad</th>
+            <th>Seccion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCompra in Model)
+        {
+            <tr>
+                <td>@objCompra.Nombre</td>
+                <td>@objCompra.Sucursal</td>
+                <td>@objCompra.Cantidad</td>
+                <td>@objCompra.Seccion</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/jquery/jquery.min.js"></script>

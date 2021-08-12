@@ -1,9 +1,19 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.Reporting.WebForms;
 using Model.Entity;
 using Model.Neg;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
+using System.Web.UI;
+using WebFacturaMvc.Datos;
+using WebFacturaMvc.Reportes.Espanol;
 
 namespace WebFacturaMvc.Controllers
 {
@@ -17,6 +27,8 @@ namespace WebFacturaMvc.Controllers
         private FacturaNeg objFacturaNeg;
         private static int Paso=0;
         private DetalleCotizacionNeg objDetalleVentaNeg;
+        private static string idVentaMail;
+        private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         public CotizacionController()
         {
             objCotizacionNeg = new CotizacionNeg();
@@ -34,26 +46,30 @@ namespace WebFacturaMvc.Controllers
         }
 
         [HttpPost]//para buscar clientes
-        public ActionResult ObtenerClientes(string txtnombre, string txtappaterno, string txtemail, long txtcliente = -1)
+        public ActionResult ObtenerClientes(string txtnombre, string txtcliente, string txtapellido,string txtemail)
         {
             if (txtnombre == "")
             {
                 txtnombre = "-1";
             }
-            if (txtappaterno == "")
+            if (txtapellido == "")
             {
-                txtappaterno = "-1";
+                txtapellido = "-1";
+            }
+            if (txtcliente == "")
+            {
+                txtcliente = "-1";
             }
             if (txtemail == "")
             {
                 txtemail = "-1";
             }
+            long txtCodigoConvertido = Convert.ToInt64(txtcliente);
             Cliente objCliente = new Cliente();
             objCliente.Nombre = txtnombre;
-            objCliente.IdCliente = txtcliente;
-            objCliente.Apellido = txtappaterno;
+            objCliente.IdCliente = txtCodigoConvertido;
+            objCliente.Apellido = txtapellido;
             objCliente.Email = txtemail;
-
             List<Cliente> cliente = objClienteNeg.findAllClientes(objCliente);
             return View(cliente);
         }
@@ -93,7 +109,7 @@ namespace WebFacturaMvc.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult GuardarCotizacion(string Fecha, string modoPago, string IdCliente, string Total, List<DetalleCotizacion> ListadoDetalle)
+        public ActionResult GuardarCotizacion(string Fecha, string modoPago, string IdCliente, string Total,string notas, string notasCompras, List<DetalleCotizacion> ListadoDetalle)
         {
             string mensaje = "";
             double iva = 18;
@@ -119,7 +135,7 @@ namespace WebFacturaMvc.Controllers
 
 
                 //REGISTRO DE VENTA
-                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva);
+                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras);
                 string codigoVenta = objCotizacionNeg.create(objVenta);
                 if (codigoVenta == "" || codigoVenta == null)
                 {
@@ -128,7 +144,8 @@ namespace WebFacturaMvc.Controllers
                 else
                 {
                    
-                    Session["idVenta"] = codigoVenta;
+                     Session["idVenta"] = codigoVenta;
+                     idVentaMail= codigoVenta;
                     //REGISTRO DE FACTURA
                     Factura objFactura = new Factura(Fecha, iva, total, codigoPago);
                     string codigoFactura = objFacturaNeg.create(objFactura);
@@ -145,6 +162,7 @@ namespace WebFacturaMvc.Controllers
                             int cantidad = Convert.ToInt32(data.Cantidad.ToString());
                             double descuento = Convert.ToDouble(data.Descuento.ToString());
                             double subtotal = Convert.ToDouble(data.SubTotal.ToString());
+
                             DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
                             objDetalleVentaNeg.create(objDetalleVenta);
 
@@ -165,19 +183,22 @@ namespace WebFacturaMvc.Controllers
                 if (Session["idVenta"].ToString() != null)
                 {
                     string idVenta = Session["idVenta"].ToString();
+                    Paso = 0;
                     return Redirect("~/Reportes/Espanol/frmReporteEs.aspx?IdVenta=" + idVenta);
                 }
                 else
                 {
                     cargarModoPagocmb();
                     cargarProductocmb();
-                    return View();
+                    TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                    return View("NuevaCotizacion");
                 }
             }
             else {
                 cargarModoPagocmb();
                 cargarProductocmb();
-                return View();
+                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                return View("NuevaCotizacion");
             }
            
         }
@@ -189,18 +210,21 @@ namespace WebFacturaMvc.Controllers
                 if (Session["idVenta"].ToString() != null)
                 {
                     string idVenta = Session["idVenta"].ToString();
+                    Paso = 0;
                     return Redirect("~/Reportes/Ingles/frmReporteEn.aspx?IdVenta=" + idVenta);
                 }
                 else
                 {
                     cargarModoPagocmb();
                     cargarProductocmb();
-                    return View();
+                    TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                    return View("NuevaCotizacion");
                 }
             } else{
                 cargarModoPagocmb();
                 cargarProductocmb();
-                return View();
+                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                return View("NuevaCotizacion");
             }
         }
             
@@ -233,5 +257,134 @@ namespace WebFacturaMvc.Controllers
             return View(Cotizacion);
         }
 
+        public ActionResult SendEmailFactura(int idVenta)
+        {
+            if (idVenta != null)
+            {
+                //string id = Session["idVenta"].ToString();
+                var lects = db.Database.SqlQuery<SendEmail>(
+    "sp_consultaEmailCliente @idVenta",
+new SqlParameter("@idVenta", idVenta)).Single();
+                Paso = 0;
+                SendEmail email = new SendEmail();
+                email = lects;
+                return View("SendEmail", lects);
+            }
+            else
+            {
+                cargarModoPagocmb();
+                cargarProductocmb();
+                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                return View();
+            }
+
+
+
+
+        }
+
+        public ActionResult SendEmail()
+        {
+            if (Paso == 1)
+            {
+                if (Session["idVenta"].ToString() != null)
+                {
+                    string idVenta = Session["idVenta"].ToString();
+                    var lects = db.Database.SqlQuery<SendEmail>(
+        "sp_consultaEmailCliente @idVenta",
+    new SqlParameter("@idVenta", idVenta)).Single();
+                    Paso = 0;
+                    SendEmail email = new SendEmail();
+                    email = lects;
+                    return View(lects);
+                }
+                else
+                {
+                    cargarModoPagocmb();
+                    cargarProductocmb();
+                    TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                    return View();
+                }
+            }
+            else
+            {
+
+                cargarModoPagocmb();
+                cargarProductocmb();
+                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                return View("NuevaCotizacion");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SendEmail(SendEmail objSendEmail)
+        {
+            configuracion objConfiguracion = new configuracion();
+            if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                string id = User.Identity.GetUserId();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                objConfiguracion = db.configuracion.First(p => p.usuario == id);            
+                if (objConfiguracion == null)
+                {
+                    return HttpNotFound();
+                }                          
+            }       
+
+            string msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+            string from = objConfiguracion.email;
+            string displayName = objConfiguracion.displayName;
+            try
+            {
+
+                using (var viewer = new LocalReport())
+                {
+                    
+                    DateTime fechaActual = DateTime.Today;
+                    string fechaQuote = string.Format("{0}{1}{2}", fechaActual.Month, fechaActual.Day, fechaActual.Year);
+
+                    DataTable dt = frmReporteEs.cargar(idVentaMail);
+                    ReportDataSource rds = new ReportDataSource("DataSet1", dt);
+                    viewer.DataSources.Add(rds);
+                    viewer.ReportPath = "Reportes/Ingles/rptFacturaEn.rdlc";
+
+                    //parameters
+                    ReportParameter[] rptParams = new ReportParameter[]
+                    {
+                new ReportParameter("idVenta",idVentaMail)
+                };
+                    viewer.Refresh();
+
+                    var bytes = viewer.Render("PDF");
+
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress(from, displayName);              
+                    mail.To.Add(objSendEmail.To);
+                    mail.Subject = objSendEmail.Subject;
+                    mail.Body = objSendEmail.Body;
+                    mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " +idVentaMail+fechaQuote + ".pdf"));
+                    mail.IsBodyHtml = true;
+                    SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
+                    client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
+                    client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                    client.Send(mail);
+                    msge = "¡Correo enviado exitosamente! Pronto te contactaremos.";
+                }
+                return RedirectToAction("NuevaCotizacion", "Cotizacion"); ;
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = "<script>alert('"+ ex.Message.ToString() + "');</script>";
+                msge = ex.Message + ". Por favor verifica tu conexión a internet y que tus datos sean correctos e intenta nuevamente.";
+                return RedirectToAction("NuevaCotizacion", "Cotizacion"); ;
+            }
+        }
     }
 }

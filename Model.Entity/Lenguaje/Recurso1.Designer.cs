@@ -106,6 +106,15 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Apellidos.
+        /// </summary>
+        public static string ApellidoS {
+            get {
+                return ResourceManager.GetString("ApellidoS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Buscar.
         /// </summary>
         public static string Buscar {
@@ -709,6 +718,15 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Correo electronico.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Información Personal.
         /// </summary>
         public static string Find_titulo {
@@ -1276,6 +1294,15 @@ namespace Lenguaje {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Apellidos.
+        /// </summary>
+        public static string OtroApellido {
+            get {
+                return ResourceManager.GetString("OtroApellido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Otros detalles.
         /// </summary>
         public static string Otros_detalles {
@@ -1713,28 +1740,6 @@ namespace Lenguaje {
         public static string Ver_detalles {
             get {
                 return ResourceManager.GetString("Ver_detalles", resourceCulture);
-            }
-        }
-
-        public static string ApellidoS
-        {
-            get
-            {
-                return ResourceManager.GetString("ApellidoS", resourceCulture);
-            }
-        }
-        public static string OtroApellido
-        {
-            get
-            {
-                return ResourceManager.GetString("OtroApellido", resourceCulture);
-            }
-        }
-        public static string Email
-        {
-            get
-            {
-                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
     }

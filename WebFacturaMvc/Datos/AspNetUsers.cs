@@ -21,6 +21,7 @@ namespace WebFacturaMvc.Datos
             this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.cotizacion = new HashSet<cotizacion>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
+            this.configuracion = new HashSet<configuracion>();
         }
     
         public string Id { get; set; }
@@ -47,5 +48,7 @@ namespace WebFacturaMvc.Datos
         public virtual ICollection<cotizacion> cotizacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<configuracion> configuracion { get; set; }
     }
 }

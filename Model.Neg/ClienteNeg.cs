@@ -321,14 +321,14 @@ namespace Model.Neg
             //end validar telefono
 
             //begin verificar duplicidad dni retorna estado=8
-            Cliente objCliente1 = new Cliente();
-            objCliente1.Email = objCliente.Email;
-            verificacion = !objClienteDao.findClientePorEmail(objCliente1);
-            if (!verificacion)
-            {
-                objCliente.Estado = 9;
-                return;
-            }
+            //Cliente objCliente1 = new Cliente();
+            //objCliente1.Email = objCliente.Email;
+            //verificacion = !objClienteDao.findClientePorEmail(objCliente1);
+            //if (!verificacion)
+            //{
+            //    objCliente.Estado = 9;
+            //    return;
+            //}
             //end validar duplicidad
 
             //si no hay error

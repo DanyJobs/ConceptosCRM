@@ -1,6 +1,7 @@
 ﻿using Model.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Model.Dao
@@ -9,6 +10,7 @@ namespace Model.Dao
     {
         private ConexionDB objConexinDB;
         private SqlCommand comando;
+        private SqlDataReader reader;
 
         public ClienteDao()
         {
@@ -219,12 +221,18 @@ namespace Model.Dao
         {
             List<Cliente> listaClientes = new List<Cliente>();
             //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
-            string findAll = "select* from cliente where nombre like '%" + objCLiente.Nombre + "%' or email like '%" + objCLiente.Email + "%' or idCliente like '%" + objCLiente.IdCliente + "%' or apPaterno like '%" + objCLiente.Apellido + "%'";
+            SqlCommand cmd = new SqlCommand("sp_obtenercliente", objConexinDB.getCon());
+
             try
             {
-                comando = new SqlCommand(findAll, objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@codigo", objCLiente.IdCliente);
+                cmd.Parameters.AddWithValue("@nombre", objCLiente.Nombre);
+                cmd.Parameters.AddWithValue("@apellido", objCLiente.Apellido);
+                cmd.Parameters.AddWithValue("@email", objCLiente.Email);
+
                 objConexinDB.getCon().Open();
-                SqlDataReader reader = comando.ExecuteReader();
+                reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     Cliente objCliente = new Cliente();
@@ -250,7 +258,6 @@ namespace Model.Dao
             }
 
             return listaClientes;
-
         }
     }
 }

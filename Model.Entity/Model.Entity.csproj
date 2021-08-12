@@ -63,16 +63,30 @@
   <ItemGroup>
     <Compile Include="Categoria.cs" />
     <Compile Include="Cliente.cs" />
+    <Compile Include="Compra.cs" />
+    <Compile Include="CompraDetalle.cs" />
     <Compile Include="DetalleCotizacion.cs" />
+    <Compile Include="EncriptacionSha.cs" />
+    <Compile Include="Existencia.cs" />
+    <Compile Include="ExistenciaT.cs" />
     <Compile Include="Factura.cs" />
     <Compile Include="Historial.cs" />
-    <Compile Include="Lenguaje\Recurso.Designer.cs" />
-    <Compile Include="Lenguaje\Recurso.en.Designer.cs" />
+    <Compile Include="Lenguaje\Recurso.en1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recurso.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Lenguaje\Recurso1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recurso.resx</DependentUpon>
+    </Compile>
     <Compile Include="Marca.cs" />
     <Compile Include="ModoPago.cs" />
     <Compile Include="Cotizacion.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendEmail.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,8 +95,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Lenguaje\Recurso.en.resx" />
-    <EmbeddedResource Include="Lenguaje\Recurso.resx" />
+    <EmbeddedResource Include="Lenguaje\Recurso.en.resx">
+      <LastGenOutput>Recurso.en1.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lenguaje\Recurso.resx">
+      <LastGenOutput>Recurso1.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

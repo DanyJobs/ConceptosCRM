@@ -14,10 +14,13 @@ E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\roslyn\System.Reflection.Metadata.
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\roslyn\vbc.exe
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\roslyn\VBCSCompiler.exe
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\roslyn\VBCSCompiler.exe.config
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Reportes\Ingles\rptFacturaEn.rdlc
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Reportes\Espanol\rptFactura.rdlc
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\WebFacturaMvc.dll.config
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\WebFacturaMvc.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\WebFacturaMvc.pdb
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Antlr3.Runtime.dll
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\EASendMail.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\EntityFramework.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\EntityFramework.SqlServer.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\Microsoft.AspNet.Identity.Core.dll

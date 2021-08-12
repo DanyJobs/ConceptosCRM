@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b8090fb44af54685a2ac947498a9e665" Name="Diagram1" ZoomLevel="65">
+      <Diagram DiagramId="b8090fb44af54685a2ac947498a9e665" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="crmconceptoseModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="crmconceptoseModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="crmconceptoseModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
@@ -41,7 +41,12 @@
         <AssociationConnector Association="crmconceptoseModel.fkProductoCompra" />
         <AssociationConnector Association="crmconceptoseModel.FK_detalleFactura_producto" />
         <AssociationConnector Association="crmconceptoseModel.fkExistenciaidProducto" />
-      </Diagram>
+        <EntityTypeShape EntityType="crmconceptoseModel.Moneda" Width="1.5" PointX="6" PointY="9.375" />
+        <EntityTypeShape EntityType="crmconceptoseModel.configuracion" Width="1.5" PointX="8.25" PointY="7.75" />
+        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionUsuario" />
+        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionMoneda" />
+        <EntityTypeShape EntityType="crmconceptoseModel.texto" Width="1.5" PointX="8.375" PointY="0.75" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

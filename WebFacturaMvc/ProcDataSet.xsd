@@ -43,6 +43,8 @@
               <Mapping SourceColumn="TotalPagar" DataSetColumn="TotalPagar1" />
               <Mapping SourceColumn="total_parcial" DataSetColumn="total_parcial1" />
               <Mapping SourceColumn="total_Producto" DataSetColumn="total_Producto" />
+              <Mapping SourceColumn="abreviatura" DataSetColumn="abreviatura" />
+              <Mapping SourceColumn="Simbolo" DataSetColumn="Simbolo" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -54,7 +56,7 @@
   <xs:element name="ProcDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="ProcDataSet" msprop:Generator_UserDSName="ProcDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="sp_reporte_venta" msprop:Generator_TableClassName="sp_reporte_ventaDataTable" msprop:Generator_TableVarName="tablesp_reporte_venta" msprop:Generator_TablePropName="sp_reporte_venta" msprop:Generator_RowDeletingName="sp_reporte_ventaRowDeleting" msprop:Generator_RowChangingName="sp_reporte_ventaRowChanging" msprop:Generator_RowEvHandlerName="sp_reporte_ventaRowChangeEventHandler" msprop:Generator_RowDeletedName="sp_reporte_ventaRowDeleted" msprop:Generator_UserTableName="sp_reporte_venta" msprop:Generator_RowChangedName="sp_reporte_ventaRowChanged" msprop:Generator_RowEvArgName="sp_reporte_ventaRowChangeEvent" msprop:Generator_RowClassName="sp_reporte_ventaRow">
+        <xs:element name="sp_reporte_venta" msprop:Generator_TableClassName="sp_reporte_ventaDataTable" msprop:Generator_TableVarName="tablesp_reporte_venta" msprop:Generator_RowChangedName="sp_reporte_ventaRowChanged" msprop:Generator_TablePropName="sp_reporte_venta" msprop:Generator_RowDeletingName="sp_reporte_ventaRowDeleting" msprop:Generator_RowChangingName="sp_reporte_ventaRowChanging" msprop:Generator_RowEvHandlerName="sp_reporte_ventaRowChangeEventHandler" msprop:Generator_RowDeletedName="sp_reporte_ventaRowDeleted" msprop:Generator_RowClassName="sp_reporte_ventaRow" msprop:Generator_UserTableName="sp_reporte_venta" msprop:Generator_RowEvArgName="sp_reporte_ventaRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="idVenta" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnidVenta" msprop:Generator_ColumnPropNameInRow="idVenta" msprop:Generator_ColumnPropNameInTable="idVentaColumn" msprop:Generator_UserColumnName="idVenta" type="xs:decimal" />
@@ -129,6 +131,20 @@
               <xs:element name="TotalPagar1" msdata:ReadOnly="true" msdata:Caption="TotalPagar" msprop:Generator_ColumnVarNameInTable="columnTotalPagar1" msprop:Generator_ColumnPropNameInRow="TotalPagar1" msprop:Generator_ColumnPropNameInTable="TotalPagar1Column" msprop:Generator_UserColumnName="TotalPagar1" type="xs:decimal" minOccurs="0" />
               <xs:element name="total_parcial1" msdata:ReadOnly="true" msdata:Caption="total_parcial" msprop:Generator_ColumnVarNameInTable="columntotal_parcial1" msprop:Generator_ColumnPropNameInRow="total_parcial1" msprop:Generator_ColumnPropNameInTable="total_parcial1Column" msprop:Generator_UserColumnName="total_parcial1" type="xs:decimal" minOccurs="0" />
               <xs:element name="total_Producto" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columntotal_Producto" msprop:Generator_ColumnPropNameInRow="total_Producto" msprop:Generator_ColumnPropNameInTable="total_ProductoColumn" msprop:Generator_UserColumnName="total_Producto" type="xs:float" minOccurs="0" />
+              <xs:element name="abreviatura" msprop:Generator_ColumnVarNameInTable="columnabreviatura" msprop:Generator_ColumnPropNameInRow="abreviatura" msprop:Generator_ColumnPropNameInTable="abreviaturaColumn" msprop:Generator_UserColumnName="abreviatura">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Simbolo" msprop:Generator_ColumnVarNameInTable="columnSimbolo" msprop:Generator_ColumnPropNameInRow="Simbolo" msprop:Generator_ColumnPropNameInTable="SimboloColumn" msprop:Generator_UserColumnName="Simbolo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

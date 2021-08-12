@@ -26,6 +26,8 @@ namespace WebFacturaMvc.Datos
         public string idVendedor { get; set; }
         public System.DateTime fecha { get; set; }
         public decimal IVA { get; set; }
+        public string notas { get; set; }
+        public string notasCompras { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }

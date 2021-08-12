@@ -12,6 +12,9 @@ namespace Model.Entity
         private string fecha;
         private double iva;
         private int estado;
+        public string notas { get; set; } 
+        public string notasCompras { get; set; }
+
         [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaCotizacion { get; set; }
         public string NombreCliente { get; set; }
@@ -114,13 +117,16 @@ namespace Model.Entity
         {
 
         }
-        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva)
-        {
+        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva,string notas,string notasCompras)
+        {           
             this.total = total;
             this.idCliente = idCliente;
             this.idVendedor = idVendedor;
             this.iva = iva;
             this.fecha = fecha;
+            this.notas = notas;
+            this.notasCompras = notasCompras;
+
         }
         public Cotizacion(long idVenta)
         {

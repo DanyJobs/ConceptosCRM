@@ -11,6 +11,7 @@ namespace Model.Dao
         private ConexionDB objConexionDB;
         private SqlCommand comando;
         private SqlDataReader reader;
+      
         public ProductoDao()
         {
             objConexionDB = ConexionDB.saberEstado();
@@ -57,22 +58,27 @@ namespace Model.Dao
 
         public bool find(Producto objProducto)
         {
-            bool hayRegistros;
-            string find = "select*from producto where idProducto='" + objProducto.IdProducto + "'";
+         
+            bool hayRegistros;         
             try
             {
-                comando = new SqlCommand(find, objConexionDB.getCon());
+                SqlCommand cmd = new SqlCommand("SP_PRODUCTO_CONSULTA_cotizacion", objConexionDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@idProducto", objProducto.IdProducto);
+
                 objConexionDB.getCon().Open();
-                reader = comando.ExecuteReader();
+
+                reader = cmd.ExecuteReader();
+
                 hayRegistros = reader.Read();
                 if (hayRegistros)
                 {
-                    objProducto.Nombre = reader[1].ToString();
-                    objProducto.Descripcion = reader[2].ToString();
-                    objProducto.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
-                    objProducto.Categoria = reader[4].ToString();
-                    objProducto.Marca = reader[5].ToString();
-                    objProducto.BandaAncha = reader[6].ToString();
+                    objProducto.Nombre = reader[1].ToString();           
+                    objProducto.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
+                    objProducto.Categoria = reader[3].ToString();
+                    objProducto.Marca = reader[4].ToString();
+                    objProducto.BandaAncha = reader[5].ToString();
                     objProducto.Estado = 99;
                 }
                 else

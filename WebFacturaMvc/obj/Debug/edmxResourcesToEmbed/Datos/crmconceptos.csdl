@@ -61,6 +61,8 @@
     <NavigationProperty Name="detalleCotizacion" Relationship="Self.FK__detalleFa__idPed__239E4DCF" FromRole="cotizacion" ToRole="detalleCotizacion" />
     <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_venta_vendedor" FromRole="cotizacion" ToRole="AspNetUsers" />
     <NavigationProperty Name="cliente" Relationship="crmconceptoseModel.FK_venta_cliente" FromRole="cotizacion" ToRole="cliente" />
+    <Property Name="notas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="notasCompras" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="detalleCotizacion">
     <Key>
@@ -77,6 +79,8 @@
     <NavigationProperty Name="cotizacion" Relationship="Self.FK__detalleFa__idPed__239E4DCF" FromRole="detalleCotizacion" ToRole="cotizacion" />
     <NavigationProperty Name="factura" Relationship="Self.FK_detalleFactura_factura" FromRole="detalleCotizacion" ToRole="factura" />
     <NavigationProperty Name="producto" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="detalleCotizacion" ToRole="producto" />
+    <Property Name="notas" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="notasCompras" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="factura">
     <Key>
@@ -320,6 +324,53 @@
       <End Role="producto" EntitySet="producto" />
       <End Role="existencia" EntitySet="existencia" />
     </AssociationSet>
+    <EntitySet Name="Moneda" EntityType="crmconceptoseModel.Moneda" />
+    <EntitySet Name="configuracion" EntityType="crmconceptoseModel.configuracion" />
+    <AssociationSet Name="FK_ConfiguracionUsuario" Association="crmconceptoseModel.FK_ConfiguracionUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="configuracion" EntitySet="configuracion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConfiguracionMoneda" Association="crmconceptoseModel.FK_ConfiguracionMoneda">
+      <End Role="Moneda" EntitySet="Moneda" />
+      <End Role="configuracion" EntitySet="configuracion" />
+    </AssociationSet>
+    <EntitySet Name="texto" EntityType="crmconceptoseModel.texto" />
+    <FunctionImport Name="sp_consultaEmailCliente" ReturnType="Collection(String)">
+      <Parameter Name="idVenta" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="sp_CompraAlta">
+      <Parameter Name="total" Mode="In" Type="Decimal" />
+      <Parameter Name="fechaCompra" Mode="In" Type="DateTime" />
+      <Parameter Name="idSucursal" Mode="In" Type="Int32" />
+      <Parameter Name="idProveedor" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_CompraDetalleAlta">
+      <Parameter Name="idcompra" Mode="In" Type="Int32" />
+      <Parameter Name="precio" Mode="In" Type="Decimal" />
+      <Parameter Name="idproducto" Mode="In" Type="String" />
+      <Parameter Name="cantidad" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaExistencias" ReturnType="Collection(crmconceptoseModel.sp_consultaExistencias_Result)" />
+    <FunctionImport Name="sp_consultaExistenciasSucursal" ReturnType="Collection(crmconceptoseModel.sp_consultaExistenciasSucursal_Result)">
+      <Parameter Name="idSucursal" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaSucursal" ReturnType="Collection(crmconceptoseModel.sp_consultaSucursal_Result)">
+      <Parameter Name="idSucursal" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaSucursales" ReturnType="Collection(crmconceptoseModel.sp_consultaSucursales_Result)" />
+    <FunctionImport Name="SP_PRODUCTO_CONSULTA_cotizacion" ReturnType="Collection(crmconceptoseModel.SP_PRODUCTO_CONSULTA_cotizacion_Result)">
+      <Parameter Name="idProducto" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_obtenercliente" ReturnType="Collection(crmconceptoseModel.sp_obtenercliente_Result)">
+      <Parameter Name="codigo" Mode="In" Type="Decimal" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="apellido" Mode="In" Type="String" />
+      <Parameter Name="email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_obtenerexistencia" ReturnType="Collection(crmconceptoseModel.sp_obtenerexistencia_Result)">
+      <Parameter Name="producto" Mode="In" Type="String" />
+      <Parameter Name="sucursal" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SP_COTIZACION_HISTORIAL_Result">
     <Property Type="DateTime" Name="fechaCotizacion" Nullable="false" />
@@ -505,6 +556,7 @@
     <NavigationProperty Name="AspNetUserLogins" Relationship="crmconceptoseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
     <NavigationProperty Name="cotizacion" Relationship="crmconceptoseModel.FK_venta_vendedor" FromRole="AspNetUsers" ToRole="cotizacion" />
     <NavigationProperty Name="AspNetRoles" Relationship="crmconceptoseModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="configuracion" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="AspNetUsers" ToRole="configuracion" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -666,4 +718,115 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Moneda">
+    <Key>
+      <PropertyRef Name="abreviatura" />
+    </Key>
+    <Property Name="abreviatura" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="simbolo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="configuracion" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="Moneda" ToRole="configuracion" />
+  </EntityType>
+  <EntityType Name="configuracion">
+    <Key>
+      <PropertyRef Name="idConfiguracion" />
+    </Key>
+    <Property Name="idConfiguracion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="moneda" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="requerir" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="impuesto" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="servidorSmtp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="puerto" Type="Int32" />
+    <Property Name="contrasena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="displayName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="configuracion" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Moneda1" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="configuracion" ToRole="Moneda" />
+  </EntityType>
+  <Association Name="FK_ConfiguracionUsuario">
+    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="configuracion">
+        <PropertyRef Name="usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConfiguracionMoneda">
+    <End Type="crmconceptoseModel.Moneda" Role="Moneda" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moneda">
+        <PropertyRef Name="abreviatura" />
+      </Principal>
+      <Dependent Role="configuracion">
+        <PropertyRef Name="moneda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="texto">
+    <Key>
+      <PropertyRef Name="idTexto" />
+    </Key>
+    <Property Name="idTexto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcionCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="texto1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <ComplexType Name="sp_consultaExistencias_Result">
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="Cantidad" Nullable="false" />
+    <Property Type="String" Name="Seccion" Nullable="true" MaxLength="9" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaExistenciasSucursal_Result">
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="Cantidad" Nullable="false" />
+    <Property Type="String" Name="Seccion" Nullable="true" MaxLength="9" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaSucursal_Result">
+    <Property Type="Int32" Name="idSucursal" Nullable="false" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="calle" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="numExt" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="colonia" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="cp" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="telefono" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaSucursales_Result">
+    <Property Type="Int32" Name="idSucursal" Nullable="false" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="calle" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="numExt" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="colonia" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="cp" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="telefono" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="SP_PRODUCTO_CONSULTA_cotizacion_Result">
+    <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="precioUnitario" Nullable="false" Precision="19" />
+    <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Marca" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="bandaAncha" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="sp_obtenercliente_Result">
+    <Property Type="Decimal" Name="idCliente" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="nombre" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="apellido" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="direccion" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="telefono" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_obtenerexistencia_Result">
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="Cantidad" Nullable="false" />
+    <Property Type="String" Name="Seccion" Nullable="true" MaxLength="9" />
+  </ComplexType>
 </Schema>

@@ -47,6 +47,9 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<proveedor> proveedor { get; set; }
         public virtual DbSet<cliente> cliente { get; set; }
         public virtual DbSet<producto> producto { get; set; }
+        public virtual DbSet<Moneda> Moneda { get; set; }
+        public virtual DbSet<configuracion> configuracion { get; set; }
+        public virtual DbSet<texto> texto { get; set; }
     
         public virtual int reporte_factura(string idPedido)
         {
@@ -342,6 +345,128 @@ namespace WebFacturaMvc.Datos
         public virtual ObjectResult<spusuario_Result> spusuario()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spusuario_Result>("spusuario");
+        }
+    
+        public virtual ObjectResult<string> sp_consultaEmailCliente(Nullable<decimal> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("idVenta", idVenta) :
+                new ObjectParameter("idVenta", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_consultaEmailCliente", idVentaParameter);
+        }
+    
+        public virtual int sp_CompraAlta(Nullable<decimal> total, Nullable<System.DateTime> fechaCompra, Nullable<int> idSucursal, Nullable<int> idProveedor)
+        {
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("total", total) :
+                new ObjectParameter("total", typeof(decimal));
+    
+            var fechaCompraParameter = fechaCompra.HasValue ?
+                new ObjectParameter("fechaCompra", fechaCompra) :
+                new ObjectParameter("fechaCompra", typeof(System.DateTime));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("idSucursal", idSucursal) :
+                new ObjectParameter("idSucursal", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("idProveedor", idProveedor) :
+                new ObjectParameter("idProveedor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraAlta", totalParameter, fechaCompraParameter, idSucursalParameter, idProveedorParameter);
+        }
+    
+        public virtual int sp_CompraDetalleAlta(Nullable<int> idcompra, Nullable<decimal> precio, string idproducto, Nullable<int> cantidad)
+        {
+            var idcompraParameter = idcompra.HasValue ?
+                new ObjectParameter("idcompra", idcompra) :
+                new ObjectParameter("idcompra", typeof(int));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("precio", precio) :
+                new ObjectParameter("precio", typeof(decimal));
+    
+            var idproductoParameter = idproducto != null ?
+                new ObjectParameter("idproducto", idproducto) :
+                new ObjectParameter("idproducto", typeof(string));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraDetalleAlta", idcompraParameter, precioParameter, idproductoParameter, cantidadParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaExistencias_Result> sp_consultaExistencias()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaExistencias_Result>("sp_consultaExistencias");
+        }
+    
+        public virtual ObjectResult<sp_consultaExistenciasSucursal_Result> sp_consultaExistenciasSucursal(Nullable<int> idSucursal)
+        {
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("idSucursal", idSucursal) :
+                new ObjectParameter("idSucursal", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaExistenciasSucursal_Result>("sp_consultaExistenciasSucursal", idSucursalParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaSucursal_Result> sp_consultaSucursal(Nullable<int> idSucursal)
+        {
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("idSucursal", idSucursal) :
+                new ObjectParameter("idSucursal", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaSucursal_Result>("sp_consultaSucursal", idSucursalParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaSucursales_Result> sp_consultaSucursales()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaSucursales_Result>("sp_consultaSucursales");
+        }
+    
+        public virtual ObjectResult<SP_PRODUCTO_CONSULTA_cotizacion_Result> SP_PRODUCTO_CONSULTA_cotizacion(string idProducto)
+        {
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCTO_CONSULTA_cotizacion_Result>("SP_PRODUCTO_CONSULTA_cotizacion", idProductoParameter);
+        }
+    
+        public virtual ObjectResult<sp_obtenercliente_Result> sp_obtenercliente(Nullable<decimal> codigo, string nombre, string apellido, string email)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(decimal));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("apellido", apellido) :
+                new ObjectParameter("apellido", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenercliente_Result>("sp_obtenercliente", codigoParameter, nombreParameter, apellidoParameter, emailParameter);
+        }
+    
+        public virtual ObjectResult<sp_obtenerexistencia_Result> sp_obtenerexistencia(string producto, Nullable<int> sucursal)
+        {
+            var productoParameter = producto != null ?
+                new ObjectParameter("producto", producto) :
+                new ObjectParameter("producto", typeof(string));
+    
+            var sucursalParameter = sucursal.HasValue ?
+                new ObjectParameter("sucursal", sucursal) :
+                new ObjectParameter("sucursal", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerexistencia_Result>("sp_obtenerexistencia", productoParameter, sucursalParameter);
         }
     }
 }

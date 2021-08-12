@@ -20,7 +20,7 @@ namespace Model.Dao
         public string create(Cotizacion objVenta)
         {
             string idVenta = "";
-            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','" + objVenta.Iva + "') SELECT SCOPE_IDENTITY();";
+            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA,notas,notasCompras) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','" + objVenta.Iva + "','" + objVenta.notas + "','" + objVenta.notasCompras + "') SELECT SCOPE_IDENTITY();";
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
