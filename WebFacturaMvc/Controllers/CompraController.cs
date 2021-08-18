@@ -100,10 +100,8 @@ namespace WebFacturaMvc.Controllers
         [HttpPost]
         public ActionResult GuardarCompra(string Fecha, string IdProveedor, string Total, string Sucursal, List<compraDetalle> ListadoDetalle)
         {
-            string mensaje = "";
-            double iva = 18;
-            string idVendedor = User.Identity.GetUserId();
-            int codigoPago = 0;
+            string mensaje = "";        
+            string idVendedor = User.Identity.GetUserId();         
             int codigoSucursal = 0;
             int codigoProveedor = 0;
             decimal total = 0;

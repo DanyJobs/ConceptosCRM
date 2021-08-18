@@ -22,6 +22,15 @@ body {
     border-left: 1px solid #e7e7e7;
   }
 }
+.navbar-brand {
+    float: left;
+    height: 50px;
+    top: 5px;
+    padding: 20px 105px;
+    font-size: 18px;
+    line-height: 20px;
+     background-image: url('../Utilidades/Imagenes/logo conceptos.png');
+}
 .navbar-top-links {
   margin-right: 0;
 }

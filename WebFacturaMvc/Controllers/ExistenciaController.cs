@@ -23,6 +23,8 @@ namespace WebFacturaMvc.Controllers
             List<sucursal> sC = cSucursal.AsEnumerable<sucursal>().ToList();
             SelectList lista = new SelectList(sC, "idSucursal", "descripcion");
             ViewBag.ListaSucursal = lista;
+
+
         }
         // GET: Existencia
         public ActionResult Index()
@@ -81,13 +83,15 @@ namespace WebFacturaMvc.Controllers
         {
             if (txtproducto == "")
             {
-                txtproducto = "-1";
+                txtproducto = null;
             }
-            if (txtsucursal == "")
+            if (txtsucursal =="")
             {
                 txtsucursal = "-1";
             }
+      
             int txtsucursalConvertido = Convert.ToInt32(txtsucursal);
+         
             ExistenciaDao daoExistencia = new ExistenciaDao();
             List<ExistenciaT> listaexistencia = daoExistencia.findAllExistencia(txtproducto, txtsucursalConvertido);
             cargarSucursales();

@@ -57,7 +57,6 @@ namespace Model.Dao
             }
             catch (Exception e)
             {
-
                 objVenta.Estado = 1;
             }
             finally
@@ -142,20 +141,15 @@ namespace Model.Dao
                     objVenta.Total = Convert.ToDouble(reader[4].ToString());
                     objVenta.FechaCotizacion = reader.GetDateTime(5);
                     listaVentas.Add(objVenta);
-
                 }
             }
-            catch (Exception)
-            {
-
+            catch (Exception){
                 throw;
             }
-            finally
-            {
+            finally{
                 objConexinDB.getCon().Close();
                 objConexinDB.closeDB();
             }
-
             return listaVentas;
         }
         public bool findVentaPorClienteId(Cotizacion objVenta)
@@ -220,7 +214,6 @@ namespace Model.Dao
             }
             return hayRegistros;
         }
-
         public void sp_reporteVenta(Cotizacion objVenta)
         {
             string create = "sp_reporte_venta" + objVenta.IdVenta;
@@ -229,7 +222,6 @@ namespace Model.Dao
                 comando = new SqlCommand(create, objConexinDB.getCon());
                 objConexinDB.getCon().Open();
                 comando.ExecuteNonQuery();
-
             }
             catch (Exception e)
             {
@@ -240,9 +232,6 @@ namespace Model.Dao
                 objConexinDB.getCon().Close();
                 objConexinDB.closeDB();
             }
-
         }
-
-
     }
 }
