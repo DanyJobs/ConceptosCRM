@@ -9,11 +9,14 @@ namespace Model.Entity
 {
     public class CompraDetalle
     {
+        //Normales
         private int idCompra;
         private decimal precio;
         private int cantidad;
         private string idproducto;
         private int estado;
+        //JOIN
+        private string nombreProducto;
         [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public int IdCompra
         {
@@ -66,7 +69,19 @@ namespace Model.Entity
                 idproducto = value;
             }
         }
-       
+        public string NombreProducto
+        {
+            get
+            {
+                return nombreProducto;
+            }
+
+            set
+            {
+                nombreProducto = value;
+            }
+        }
+
 
         public int Estado
         {
@@ -91,7 +106,7 @@ namespace Model.Entity
             this.idproducto = idproducto;
             this.precio = precio;
             this.cantidad = cantidad;
-        }
+        }        
         public CompraDetalle(int idCompra)
         {
             this.idCompra = idCompra;

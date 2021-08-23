@@ -5,9 +5,11 @@ using System.Web.Mvc;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class InicioController : Controller
     {
         // GET: Inicio
+
         public ActionResult Index()
         {
             CotizacionNeg objVentaNeg = new CotizacionNeg();

@@ -9,13 +9,17 @@ namespace Model.Entity
 {
     public class Compra
     {
+        //Información limpia
         private int idCompra;        
         private decimal total;
         private int idSucursal;
         private int idProveedor;
         private DateTime fecha;        
         private int estado;
-        [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]                
+        //Para JOIN
+        private string nombreSucursal;
+        private string nombreProveedor;
+                       
         public int IdCompra
         {
             get
@@ -67,6 +71,7 @@ namespace Model.Entity
                 idProveedor = value;
             }
         }
+        [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha
         {
             get
@@ -91,7 +96,31 @@ namespace Model.Entity
             {
                 estado = value;
             }
-        }        
+        }
+        public string NombreSucursal
+        {
+            get
+            {
+                return nombreSucursal;
+            }
+
+            set
+            {
+                nombreSucursal = value;
+            }
+        }
+        public string NombreProveedor
+        {
+            get
+            {
+                return nombreProveedor;
+            }
+
+            set
+            {
+                nombreProveedor = value;
+            }
+        }
 
         public Compra()
         {
@@ -107,6 +136,13 @@ namespace Model.Entity
         public Compra(int idCompra)
         {
             this.idCompra = idCompra;
+        }
+        public Compra(decimal total, string Proveedor, string Sucursal, DateTime fecha)
+        {
+            this.total = total;
+            this.nombreProveedor = Proveedor;
+            this.nombreSucursal = Sucursal;
+            this.fecha = fecha;
         }
     }
 }

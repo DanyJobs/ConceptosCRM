@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using WebFacturaMvc.Datos;
 using Model.Dao;
+using System.Data;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class CompraController : Controller
     {
         
@@ -67,15 +69,9 @@ namespace WebFacturaMvc.Controllers
                 objProductoNeg.find(objProducto);
                 return Json(objProducto, JsonRequestBehavior.AllowGet);
 
-            }
-            public ActionResult PruebaJson()
-            {  // escribir la url directa  para ver el formato      
-                List<Producto> lista = objProductoNeg.findAll();
-                return Json(lista, JsonRequestBehavior.AllowGet);
+            }            
 
-            }
-
-            public void cargarSucursales()
+            private void cargarSucursales()
             {
             //Consulta LINQ para obtener las sucursales
             var cSucursal = (from mProveedor in db.sucursal                              
@@ -84,7 +80,7 @@ namespace WebFacturaMvc.Controllers
                 SelectList lista = new SelectList(sC, "idSucursal", "descripcion");
                 ViewBag.ListaSucursal = lista;
             }
-        public void cargarProductocmb()
+        private void cargarProductocmb()
         {
             List<Producto> data = objProductoNeg.findAll();
             SelectList lista = new SelectList(data, "idProducto", "nombre");
@@ -100,8 +96,10 @@ namespace WebFacturaMvc.Controllers
         [HttpPost]
         public ActionResult GuardarCompra(string Fecha, string IdProveedor, string Total, string Sucursal, List<compraDetalle> ListadoDetalle)
         {
-            string mensaje = "";        
-            string idVendedor = User.Identity.GetUserId();         
+            string mensaje = "";
+            double iva = 18;
+            string idVendedor = User.Identity.GetUserId();
+            int codigoPago = 0;
             int codigoSucursal = 0;
             int codigoProveedor = 0;
             decimal total = 0;
@@ -162,14 +160,200 @@ namespace WebFacturaMvc.Controllers
                         }
                                                
             return Json(mensaje);
-            }            
-            /*public ActionResult DetallesVenta(long id)
+            }
+        
+        private List<Compra> cargarCompras()
+        {
+            //Dao
+            CompraDao c = new CompraDao();
+            //Tabla
+            DataTable dtCompras = c.consultar();
+            //Lista
+            List<Compra> listCompras = new List<Compra>();
+            for(int i = 0; i < dtCompras.Rows.Count; i++)
             {
-                DetalleCotizacion objDetalleVenta = new DetalleCotizacion();
-                objDetalleVenta.IdVenta = id;
-                List<DetalleCotizacion> lista = objDetalleVentaNeg.detallesPorIdVenta(objDetalleVenta);
-                return View(lista);
-            }           */
-
+                //Entity
+                Compra compras = new Compra();
+                compras.IdCompra = int.Parse(dtCompras.Rows[i]["idCompra"].ToString());
+                compras.Total = Convert.ToDecimal(dtCompras.Rows[i]["total"].ToString());
+                compras.Fecha = Convert.ToDateTime(dtCompras.Rows[i]["fechaCompra"].ToString());
+                compras.NombreSucursal = dtCompras.Rows[i]["descripcion"].ToString();
+                compras.NombreProveedor = dtCompras.Rows[i]["nombre"].ToString();
+                listCompras.Add(compras);
+            }
+            return listCompras;
         }
+        private List<Compra> cargarCompras(string month, string year)
+        {
+            //Dao
+            CompraDao c = new CompraDao();
+            //Tabla
+            DataTable dtCompras = c.filtrar(month, year);
+            //Lista
+            List<Compra> listCompras = new List<Compra>();
+            for (int i = 0; i < dtCompras.Rows.Count; i++)
+            {
+                //Entity
+                Compra compras = new Compra();
+                compras.IdCompra = int.Parse(dtCompras.Rows[i]["idCompra"].ToString());
+                compras.Total = Convert.ToDecimal(dtCompras.Rows[i]["total"].ToString());
+                compras.Fecha = Convert.ToDateTime(dtCompras.Rows[i]["fechaCompra"].ToString());
+                compras.NombreSucursal = dtCompras.Rows[i]["descripcion"].ToString();
+                compras.NombreProveedor = dtCompras.Rows[i]["nombre"].ToString();
+                listCompras.Add(compras);
+            }
+            return listCompras;
+        }
+        private void cargarFechas()
+        {
+            //Arreglo de meses
+            string[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo","Junio","Julio","Agosto","Septiembre",
+            "Octubre","Noviembre","Diciembre"};            
+            List<SelectListItem> listMeses = new List<SelectListItem>();
+
+            for (int i = 0; i < 12; i++)
+            {                
+                    int j = i + 1;
+                string numero = j.ToString();              
+                listMeses.Add(new SelectListItem() {Text=meses[i], Value = numero });
+               // prueba = numero;
+            }
+            ViewBag.ListaMeses = listMeses;
+            //Años 2000-2099
+            List<SelectListItem> listYears = new List<SelectListItem>();
+            for (int i = 2000; i < 2100; i++)
+            {                
+                string numero = i.ToString();
+                listYears.Add(new SelectListItem() { Text =numero, Value = numero });
+                
+            }
+            ViewBag.ListaYears = listYears;
+                        
+        }
+        //public static string prueba;
+        
+        [HttpGet]
+
+        public ActionResult Consulta()
+        {
+            cargarFechas();
+           // System.Diagnostics.Debug.WriteLine(prueba);
+            return View(cargarCompras());
+        }
+        //Compras filtradas
+        [HttpPost]
+        public ActionResult Consulta(string txtMes, string txtyear)
+        {
+            string month="", year = "";
+            string vyear = "";
+            int condicion = 0;
+            if (txtMes == "")
+            {
+                txtMes = null;
+            }
+            if (txtyear == "")
+            {
+                txtyear = "-1";
+            }
+            //Validaciones
+            if (txtyear == "-1")
+            {
+                vyear = null;
+            }
+            //Para meses 10-12
+            if (txtMes != null)
+            {
+                condicion = int.Parse(txtMes);
+                if (condicion >= 10)
+                {
+                    month = txtMes;
+                }
+                //Para meses 1-9
+                else
+                {
+                    month = "0" + txtMes;
+                }
+            }
+            //Para el año
+            if(vyear!=null)
+            {
+                year = txtyear;
+            }
+            
+            
+            cargarFechas();
+            /*System.Diagnostics.Debug.WriteLine(month);
+            System.Diagnostics.Debug.WriteLine(year);*/
+            return View(cargarCompras(month,year));
+        }
+        private List<CompraDetalle> cargarComprasDetalle(int idCompra)
+        {
+            //Dao
+            CompraDetalleDao c = new CompraDetalleDao();
+            //Tabla
+            DataTable dtCompras = c.consultar(idCompra);
+            //Lista
+            List<CompraDetalle> listCompras = new List<CompraDetalle>();
+            for (int i = 0; i < dtCompras.Rows.Count; i++)
+            {
+                //Entity
+                CompraDetalle compras = new CompraDetalle();
+                compras.IdCompra = int.Parse(dtCompras.Rows[i]["idCompra"].ToString());
+                compras.Precio = Convert.ToDecimal(dtCompras.Rows[i]["precio"].ToString());                
+                compras.IdProducto = dtCompras.Rows[i]["nombre"].ToString();
+                compras.Cantidad = int.Parse(dtCompras.Rows[i]["cantidad"].ToString());
+                listCompras.Add(compras);
+            }
+            return listCompras;
+        }
+        public ActionResult CompraDetalle(int idCompra)
+        {
+
+            return View(cargarComprasDetalle(idCompra));
+        }
+        //Mostrar la info del archivo a eliminar
+        private List<Compra> cargarCompras(int idCompra)
+        {
+            //Dao
+            CompraDao c = new CompraDao();
+            //Tabla
+            DataTable dtCompras = c.consultar(idCompra);
+            //Lista
+            List<Compra> listCompras = new List<Compra>();
+            for (int i = 0; i < dtCompras.Rows.Count; i++)
+            {
+                //Entity
+                Compra compras = new Compra();
+                compras.IdCompra = int.Parse(dtCompras.Rows[i]["idCompra"].ToString());
+                compras.Total = Convert.ToDecimal(dtCompras.Rows[i]["total"].ToString());
+                compras.Fecha = Convert.ToDateTime(dtCompras.Rows[i]["fechaCompra"].ToString());
+                compras.NombreSucursal = dtCompras.Rows[i]["descripcion"].ToString();
+                compras.NombreProveedor = dtCompras.Rows[i]["nombre"].ToString();
+                listCompras.Add(compras);
+            }
+            return listCompras;
+        }
+        public ActionResult EliminarCompraPreview(int idCompra)
+        {
+
+            return View(cargarCompras(idCompra));
+        }
+        public ActionResult EliminarCompra(int idCompra)
+        {
+            //Dao
+            CompraDao c = new CompraDao();
+            try
+            {
+                //Eliminar
+                c.eliminar(idCompra);
+                ViewBag.MensajeEliminar = "Registro eliminado correctamente!";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.MensajeEliminar = ex.ToString();
+            }
+                        
+            return View();
+        }
+    }
     }

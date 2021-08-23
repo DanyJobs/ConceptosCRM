@@ -11,6 +11,7 @@ using WebFacturaMvc.Datos;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class ExistenciaController : Controller
     {
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();

@@ -132,8 +132,6 @@ namespace WebFacturaMvc.Controllers
                 codigoCliente = Convert.ToInt64(IdCliente);
                 total = Convert.ToDouble(Total);
 
-
-
                 //REGISTRO DE VENTA
                 Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras);
                 string codigoVenta = objCotizacionNeg.create(objVenta);
@@ -165,7 +163,6 @@ namespace WebFacturaMvc.Controllers
 
                             DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
                             objDetalleVentaNeg.create(objDetalleVenta);
-
                         }
                         mensaje = "VENTA GUARDADA CON EXITO...";
                     }
@@ -277,10 +274,6 @@ new SqlParameter("@idVenta", idVenta)).Single();
                 TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
                 return View();
             }
-
-
-
-
         }
 
         public ActionResult SendEmail()
@@ -290,9 +283,7 @@ new SqlParameter("@idVenta", idVenta)).Single();
                 if (Session["idVenta"].ToString() != null)
                 {
                     string idVenta = Session["idVenta"].ToString();
-                    var lects = db.Database.SqlQuery<SendEmail>(
-        "sp_consultaEmailCliente @idVenta",
-    new SqlParameter("@idVenta", idVenta)).Single();
+                    var lects = db.Database.SqlQuery<SendEmail>("sp_consultaEmailCliente @idVenta",new SqlParameter("@idVenta", idVenta)).Single();
                     Paso = 0;
                     SendEmail email = new SendEmail();
                     email = lects;

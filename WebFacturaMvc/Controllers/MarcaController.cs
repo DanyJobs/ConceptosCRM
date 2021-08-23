@@ -10,6 +10,7 @@ using WebFacturaMvc.Datos;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class MarcaController : Controller
     {
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();

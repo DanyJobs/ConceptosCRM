@@ -1,0 +1,32 @@
+﻿@model List<Model.Entity.Compra>
+@{
+    ViewBag.Title = "Preview";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Información a eliminar</h2>
+<center><a class="btn btn-success" href="~/Compra/Consulta"><span>Regresar</span></a></center>
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>ID Compra</th>
+            <th>Total</th>
+            <th>Fecha de compra</th>
+            <th>Sucursal</th>
+            <th>Proveedor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCompra in Model)
+        {
+            <tr>
+                <td>@objCompra.IdCompra</td>
+                <td>@objCompra.Total</td>
+                <td>@objCompra.Fecha.ToString("MM/dd/yyyy")</td>
+                <td>@objCompra.NombreSucursal</td>
+                <td>@objCompra.NombreProveedor</td>                
+                <td><a class="btn btn-danger" href="~/Compra/EliminarCompra?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>

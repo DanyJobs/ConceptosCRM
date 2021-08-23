@@ -6,6 +6,7 @@ using WebFacturaMvc.Datos;
 
 namespace WebFacturaMvc.Controllers
 {
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class SucursalController : Controller
     {
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();

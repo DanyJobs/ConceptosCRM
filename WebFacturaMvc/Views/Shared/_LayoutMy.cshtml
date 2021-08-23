@@ -15,18 +15,17 @@
     <!-- Bootstrap Core CSS -->
     <link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- MetisMenu CSS -->
-    <link href="~/Assets/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    @*<link href="~/Assets/metisMenu/metisMenu.min.css" rel="stylesheet" />*@
     <!-- Custom CSS -->
     <link href="~/Css/sb-admin-2.css" rel="stylesheet" />
     <!-- Morris Charts CSS -->
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 
-    <link href="~/Assets/morrisjs/morris.css" rel="stylesheet" />
-    <!-- Custom Fonts -->
-    
-
+    @*<link href="~/Assets/morrisjs/morris.css" rel="stylesheet" />*@
+    <!-- Custom Fonts -->      
     <link href="~/Assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -116,7 +115,6 @@
                     <!-- /.dropdown-alerts -->
                 </li>
                 <!-- /.dropdown -->
-
                 @if (User.Identity.IsAuthenticated)
                 {               
 
@@ -168,7 +166,7 @@
                             <a href="~/"><i class="fa fa-home fa-fw"></i> Principal</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-car fa-fw"></i> Artículos<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-square fa-fw"></i> Artículos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="~/Categoria/Index"><i class="fa fa-check fa-fw" style="color:#f0ad4e"></i>Categorías</a>
@@ -181,13 +179,13 @@
                                     <a href="~/Producto/Index"><i class="fa fa-product-hunt fa-fw" style="color:#f0ad4e"></i>Artículos</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-sort-numeric-asc fa-fw" style="color:#f0ad4e"></i>Inventario</a>
+                                    <a href="~/Existencia/Filtrado"><i class="fa fa-sort-numeric-asc fa-fw" style="color:#f0ad4e"></i>Inventario</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Cotizaciones<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-dollar fa-fw"></i> Cotizaciones<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="~/Cotizacion/VentaFactura"><i class="fa fa-archive fa-fw" style="color:#f0ad4e"></i>Generar Factura</a>
@@ -203,6 +201,20 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-shopping-bag fa-fw"></i> Compra<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="~/Compra/Consulta"><i class="fa fa-archive fa-fw" style="color:#f0ad4e"></i>Detalle Compra</a>
+                                </li>
+                                <li>
+                                    <a href="~/Compra/Index"><i class="fa fa-shopping-cart fa-fw" style="color:#f0ad4e"></i>Nueva Compra</a>
+                                </li> 
+                            </ul>
+                        </li>
+
+
                         <li>
                             <a href="~/Cliente/Index"><i class="fa fa-user fa-fw"></i> Clientes</a>
                         </li>
@@ -221,18 +233,13 @@
             </ul>*@
                         </li>
                         <li>
-                            <a href="~/Sucursal/Index"><i class="far fa-trash-alt"></i> Sucursal<span class="fa arrow"></span></a>
+                            <a href="~/Sucursal/Index"><i class="fa fa-home fa-fw"></i> Sucursal</a>
                             <!-- /.nav-second-level -->
                         </li>
-
                         <li>
-                            <a href="~/Proveedor/Index"><i class="far fa-trash-alt"></i> Proveedor<span class="fa arrow"></span></a>
+                            <a href="~/Proveedor/Index"><i class="fa fa-shopping-cart fa-fw"></i> Proveedor</a>
                             <!-- /.nav-second-level -->
                         </li>
-
-
-
-
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Cobros y Pagos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -247,7 +254,6 @@
                                 </li>
                             </ul>
                         </li>
-
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Administración<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -266,7 +272,6 @@
                                 <li>
                                     <a href="#"> Usuarios</a>
                                 </li>
-
                             </ul>
                         </li>
                         <li>
@@ -282,12 +287,10 @@
             <!-- /.navbar-static-side -->
         </nav>
         <div id="page-wrapper">           
-            <!-- /.row -->
-           
+            <!-- /.row -->           
             <div class="row">
                 @RenderBody()
             </div>
-
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -298,14 +301,10 @@
     <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="~/Assets/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    
-    <script src="~/Assets/morrisjs/morris.min.js"></script>    
-   
+    <!-- Morris Charts JavaScript -->    
+    <script src="~/Assets/morrisjs/morris.min.js"></script>       
     <!-- Custom Theme JavaScript -->
     <script src="~/Js/sb-admin-2.js"></script>
-   
- 
 </body>
 </html>
 
