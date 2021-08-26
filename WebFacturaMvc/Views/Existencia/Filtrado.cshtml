@@ -10,19 +10,19 @@
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>*@
 
-<script>
+@*<script>
     $(document).ready(function () {
         $("#tbcliente tbody tr").dblclick(function () {
-            //var ExistenciaT = {};
-            //var n, a, m;
-            ////n = ExistenciaT.Codigo = $(this).children().eq('0').text();
-            ////a = ExistenciaT.DatosPersonales = $(this).children().eq('1').text() + " " + $(this).children().eq('2').text();
-            ////m = ExistenciaT.Identificacion = $(this).children().eq('5').text();
-            //window.opener.Filtrado(ExistenciaT);
-            //window.close();
+            var ExistenciaT = {};
+            var n, a, m;
+            n = ExistenciaT.Codigo = $(this).children().eq('0').text();
+            a = ExistenciaT.DatosPersonales = $(this).children().eq('1').text() + " " + $(this).children().eq('2').text();
+            m = ExistenciaT.Identificacion = $(this).children().eq('5').text();
+            window.opener.Filtrado(ExistenciaT);
+            window.close();
         });
     });
-</script>
+</script>*@
 
 @using (Html.BeginForm())
 {  

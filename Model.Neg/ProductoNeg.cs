@@ -247,9 +247,15 @@ namespace Model.Neg
         {
             return objProductoDao.findAllProductos(objProducto);
         }
+
         public List<Producto> findAllProductosPorCategoria(Producto objProducto)
         {
             return objProductoDao.findAllProductosPorCategoria(objProducto);
         }
+        public List<Producto> findAllProductosCotizacion(Producto objProducto)
+        {
+            return objProductoDao.findAllProductosCotizacion(objProducto);
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Reporting.WebForms;
+using Model.Dao;
 using Model.Entity;
 using Model.Neg;
 using System;
@@ -23,14 +24,19 @@ namespace WebFacturaMvc.Controllers
         private CotizacionNeg objCotizacionNeg;
         private ClienteNeg objClienteNeg;
         private ProductoNeg objProductoNeg;
+        private ProductoDao objProductoDao;
         private ModoPagoNeg objModoPagoNeg;
         private FacturaNeg objFacturaNeg;
+        private CategoriaNeg objCategoriaNeg;
+        private MarcaNeg objMarcaNeg;
         private static int Paso=0;
         private DetalleCotizacionNeg objDetalleVentaNeg;
         private static string idVentaMail;
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         public CotizacionController()
         {
+            objMarcaNeg = new MarcaNeg();
+            objCategoriaNeg = new CategoriaNeg();
             objCotizacionNeg = new CotizacionNeg();
             objClienteNeg = new ClienteNeg();
             objProductoNeg = new ProductoNeg();
@@ -101,6 +107,19 @@ namespace WebFacturaMvc.Controllers
             SelectList lista = new SelectList(data, "numPago", "nombre");
             ViewBag.ListaModoPago = lista;
         }
+        public void cargarCategoria()
+        {
+            List<Categoria> data = objCategoriaNeg.findAll();
+            SelectList lista = new SelectList(data, "idCategoria", "nombre");
+            ViewBag.ListaCategoria = lista;
+        }
+        public void cargarMarca()
+        {
+            List<Marca> data = objMarcaNeg.findAll();
+            SelectList lista = new SelectList(data, "idMarca", "descripcion");
+            ViewBag.ListaMarca = lista;
+        }
+
 
         public ActionResult NuevaCotizacion()
         {
@@ -259,9 +278,7 @@ namespace WebFacturaMvc.Controllers
             if (idVenta != null)
             {
                 //string id = Session["idVenta"].ToString();
-                var lects = db.Database.SqlQuery<SendEmail>(
-    "sp_consultaEmailCliente @idVenta",
-new SqlParameter("@idVenta", idVenta)).Single();
+                var lects = db.Database.SqlQuery<SendEmail>("sp_consultaEmailCliente @idVenta",new SqlParameter("@idVenta", idVenta)).Single();
                 Paso = 0;
                 SendEmail email = new SendEmail();
                 email = lects;
@@ -376,6 +393,46 @@ new SqlParameter("@idVenta", idVenta)).Single();
                 msge = ex.Message + ". Por favor verifica tu conexión a internet y que tus datos sean correctos e intenta nuevamente.";
                 return RedirectToAction("NuevaCotizacion", "Cotizacion"); ;
             }
+        }
+
+        [HttpGet]
+        public ActionResult ObtenerProductos()
+        {            
+            List<Producto> lista = objProductoNeg.findAll();
+            cargarCategoria();
+            cargarMarca();
+            return View(lista);
+        }
+
+        [HttpPost]//para buscar clientes
+        public ActionResult ObtenerProductos(string txtcodigo, string txtnombre, string txtCategoria, string txtMarca)
+        {
+         
+            if (txtcodigo == "")
+            {
+                txtcodigo = null;
+            }
+            if (txtnombre == "")
+            {
+                txtnombre = null;
+            }
+            if (txtCategoria == "")
+            {
+                txtCategoria = "-1";
+            }
+            if (txtMarca == "")
+            {
+                txtMarca = "-1";
+            }
+            Producto objProducto = new Producto();
+            objProducto.IdProducto = txtcodigo;
+            objProducto.Nombre = txtnombre;
+            objProducto.Categoria = txtCategoria;
+            objProducto.Marca = txtMarca;
+            List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
+            cargarCategoria();
+            cargarMarca();         
+            return View(ListaProducto);
         }
     }
 }

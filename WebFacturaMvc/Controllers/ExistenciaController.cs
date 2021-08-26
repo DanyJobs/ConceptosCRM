@@ -24,8 +24,6 @@ namespace WebFacturaMvc.Controllers
             List<sucursal> sC = cSucursal.AsEnumerable<sucursal>().ToList();
             SelectList lista = new SelectList(sC, "idSucursal", "descripcion");
             ViewBag.ListaSucursal = lista;
-
-
         }
         // GET: Existencia
         public ActionResult Index()

@@ -101,8 +101,6 @@ namespace Model.Dao
 
         public List<Producto> findAll()
         {
-
-
             List<Producto> listaVendedores = new List<Producto>();
             //string find = "select*from producto order by nombre asc";
             try
@@ -116,13 +114,14 @@ namespace Model.Dao
                     Producto objProducto = new Producto();
                     objProducto.IdProducto = reader[0].ToString();
                     objProducto.Nombre = reader[1].ToString();
-                    objProducto.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
-                    objProducto.Categoria = reader[3].ToString();
-                    objProducto.Marca = reader[4].ToString();
-                    objProducto.BandaAncha = reader[5].ToString();
+                    objProducto.Descripcion = reader[2].ToString();
+                    objProducto.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
+                    objProducto.Categoria = reader[4].ToString();
+                    objProducto.Marca = reader[5].ToString();
+                    objProducto.BandaAncha = reader[6].ToString();
+                    objProducto.Channels = Convert.ToInt32(reader[7].ToString());
                     listaVendedores.Add(objProducto);
                 }
-
             }
             catch (Exception)
             {
@@ -134,7 +133,6 @@ namespace Model.Dao
                 objConexionDB.getCon().Close();
                 objConexionDB.closeDB();
             }
-
             return listaVendedores;
         }
 
@@ -238,10 +236,12 @@ namespace Model.Dao
                     Producto objProductos = new Producto();
                     objProductos.IdProducto = reader[0].ToString();
                     objProductos.Nombre = reader[1].ToString();
-                    objProductos.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
-                    objProductos.Categoria = reader[3].ToString();
-                    objProducto.Marca = reader[4].ToString();
-                    objProducto.BandaAncha = reader[5].ToString();
+                    objProductos.Descripcion = reader[2].ToString();
+                    objProductos.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
+                    objProductos.Categoria = reader[4].ToString();
+                    objProducto.Marca = reader[5].ToString();
+                    objProducto.BandaAncha = reader[6].ToString();
+                    objProducto.Channels = Convert.ToInt32(reader[7].ToString());
                     listaProductos.Add(objProductos);
 
                 }
@@ -258,8 +258,49 @@ namespace Model.Dao
             }
 
             return listaProductos;
-
         }
+
+        public List<Producto> findAllProductosCotizacion(Producto objProducto)
+        {
+            List<Producto> objListaProducto = new List<Producto>();
+            try
+            {
+                //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
+                SqlCommand cmd = new SqlCommand("SP_PRODUCTO_CONSULTA_FILTRADO", objConexionDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idProducto", objProducto.IdProducto);
+                cmd.Parameters.AddWithValue("@nombre", objProducto.Nombre);
+                cmd.Parameters.AddWithValue("@categoria", objProducto.Categoria);
+                cmd.Parameters.AddWithValue("@idMarca", objProducto.Marca);
+                objConexionDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Producto objProductoT = new Producto();
+                    objProductoT.IdProducto = reader[0].ToString();
+                    objProductoT.Nombre = reader[1].ToString();
+                    objProductoT.Descripcion = reader[2].ToString();
+                    objProductoT.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
+                    objProductoT.Categoria = reader[4].ToString();
+                    objProductoT.Marca = reader[5].ToString();
+                    objProductoT.BandaAncha = reader[6].ToString();
+                    objProductoT.Channels = Convert.ToInt32(reader[7].ToString());
+                    objListaProducto.Add(objProductoT);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                objConexionDB.getCon().Close();
+                objConexionDB.closeDB();
+            }
+            return objListaProducto;
+        }
+
+
         public List<Producto> findAllProductosPorCategoria(Producto objProducto)
         {
             List<Producto> listaProductos = new List<Producto>();

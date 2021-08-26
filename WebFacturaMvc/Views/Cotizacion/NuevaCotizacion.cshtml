@@ -68,12 +68,20 @@
     var subtotal = 0;
     function obtenerCliente(Cliente) {
 
-        var watchclose = setInterval(function () {
+ /*       var watchclose = setInterval(function () {*/
             $("#txtnombre").val(Cliente.DatosPersonales);
             $("#idCliente").val(Cliente.Identificacion);
             $("#codigoCliente").val(Cliente.Codigo);
+ /*       });*/
+    }
 
-        });
+    function obtenerProductos(Producto) {      
+            $("#idproducto").val(Producto.Codigo);
+            $("#nombreproducto").val(Producto.Nombre);
+            $("#marca").val(Producto.Marca);
+            $("#precio").val(Producto.Precio);  
+            $("#descuento").val("0");  
+            $("#cantidad").val("1");          
     }
 
     function fn_agregar() {
@@ -183,20 +191,11 @@
             </td>
         </tr>
         <tr style="font-size:20px;">
-            <td style="float:right; vertical-align:middle;">@Lenguaje.Recurso.Cotizacion_detalleProducto</td>
+            <td style="float:right; vertical-align:middle;">@Lenguaje.Recurso.Cotizacion_detalleProducto:</td>
             <td>
-                @*<a class="btn_productos btn btn-primary" href="#">
-                       Obtener Productos
-                    </a>*@
-
-                <div class="form-group col-md-12">
-                    <div class="col-md-9 dropdown">
-                        @Html.DropDownList("ListaProducto", ViewBag.ListaProducto as SelectList, Lenguaje.Recurso.Cotizacion_selectProducto, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-warning btn-lg" name="btnproductos" id="btnproductos">@Lenguaje.Recurso.Cotizacion_seleccionar</button>
-                    </div>
-                </div>
+                <a href="~/Cotizacion/ObtenerProductos" rel="pop-up">
+                    <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="Obtener Producto" />
+                </a>             
             </td>
         </tr>
     </tbody>
@@ -204,8 +203,8 @@
 <form action="javascript:fn_agregar()" ; method="post" id="frm_usu" class="form-horizontal">
     <table class="table">
         <tr style="font-size:20px;">
-            <td>@Lenguaje.Recurso.Cotizacion_nombreProducto <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
             <td>Id <input style="font-size:20px; font-weight:700;" type="text" id="idproducto" class="form-control" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_nombreProducto <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
             <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
             <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:20px; font-weight:700;" type="text" id="precio" class="form-control" /></td>
             <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="descuento" value="0" onfocus="this.value = '';" required /></td>
