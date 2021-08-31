@@ -24,7 +24,7 @@ namespace WebFacturaMvc.Controllers
         private CotizacionNeg objCotizacionNeg;
         private ClienteNeg objClienteNeg;
         private ProductoNeg objProductoNeg;
-        private ProductoDao objProductoDao;
+        //private ProductoDao objProductoDao;
         private ModoPagoNeg objModoPagoNeg;
         private FacturaNeg objFacturaNeg;
         private CategoriaNeg objCategoriaNeg;
@@ -123,19 +123,23 @@ namespace WebFacturaMvc.Controllers
 
         public ActionResult NuevaCotizacion()
         {
+            Llenar();
             cargarModoPagocmb();
             cargarProductocmb();
             return View();
         }
+
         [HttpPost]
-        public ActionResult GuardarCotizacion(string Fecha, string modoPago, string IdCliente, string Total,string notas, string notasCompras, List<DetalleCotizacion> ListadoDetalle)
+        public ActionResult GuardarCotizacion(string Fecha, string modoPago, string IdCliente, string Total,string notas, string notasCompras,string estatus, List<DetalleCotizacion> ListadoDetalle)
         {
+            Llenar();
             string mensaje = "";
             double iva = 18;
             string idVendedor = User.Identity.GetUserId();
             int codigoPago = 0;
             long codigoCliente = 0;
             double total = 0;
+       
 
             if (Fecha == "" || modoPago == "" || IdCliente == "" || Total == "")
             {
@@ -152,7 +156,8 @@ namespace WebFacturaMvc.Controllers
                 total = Convert.ToDouble(Total);
 
                 //REGISTRO DE VENTA
-                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras);
+                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus);
+                System.Diagnostics.Debug.WriteLine(objVenta.estatus);
                 string codigoVenta = objCotizacionNeg.create(objVenta);
                 if (codigoVenta == "" || codigoVenta == null)
                 {
@@ -295,6 +300,7 @@ namespace WebFacturaMvc.Controllers
 
         public ActionResult SendEmail()
         {
+            Llenar();
             if (Paso == 1)
             {
                 if (Session["idVenta"].ToString() != null)
@@ -327,6 +333,7 @@ namespace WebFacturaMvc.Controllers
         [HttpPost]
         public ActionResult SendEmail(SendEmail objSendEmail)
         {
+            Llenar();
             configuracion objConfiguracion = new configuracion();
             if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
             {
@@ -364,14 +371,9 @@ namespace WebFacturaMvc.Controllers
                     viewer.ReportPath = "Reportes/Ingles/rptFacturaEn.rdlc";
 
                     //parameters
-                    ReportParameter[] rptParams = new ReportParameter[]
-                    {
-                new ReportParameter("idVenta",idVentaMail)
-                };
+                    ReportParameter[] rptParams = new ReportParameter[]{new ReportParameter("idVenta",idVentaMail)};
                     viewer.Refresh();
-
                     var bytes = viewer.Render("PDF");
-
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress(from, displayName);              
                     mail.To.Add(objSendEmail.To);
@@ -403,6 +405,14 @@ namespace WebFacturaMvc.Controllers
             cargarMarca();
             return View(lista);
         }
+        public void Llenar()
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem() { Text = "Alto", Value = "A" });
+            lst.Add(new SelectListItem() { Text = "Medio", Value = "M" });
+            lst.Add(new SelectListItem() { Text = "Bajo", Value = "B" });
+            ViewBag.Estatus = lst;
+        }
 
         [HttpPost]//para buscar clientes
         public ActionResult ObtenerProductos(string txtcodigo, string txtnombre, string txtCategoria, string txtMarca)
@@ -431,7 +441,8 @@ namespace WebFacturaMvc.Controllers
             objProducto.Marca = txtMarca;
             List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
             cargarCategoria();
-            cargarMarca();         
+            cargarMarca();
+            //System.Diagnostics.Debug.WriteLine(objProducto.IdProducto +"    " +objProducto.Nombre+"    " +objProducto.Categoria+ "     "+objProducto.Marca);
             return View(ListaProducto);
         }
     }

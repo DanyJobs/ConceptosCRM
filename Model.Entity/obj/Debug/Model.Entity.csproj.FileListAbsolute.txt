@@ -52,7 +52,6 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\EntityFramework.SqlServer.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\bin\Debug\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csprojAssemblyReference.cache
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.resources
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.Lenguaje.Recurso.en.resources
 E:\Proycto\FACTURA_JHONNYv2\Model.Entity\obj\Debug\Model.Entity.csproj.GenerateResource.cache

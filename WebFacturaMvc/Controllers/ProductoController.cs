@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Model.Dao;
 using Model.Entity;
 using Model.Neg;
 
@@ -11,10 +12,19 @@ namespace WebFacturaMvc.Controllers
     [Authorize(Roles = "ADMIN")]
     public class ProductoController : Controller
     {
-        ProductoNeg objProductoNeg;
+        private ProductoNeg objProductoNeg;
+        private CategoriaNeg objCategoriaNeg;
+        private MarcaNeg objMarcaNeg;
+        private ProductoDao objProductoDao;
+        private static string categoria;
+        private static string marca;
+
         public ProductoController()
         {
+            objProductoDao = new ProductoDao();
             objProductoNeg = new ProductoNeg();
+            objMarcaNeg = new MarcaNeg();
+            objCategoriaNeg = new CategoriaNeg();
         }
         // GET: Producto
         public ActionResult Index()
@@ -124,11 +134,21 @@ namespace WebFacturaMvc.Controllers
         public ActionResult Update(string id)
         {
             CategoriaNeg objCategoriaNeg = new CategoriaNeg();
-            List<Categoria> data = objCategoriaNeg.findAll();
-            SelectList lista = new SelectList(data, "idCategoria", "nombre");
-            ViewBag.ListaCategorias = lista;
             Producto objProducto = new Producto(id);
             objProductoNeg.find(objProducto);
+
+            marca = objProducto.Marca;
+            categoria = objProducto.Categoria;
+            List<Categoria> data = objCategoriaNeg.findAll();
+            SelectList lista = new SelectList(data, "idCategoria", "nombre", categoria);
+            ViewBag.ListaCategorias = lista;
+
+            MarcaNeg objMarcaNeg = new MarcaNeg();
+            List<Marca> dataMarca = objMarcaNeg.findAll();
+            SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
+            ViewBag.ListaMarcas = ListaMarca;
+
+
             mensajeInicioActualizar();
             return View(objProducto);
         }
@@ -137,10 +157,17 @@ namespace WebFacturaMvc.Controllers
         {
             mensajeInicioActualizar();
             CategoriaNeg objCategoriaNeg = new CategoriaNeg();
+
             List<Categoria> data = objCategoriaNeg.findAll();
-            SelectList lista = new SelectList(data, "idCategoria", "nombre");
+            SelectList lista = new SelectList(data, "idCategoria", "nombre", categoria);
             ViewBag.ListaCategorias = lista;
-            objProductoNeg.update(objProducto);
+          
+            MarcaNeg objMarcaNeg = new MarcaNeg();
+            List<Marca> dataMarca = objMarcaNeg.findAll();
+            SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
+            ViewBag.ListaMarcas = ListaMarca;    
+
+            objProductoDao.update(objProducto);
             MensajeErrorActualizar(objProducto);
             return View();
         }
@@ -259,48 +286,58 @@ namespace WebFacturaMvc.Controllers
             //objClienteNeg.find2(objCliente);
             return View(objProducto);
         }
+        public void cargarCategoria()
+        {
+            List<Categoria> data = objCategoriaNeg.findAll();
+            SelectList lista = new SelectList(data, "idCategoria", "nombre");
+            ViewBag.ListaCategoria = lista;
+        }
+        public void cargarMarca()
+        {
+            List<Marca> data = objMarcaNeg.findAll();
+            SelectList lista = new SelectList(data, "idMarca", "descripcion");
+            ViewBag.ListaMarca = lista;
+        }
 
         [HttpGet]
         public ActionResult BuscarProductos()
         {
-            CategoriaNeg objCategoriaNeg = new CategoriaNeg();
-            List<Categoria> data = objCategoriaNeg.findAll();
-            SelectList lista = new SelectList(data, "idCategoria", "nombre");
-            ViewBag.ListaCategorias = lista;
-
-            List<Producto> listas = objProductoNeg.findAll();
-            return View(listas);
+            List<Producto> lista = objProductoNeg.findAll();
+            cargarCategoria();
+            cargarMarca();
+            return View(lista);
         }
-        [HttpPost]
-        public ActionResult BuscarProductos(string txtproducto, string txtnombre, string ListaCategorias)
+
+        [HttpPost]//para buscar clientes
+        public ActionResult BuscarProductos(string txtcodigo, string txtnombre, string txtCategoria, string txtMarca)
         {
 
+            if (txtcodigo == "")
+            {
+                txtcodigo = null;
+            }
             if (txtnombre == "")
             {
-                txtnombre = "-1";
+                txtnombre = null;
             }
-            if (txtproducto == "")
+            if (txtCategoria == "")
             {
-                txtproducto = "-1";
+                txtCategoria = "-1";
             }
-            if (ListaCategorias == "")
+            if (txtMarca == "")
             {
-                ListaCategorias = "-1";
+                txtMarca = "-1";
             }
-
-            CategoriaNeg objCategoriaNeg = new CategoriaNeg();
-            List<Categoria> data = objCategoriaNeg.findAll();
-            SelectList lista = new SelectList(data, "idCategoria", "nombre");
-            ViewBag.ListaCategorias = lista;
-
             Producto objProducto = new Producto();
+            objProducto.IdProducto = txtcodigo;
             objProducto.Nombre = txtnombre;
-            objProducto.IdProducto = txtproducto;
-            objProducto.Categoria = ListaCategorias;
-
-            List<Producto> Producto = objProductoNeg.findAllProductos(objProducto);
-            mensajeErrorServidor(objProducto);
-            return View(Producto);
+            objProducto.Categoria = txtCategoria;
+            objProducto.Marca = txtMarca;
+            List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
+            cargarCategoria();
+            cargarMarca();
+            //System.Diagnostics.Debug.WriteLine(objProducto.IdProducto +"    " +objProducto.Nombre+"    " +objProducto.Categoria+ "     "+objProducto.Marca);
+            return View(ListaProducto);
         }
 
         public void mensajeErrorServidor(Producto objProducto)

@@ -421,6 +421,7 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Utilidades\Imagenes\logo conceptos Icon.png" />
     <Content Include="Utilidades\Imagenes\logo conceptos.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -737,6 +738,7 @@
     <Content Include="Views\Compra\Consulta.cshtml" />
     <Content Include="Views\Compra\EliminarCompra.cshtml" />
     <Content Include="Views\Compra\EliminarCompraPreview.cshtml" />
+    <Content Include="Views\DetalleCotizacion\DetalleCotizacion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

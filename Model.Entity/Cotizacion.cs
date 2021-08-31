@@ -14,10 +14,14 @@ namespace Model.Entity
         private int estado;
         public string notas { get; set; } 
         public string notasCompras { get; set; }
+        public string estatus { get; set; }
 
         [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaCotizacion { get; set; }
         public string NombreCliente { get; set; }
+        //Para la parte de mostrar las cotizaciones y editar
+        private string cliente;
+
         public long IdVenta
         {
             get
@@ -28,6 +32,19 @@ namespace Model.Entity
             set
             {
                 idVenta = value;
+            }
+        }
+        //Nombre del cliente
+        public string Cliente
+        {
+            get
+            {
+                return cliente;
+            }
+
+            set
+            {
+                cliente = value;
             }
         }
 
@@ -117,7 +134,7 @@ namespace Model.Entity
         {
 
         }
-        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva,string notas,string notasCompras)
+        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva,string notas,string notasCompras,string estatus)
         {           
             this.total = total;
             this.idCliente = idCliente;
@@ -126,7 +143,16 @@ namespace Model.Entity
             this.fecha = fecha;
             this.notas = notas;
             this.notasCompras = notasCompras;
-
+            this.estatus = estatus;
+        }
+        //Para la parte de mostrar las cotizaciones y editar
+        public Cotizacion(double total, string Cliente, string idVendedor, string fecha, double iva)
+        {
+            this.total = total;
+            this.cliente = Cliente;
+            this.idVendedor = idVendedor;
+            this.iva = iva;
+            this.fecha = fecha;            
         }
         public Cotizacion(long idVenta)
         {

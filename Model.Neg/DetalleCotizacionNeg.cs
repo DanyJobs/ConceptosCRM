@@ -63,6 +63,10 @@ namespace Model.Neg
         {
             return objDetalleCotizacionDao.findAll();
         }
+        public List<DetalleCotizacion> VerDetalles(int IdVenta)
+        {
+            return objDetalleCotizacionDao.VerDetalles(IdVenta);
+        }
 
 
     }

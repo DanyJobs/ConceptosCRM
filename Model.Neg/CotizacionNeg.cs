@@ -170,6 +170,16 @@ namespace Model.Neg
         {
             return objCotizacionDao.findAll();
         }
+        //Para la parte de mostrar las cotizaciones y editar
+        public List<Cotizacion> buscar()
+        {
+            return objCotizacionDao.buscar();
+        }
+        //Para filtrar por año y mes
+        public List<Cotizacion> buscar(string Month, string Year)
+        {
+            return objCotizacionDao.buscar(Month,Year);
+        }
         public List<Historial> findHistorial(Historial historial)
         {
             return objDetalleCotizacionDao.findHistorial(historial);

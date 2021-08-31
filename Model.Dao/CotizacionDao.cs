@@ -20,7 +20,7 @@ namespace Model.Dao
         public string create(Cotizacion objVenta)
         {
             string idVenta = "";
-            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA,notas,notasCompras) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','" + objVenta.Iva + "','" + objVenta.notas + "','" + objVenta.notasCompras + "') SELECT SCOPE_IDENTITY();";
+            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA,notas,notasCompras,estatus) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','" + objVenta.Iva + "','" + objVenta.notas + "','" + objVenta.notasCompras + "','" + objVenta.estatus+"') SELECT SCOPE_IDENTITY();";
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
@@ -232,6 +232,93 @@ namespace Model.Dao
                 objConexinDB.getCon().Close();
                 objConexinDB.closeDB();
             }
+        }
+        //Para la parte de mostrar las cotizaciones y editar
+        //Trae las cotizaciones sin necesitar ningun parametro
+        public List<Cotizacion> buscar()
+        {
+            List<Cotizacion> listaVentas = new List<Cotizacion>();
+
+
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_consultaCotizacion";
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexinDB.getCon();
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("pMonth", "");
+            command.Parameters.AddWithValue("pYear", "");
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se crea la tabla
+            DataTable dtCotizacion = new DataTable();
+            //Se abre la conexión
+            objConexinDB.getCon().Open();
+            //Se le da el comando al adaptador
+            adapter.SelectCommand = command;
+            //Se llena la tabla con el adaptador
+            adapter.Fill(dtCotizacion);
+            //Se cierra la conexión
+            objConexinDB.getCon().Close();
+            command.Connection.Close();
+            //Se llena la lista
+            for (int i = 0; i < dtCotizacion.Rows.Count; i++)
+            {
+                Cotizacion c = new Cotizacion();
+                c.IdVenta = int.Parse(dtCotizacion.Rows[i]["idVenta"].ToString());
+                c.Total = Convert.ToDouble(dtCotizacion.Rows[i]["total"].ToString());
+                c.Cliente = dtCotizacion.Rows[i]["Cliente"].ToString();
+                c.FechaCotizacion = Convert.ToDateTime(dtCotizacion.Rows[i]["fecha"].ToString());
+                c.Iva = Convert.ToDouble(dtCotizacion.Rows[i]["IVA"].ToString());
+                listaVentas.Add(c);
+            }
+            //Se regresa el objeto            
+            return listaVentas;
+        }
+        //Trae las cotizaciones según el año y mes
+        public List<Cotizacion> buscar(string Month, string Year)
+        {
+            List<Cotizacion> listaVentas = new List<Cotizacion>();
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_consultaCotizacion";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("pMonth", Month);
+            command.Parameters.AddWithValue("pYear", Year);
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexinDB.getCon();
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se crea la tabla
+            DataTable dtCotizacion = new DataTable();
+            //Se abre la conexión
+            objConexinDB.getCon().Open();
+            //Se le da el comando al adaptador
+            adapter.SelectCommand = command;
+            //Se llena la tabla con el adaptador
+            adapter.Fill(dtCotizacion);
+            //Se cierra la conexión
+            objConexinDB.getCon().Close();
+            command.Connection.Close();
+            //Se llena la lista
+            for (int i = 0; i < dtCotizacion.Rows.Count; i++)
+            {
+                Cotizacion c = new Cotizacion();
+                c.IdVenta = int.Parse(dtCotizacion.Rows[i]["idVenta"].ToString());
+                c.Total = Convert.ToDouble(dtCotizacion.Rows[i]["total"].ToString());
+                c.Cliente = dtCotizacion.Rows[i]["Cliente"].ToString();
+                c.FechaCotizacion = Convert.ToDateTime(dtCotizacion.Rows[i]["fecha"].ToString());
+                c.Iva = Convert.ToDouble(dtCotizacion.Rows[i]["IVA"].ToString());
+                listaVentas.Add(c);
+            }
+            //Se regresa el objeto            
+            return listaVentas;
         }
     }
 }

@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="~/Utilidades/Imagenes/logo conceptos Icon.png">
     <title>Principal- Sistema Ventas</title>
     <!-- Bootstrap Core CSS -->
     <link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -22,16 +23,14 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 
     @*<link href="~/Assets/morrisjs/morris.css" rel="stylesheet" />*@
-    <!-- Custom Fonts -->      
+    <!-- Custom Fonts -->
     <link href="~/Assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 <body>
     <div id="wrapper">
@@ -117,7 +116,6 @@
                 <!-- /.dropdown -->
                 @if (User.Identity.IsAuthenticated)
                 {               
-
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -133,8 +131,7 @@
                             <li>
                                 @Html.ActionLink(@Lenguaje.Recurso.Cerrar_sesion, "LogOff","Account")
                             </li>
-                        </ul>
-                        @*/.dropdown-user*@
+                        </ul>               
                     </li>
                 }
                 else
@@ -143,8 +140,6 @@
                         <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Registrarse</a>
                     </li>
                 }
-
-
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -168,6 +163,9 @@
                         <li>
                             <a href="#"><i class="fa fa-square fa-fw"></i> Artículos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="~/Marca/Index"><i class="fa fa-tags fa-fw" style="color:#f0ad4e"></i>Marca</a>
+                                </li>
                                 <li>
                                     <a href="~/Categoria/Index"><i class="fa fa-check fa-fw" style="color:#f0ad4e"></i>Categorías</a>
                                 </li>

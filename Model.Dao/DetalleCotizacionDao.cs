@@ -335,5 +335,49 @@ namespace Model.Dao
             }
             return listaHistorial;
         }
+
+        //Trae la información del Detalle cotizacion
+        public List<DetalleCotizacion> VerDetalles(int IdVenta)
+        {
+            List<DetalleCotizacion> listaCotizaciones = new List<DetalleCotizacion>();
+
+
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_CotizacionDetalleConsulta";
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexionDB.getCon();
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdVenta", IdVenta);
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se crea la tabla
+            DataTable dtCotizacion = new DataTable();
+            //Se abre la conexión
+            objConexionDB.getCon().Open();
+            //Se le da el comando al adaptador
+            adapter.SelectCommand = command;
+            //Se llena la tabla con el adaptador
+            adapter.Fill(dtCotizacion);
+            //Se cierra la conexión
+            objConexionDB.getCon().Close();
+            command.Connection.Close();
+            //Se llena la lista
+            for (int i = 0; i < dtCotizacion.Rows.Count; i++)
+            {
+                DetalleCotizacion c = new DetalleCotizacion();
+                c.IdVenta = int.Parse(dtCotizacion.Rows[i]["idVenta"].ToString());
+                c.SubTotal = Convert.ToDouble(dtCotizacion.Rows[i]["subTotal"].ToString());
+                c.IdProducto = dtCotizacion.Rows[i]["nombre"].ToString();
+                c.Descuento = Convert.ToDouble(dtCotizacion.Rows[i]["descuento"].ToString());
+                c.Cantidad = int.Parse(dtCotizacion.Rows[i]["cantidad"].ToString());
+                listaCotizaciones.Add(c);
+            }
+            //Se regresa el objeto            
+            return listaCotizaciones;
+        }
     }
 }
