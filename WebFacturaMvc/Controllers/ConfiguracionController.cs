@@ -73,8 +73,9 @@ namespace WebFacturaMvc.Controllers
                 return HttpNotFound();
             }
             Llenar();
-            ViewBag.usuario = new SelectList(db.AspNetUsers, "Id", "Email", configuracion.usuario);
+            ViewBag.usuario = new SelectList(db.AspNetUsers, "Id", "Email", configuracion.usuario);   
             ViewBag.moneda = new SelectList(db.Moneda, "abreviatura", "abreviatura", configuracion.moneda);
+
             return View(configuracion);
         }
 

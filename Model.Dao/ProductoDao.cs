@@ -140,7 +140,7 @@ namespace Model.Dao
 
         public void update(Producto objProducto)
         {
-            string update = "update producto set  nombre='" + objProducto.Nombre + "',descripcion='" + objProducto.Descripcion + "' precioUnitario='" + objProducto.PrecioUnitario + "',idCategoria='" + objProducto.Categoria + "' where idProducto='" + objProducto.IdProducto + "'";
+            string update = "update producto set  nombre='" + objProducto.Nombre + "',descripcion='" + objProducto.Descripcion + "' ,precioUnitario=" + objProducto.PrecioUnitario + ",idCategoria='" + objProducto.Categoria + "' ,idMarca='" + objProducto.Marca + "' where idProducto='" + objProducto.IdProducto + "'";
             try
             {
                 comando = new SqlCommand(update, objConexionDB.getCon());

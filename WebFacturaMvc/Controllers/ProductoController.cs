@@ -136,17 +136,14 @@ namespace WebFacturaMvc.Controllers
             CategoriaNeg objCategoriaNeg = new CategoriaNeg();
             Producto objProducto = new Producto(id);
             objProductoNeg.find(objProducto);
-
             marca = objProducto.Marca;
             categoria = objProducto.Categoria;
-            List<Categoria> data = objCategoriaNeg.findAll();
-            SelectList lista = new SelectList(data, "idCategoria", "nombre", categoria);
-            ViewBag.ListaCategorias = lista;
-
+            List<Categoria> data = objCategoriaNeg.findAll();     
+            ViewBag.Categoria = new SelectList(data, "idCategoria", "nombre", categoria);
             MarcaNeg objMarcaNeg = new MarcaNeg();
             List<Marca> dataMarca = objMarcaNeg.findAll();
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
-            ViewBag.ListaMarcas = ListaMarca;
+            ViewBag.Marca = ListaMarca;
 
 
             mensajeInicioActualizar();
@@ -160,16 +157,16 @@ namespace WebFacturaMvc.Controllers
 
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList lista = new SelectList(data, "idCategoria", "nombre", categoria);
-            ViewBag.ListaCategorias = lista;
+            ViewBag.Categoria = lista;
           
             MarcaNeg objMarcaNeg = new MarcaNeg();
             List<Marca> dataMarca = objMarcaNeg.findAll();
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
-            ViewBag.ListaMarcas = ListaMarca;    
+            ViewBag.Marca = ListaMarca;    
 
             objProductoDao.update(objProducto);
             MensajeErrorActualizar(objProducto);
-            return View();
+            return View("Index");
         }
 
         //mensaje de error

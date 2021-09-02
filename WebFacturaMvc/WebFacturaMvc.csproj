@@ -739,6 +739,7 @@
     <Content Include="Views\Compra\EliminarCompra.cshtml" />
     <Content Include="Views\Compra\EliminarCompraPreview.cshtml" />
     <Content Include="Views\DetalleCotizacion\DetalleCotizacion.cshtml" />
+    <Content Include="Views\Cotizacion\Historial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

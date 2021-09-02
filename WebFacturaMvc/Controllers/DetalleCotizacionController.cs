@@ -49,10 +49,8 @@ namespace WebFacturaMvc.Controllers
             {
                 string numero = i.ToString();
                 listYears.Add(new SelectListItem() { Text = numero, Value = numero });
-
             }
             ViewBag.ListaYears = listYears;
-
         }
         
         public ActionResult DetalleCotizacion(int idVenta)

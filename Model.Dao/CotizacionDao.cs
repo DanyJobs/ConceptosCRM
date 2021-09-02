@@ -10,7 +10,7 @@ namespace Model.Dao
     {
         private ConexionDB objConexinDB;
         private SqlCommand comando;
-
+        private SqlDataReader reader;
         public CotizacionDao()
         {
             objConexinDB = ConexionDB.saberEstado();
@@ -319,6 +319,77 @@ namespace Model.Dao
             }
             //Se regresa el objeto            
             return listaVentas;
+        }
+
+        public List<Cotizacion> buscarConEstatus(string Month, string Year,string Estatus)
+        {
+            List<Cotizacion> objListaCotizacion= new List<Cotizacion>();
+            try
+            {
+                //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
+                SqlCommand cmd = new SqlCommand("sp_consultaCotizacionEstatus", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Month", Month);
+                cmd.Parameters.AddWithValue("@Year", Year);
+                cmd.Parameters.AddWithValue("@Estatus", Estatus);
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Cotizacion objCotizacion = new Cotizacion();
+                    objCotizacion.IdVenta = int.Parse(reader[0].ToString());
+                    objCotizacion.Total = Convert.ToDouble(reader[1].ToString());
+                    objCotizacion.Cliente = reader[2].ToString();
+                    objCotizacion.FechaCotizacion = Convert.ToDateTime(reader[3].ToString());
+                    objCotizacion.Iva = Convert.ToDouble(reader[4].ToString());
+                    objCotizacion.estatus = reader[5].ToString();
+                    objListaCotizacion.Add(objCotizacion);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return objListaCotizacion;
+        }
+
+        public List<Cotizacion> buscarConEstatus()
+        {
+            List<Cotizacion> objListaCotizacion = new List<Cotizacion>();
+            try
+            {
+                //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
+                SqlCommand cmd = new SqlCommand("sp_consultaCotizacionEstatus", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;              
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Cotizacion objCotizacion = new Cotizacion();
+                    objCotizacion.IdVenta = int.Parse(reader[0].ToString());
+                    objCotizacion.Total = Convert.ToDouble(reader[1].ToString());
+                    objCotizacion.Cliente = reader[2].ToString();
+                    objCotizacion.FechaCotizacion = Convert.ToDateTime(reader[3].ToString());
+                    objCotizacion.Iva = Convert.ToDouble(reader[4].ToString());
+                    objCotizacion.estatus = reader[5].ToString();
+                    objListaCotizacion.Add(objCotizacion);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return objListaCotizacion;
         }
     }
 }

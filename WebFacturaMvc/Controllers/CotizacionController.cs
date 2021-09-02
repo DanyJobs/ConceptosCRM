@@ -44,6 +44,91 @@ namespace WebFacturaMvc.Controllers
             objFacturaNeg = new FacturaNeg();
             objDetalleVentaNeg = new DetalleCotizacionNeg();
         }
+
+        public ActionResult Historial()
+        {
+            Llenar();
+            List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus();
+            cargarFechas();
+            return View(lista);
+        }
+
+        [HttpPost]
+        public ActionResult Historial(string txtMes, string txtYear,string txtEstatus)
+        {
+            Llenar();
+            string month = "", year = "";
+            string vyear = "";
+            int condicion = 0;
+            if (txtMes == "")
+            {
+                txtMes = null;
+            }
+            if (txtYear == "")
+            {
+                txtYear = "-1";
+            }
+            //Validaciones
+            if (txtYear == "-1")
+            {
+                vyear = null;
+            }
+
+            if (txtEstatus == "")
+            {
+                txtEstatus = null;
+            }
+
+            //Para meses 10-12
+            if (txtMes != null)
+            {
+                condicion = int.Parse(txtMes);
+                if (condicion >= 10)
+                {
+                    month = txtMes;
+                }
+                //Para meses 1-9
+                else
+                {
+                    month = "0" + txtMes;
+                }
+            }
+            //Para el año
+            if (vyear != null)
+            {
+                year = txtYear;
+            }
+            cargarFechas();
+            List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus(month, year, txtEstatus);
+            return View(lista);
+        }
+
+        //Para ver los detalles de la cotizacion
+        private void cargarFechas()
+        {
+            //Arreglo de meses
+            string[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo","Junio","Julio","Agosto","Septiembre",
+            "Octubre","Noviembre","Diciembre"};
+            List<SelectListItem> listMeses = new List<SelectListItem>();
+
+            for (int i = 0; i < 12; i++)
+            {
+                int j = i + 1;
+                string numero = j.ToString();
+                listMeses.Add(new SelectListItem() { Text = meses[i], Value = numero });
+                // prueba = numero;
+            }
+            ViewBag.ListaMeses = listMeses;
+            //Años 2000-2099
+            List<SelectListItem> listYears = new List<SelectListItem>();
+            for (int i = 2000; i < 2100; i++)
+            {
+                string numero = i.ToString();
+                listYears.Add(new SelectListItem() { Text = numero, Value = numero });
+            }
+            ViewBag.ListaYears = listYears;
+        }
+
         [HttpGet]
         public ActionResult ObtenerClientes()
         {
@@ -156,8 +241,7 @@ namespace WebFacturaMvc.Controllers
                 total = Convert.ToDouble(Total);
 
                 //REGISTRO DE VENTA
-                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus);
-                System.Diagnostics.Debug.WriteLine(objVenta.estatus);
+                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus);         
                 string codigoVenta = objCotizacionNeg.create(objVenta);
                 if (codigoVenta == "" || codigoVenta == null)
                 {
@@ -405,9 +489,11 @@ namespace WebFacturaMvc.Controllers
             cargarMarca();
             return View(lista);
         }
+
         public void Llenar()
         {
             List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem() { Text = "Seleccionar", Value = null});
             lst.Add(new SelectListItem() { Text = "Alto", Value = "A" });
             lst.Add(new SelectListItem() { Text = "Medio", Value = "M" });
             lst.Add(new SelectListItem() { Text = "Bajo", Value = "B" });

@@ -180,6 +180,14 @@ namespace Model.Neg
         {
             return objCotizacionDao.buscar(Month,Year);
         }
+        public List<Cotizacion> buscarConEstatus(string Month, string Year,string Estatus)
+        {
+            return objCotizacionDao.buscarConEstatus(Month, Year,Estatus);
+        }
+        public List<Cotizacion> buscarConEstatus()
+        {
+            return objCotizacionDao.buscarConEstatus();
+        }
         public List<Historial> findHistorial(Historial historial)
         {
             return objDetalleCotizacionDao.findHistorial(historial);
