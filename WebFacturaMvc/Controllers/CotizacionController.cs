@@ -11,8 +11,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Web.WebPages;
 using WebFacturaMvc.Datos;
 using WebFacturaMvc.Reportes.Espanol;
 
@@ -29,7 +34,7 @@ namespace WebFacturaMvc.Controllers
         private FacturaNeg objFacturaNeg;
         private CategoriaNeg objCategoriaNeg;
         private MarcaNeg objMarcaNeg;
-        private static int Paso=0;
+        private static int Paso = 0;
         private DetalleCotizacionNeg objDetalleVentaNeg;
         private static string idVentaMail;
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
@@ -54,7 +59,7 @@ namespace WebFacturaMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Historial(string txtMes, string txtYear,string txtEstatus)
+        public ActionResult Historial(string txtMes, string txtYear, string txtEstatus)
         {
             Llenar();
             string month = "", year = "";
@@ -78,7 +83,7 @@ namespace WebFacturaMvc.Controllers
             {
                 txtEstatus = null;
             }
-
+            System.Diagnostics.Debug.WriteLine(txtEstatus);
             //Para meses 10-12
             if (txtMes != null)
             {
@@ -137,7 +142,7 @@ namespace WebFacturaMvc.Controllers
         }
 
         [HttpPost]//para buscar clientes
-        public ActionResult ObtenerClientes(string txtnombre, string txtcliente, string txtapellido,string txtemail)
+        public ActionResult ObtenerClientes(string txtnombre, string txtcliente, string txtapellido, string txtemail)
         {
             if (txtnombre == "")
             {
@@ -171,8 +176,110 @@ namespace WebFacturaMvc.Controllers
             Producto objProducto = new Producto(idProducto);
             objProductoNeg.find(objProducto);
             return Json(objProducto, JsonRequestBehavior.AllowGet);
-
         }
+
+        private void EnviarCorreosMensaje(List<string> ListadoDetalle,configuracion objConfiguracion,string id) 
+        {
+            string msge = "";
+            foreach (var item in ListadoDetalle)
+            {
+                objConfiguracion = db.configuracion.First(p => p.usuario == id);
+                if (objConfiguracion == null)
+                {          
+                    RedirectToAction("HttpNotFound");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(item.ToString());
+                    var lects = db.Database.SqlQuery<SendEmail>("sp_consultaEmailCliente @idVenta", new SqlParameter("@idVenta", item.ToString())).Single();
+                    Paso = 0;
+                    SendEmail email = new SendEmail();
+                    email = lects;
+
+                    msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+                    string from = objConfiguracion.email;
+                    string displayName = objConfiguracion.displayName;
+                    try
+                    {
+                        //parameters                                     
+                        MailMessage mail = new MailMessage();
+                        mail.From = new MailAddress(from, displayName);
+                        mail.To.Add(email.To);
+                        mail.Subject = "Follow Up " + email.Subject;
+                        mail.IsBodyHtml = true;
+                        string stCuerpoHTML = "<!DOCTYPE html>";
+                        stCuerpoHTML += "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>";
+                        stCuerpoHTML += "<head> <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'>";
+                        stCuerpoHTML += "<title>" + "Follow Up " + email.Subject + "</title>";
+                        stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}</style>";
+                        stCuerpoHTML += "</head>";
+                        stCuerpoHTML += "<body style='margin:0;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr>";
+                        stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
+                        stCuerpoHTML += "<img src='cid:Fondo' alt='' width='600' style='height:auto;display:block;' /></td></tr><tr>";
+                        stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
+                        stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + email.Cliente + ".</h1>";
+                        stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><br /> <br /> I hope you are well. <br /><br /> I wanted to know if you are still interested in the equipment. <br /> <br /> Let me know as soon as possible. <br /> <br /> Regards. </p>";
+                        stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
+                        stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
+                        stCuerpoHTML += "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>Copyright &reg; CRM Conceptos Electronics 2021<br /></p></td><td style='padding:0;width:50%;' align='right'>";
+                        stCuerpoHTML += "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.twitter.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/tw_1.png' alt='Twitter' width='38' style='height:auto;display:block;border:0;' /></a>";
+                        stCuerpoHTML += "</td><td style='padding:0 0 0 10px;width:38px;'><a href='https://www.facebook.com/Conceptos-Electronics-104154518135452' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a>";
+                        stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
+                        stCuerpoHTML += "</td></tr></table></body></html>";
+                        AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
+                        string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
+                        string stIdImagen = "Fondo";
+                        LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                        img.ContentId = stIdImagen;
+                        htmlView.LinkedResources.Add(img);
+                        mail.AlternateViews.Add(htmlView);
+                        mail.Body = stCuerpoHTML;
+                        mail.IsBodyHtml = true;
+                        SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
+                        client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
+                        client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                        client.Send(mail);
+                        msge = "¡Correo enviado exitosamente!";                       
+                    }
+                    catch (Exception e) {
+                        TempData["msg"] = "<script>alert('Error: '" + e.Message.ToString() + "');</script>";
+                    }
+                }
+            }
+            TempData["msg"] = "<script>alert('" + msge + "');</script>";
+        }
+
+
+        [HttpPost]
+        public ActionResult EnviarCorreos(List<string> ListadoDetalle)
+        {         
+            string id = User.Identity.GetUserId();        
+            List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus();
+            configuracion objConfiguracion = new configuracion();
+            cargarFechas();
+            if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                if (ListadoDetalle==null) {
+                    System.Diagnostics.Debug.WriteLine("Lista vacia");
+                }
+                else {
+                    EnviarCorreosMensaje(ListadoDetalle, objConfiguracion, id);
+                }               
+                Llenar();
+                cargarFechas();
+                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+                return View("Historial", lista);
+            } 
+        }
+
+    
+           
+        
+
         public ActionResult PruebaJson()
         {  // escribir la url directa  para ver el formato      
             List<Producto> lista = objProductoNeg.findAll();
@@ -261,14 +368,12 @@ namespace WebFacturaMvc.Controllers
                     }
                     else
                     {
-
                         foreach (var data in ListadoDetalle)
                         {
                             string idProducto = data.IdProducto.ToString();
                             int cantidad = Convert.ToInt32(data.Cantidad.ToString());
                             double descuento = Convert.ToDouble(data.Descuento.ToString());
                             double subtotal = Convert.ToDouble(data.SubTotal.ToString());
-
                             DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
                             objDetalleVentaNeg.create(objDetalleVenta);
                         }
@@ -362,25 +467,112 @@ namespace WebFacturaMvc.Controllers
             return View(Cotizacion);
         }
 
-        public ActionResult SendEmailFactura(int idVenta)
-        {
-            if (idVenta != null)
-            {
-                //string id = Session["idVenta"].ToString();
-                var lects = db.Database.SqlQuery<SendEmail>("sp_consultaEmailCliente @idVenta",new SqlParameter("@idVenta", idVenta)).Single();
+        public ActionResult SendEmailFactura(decimal IdVenta)
+        {       //string id = Session["idVenta"].ToString();
+                var lects = db.Database.SqlQuery<SendEmail>("sp_consultaEmailCliente @idVenta",new SqlParameter("@idVenta", IdVenta)).Single();
                 Paso = 0;
                 SendEmail email = new SendEmail();
                 email = lects;
-                return View("SendEmail", lects);
+                return View("SendEmailFactura", lects);       
+        }
+
+        [HttpPost]
+        public ActionResult SendEmailFactura(SendEmail objSendEmail)
+        {
+            Llenar();
+            configuracion objConfiguracion = new configuracion();
+            if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
+            {
+                return RedirectToAction("Login", "Account");
             }
             else
             {
-                cargarModoPagocmb();
-                cargarProductocmb();
-                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
-                return View();
+                string id = User.Identity.GetUserId();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                objConfiguracion = db.configuracion.First(p => p.usuario == id);
+                if (objConfiguracion == null)
+                {
+                    return HttpNotFound();
+                }
             }
+
+            string msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+            string from = objConfiguracion.email;
+            string displayName = objConfiguracion.displayName;
+            //try
+            //{
+                using (var viewer = new LocalReport())
+                {
+                    DateTime fechaActual = DateTime.Today;
+                    string fechaQuote = string.Format("{0}{1}{2}", fechaActual.Month, fechaActual.Day, fechaActual.Year);
+
+                    DataTable dt = frmReporteEs.cargar(objSendEmail.idCotizacion.ToString());
+                    ReportDataSource rds = new ReportDataSource("DataSet1", dt);
+                    viewer.DataSources.Add(rds);
+                    viewer.ReportPath = "Reportes/Ingles/rptFacturaEn.rdlc";
+
+                    //parameters
+                    ReportParameter[] rptParams = new ReportParameter[] { new ReportParameter("idVenta", idVentaMail) };
+                    viewer.Refresh();
+                    var bytes = viewer.Render("PDF");
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress(from, displayName);
+                    mail.To.Add(objSendEmail.To);
+                    mail.Subject = objSendEmail.Subject;
+                    mail.IsBodyHtml = true;
+                    string stCuerpoHTML = "<!DOCTYPE html>";
+                    stCuerpoHTML += "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>";
+                    stCuerpoHTML += "<head> <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'>";
+                    stCuerpoHTML += "<title>"  + objSendEmail.Subject + "</title>";
+                    stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}</style>";
+                    stCuerpoHTML += "</head>";
+                    stCuerpoHTML += "<body style='margin:0;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr>";
+                    stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
+                    stCuerpoHTML += "<img src='cid:Fondo' alt='' width='600' style='height:auto;display:block;' /></td></tr><tr>";
+                    stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
+                    stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + objSendEmail.Cliente + ".</h1>";
+                    stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><br /> <br /> I hope you are well. <br /><br /> Here is the quote you requested. <br /> <br /> Let me know as soon as you can. <br /> <br />Best Regards.  <br /><br /> ";
+                    if (String.IsNullOrWhiteSpace(objSendEmail.Body)){
+                        stCuerpoHTML += "</p>";
+                    }else {                   
+                    stCuerpoHTML += "Note: " + objSendEmail.Body + "</p>";                  
+                    }
+                    stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
+                    stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
+                    stCuerpoHTML += "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>Copyright &reg; CRM Conceptos Electronics 2021<br /></p></td><td style='padding:0;width:50%;' align='right'>";
+                    stCuerpoHTML += "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.twitter.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/tw_1.png' alt='Twitter' width='38' style='height:auto;display:block;border:0;' /></a>";
+                    stCuerpoHTML += "</td><td style='padding:0 0 0 10px;width:38px;'><a href='https://www.facebook.com/Conceptos-Electronics-104154518135452' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a>";
+                    stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
+                    stCuerpoHTML += "</td></tr></table></body></html>";               
+                    AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
+                    string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
+                    string stIdImagen = "Fondo";
+                    LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                    img.ContentId = stIdImagen;
+                    htmlView.LinkedResources.Add(img);
+                    mail.AlternateViews.Add(htmlView);
+                    mail.Body = HttpUtility.HtmlEncode(stCuerpoHTML);
+                    mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " + idVentaMail + fechaQuote + ".pdf"));
+                    mail.IsBodyHtml = true;
+                    SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
+                    client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
+                    client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                    client.Send(mail);
+                    msge = "¡Correo enviado exitosamente! Pronto te contactaremos.";
+                }
+                return RedirectToAction("VentaFactura", "Cotizacion"); ;
+            //}
+            //catch (Exception ex)
+            //{
+            //    TempData["msg"] = "<script>alert('" + ex.Message.ToString() + "');</script>";
+            //    msge = ex.Message + ". Por favor verifica tu conexión a internet y que tus datos sean correctos e intenta nuevamente.";
+            //    return RedirectToAction("VentaFactura", "Cotizacion"); ;
+            //}
         }
+
 
         public ActionResult SendEmail()
         {
@@ -462,7 +654,42 @@ namespace WebFacturaMvc.Controllers
                     mail.From = new MailAddress(from, displayName);              
                     mail.To.Add(objSendEmail.To);
                     mail.Subject = objSendEmail.Subject;
-                    mail.Body = objSendEmail.Body;
+                    mail.IsBodyHtml = true;
+                    string stCuerpoHTML = "<!DOCTYPE html>";
+                    stCuerpoHTML += "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>";
+                    stCuerpoHTML += "<head> <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'>";
+                    stCuerpoHTML += "<title>" + objSendEmail.Subject + "</title>";
+                    stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}</style>";
+                    stCuerpoHTML += "</head>";
+                    stCuerpoHTML += "<body style='margin:0;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr>";
+                    stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
+                    stCuerpoHTML += "<img src='cid:Fondo' alt='' width='600' style='height:auto;display:block;' /></td></tr><tr>";
+                    stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
+                    stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + objSendEmail.Cliente + ".</h1>";
+                    stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><br /> <br /> I hope you are well. <br /><br /> Here is the quote you requested. <br /> <br /> Let me know as soon as you can. <br /> <br />Best Regards.  <br /><br /> ";
+                    if (String.IsNullOrWhiteSpace(objSendEmail.Body))
+                    {
+                        stCuerpoHTML += "</p>";
+                    }
+                    else
+                    {
+                        stCuerpoHTML += "Note: " + objSendEmail.Body + "</p>";
+                    }
+                    stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
+                    stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
+                    stCuerpoHTML += "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>Copyright &reg; CRM Conceptos Electronics 2021<br /></p></td><td style='padding:0;width:50%;' align='right'>";
+                    stCuerpoHTML += "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.twitter.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/tw_1.png' alt='Twitter' width='38' style='height:auto;display:block;border:0;' /></a>";
+                    stCuerpoHTML += "</td><td style='padding:0 0 0 10px;width:38px;'><a href='https://www.facebook.com/Conceptos-Electronics-104154518135452' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a>";
+                    stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
+                    stCuerpoHTML += "</td></tr></table></body></html>";
+                    AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
+                    string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
+                    string stIdImagen = "Fondo";
+                    LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                    img.ContentId = stIdImagen;
+                    htmlView.LinkedResources.Add(img);
+                    mail.AlternateViews.Add(htmlView);
+                    mail.Body = HttpUtility.HtmlEncode(stCuerpoHTML);
                     mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " +idVentaMail+fechaQuote + ".pdf"));
                     mail.IsBodyHtml = true;
                     SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
@@ -493,7 +720,6 @@ namespace WebFacturaMvc.Controllers
         public void Llenar()
         {
             List<SelectListItem> lst = new List<SelectListItem>();
-            lst.Add(new SelectListItem() { Text = "Seleccionar", Value = null});
             lst.Add(new SelectListItem() { Text = "Alto", Value = "A" });
             lst.Add(new SelectListItem() { Text = "Medio", Value = "M" });
             lst.Add(new SelectListItem() { Text = "Bajo", Value = "B" });

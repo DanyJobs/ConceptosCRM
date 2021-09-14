@@ -314,16 +314,117 @@ namespace Model.Dao
                 c.Total = Convert.ToDouble(dtCotizacion.Rows[i]["total"].ToString());
                 c.Cliente = dtCotizacion.Rows[i]["Cliente"].ToString();
                 c.FechaCotizacion = Convert.ToDateTime(dtCotizacion.Rows[i]["fecha"].ToString());
-                c.Iva = Convert.ToDouble(dtCotizacion.Rows[i]["IVA"].ToString());
+                c.Iva = Convert.ToDouble(dtCotizacion.Rows[i]["IVA"].ToString());                
                 listaVentas.Add(c);
             }
             //Se regresa el objeto            
             return listaVentas;
         }
 
-        public List<Cotizacion> buscarConEstatus(string Month, string Year,string Estatus)
+        //Trae una cotizacion según el id
+        public Cotizacion buscarIdVenta(int idVenta)
+        {            
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_consultaCotizacionIndividual";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("idVenta", idVenta);            
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexinDB.getCon();
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se crea la tabla
+            DataTable dtCotizacion = new DataTable();
+            //Se abre la conexión
+            objConexinDB.getCon().Open();
+            //Se le da el comando al adaptador
+            adapter.SelectCommand = command;
+            //Se llena la tabla con el adaptador
+            adapter.Fill(dtCotizacion);
+            //Se cierra la conexión
+            objConexinDB.getCon().Close();
+            command.Connection.Close();
+            //Objeto Cotizacion
+            Cotizacion c = new Cotizacion();
+            //Se llena la lista
+            for (int i = 0; i < dtCotizacion.Rows.Count; i++)
+            {
+                
+                c.IdVenta = int.Parse(dtCotizacion.Rows[i]["idVenta"].ToString());
+                c.Total = Convert.ToDouble(dtCotizacion.Rows[i]["total"].ToString());
+                c.Cliente = dtCotizacion.Rows[i]["Cliente"].ToString();
+                c.IdCliente = int.Parse(dtCotizacion.Rows[i]["idCliente"].ToString());
+                c.Email= dtCotizacion.Rows[i]["Email"].ToString();
+                c.FechaCotizacion = Convert.ToDateTime(dtCotizacion.Rows[i]["fecha"].ToString());
+                c.Iva = Convert.ToDouble(dtCotizacion.Rows[i]["IVA"].ToString());
+                c.estatus = dtCotizacion.Rows[i]["estatus"].ToString();
+                c.notas = dtCotizacion.Rows[i]["notas"].ToString();
+                c.notasCompras = dtCotizacion.Rows[i]["notasCompras"].ToString();
+            }
+            //Se regresa el objeto            
+            return c;
+        }
+        //Metodo para actualizar al información de la cotizacion y cotización detalle
+        public void Actualizar(int idVenta, decimal Total, int IdCliente, string idVendedor, string fecha, decimal IVA, string Notas, string NotasCompras, string Estatus)
         {
-            List<Cotizacion> objListaCotizacion= new List<Cotizacion>();
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_actualizarCotizacion";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdVenta", idVenta);
+            command.Parameters.AddWithValue("Total", Total);
+            command.Parameters.AddWithValue("IdCliente", IdCliente);
+            command.Parameters.AddWithValue("IdVendedor", idVendedor);
+            command.Parameters.AddWithValue("Fecha", fecha);
+            command.Parameters.AddWithValue("IVA", IVA);
+            command.Parameters.AddWithValue("Notas", Notas);
+            command.Parameters.AddWithValue("NotasCompras", NotasCompras);
+            command.Parameters.AddWithValue("Estatus", Estatus);            
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexinDB.getCon();
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se abre la conexión
+            objConexinDB.getCon().Open();
+            //Se ejecuta el comando
+            command.ExecuteNonQuery();
+            //Se cierra la conexión
+            objConexinDB.getCon().Close();
+            command.Connection.Close();
+        }
+        //Metodo para eliminar la cotizacion
+        public void Eliminar(int idVenta)
+        {
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_eliminarCotizacion";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdVenta", idVenta);            
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexinDB.getCon();
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se abre la conexión
+            objConexinDB.getCon().Open();
+            //Se ejecuta el comando
+            command.ExecuteNonQuery();
+            //Se cierra la conexión
+            objConexinDB.getCon().Close();
+            command.Connection.Close();
+        }
+
+        public List<Cotizacion> buscarConEstatus(string Month, string Year, string Estatus)
+        {
+            List<Cotizacion> objListaCotizacion = new List<Cotizacion>();
             try
             {
                 //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
@@ -365,7 +466,7 @@ namespace Model.Dao
             {
                 //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
                 SqlCommand cmd = new SqlCommand("sp_consultaCotizacionEstatus", objConexinDB.getCon());
-                cmd.CommandType = CommandType.StoredProcedure;              
+                cmd.CommandType = CommandType.StoredProcedure;
                 objConexinDB.getCon().Open();
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -391,5 +492,7 @@ namespace Model.Dao
             }
             return objListaCotizacion;
         }
-    }
+    
+
+}
 }

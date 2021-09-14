@@ -135,6 +135,7 @@
           <Property Name="IVA" Type="money" Nullable="false" />
           <Property Name="notas" Type="nvarchar" MaxLength="200" />
           <Property Name="notasCompras" Type="nvarchar" MaxLength="200" />
+          <Property Name="estatus" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="detalleCotizacion">
           <Key>
@@ -148,8 +149,6 @@
           <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="descuento" Type="money" Nullable="false" />
           <Property Name="cantidad" Type="int" Nullable="false" />
-          <Property Name="notas" Type="varchar" MaxLength="200" />
-          <Property Name="notasCompras" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="existencia">
           <Key>
@@ -204,7 +203,7 @@
           <Property Name="precioUnitario" Type="money" Nullable="false" />
           <Property Name="idCategoria" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="idMarca" Type="varchar" MaxLength="5" />
-          <Property Name="bandaAncha" Type="varchar" MaxLength="10" />
+          <Property Name="bandaAncha" Type="nvarchar" MaxLength="30" />
           <Property Name="channels" Type="int" />
         </EntityType>
         <EntityType Name="proveedor">
@@ -499,6 +498,24 @@
         <Function Name="reporte_factura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPedido" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_actualizarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVenta" Type="int" Mode="In" />
+          <Parameter Name="Total" Type="real" Mode="In" />
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+          <Parameter Name="IdVendedor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+          <Parameter Name="IVA" Type="money" Mode="In" />
+          <Parameter Name="Notas" Type="nvarchar" Mode="In" />
+          <Parameter Name="NotasCompras" Type="nvarchar" Mode="In" />
+          <Parameter Name="Estatus" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_actualizarDetalleCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVenta" Type="int" Mode="In" />
+          <Parameter Name="SubTotal" Type="real" Mode="In" />
+          <Parameter Name="IdProducto" Type="nvarchar" Mode="In" />
+          <Parameter Name="Descuento" Type="money" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -512,11 +529,43 @@
           <Parameter Name="idSucursal" Type="int" Mode="In" />
           <Parameter Name="idProveedor" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_CompraConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CompraConsultaIndividual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCompra" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_CompraDetalleAlta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idcompra" Type="int" Mode="In" />
           <Parameter Name="precio" Type="money" Mode="In" />
           <Parameter Name="idproducto" Type="nvarchar" Mode="In" />
           <Parameter Name="cantidad" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CompraDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCompra" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CompraEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCompra" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CompraFiltrado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pMonth" Type="varchar" Mode="In" />
+          <Parameter Name="pYear" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_consultaCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pMonth" Type="varchar" Mode="In" />
+          <Parameter Name="pYear" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_consultaCotizacionEstatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Month" Type="varchar" Mode="In" />
+          <Parameter Name="Year" Type="varchar" Mode="In" />
+          <Parameter Name="Estatus" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_consultaCotizacionIdVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idVenta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_consultaCotizacionIndividual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idVenta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_consultaCotizacionProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVenta" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_consultaEmailCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idVenta" Type="numeric" Mode="In" />
@@ -524,6 +573,9 @@
         <Function Name="sp_consultaExistencias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_consultaExistenciasSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idSucursal" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_consultaProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdProducto" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_consultaSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idSucursal" Type="int" Mode="In" />
@@ -533,6 +585,9 @@
           <Parameter Name="idProducto" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_COTIZACION_HISTORIAL_TODO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CotizacionDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVenta" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -542,6 +597,9 @@
         <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_eliminarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVenta" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -566,12 +624,24 @@
           <Parameter Name="producto" Type="varchar" Mode="In" />
           <Parameter Name="sucursal" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_preEliminarDC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVenta" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_producto_categoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idCategoria" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_PRODUCTO_CONSULTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="SP_PRODUCTO_CONSULTA_cotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="SP_PRODUCTO_CONSULTA_COTIZACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_PRODUCTO_CONSULTA_FILTRADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="categoria" Type="nvarchar" Mode="In" />
+          <Parameter Name="idMarca" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -781,29 +851,12 @@
           <Property Name="idVendedor" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IVA" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="detalleCotizacion" Relationship="Self.FK__detalleFa__idPed__239E4DCF" FromRole="cotizacion" ToRole="detalleCotizacion" />
           <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_venta_vendedor" FromRole="cotizacion" ToRole="AspNetUsers" />
           <NavigationProperty Name="cliente" Relationship="crmconceptoseModel.FK_venta_cliente" FromRole="cotizacion" ToRole="cliente" />
           <Property Name="notas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="notasCompras" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="detalleCotizacion">
-          <Key>
-            <PropertyRef Name="idDetalle" />
-            <PropertyRef Name="numFactura" />
-          </Key>
-          <Property Name="idDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="numFactura" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="idVenta" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="subTotal" Type="Single" Nullable="false" />
-          <Property Name="idProducto" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="descuento" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="cantidad" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="cotizacion" Relationship="Self.FK__detalleFa__idPed__239E4DCF" FromRole="detalleCotizacion" ToRole="cotizacion" />
-          <NavigationProperty Name="factura" Relationship="Self.FK_detalleFactura_factura" FromRole="detalleCotizacion" ToRole="factura" />
-          <NavigationProperty Name="producto" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="detalleCotizacion" ToRole="producto" />
-          <Property Name="notas" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="notasCompras" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF" FromRole="cotizacion" ToRole="detalleCotizacion" />
         </EntityType>
         <EntityType Name="factura">
           <Key>
@@ -815,8 +868,8 @@
           <Property Name="total" Type="Single" Nullable="false" />
           <Property Name="numPago" Type="Int32" Nullable="false" />
           <Property Name="descuento" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="detalleCotizacion" Relationship="Self.FK_detalleFactura_factura" FromRole="factura" ToRole="detalleCotizacion" />
           <NavigationProperty Name="modoPago" Relationship="Self.FK_factura_modoPago" FromRole="factura" ToRole="modoPago" />
+          <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK_detalleFactura_factura" FromRole="factura" ToRole="detalleCotizacion" />
         </EntityType>
         <EntityType Name="marca">
           <Key>
@@ -841,30 +894,6 @@
           <Property Name="idTipo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="FK__detalleFa__idPed__239E4DCF">
-          <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="1" />
-          <End Role="detalleCotizacion" Type="Self.detalleCotizacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cotizacion">
-              <PropertyRef Name="idVenta" />
-            </Principal>
-            <Dependent Role="detalleCotizacion">
-              <PropertyRef Name="idVenta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_detalleFactura_factura">
-          <End Role="factura" Type="Self.factura" Multiplicity="1" />
-          <End Role="detalleCotizacion" Type="Self.detalleCotizacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="factura">
-              <PropertyRef Name="numFactura" />
-            </Principal>
-            <Dependent Role="detalleCotizacion">
-              <PropertyRef Name="numFactura" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_factura_modoPago">
           <End Role="modoPago" Type="Self.modoPago" Multiplicity="1" />
           <End Role="factura" Type="Self.factura" Multiplicity="*" />
@@ -884,19 +913,10 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
           <EntitySet Name="categoria" EntityType="Self.categoria" />
           <EntitySet Name="cotizacion" EntityType="Self.cotizacion" />
-          <EntitySet Name="detalleCotizacion" EntityType="Self.detalleCotizacion" />
           <EntitySet Name="factura" EntityType="Self.factura" />
           <EntitySet Name="marca" EntityType="Self.marca" />
           <EntitySet Name="modoPago" EntityType="Self.modoPago" />
           <EntitySet Name="tipoEmpleado" EntityType="Self.tipoEmpleado" />
-          <AssociationSet Name="FK__detalleFa__idPed__239E4DCF" Association="Self.FK__detalleFa__idPed__239E4DCF">
-            <End Role="cotizacion" EntitySet="cotizacion" />
-            <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_detalleFactura_factura" Association="Self.FK_detalleFactura_factura">
-            <End Role="factura" EntitySet="factura" />
-            <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
-          </AssociationSet>
           <AssociationSet Name="FK_factura_modoPago" Association="Self.FK_factura_modoPago">
             <End Role="modoPago" EntitySet="modoPago" />
             <End Role="factura" EntitySet="factura" />
@@ -1039,10 +1059,6 @@
             <End Role="producto" EntitySet="producto" />
             <End Role="compraDetalle" EntitySet="compraDetalle" />
           </AssociationSet>
-          <AssociationSet Name="FK_detalleFactura_producto" Association="crmconceptoseModel.FK_detalleFactura_producto">
-            <End Role="producto" EntitySet="producto" />
-            <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
-          </AssociationSet>
           <AssociationSet Name="fkExistenciaidProducto" Association="crmconceptoseModel.fkExistenciaidProducto">
             <End Role="producto" EntitySet="producto" />
             <End Role="existencia" EntitySet="existencia" />
@@ -1093,6 +1109,93 @@
           <FunctionImport Name="sp_obtenerexistencia" ReturnType="Collection(crmconceptoseModel.sp_obtenerexistencia_Result)">
             <Parameter Name="producto" Mode="In" Type="String" />
             <Parameter Name="sucursal" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_actualizarCotizacion">
+            <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Single" />
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="IdVendedor" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="IVA" Mode="In" Type="Decimal" />
+            <Parameter Name="Notas" Mode="In" Type="String" />
+            <Parameter Name="NotasCompras" Mode="In" Type="String" />
+            <Parameter Name="Estatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_actualizarDetalleCotizacion">
+            <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+            <Parameter Name="SubTotal" Mode="In" Type="Single" />
+            <Parameter Name="IdProducto" Mode="In" Type="String" />
+            <Parameter Name="Descuento" Mode="In" Type="Decimal" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CompraConsulta" ReturnType="Collection(crmconceptoseModel.sp_CompraConsulta_Result)" />
+          <FunctionImport Name="sp_CompraConsultaIndividual" ReturnType="Collection(crmconceptoseModel.sp_CompraConsultaIndividual_Result)">
+          <Parameter Name="idCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CompraDetalleConsulta" ReturnType="Collection(crmconceptoseModel.sp_CompraDetalleConsulta_Result)">
+          <Parameter Name="idCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CompraEliminar">
+          <Parameter Name="idCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CompraFiltrado" ReturnType="Collection(crmconceptoseModel.sp_CompraFiltrado_Result)">
+            <Parameter Name="pMonth" Mode="In" Type="String" />
+            <Parameter Name="pYear" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_consultaCotizacion" ReturnType="Collection(crmconceptoseModel.sp_consultaCotizacion_Result)">
+            <Parameter Name="pMonth" Mode="In" Type="String" />
+            <Parameter Name="pYear" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_consultaCotizacionEstatus" ReturnType="Collection(crmconceptoseModel.sp_consultaCotizacionEstatus_Result)">
+            <Parameter Name="Month" Mode="In" Type="String" />
+            <Parameter Name="Year" Mode="In" Type="String" />
+            <Parameter Name="Estatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_consultaCotizacionIdVenta" ReturnType="Collection(crmconceptoseModel.sp_consultaCotizacionIdVenta_Result)">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_consultaCotizacionIndividual" ReturnType="Collection(crmconceptoseModel.sp_consultaCotizacionIndividual_Result)">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_consultaCotizacionProductos" ReturnType="Collection(crmconceptoseModel.sp_consultaCotizacionProductos_Result)">
+          <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_consultaProducto" ReturnType="Collection(crmconceptoseModel.sp_consultaProducto_Result)">
+          <Parameter Name="IdProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CotizacionDetalleConsulta" ReturnType="Collection(crmconceptoseModel.sp_CotizacionDetalleConsulta_Result)">
+          <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PRODUCTO_CONSULTA_COTIZACION1" ReturnType="Collection(crmconceptoseModel.SP_PRODUCTO_CONSULTA_COTIZACION1_Result)">
+          <Parameter Name="idProducto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO" ReturnType="Collection(crmconceptoseModel.SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO_Result)">
+          <Parameter Name="idProducto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PRODUCTO_CONSULTA_FILTRADO" ReturnType="Collection(crmconceptoseModel.SP_PRODUCTO_CONSULTA_FILTRADO_Result)">
+            <Parameter Name="idProducto" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="categoria" Mode="In" Type="String" />
+            <Parameter Name="idMarca" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="detalleCotizacion" EntityType="crmconceptoseModel.detalleCotizacion" />
+          <AssociationSet Name="FK__detalleFa__idPed__239E4DCF" Association="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF">
+            <End Role="cotizacion" EntitySet="cotizacion" />
+            <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detalleFactura_factura" Association="crmconceptoseModel.FK_detalleFactura_factura">
+            <End Role="factura" EntitySet="factura" />
+            <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detalleFactura_producto" Association="crmconceptoseModel.FK_detalleFactura_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
+          </AssociationSet>
+          <FunctionImport Name="sp_eliminarCotizacion">
+            <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_preEliminarDC">
+            <Parameter Name="IdVenta" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="SP_COTIZACION_HISTORIAL_Result">
@@ -1386,12 +1489,12 @@
           <Property Name="precioUnitario" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="idCategoria" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="idMarca" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="bandaAncha" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="bandaAncha" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="channels" Type="Int32" />
           <NavigationProperty Name="categoria" Relationship="crmconceptoseModel.FK__producto__idCate__164452B1" FromRole="producto" ToRole="categoria" />
           <NavigationProperty Name="compraDetalle" Relationship="crmconceptoseModel.fkProductoCompra" FromRole="producto" ToRole="compraDetalle" />
-          <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="producto" ToRole="detalleCotizacion" />
           <NavigationProperty Name="existencia" Relationship="crmconceptoseModel.fkExistenciaidProducto" FromRole="producto" ToRole="existencia" />
+          <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="producto" ToRole="detalleCotizacion" />
         </EntityType>
         <Association Name="FK__producto__idCate__164452B1">
           <End Type="crmconceptoseModel.categoria" Role="categoria" Multiplicity="1" />
@@ -1413,18 +1516,6 @@
               <PropertyRef Name="idProducto" />
             </Principal>
             <Dependent Role="compraDetalle">
-              <PropertyRef Name="idProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_detalleFactura_producto">
-          <End Type="crmconceptoseModel.producto" Role="producto" Multiplicity="1" />
-          <End Type="crmconceptoseModel.detalleCotizacion" Role="detalleCotizacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="idProducto" />
-            </Principal>
-            <Dependent Role="detalleCotizacion">
               <PropertyRef Name="idProducto" />
             </Dependent>
           </ReferentialConstraint>
@@ -1552,6 +1643,180 @@
           <Property Type="Int32" Name="Cantidad" Nullable="false" />
           <Property Type="String" Name="Seccion" Nullable="true" MaxLength="9" />
         </ComplexType>
+        <ComplexType Name="sp_CompraConsulta_Result">
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="Decimal" Name="total" Nullable="false" Precision="19" />
+          <Property Type="DateTime" Name="fechaCompra" Nullable="false" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_CompraConsultaIndividual_Result">
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="Decimal" Name="total" Nullable="false" Precision="19" />
+          <Property Type="DateTime" Name="fechaCompra" Nullable="false" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_CompraDetalleConsulta_Result">
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_CompraFiltrado_Result">
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="Decimal" Name="total" Nullable="false" Precision="19" />
+          <Property Type="DateTime" Name="fechaCompra" Nullable="false" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_consultaCotizacion_Result">
+          <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Single" Name="total" Nullable="false" />
+          <Property Type="String" Name="Cliente" Nullable="false" MaxLength="61" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" />
+          <Property Type="Decimal" Name="IVA" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_consultaCotizacionEstatus_Result">
+          <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Single" Name="total" Nullable="false" />
+          <Property Type="String" Name="Cliente" Nullable="false" MaxLength="61" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" />
+          <Property Type="Decimal" Name="IVA" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Estatus" Nullable="true" MaxLength="8000" />
+        </ComplexType>
+        <ComplexType Name="sp_consultaCotizacionIdVenta_Result">
+          <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Single" Name="total" Nullable="false" />
+          <Property Type="Decimal" Name="idCliente" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="idVendedor" Nullable="true" MaxLength="128" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" />
+          <Property Type="Decimal" Name="IVA" Nullable="false" Precision="19" />
+          <Property Type="String" Name="notas" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="notasCompras" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="estatus" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="sp_consultaCotizacionIndividual_Result">
+          <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Single" Name="total" Nullable="false" />
+          <Property Type="String" Name="Cliente" Nullable="false" MaxLength="61" />
+          <Property Type="DateTime" Name="fecha" Nullable="false" />
+          <Property Type="Decimal" Name="IVA" Nullable="false" Precision="19" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="estatus" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="notas" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="notasCompras" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="sp_consultaCotizacionProductos_Result">
+          <Property Type="Int32" Name="idDetalle" Nullable="false" />
+          <Property Type="Decimal" Name="numFactura" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Single" Name="subTotal" Nullable="false" />
+          <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+          <Property Type="Decimal" Name="descuento" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_consultaProducto_Result">
+          <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="precioUnitario" Nullable="false" Precision="19" />
+          <Property Type="String" Name="idCategoria" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="idMarca" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="bandaAncha" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="channels" Nullable="true" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="Decimal" Name="descuento" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_CotizacionDetalleConsulta_Result">
+          <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Single" Name="subTotal" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="descuento" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCTO_CONSULTA_COTIZACION1_Result">
+          <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="precioUnitario" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Marca" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="bandaAncha" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="channels" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO_Result">
+          <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="precioUnitario" Nullable="false" Precision="19" />
+          <Property Type="String" Name="idCategoria" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="Marca" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="bandaAncha" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="channels" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCTO_CONSULTA_FILTRADO_Result">
+          <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="precioUnitario" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Marca" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="bandaAncha" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="channels" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="detalleCotizacion">
+          <Key>
+            <PropertyRef Name="idDetalle" />
+            <PropertyRef Name="numFactura" />
+          </Key>
+          <Property Name="idDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numFactura" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="idVenta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="subTotal" Type="Single" Nullable="false" />
+          <Property Name="idProducto" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="descuento" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cotizacion" Relationship="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF" FromRole="detalleCotizacion" ToRole="cotizacion" />
+          <NavigationProperty Name="factura" Relationship="crmconceptoseModel.FK_detalleFactura_factura" FromRole="detalleCotizacion" ToRole="factura" />
+          <NavigationProperty Name="producto" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="detalleCotizacion" ToRole="producto" />
+        </EntityType>
+        <Association Name="FK__detalleFa__idPed__239E4DCF">
+          <End Type="crmconceptoseModel.cotizacion" Role="cotizacion" Multiplicity="1" />
+          <End Type="crmconceptoseModel.detalleCotizacion" Role="detalleCotizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cotizacion">
+              <PropertyRef Name="idVenta" />
+            </Principal>
+            <Dependent Role="detalleCotizacion">
+              <PropertyRef Name="idVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detalleFactura_factura">
+          <End Type="crmconceptoseModel.factura" Role="factura" Multiplicity="1" />
+          <End Type="crmconceptoseModel.detalleCotizacion" Role="detalleCotizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="factura">
+              <PropertyRef Name="numFactura" />
+            </Principal>
+            <Dependent Role="detalleCotizacion">
+              <PropertyRef Name="numFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detalleFactura_producto">
+          <End Type="crmconceptoseModel.producto" Role="producto" Multiplicity="1" />
+          <End Type="crmconceptoseModel.detalleCotizacion" Role="detalleCotizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="detalleCotizacion">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1607,6 +1872,7 @@
           <EntitySetMapping Name="cotizacion">
             <EntityTypeMapping TypeName="crmconceptoseModel.cotizacion">
               <MappingFragment StoreEntitySet="cotizacion">
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
                 <ScalarProperty Name="notasCompras" ColumnName="notasCompras" />
                 <ScalarProperty Name="notas" ColumnName="notas" />
                 <ScalarProperty Name="idVenta" ColumnName="idVenta" />
@@ -1615,21 +1881,6 @@
                 <ScalarProperty Name="idVendedor" ColumnName="idVendedor" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="IVA" ColumnName="IVA" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="detalleCotizacion">
-            <EntityTypeMapping TypeName="crmconceptoseModel.detalleCotizacion">
-              <MappingFragment StoreEntitySet="detalleCotizacion">
-                <ScalarProperty Name="notasCompras" ColumnName="notasCompras" />
-                <ScalarProperty Name="notas" ColumnName="notas" />
-                <ScalarProperty Name="idDetalle" ColumnName="idDetalle" />
-                <ScalarProperty Name="numFactura" ColumnName="numFactura" />
-                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
-                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
-                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
-                <ScalarProperty Name="descuento" ColumnName="descuento" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1987,18 +2238,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_PRODUCTO_CONSULTA_cotizacion" FunctionName="crmconceptoseModel.Store.SP_PRODUCTO_CONSULTA_cotizacion">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="crmconceptoseModel.SP_PRODUCTO_CONSULTA_cotizacion_Result">
-                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
-                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
-                <ScalarProperty Name="bandaAncha" ColumnName="bandaAncha" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtenercliente" FunctionName="crmconceptoseModel.Store.sp_obtenercliente">
             <ResultMapping>
               <ComplexTypeMapping TypeName="crmconceptoseModel.sp_obtenercliente_Result">
@@ -2021,6 +2260,202 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_actualizarCotizacion" FunctionName="crmconceptoseModel.Store.sp_actualizarCotizacion" />
+          <FunctionImportMapping FunctionImportName="sp_actualizarDetalleCotizacion" FunctionName="crmconceptoseModel.Store.sp_actualizarDetalleCotizacion" />
+          <FunctionImportMapping FunctionImportName="sp_CompraConsulta" FunctionName="crmconceptoseModel.Store.sp_CompraConsulta">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraConsulta_Result">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="fechaCompra" ColumnName="fechaCompra" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CompraConsultaIndividual" FunctionName="crmconceptoseModel.Store.sp_CompraConsultaIndividual">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraConsultaIndividual_Result">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="fechaCompra" ColumnName="fechaCompra" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CompraDetalleConsulta" FunctionName="crmconceptoseModel.Store.sp_CompraDetalleConsulta">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraDetalleConsulta_Result">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CompraEliminar" FunctionName="crmconceptoseModel.Store.sp_CompraEliminar" />
+          <FunctionImportMapping FunctionImportName="sp_CompraFiltrado" FunctionName="crmconceptoseModel.Store.sp_CompraFiltrado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraFiltrado_Result">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="fechaCompra" ColumnName="fechaCompra" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_consultaCotizacion" FunctionName="crmconceptoseModel.Store.sp_consultaCotizacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaCotizacion_Result">
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_consultaCotizacionEstatus" FunctionName="crmconceptoseModel.Store.sp_consultaCotizacionEstatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaCotizacionEstatus_Result">
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_consultaCotizacionIdVenta" FunctionName="crmconceptoseModel.Store.sp_consultaCotizacionIdVenta">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaCotizacionIdVenta_Result">
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="idVendedor" ColumnName="idVendedor" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="notasCompras" ColumnName="notasCompras" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_consultaCotizacionIndividual" FunctionName="crmconceptoseModel.Store.sp_consultaCotizacionIndividual">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaCotizacionIndividual_Result">
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="notasCompras" ColumnName="notasCompras" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_consultaCotizacionProductos" FunctionName="crmconceptoseModel.Store.sp_consultaCotizacionProductos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaCotizacionProductos_Result">
+                <ScalarProperty Name="idDetalle" ColumnName="idDetalle" />
+                <ScalarProperty Name="numFactura" ColumnName="numFactura" />
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_consultaProducto" FunctionName="crmconceptoseModel.Store.sp_consultaProducto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaProducto_Result">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="idMarca" ColumnName="idMarca" />
+                <ScalarProperty Name="bandaAncha" ColumnName="bandaAncha" />
+                <ScalarProperty Name="channels" ColumnName="channels" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CotizacionDetalleConsulta" FunctionName="crmconceptoseModel.Store.sp_CotizacionDetalleConsulta">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CotizacionDetalleConsulta_Result">
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCTO_CONSULTA_COTIZACION1" FunctionName="crmconceptoseModel.Store.SP_PRODUCTO_CONSULTA_COTIZACION">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.SP_PRODUCTO_CONSULTA_COTIZACION1_Result">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="bandaAncha" ColumnName="bandaAncha" />
+                <ScalarProperty Name="channels" ColumnName="channels" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO" FunctionName="crmconceptoseModel.Store.SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO_Result">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="bandaAncha" ColumnName="bandaAncha" />
+                <ScalarProperty Name="channels" ColumnName="channels" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCTO_CONSULTA_FILTRADO" FunctionName="crmconceptoseModel.Store.SP_PRODUCTO_CONSULTA_FILTRADO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.SP_PRODUCTO_CONSULTA_FILTRADO_Result">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="bandaAncha" ColumnName="bandaAncha" />
+                <ScalarProperty Name="channels" ColumnName="channels" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="detalleCotizacion">
+            <EntityTypeMapping TypeName="crmconceptoseModel.detalleCotizacion">
+              <MappingFragment StoreEntitySet="detalleCotizacion">
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="numFactura" ColumnName="numFactura" />
+                <ScalarProperty Name="idDetalle" ColumnName="idDetalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_eliminarCotizacion" FunctionName="crmconceptoseModel.Store.sp_eliminarCotizacion" />
+          <FunctionImportMapping FunctionImportName="sp_preEliminarDC" FunctionName="crmconceptoseModel.Store.sp_preEliminarDC" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -189,8 +189,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bootstrap\css\blog.css" />
     <Content Include="Assets\bootstrap\css\bootstrap.css" />
     <Content Include="Assets\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Assets\bootstrap\css\principal.css" />
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\bootstrap\js\bootstrap.js" />
     <Content Include="Assets\bootstrap\js\bootstrap.min.js" />
@@ -243,6 +245,7 @@
     <Content Include="Error404.html" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Img\CRM Logo.jpg" />
     <Content Include="Img\logo conceptos.png" />
     <Content Include="Img\user.jpeg" />
     <Content Include="Js\alertify.js" />
@@ -324,6 +327,7 @@
     <Content Include="dbventasDataSet.xss">
       <DependentUpon>dbventasDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Js\script.js" />
     <Content Include="Reportes\Espanol\frmReporteEs.aspx" />
     <Content Include="Reportes\Ingles\frmReporteEn.aspx" />
     <Content Include="RPTDataset\dsPrincipal.xsc">
@@ -531,16 +535,49 @@
     <Compile Include="Datos\SP_Buscar_Cotizacion_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_CompraConsultaIndividual_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_CompraConsulta_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_CompraDetalleConsulta_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_CompraFiltrado_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaCotizacionEstatus_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaCotizacionIdVenta_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaCotizacionIndividual_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaCotizacionProductos_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaCotizacion_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_consultaExistenciasSucursal_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_consultaExistencias_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_consultaProducto_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_consultaSucursales_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_consultaSucursal_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_CotizacionDetalleConsulta_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\SP_COTIZACION_HISTORIAL_Result.cs">
@@ -564,7 +601,16 @@
     <Compile Include="Datos\sp_producto_categoria_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\SP_PRODUCTO_CONSULTA_COTIZACION1_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\SP_PRODUCTO_CONSULTA_cotizacion_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\SP_PRODUCTO_CONSULTA_FILTRADO_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\SP_PRODUCTO_CONSULTA_Result.cs">
@@ -740,6 +786,10 @@
     <Content Include="Views\Compra\EliminarCompraPreview.cshtml" />
     <Content Include="Views\DetalleCotizacion\DetalleCotizacion.cshtml" />
     <Content Include="Views\Cotizacion\Historial.cshtml" />
+    <Content Include="Views\Cotizacion\SendEmailFactura.cshtml" />
+    <Content Include="Views\Producto\View.cshtml" />
+    <Content Include="Views\DetalleCotizacion\Editar.cshtml" />
+    <Content Include="Views\DetalleCotizacion\PreEliminar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

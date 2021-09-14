@@ -33,7 +33,6 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<categoria> categoria { get; set; }
         public virtual DbSet<cotizacion> cotizacion { get; set; }
-        public virtual DbSet<detalleCotizacion> detalleCotizacion { get; set; }
         public virtual DbSet<factura> factura { get; set; }
         public virtual DbSet<marca> marca { get; set; }
         public virtual DbSet<modoPago> modoPago { get; set; }
@@ -50,6 +49,7 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<Moneda> Moneda { get; set; }
         public virtual DbSet<configuracion> configuracion { get; set; }
         public virtual DbSet<texto> texto { get; set; }
+        public virtual DbSet<detalleCotizacion> detalleCotizacion { get; set; }
     
         public virtual int reporte_factura(string idPedido)
         {
@@ -467,6 +467,249 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("sucursal", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerexistencia_Result>("sp_obtenerexistencia", productoParameter, sucursalParameter);
+        }
+    
+        public virtual int sp_actualizarCotizacion(Nullable<int> idVenta, Nullable<float> total, Nullable<int> idCliente, string idVendedor, Nullable<System.DateTime> fecha, Nullable<decimal> iVA, string notas, string notasCompras, string estatus)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(float));
+    
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var idVendedorParameter = idVendedor != null ?
+                new ObjectParameter("IdVendedor", idVendedor) :
+                new ObjectParameter("IdVendedor", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var iVAParameter = iVA.HasValue ?
+                new ObjectParameter("IVA", iVA) :
+                new ObjectParameter("IVA", typeof(decimal));
+    
+            var notasParameter = notas != null ?
+                new ObjectParameter("Notas", notas) :
+                new ObjectParameter("Notas", typeof(string));
+    
+            var notasComprasParameter = notasCompras != null ?
+                new ObjectParameter("NotasCompras", notasCompras) :
+                new ObjectParameter("NotasCompras", typeof(string));
+    
+            var estatusParameter = estatus != null ?
+                new ObjectParameter("Estatus", estatus) :
+                new ObjectParameter("Estatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarCotizacion", idVentaParameter, totalParameter, idClienteParameter, idVendedorParameter, fechaParameter, iVAParameter, notasParameter, notasComprasParameter, estatusParameter);
+        }
+    
+        public virtual int sp_actualizarDetalleCotizacion(Nullable<int> idVenta, Nullable<float> subTotal, string idProducto, Nullable<decimal> descuento, Nullable<int> cantidad)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            var subTotalParameter = subTotal.HasValue ?
+                new ObjectParameter("SubTotal", subTotal) :
+                new ObjectParameter("SubTotal", typeof(float));
+    
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(string));
+    
+            var descuentoParameter = descuento.HasValue ?
+                new ObjectParameter("Descuento", descuento) :
+                new ObjectParameter("Descuento", typeof(decimal));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarDetalleCotizacion", idVentaParameter, subTotalParameter, idProductoParameter, descuentoParameter, cantidadParameter);
+        }
+    
+        public virtual ObjectResult<sp_CompraConsulta_Result> sp_CompraConsulta()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CompraConsulta_Result>("sp_CompraConsulta");
+        }
+    
+        public virtual ObjectResult<sp_CompraConsultaIndividual_Result> sp_CompraConsultaIndividual(Nullable<int> idCompra)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("idCompra", idCompra) :
+                new ObjectParameter("idCompra", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CompraConsultaIndividual_Result>("sp_CompraConsultaIndividual", idCompraParameter);
+        }
+    
+        public virtual ObjectResult<sp_CompraDetalleConsulta_Result> sp_CompraDetalleConsulta(Nullable<int> idCompra)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("idCompra", idCompra) :
+                new ObjectParameter("idCompra", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CompraDetalleConsulta_Result>("sp_CompraDetalleConsulta", idCompraParameter);
+        }
+    
+        public virtual int sp_CompraEliminar(Nullable<int> idCompra)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("idCompra", idCompra) :
+                new ObjectParameter("idCompra", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraEliminar", idCompraParameter);
+        }
+    
+        public virtual ObjectResult<sp_CompraFiltrado_Result> sp_CompraFiltrado(string pMonth, string pYear)
+        {
+            var pMonthParameter = pMonth != null ?
+                new ObjectParameter("pMonth", pMonth) :
+                new ObjectParameter("pMonth", typeof(string));
+    
+            var pYearParameter = pYear != null ?
+                new ObjectParameter("pYear", pYear) :
+                new ObjectParameter("pYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CompraFiltrado_Result>("sp_CompraFiltrado", pMonthParameter, pYearParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaCotizacion_Result> sp_consultaCotizacion(string pMonth, string pYear)
+        {
+            var pMonthParameter = pMonth != null ?
+                new ObjectParameter("pMonth", pMonth) :
+                new ObjectParameter("pMonth", typeof(string));
+    
+            var pYearParameter = pYear != null ?
+                new ObjectParameter("pYear", pYear) :
+                new ObjectParameter("pYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaCotizacion_Result>("sp_consultaCotizacion", pMonthParameter, pYearParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaCotizacionEstatus_Result> sp_consultaCotizacionEstatus(string month, string year, string estatus)
+        {
+            var monthParameter = month != null ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(string));
+    
+            var yearParameter = year != null ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(string));
+    
+            var estatusParameter = estatus != null ?
+                new ObjectParameter("Estatus", estatus) :
+                new ObjectParameter("Estatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaCotizacionEstatus_Result>("sp_consultaCotizacionEstatus", monthParameter, yearParameter, estatusParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaCotizacionIdVenta_Result> sp_consultaCotizacionIdVenta(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("idVenta", idVenta) :
+                new ObjectParameter("idVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaCotizacionIdVenta_Result>("sp_consultaCotizacionIdVenta", idVentaParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaCotizacionIndividual_Result> sp_consultaCotizacionIndividual(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("idVenta", idVenta) :
+                new ObjectParameter("idVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaCotizacionIndividual_Result>("sp_consultaCotizacionIndividual", idVentaParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaCotizacionProductos_Result> sp_consultaCotizacionProductos(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaCotizacionProductos_Result>("sp_consultaCotizacionProductos", idVentaParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaProducto_Result> sp_consultaProducto(Nullable<int> idProducto)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaProducto_Result>("sp_consultaProducto", idProductoParameter);
+        }
+    
+        public virtual ObjectResult<sp_CotizacionDetalleConsulta_Result> sp_CotizacionDetalleConsulta(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CotizacionDetalleConsulta_Result>("sp_CotizacionDetalleConsulta", idVentaParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCTO_CONSULTA_COTIZACION1_Result> SP_PRODUCTO_CONSULTA_COTIZACION1(string idProducto)
+        {
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCTO_CONSULTA_COTIZACION1_Result>("SP_PRODUCTO_CONSULTA_COTIZACION1", idProductoParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO_Result> SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO(string idProducto)
+        {
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO_Result>("SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO", idProductoParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCTO_CONSULTA_FILTRADO_Result> SP_PRODUCTO_CONSULTA_FILTRADO(string idProducto, string nombre, string categoria, string idMarca)
+        {
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var categoriaParameter = categoria != null ?
+                new ObjectParameter("categoria", categoria) :
+                new ObjectParameter("categoria", typeof(string));
+    
+            var idMarcaParameter = idMarca != null ?
+                new ObjectParameter("idMarca", idMarca) :
+                new ObjectParameter("idMarca", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCTO_CONSULTA_FILTRADO_Result>("SP_PRODUCTO_CONSULTA_FILTRADO", idProductoParameter, nombreParameter, categoriaParameter, idMarcaParameter);
+        }
+    
+        public virtual int sp_eliminarCotizacion(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarCotizacion", idVentaParameter);
+        }
+    
+        public virtual int sp_preEliminarDC(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_preEliminarDC", idVentaParameter);
         }
     }
 }

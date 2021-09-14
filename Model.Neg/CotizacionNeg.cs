@@ -180,13 +180,10 @@ namespace Model.Neg
         {
             return objCotizacionDao.buscar(Month,Year);
         }
-        public List<Cotizacion> buscarConEstatus(string Month, string Year,string Estatus)
+        //Para traer la ifnormación de un registro de cotizacion con el IdVenta
+        public Cotizacion buscarIdVenta(int idVenta)
         {
-            return objCotizacionDao.buscarConEstatus(Month, Year,Estatus);
-        }
-        public List<Cotizacion> buscarConEstatus()
-        {
-            return objCotizacionDao.buscarConEstatus();
+            return objCotizacionDao.buscarIdVenta(idVenta);
         }
         public List<Historial> findHistorial(Historial historial)
         {
@@ -197,7 +194,24 @@ namespace Model.Neg
         {
             return objDetalleCotizacionDao.findAllHistorial();
         }
-
+        //Metodo para actualizar al información de la cotizacion y cotización detalle
+        public void Actualizar(int idVenta, decimal Total, int IdCliente, string idVendedor, string fecha, decimal IVA, string Notas, string NotasCompras, string Estatus)
+        {
+            objCotizacionDao.Actualizar(idVenta, Total, IdCliente, idVendedor, fecha,  IVA, Notas,  NotasCompras, Estatus);
+        }
+        //Eliminar la cotizacion
+        public void Eliminar(int idVenta)
+        {
+            objCotizacionDao.Eliminar(idVenta);
+        }
+        public List<Cotizacion> buscarConEstatus()
+        {
+            return objCotizacionDao.buscarConEstatus();
+        }
+        public List<Cotizacion> buscarConEstatus(string Month, string Year, string Estatus)
+        {
+            return objCotizacionDao.buscarConEstatus(Month, Year, Estatus);
+        }
 
     }
 }

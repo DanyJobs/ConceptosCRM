@@ -232,6 +232,11 @@ namespace Model.Neg
         {
             return objProductoDao.find(objProducto);
         }
+        public bool findProductos(Producto objProducto)
+        {
+            return objProductoDao.findProductos(objProducto);
+        }
+
 
         public List<Producto> findAll()
         {

@@ -59,9 +59,9 @@ namespace Model.Dao
         public bool find(Producto objProducto)
         {
          
-            bool hayRegistros;         
-            //try
-            //{
+            bool hayRegistros;
+            try
+            {
                 SqlCommand cmd = new SqlCommand("SP_PRODUCTO_CONSULTA_COTIZACION", objConexionDB.getCon());
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -76,7 +76,7 @@ namespace Model.Dao
                 {
                     objProducto.Nombre = reader[1].ToString();
                     objProducto.Descripcion = reader[2].ToString();
-                    objProducto.PrecioUnitario = Convert.ToDouble(reader[3].ToString());                 
+                    objProducto.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
                     objProducto.Categoria = reader[4].ToString();
                     objProducto.Marca = reader[5].ToString();
                     objProducto.BandaAncha = reader[6].ToString();
@@ -87,20 +87,63 @@ namespace Model.Dao
                 {
                     objProducto.Estado = 1;
                 }
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
                 objConexionDB.getCon().Close();
                 objConexionDB.closeDB();
-            //}
+            }
 
             return hayRegistros;
         }
+        public bool findProductos(Producto objProducto)
+        {
 
+            bool hayRegistros;
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO", objConexionDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@idProducto", objProducto.IdProducto);
+
+                objConexionDB.getCon().Open();
+
+                reader = cmd.ExecuteReader();
+
+                hayRegistros = reader.Read();
+                if (hayRegistros)
+                {
+                    objProducto.Nombre = reader[1].ToString();
+                    objProducto.Descripcion = reader[2].ToString();
+                    objProducto.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
+                    objProducto.Categoria = reader[4].ToString();
+                    objProducto.Marca = reader[5].ToString();
+                    objProducto.BandaAncha = reader[6].ToString();
+                    objProducto.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProducto.Estado = 99;
+                }
+                else
+                {
+                    objProducto.Estado = 1;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                objConexionDB.getCon().Close();
+                objConexionDB.closeDB();
+            }
+
+            return hayRegistros;
+        }
         public List<Producto> findAll()
         {
             List<Producto> listaVendedores = new List<Producto>();

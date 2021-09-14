@@ -135,11 +135,14 @@ namespace WebFacturaMvc.Controllers
         {
             CategoriaNeg objCategoriaNeg = new CategoriaNeg();
             Producto objProducto = new Producto(id);
-            objProductoNeg.find(objProducto);
+            objProductoNeg.findProductos(objProducto);
+
             marca = objProducto.Marca;
             categoria = objProducto.Categoria;
-            List<Categoria> data = objCategoriaNeg.findAll();     
+           
+            List <Categoria> data = objCategoriaNeg.findAll();     
             ViewBag.Categoria = new SelectList(data, "idCategoria", "nombre", categoria);
+            
             MarcaNeg objMarcaNeg = new MarcaNeg();
             List<Marca> dataMarca = objMarcaNeg.findAll();
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
@@ -152,22 +155,36 @@ namespace WebFacturaMvc.Controllers
         [HttpPost]
         public ActionResult Update(Producto objProducto)
         {
-            mensajeInicioActualizar();
             CategoriaNeg objCategoriaNeg = new CategoriaNeg();
-
-            List<Categoria> data = objCategoriaNeg.findAll();
-            SelectList lista = new SelectList(data, "idCategoria", "nombre", categoria);
-            ViewBag.Categoria = lista;
-          
             MarcaNeg objMarcaNeg = new MarcaNeg();
             List<Marca> dataMarca = objMarcaNeg.findAll();
+            List<Categoria> data = objCategoriaNeg.findAll();
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
-            ViewBag.Marca = ListaMarca;    
+            SelectList lista = new SelectList(data, "idCategoria", "nombre", categoria);
 
-            objProductoDao.update(objProducto);
-            MensajeErrorActualizar(objProducto);
-            return View("Index");
+            mensajeInicioActualizar();
+            try
+            {
+                if (ModelState.IsValid)
+                {                          
+                    ViewBag.Categoria = lista;  
+                    ViewBag.Marca = ListaMarca;
+                    objProductoDao.update(objProducto);
+                    MensajeErrorActualizar(objProducto);
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.Categoria = lista;
+                ViewBag.Marca = ListaMarca;
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }   
         }
+    
 
         //mensaje de error
         public void MensajeErrorActualizar(Producto objProducto)

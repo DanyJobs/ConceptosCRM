@@ -1,0 +1,34 @@
+﻿@model List<Model.Entity.Cotizacion>
+@{
+    ViewBag.Title = "PreEliminar";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Información a eliminar</h2>
+<center><a class="btn btn-success" href="~/DetalleCotizacion/Index"><span>Regresar</span></a></center>
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>Id Venta</th>
+            <th>Total</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>IVA(%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCotizacion in Model)
+        {
+        <tr>
+            <td>@objCotizacion.IdVenta</td>
+            <td>@objCotizacion.Total</td>
+            <td>@objCotizacion.Cliente</td>
+            <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>
+            <td>@objCotizacion.Iva</td>
+            <td><a class="btn btn-danger" id="eliminar" href="~/DetalleCotizacion/Eliminar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-remove">Eliminar</span></a></td>
+        </tr>                
+       }
+
+    </tbody>
+</table>
+
+
+

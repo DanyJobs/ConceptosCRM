@@ -13,6 +13,9 @@ namespace Model.Entity
         public string marca;
         public string bandaAncha;
         public int channels;
+        //Para la parte de editar
+        private int cantidad;
+        private decimal descuento;
 
 
         public int Estado
@@ -24,6 +27,28 @@ namespace Model.Entity
             set
             {
                 estado = value;
+            }
+        }
+        public int Cantidad
+        {
+            get
+            {
+                return cantidad;
+            }
+            set
+            {
+                cantidad = value;
+            }
+        }
+        public decimal Descuento
+        {
+            get
+            {
+                return descuento;
+            }
+            set
+            {
+                descuento = value;
             }
         }
 

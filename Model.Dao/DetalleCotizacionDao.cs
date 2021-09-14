@@ -10,7 +10,7 @@ namespace Model.Dao
     {
         private ConexionDB objConexionDB;
         private SqlCommand comando;
-        private SqlDataReader reader;
+        private SqlDataReader reader;        
         public DetalleCotizacionDao()
         {
             objConexionDB = ConexionDB.saberEstado();
@@ -379,5 +379,143 @@ namespace Model.Dao
             //Se regresa el objeto            
             return listaCotizaciones;
         }
+        //Trae la información del Detalle cotizacion pero sin JOIN
+        public List<DetalleCotizacion> VerProductos(int IdVenta)
+        {
+            List<DetalleCotizacion> listaCotizaciones = new List<DetalleCotizacion>();
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_consultaCotizacionProductos";
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexionDB.getCon();
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdVenta", IdVenta);
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se crea la tabla
+            DataTable dtCotizacion = new DataTable();
+            //Se abre la conexión
+            objConexionDB.getCon().Open();
+            //Se le da el comando al adaptador
+            adapter.SelectCommand = command;
+            //Se llena la tabla con el adaptador
+            adapter.Fill(dtCotizacion);
+            //Se cierra la conexión
+            objConexionDB.getCon().Close();
+            command.Connection.Close();
+            //Se llena la lista
+            for (int i = 0; i < dtCotizacion.Rows.Count; i++)
+            {
+                DetalleCotizacion c = new DetalleCotizacion();
+                c.IdVenta = int.Parse(dtCotizacion.Rows[i]["idVenta"].ToString());
+                c.SubTotal = Convert.ToDouble(dtCotizacion.Rows[i]["subTotal"].ToString());
+                c.IdProducto = dtCotizacion.Rows[i]["idProducto"].ToString();
+                c.Descuento = Convert.ToDouble(dtCotizacion.Rows[i]["descuento"].ToString());
+                c.Cantidad = int.Parse(dtCotizacion.Rows[i]["cantidad"].ToString());
+                listaCotizaciones.Add(c);
+            }
+            //Se regresa el objeto            
+            return listaCotizaciones;
+        }
+        //Trae la información de un producto según su ID
+        public Producto VerProducto(int IdProducto)
+        {
+            List<Producto> listaProducto = new List<Producto>();
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_consultaProducto";
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexionDB.getCon();
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdProducto", IdProducto);
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se crea la tabla
+            DataTable dtCotizacion = new DataTable();
+            //Se abre la conexión
+            objConexionDB.getCon().Open();
+            //Se le da el comando al adaptador
+            adapter.SelectCommand = command;
+            //Se llena la tabla con el adaptador
+            adapter.Fill(dtCotizacion);
+            //Se cierra la conexión
+            objConexionDB.getCon().Close();
+            command.Connection.Close();
+            Producto c = new Producto();
+            //Se llena la lista
+            for (int i = 0; i < dtCotizacion.Rows.Count; i++)
+            {
+                
+                c.IdProducto = dtCotizacion.Rows[i]["idProducto"].ToString();
+                c.Nombre = dtCotizacion.Rows[i]["nombre"].ToString();
+                c.Descripcion = dtCotizacion.Rows[i]["descripcion"].ToString();
+                c.Cantidad = int.Parse(dtCotizacion.Rows[i]["cantidad"].ToString());
+                c.PrecioUnitario = Convert.ToDouble(dtCotizacion.Rows[i]["precioUnitario"].ToString());
+                c.Descuento = Convert.ToDecimal(dtCotizacion.Rows[i]["descuento"].ToString());
+                c.Categoria = dtCotizacion.Rows[i]["idCategoria"].ToString();
+                c.Marca = dtCotizacion.Rows[i]["idMarca"].ToString();
+                c.BandaAncha = dtCotizacion.Rows[i]["bandaAncha"].ToString();                                
+            }
+            //Se regresa el objeto            
+            return c;
+        }
+        //Elimina los valores de los DetalleCotizacion de una Cotizacion
+        public void preEliminar(int idVenta)
+        {
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_preEliminarDC ";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdVenta", idVenta);            
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexionDB.getCon();
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se abre la conexión
+            objConexionDB.getCon().Open();
+            //Se ejecuta el comando
+            command.ExecuteNonQuery();
+            //Se cierra la conexión
+            objConexionDB.getCon().Close();
+            command.Connection.Close();
+        }
+        //Actualiza los valores de los DetalleCotizacion de una Cotizacion
+        public void Actualizar(int idVenta, decimal SubTotal, string IdProducto, decimal Descuento, int Cantidad)
+        {
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_actualizarDetalleCotizacion";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdVenta", idVenta);
+            command.Parameters.AddWithValue("SubTotal", SubTotal);
+            command.Parameters.AddWithValue("IdProducto", IdProducto);
+            command.Parameters.AddWithValue("Descuento", Descuento);
+            command.Parameters.AddWithValue("Cantidad", Cantidad);
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexionDB.getCon();
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se abre la conexión
+            objConexionDB.getCon().Open();
+            //Se ejecuta el comando
+            command.ExecuteNonQuery();
+            //Se cierra la conexión
+            objConexionDB.getCon().Close();
+            command.Connection.Close();
+        }
+
+
     }
 }

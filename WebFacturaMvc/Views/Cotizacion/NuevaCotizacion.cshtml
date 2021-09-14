@@ -16,7 +16,7 @@
             return false;
         });
         //botones
-        $("#finalizar").click(function () {       
+        $("#finalizar").click(function () {
             var i = 0;
             var envio = "{Fecha:'" + $("#id_fecha").val() + "',ModoPago:'" + $("#modoPago").val() + "',IdCliente:'" + $("#codigoCliente").val() + "',IdCabecera:'2',Total:'" + $('#TotalaPagar').val() + "',notas:'" + $('#notas').val() + "',notasCompras:'" + $('#notasCompras').val() + "',estatus:'" + $('#estatus').val() + "',";
             $("#detalle tbody tr").each(function (index) {
@@ -25,17 +25,19 @@
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
                         "',Descuento:'" + $(this).find('td').eq(4).text() +
                         "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}";
+                    console.log(envio);
                 } else {
                     envio += ",{IdProducto:'" + $(this).find('td').eq(0).text() +
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
                         "',Descuento:'" + $(this).find('td').eq(4).text() +
                         "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}"
+                    console.log(envio);
                 }
                 i = 1;
             });
             envio += "]}";
             var json = eval("(" + envio + ')');
-
+            console.log(envio);
             //alertify.alert("INGRESE DATOS");
             console.info(json);
             $.ajax({
@@ -61,21 +63,21 @@
     var valor = 0;
     var subtotal = 0;
     function obtenerCliente(Cliente) {
- /*       var watchclose = setInterval(function () {*/
-            $("#txtnombre").val(Cliente.DatosPersonales);
-            $("#idCliente").val(Cliente.Identificacion);
-         $("#codigoCliente").val(Cliente.Codigo);
-   
- /*       });*/
+        /*       var watchclose = setInterval(function () {*/
+        $("#txtnombre").val(Cliente.DatosPersonales);
+        $("#idCliente").val(Cliente.Identificacion);
+        $("#codigoCliente").val(Cliente.Codigo);
+
+        /*       });*/
     }
 
-    function obtenerProductos(Producto) {      
-            $("#idproducto").val(Producto.Codigo);
-            $("#nombreproducto").val(Producto.Nombre);
-            $("#marca").val(Producto.Marca);
-            $("#precio").val(Producto.Precio);  
-            $("#descuento").val("0");  
-            $("#cantidad").val("1");          
+    function obtenerProductos(Producto) {
+        $("#idproducto").val(Producto.Codigo);
+        $("#nombreproducto").val(Producto.Nombre);
+        $("#marca").val(Producto.Marca);
+        $("#precio").val(Producto.Precio);
+        $("#descuento").val("0");
+        $("#cantidad").val("1");
     }
 
     function fn_agregar() {
@@ -168,7 +170,7 @@
                     @Html.DropDownList("modoPago", ViewBag.ListaModoPago as SelectList, Lenguaje.Recurso.Cotizacion_errorMP, htmlAttributes: new { @class = "form-control", @required = "required" })
                 </div>
             </td>
-        </tr>   
+        </tr>
         <tr style="font-size:20px;">
 
             <td>@Lenguaje.Recurso.Cotizacion_nombreCliente <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtnombre" readonly required /></td>
@@ -194,9 +196,9 @@
             <td>Id <input style="font-size:20px; font-weight:700;" type="text" id="idproducto" class="form-control" readonly required /></td>
             <td>@Lenguaje.Recurso.Cotizacion_nombreProducto <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
             <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:20px; font-weight:700;" type="number" id="precio" class="form-control" required/></td>
-            <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="descuento"  onfocus="this.value = '';" required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="cantidad"  onfocus="this.value = '';" required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:20px; font-weight:700;" type="number" id="precio" class="form-control" required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="descuento" onfocus="this.value = '';" required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="cantidad" onfocus="this.value = '';" required /></td>
             <td colspan="2"><input class="btn btn-primary btn-lg" type="submit" name="agregar" id="agregar" value=@Lenguaje.Recurso.Cotizacion_agregar /></td>
         </tr>
     </table>
@@ -224,13 +226,13 @@
         <td style="font-size:20px; font-weight: 700;">Notas Internas</td>
         <td style="font-size:20px; font-weight: 700;">Notas Compras</td>
         <td style="font-size:20px; font-weight: 700;"> Estatus:</td>
-    </tr>     
-    <tr>       
-         <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly /></td>
-        <td><textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="notas" id="notas" ></textarea></td>   
-        <td><textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="notasCompras" id="notasCompras" ></textarea></td>   
+    </tr>
+    <tr>
+        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly /></td>
+        <td><textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="notas" id="notas"></textarea></td>
+        <td><textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="notasCompras" id="notasCompras"></textarea></td>
         <td>
-            @Html.DropDownList("estatus", (IEnumerable<SelectListItem>)ViewBag.Estatus, new { @class = "form-control" })        
+            @Html.DropDownList("estatus", (IEnumerable<SelectListItem>)ViewBag.Estatus, new { @class = "form-control" })
         </td>
     </tr>
 </table>
@@ -274,3 +276,6 @@
         });
     });
 </script>
+
+
+

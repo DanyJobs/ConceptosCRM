@@ -12,6 +12,7 @@ namespace Model.Entity
         private string fecha;
         private double iva;
         private int estado;
+        private string email;
         public string notas { get; set; } 
         public string notasCompras { get; set; }
         public string estatus { get; set; }
@@ -45,6 +46,19 @@ namespace Model.Entity
             set
             {
                 cliente = value;
+            }
+        }
+        //Para el Email del cliente
+        public string Email
+        {
+            get
+            {
+                return email;
+            }
+
+            set
+            {
+                email = value;
             }
         }
 

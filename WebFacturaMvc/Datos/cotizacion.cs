@@ -28,10 +28,11 @@ namespace WebFacturaMvc.Datos
         public decimal IVA { get; set; }
         public string notas { get; set; }
         public string notasCompras { get; set; }
+        public string estatus { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual cliente cliente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
     }
 }

@@ -27,8 +27,8 @@ namespace WebFacturaMvc.Datos
         public int numPago { get; set; }
         public Nullable<decimal> descuento { get; set; }
     
+        public virtual modoPago modoPago { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
-        public virtual modoPago modoPago { get; set; }
     }
 }

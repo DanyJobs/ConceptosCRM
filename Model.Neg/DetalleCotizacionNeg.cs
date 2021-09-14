@@ -67,6 +67,23 @@ namespace Model.Neg
         {
             return objDetalleCotizacionDao.VerDetalles(IdVenta);
         }
+        public List<DetalleCotizacion> VerProductos(int IdVenta)
+        {
+            return objDetalleCotizacionDao.VerProductos(IdVenta);
+        }
+        public Producto VerProducto(int IdProducto)
+        {
+            return objDetalleCotizacionDao.VerProducto(IdProducto);
+        }
+        public void Actualizar(int idVenta, decimal SubTotal, string IdProducto, decimal Descuento, int Cantidad)
+        {
+            objDetalleCotizacionDao.Actualizar(idVenta, SubTotal, IdProducto, Descuento, Cantidad);
+        }
+        //Elimina los valores de los DetalleCotizacion de una Cotizacion
+        public void preEliminar(int idVenta)
+        {
+            objDetalleCotizacionDao.preEliminar(idVenta);
+        }
 
 
     }

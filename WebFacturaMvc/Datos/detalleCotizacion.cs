@@ -21,8 +21,6 @@ namespace WebFacturaMvc.Datos
         public string idProducto { get; set; }
         public decimal descuento { get; set; }
         public int cantidad { get; set; }
-        public string notas { get; set; }
-        public string notasCompras { get; set; }
     
         public virtual cotizacion cotizacion { get; set; }
         public virtual factura factura { get; set; }

@@ -130,6 +130,7 @@
     <Property Name="IVA" Type="money" Nullable="false" />
     <Property Name="notas" Type="nvarchar" MaxLength="200" />
     <Property Name="notasCompras" Type="nvarchar" MaxLength="200" />
+    <Property Name="estatus" Type="varchar" MaxLength="1" />
   </EntityType>
   <EntityType Name="detalleCotizacion">
     <Key>
@@ -143,8 +144,6 @@
     <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="descuento" Type="money" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
-    <Property Name="notas" Type="varchar" MaxLength="200" />
-    <Property Name="notasCompras" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="existencia">
     <Key>
@@ -199,7 +198,7 @@
     <Property Name="precioUnitario" Type="money" Nullable="false" />
     <Property Name="idCategoria" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="idMarca" Type="varchar" MaxLength="5" />
-    <Property Name="bandaAncha" Type="varchar" MaxLength="10" />
+    <Property Name="bandaAncha" Type="nvarchar" MaxLength="30" />
     <Property Name="channels" Type="int" />
   </EntityType>
   <EntityType Name="proveedor">
@@ -494,6 +493,24 @@
   <Function Name="reporte_factura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idPedido" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="sp_actualizarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+    <Parameter Name="Total" Type="real" Mode="In" />
+    <Parameter Name="IdCliente" Type="int" Mode="In" />
+    <Parameter Name="IdVendedor" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fecha" Type="date" Mode="In" />
+    <Parameter Name="IVA" Type="money" Mode="In" />
+    <Parameter Name="Notas" Type="nvarchar" Mode="In" />
+    <Parameter Name="NotasCompras" Type="nvarchar" Mode="In" />
+    <Parameter Name="Estatus" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_actualizarDetalleCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+    <Parameter Name="SubTotal" Type="real" Mode="In" />
+    <Parameter Name="IdProducto" Type="nvarchar" Mode="In" />
+    <Parameter Name="Descuento" Type="money" Mode="In" />
+    <Parameter Name="Cantidad" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -507,11 +524,43 @@
     <Parameter Name="idSucursal" Type="int" Mode="In" />
     <Parameter Name="idProveedor" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_CompraConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_CompraConsultaIndividual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idCompra" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_CompraDetalleAlta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idcompra" Type="int" Mode="In" />
     <Parameter Name="precio" Type="money" Mode="In" />
     <Parameter Name="idproducto" Type="nvarchar" Mode="In" />
     <Parameter Name="cantidad" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CompraDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idCompra" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CompraEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idCompra" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CompraFiltrado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pMonth" Type="varchar" Mode="In" />
+    <Parameter Name="pYear" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pMonth" Type="varchar" Mode="In" />
+    <Parameter Name="pYear" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaCotizacionEstatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Month" Type="varchar" Mode="In" />
+    <Parameter Name="Year" Type="varchar" Mode="In" />
+    <Parameter Name="Estatus" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaCotizacionIdVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idVenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaCotizacionIndividual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idVenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaCotizacionProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_consultaEmailCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idVenta" Type="numeric" Mode="In" />
@@ -519,6 +568,9 @@
   <Function Name="sp_consultaExistencias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_consultaExistenciasSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idSucursal" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProducto" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_consultaSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idSucursal" Type="int" Mode="In" />
@@ -528,6 +580,9 @@
     <Parameter Name="idProducto" Type="varchar" Mode="In" />
   </Function>
   <Function Name="SP_COTIZACION_HISTORIAL_TODO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_CotizacionDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -537,6 +592,9 @@
   <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -561,12 +619,24 @@
     <Parameter Name="producto" Type="varchar" Mode="In" />
     <Parameter Name="sucursal" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_preEliminarDC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_producto_categoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCategoria" Type="varchar" Mode="In" />
   </Function>
   <Function Name="SP_PRODUCTO_CONSULTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="SP_PRODUCTO_CONSULTA_cotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="SP_PRODUCTO_CONSULTA_COTIZACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_PRODUCTO_CONSULTA_COTIZACION_PRODUCTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_PRODUCTO_CONSULTA_FILTRADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+    <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="categoria" Type="nvarchar" Mode="In" />
+    <Parameter Name="idMarca" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
