@@ -24,6 +24,12 @@ namespace WebFacturaMvc.Datos
         public string contrasena { get; set; }
         public string displayName { get; set; }
         public string email { get; set; }
+        public string nombre { get; set; }
+        public string telefono { get; set; }
+        public string celular { get; set; }
+        public byte[] imagen { get; set; }
+        public string puesto { get; set; }
+        public string paginaUrl { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Moneda Moneda1 { get; set; }

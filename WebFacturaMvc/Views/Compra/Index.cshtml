@@ -81,6 +81,14 @@
             $("#codigoCliente").val(Cliente.Codigo);
         });
     }
+    function obtenerProductos(Producto) {
+        $("#idproducto").val(Producto.Codigo);
+        $("#nombreproducto").val(Producto.Nombre);
+        $("#marca").val(Producto.Marca);
+        $("#precio").val(Producto.Precio);
+        $("#descuento").val("0");
+        $("#cantidad").val("1");
+    }
 
     function fn_agregar() {
 
@@ -95,8 +103,7 @@
         y = $("#cantidad").val();
         x = $("#precio").val();        
         subtotal = (x * y);
-        cadena = cadena + "<td>" + subtotal + "</td>"
-        cadena = cadena + "<td>" + $("#txtsucursal").val() + "</td>";
+        cadena = cadena + "<td>" + subtotal + "</td>"        
         cadena = cadena + "<td><a class ='elimina'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td>";
         $("#detalle tbody").append(cadena);
         sumar();
@@ -132,11 +139,9 @@
     }
     function fn_dar_eliminar() {
         $("a.elimina").click(function () {
-            valor = $(this).parents("tr").find("td").eq(5).html();
-
+            valor = $(this).parents("tr").find("td").eq(4).html();
             $(this).parents("tr").fadeOut("normal", function () {
-                $(this).remove();
-                
+                $(this).remove();                
                 restar();
             });
         });
@@ -175,28 +180,24 @@
 
             <td>Nombre de proveedor <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtnombre" readonly required /></td>
             <td>Código de proveedor <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtIdProveedor" readonly required /></td>
-            <td>Sucursal: 
-            <div class="col-md-12 dropdown">
-    @Html.DropDownList("txtsucursal", ViewBag.ListaSucursal as SelectList, "Seleccione sucursal", htmlAttributes: new { @class = "form-control", @required = "required" })
-            </div></td>
-</tr>        
-        <tr style="font-size:20px;">
-            <td style="float:right; vertical-align:middle;">Producto</td>
             <td>
-                @*<a class="btn_productos btn btn-primary" href="#">
-                   Obtener Productos
-                </a>*@
-
-                <div class="form-group col-md-12">
-                    <div class="col-md-9 dropdown">
-                        @Html.DropDownList("ListaProducto", ViewBag.ListaProducto as SelectList, Lenguaje.Recurso.Cotizacion_selectProducto, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-warning btn-lg" name="btnproductos" id="btnproductos">@Lenguaje.Recurso.Cotizacion_seleccionar</button>
-                    </div>
+                Sucursal:
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtsucursal", ViewBag.ListaSucursal as SelectList, "Seleccione sucursal", htmlAttributes: new { @class = "form-control", @required = "required" })
                 </div>
-
             </td>
+        </tr>
+                    
+        <tr style="font-size:20px;">
+            <td style="float:right; vertical-align:middle;">@Lenguaje.Recurso.Cotizacion_detalleProducto:</td>
+            <td>
+                <a href="~/Compra/ObtenerProductos" rel="pop-up">
+                    <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="Obtener Producto" />
+                </a>
+            </td>
+        </tr>
+
+        </td>
         </tr>
     </tbody>
 </table>
@@ -223,8 +224,7 @@
             <th>@Lenguaje.Recurso.Cotizacion_detalleProducto</th>
             <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
             <th>@Lenguaje.Recurso.Cotizacion_precio</th>
-            <th>Total</th>
-            <th>Sucursal</th>
+            <th>Total</th>            
         </tr>
     </thead>
     <tbody></tbody>

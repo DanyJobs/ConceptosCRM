@@ -69,7 +69,6 @@ namespace Model.Dao
             command.Connection.Close();            
             //Se regresa el objeto            
             return dtCompras;
-
         }
         //Obtener la info de una compra
         public DataTable consultar(int idCompra)
@@ -147,6 +146,69 @@ namespace Model.Dao
             command.Connection = objConexinDB.getCon();
             //Se le pasan los parametros            
             command.Parameters.AddWithValue("idCompra", idCompra);            
+            //Se abre la conexión
+            objConexinDB.getCon().Open();
+            //Se ejecuta el comando
+            command.ExecuteNonQuery();
+            //Se cierra la conexión
+            objConexinDB.getCon().Close();
+            command.Connection.Close();
+
+        }
+        //Obtener la información de la compra apartir de su id
+        public Compra consultaE(int idCompra)
+        {
+            Compra c = new Compra();
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_CompraConsultaEditar";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("IdCompra", idCompra);
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexinDB.getCon();
+            //Se crea el adaptador de datos
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            //Se crea la tabla
+            DataTable dtCompras = new DataTable();
+            //Se abre la conexión
+            objConexinDB.getCon().Open();
+            //Se le da el comando al adaptador
+            adapter.SelectCommand = command;
+            //Se llena la tabla con el adaptador
+            adapter.Fill(dtCompras);
+            //Se cierra la conexión
+            objConexinDB.getCon().Close();
+            command.Connection.Close();
+            c.IdCompra = idCompra;
+            c.Fecha = Convert.ToDateTime(dtCompras.Rows[0]["fechaCompra"].ToString());
+            c.IdProveedor=int.Parse(dtCompras.Rows[0]["idProveedor"].ToString());
+            c.NombreProveedor = dtCompras.Rows[0]["NP"].ToString();
+            c.IdSucursal= int.Parse(dtCompras.Rows[0]["idSucursal"].ToString());
+            c.Total = Convert.ToDecimal(dtCompras.Rows[0]["total"].ToString());
+            //Se regresa el objeto            
+            return c;
+        }
+        //Actualiza al información del registro de la tabla de compra
+        public void editar(int idCompra, decimal total, string fecha, int idSucursal, int idProveedor)
+        {
+            Compra c = new Compra();
+            //Comando de uso
+            SqlCommand command = new SqlCommand();
+            //Tipo de comando-Procedimiento almacenado
+            command.CommandType = CommandType.StoredProcedure;
+            //Nombre de procedimiento almacenado
+            command.CommandText = "sp_CompraEditar";
+            //Se le pasan los parametros            
+            command.Parameters.AddWithValue("idCompra", idCompra);
+            command.Parameters.AddWithValue("total", total);
+            command.Parameters.AddWithValue("fechaCompra", fecha);
+            command.Parameters.AddWithValue("idSucursal", idSucursal);
+            command.Parameters.AddWithValue("idProveedor", idProveedor);
+            //Se le asigna la conexión a utilizar al comando
+            command.Connection = objConexinDB.getCon();
             //Se abre la conexión
             objConexinDB.getCon().Open();
             //Se ejecuta el comando

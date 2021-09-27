@@ -47,9 +47,9 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<cliente> cliente { get; set; }
         public virtual DbSet<producto> producto { get; set; }
         public virtual DbSet<Moneda> Moneda { get; set; }
-        public virtual DbSet<configuracion> configuracion { get; set; }
         public virtual DbSet<texto> texto { get; set; }
         public virtual DbSet<detalleCotizacion> detalleCotizacion { get; set; }
+        public virtual DbSet<configuracion> configuracion { get; set; }
     
         public virtual int reporte_factura(string idPedido)
         {
@@ -710,6 +710,58 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("IdVenta", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_preEliminarDC", idVentaParameter);
+        }
+    
+        public virtual ObjectResult<sp_CompraConsultaEditar_Result> sp_CompraConsultaEditar(Nullable<int> idCompra)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("IdCompra", idCompra) :
+                new ObjectParameter("IdCompra", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CompraConsultaEditar_Result>("sp_CompraConsultaEditar", idCompraParameter);
+        }
+    
+        public virtual ObjectResult<sp_CompraConsultaEditar2_Result> sp_CompraConsultaEditar2(Nullable<int> idCompra)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("IdCompra", idCompra) :
+                new ObjectParameter("IdCompra", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CompraConsultaEditar2_Result>("sp_CompraConsultaEditar2", idCompraParameter);
+        }
+    
+        public virtual int sp_CompraDetalleEliminar(Nullable<int> idCompra)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("IdCompra", idCompra) :
+                new ObjectParameter("IdCompra", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraDetalleEliminar", idCompraParameter);
+        }
+    
+        public virtual int sp_CompraEditar(Nullable<int> idCompra, Nullable<decimal> total, Nullable<System.DateTime> fechaCompra, Nullable<int> idSucursal, Nullable<int> idProveedor)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("idCompra", idCompra) :
+                new ObjectParameter("idCompra", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("total", total) :
+                new ObjectParameter("total", typeof(decimal));
+    
+            var fechaCompraParameter = fechaCompra.HasValue ?
+                new ObjectParameter("fechaCompra", fechaCompra) :
+                new ObjectParameter("fechaCompra", typeof(System.DateTime));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("idSucursal", idSucursal) :
+                new ObjectParameter("idSucursal", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("idProveedor", idProveedor) :
+                new ObjectParameter("idProveedor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraEditar", idCompraParameter, totalParameter, fechaCompraParameter, idSucursalParameter, idProveedorParameter);
         }
     }
 }

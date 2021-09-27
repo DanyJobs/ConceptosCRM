@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -136,6 +137,8 @@ namespace WebFacturaMvc.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             configuracion configuracion = db.configuracion.Find(id);
+
+
             if (configuracion == null)
             {
                 return HttpNotFound();
@@ -146,12 +149,39 @@ namespace WebFacturaMvc.Controllers
             return View(configuracion);
         }
 
+        public ActionResult VerImagen(string id)
+        {
+            using (db)
+            {
+                var imagen = (from configuracion in db.configuracion
+                              where configuracion.usuario == id
+                              select configuracion.imagen).FirstOrDefault();
+                if (imagen != null)
+                {
+                    return File(imagen, "Img/jpg");
+                }
+                else {
+                    string stImagen = Server.MapPath("~") + @"\Img\noimage.jpg";
+                    return File(stImagen, "Img/jpg");
+                }
+            }    
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ConfigurarCorreo(configuracion configuracion)
+        public ActionResult ConfigurarCorreo(configuracion configuracion, HttpPostedFileBase upload,string check)
         {
             if (ModelState.IsValid)
-            {
+            {                
+                if (upload != null && upload.ContentLength>0)
+                {
+                    byte[] imagenData = null;
+                    using (var imagen = new BinaryReader(upload.InputStream))
+                    {
+                        imagenData = imagen.ReadBytes(upload.ContentLength);
+                    }
+                    configuracion.imagen = imagenData;
+                }
                 configuracion.usuario = User.Identity.GetUserId();
                 configuracion.contrasena = EncriptacionSha.Encriptar(configuracion.contrasena);              
                 db.configuracion.Attach(configuracion);
@@ -160,6 +190,17 @@ namespace WebFacturaMvc.Controllers
                 db.Entry(configuracion).Property(x => x.contrasena).IsModified = true;
                 db.Entry(configuracion).Property(x => x.displayName).IsModified = true;
                 db.Entry(configuracion).Property(x => x.email).IsModified = true;
+                db.Entry(configuracion).Property(x => x.nombre).IsModified = true;
+                db.Entry(configuracion).Property(x => x.telefono).IsModified = true;
+                db.Entry(configuracion).Property(x => x.celular).IsModified = true;
+                db.Entry(configuracion).Property(x => x.puesto).IsModified = true;
+                db.Entry(configuracion).Property(x => x.paginaUrl).IsModified = true;
+                if (String.IsNullOrWhiteSpace(check))
+                {
+                  db.Entry(configuracion).Property(x => x.imagen).IsModified = true;
+                }
+               
+                              
                 db.SaveChanges();
                 return RedirectToAction("DetailsCorreo");
             }
@@ -202,8 +243,7 @@ namespace WebFacturaMvc.Controllers
                     return View(configuracionObj);
                 }
             }
-        }
-
+        }     
 
     }
 }

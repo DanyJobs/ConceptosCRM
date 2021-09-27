@@ -1,10 +1,3 @@
-E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csprojAssemblyReference.cache
-E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.Migrations.Test.resources
-E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.Traducciones.textos.resources
-E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csproj.GenerateResource.cache
-E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.cache
-E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.compiled
-E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csproj.CoreCompileInputs.cache
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\SqlServerTypes\x64\msvcr120.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\SqlServerTypes\x64\SqlServerSpatial140.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\SqlServerTypes\x86\msvcr120.dll
@@ -176,6 +169,13 @@ E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\es\System.Web.Razor.resources.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\es\System.Web.WebPages.resources.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\es\System.Web.WebPages.Deployment.resources.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\bin\es\System.Web.WebPages.Razor.resources.dll
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csprojAssemblyReference.cache
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.Migrations.Test.resources
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.Traducciones.textos.resources
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csproj.GenerateResource.cache
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.cache
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.compiled
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csproj.CoreCompileInputs.cache
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csproj.CopyComplete
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.pdb

@@ -122,6 +122,12 @@
           <Property Name="contrasena" Type="nvarchar(max)" />
           <Property Name="displayName" Type="nvarchar" MaxLength="30" />
           <Property Name="email" Type="nvarchar" MaxLength="256" />
+          <Property Name="nombre" Type="varchar" MaxLength="40" />
+          <Property Name="telefono" Type="varchar" MaxLength="30" />
+          <Property Name="celular" Type="varchar" MaxLength="30" />
+          <Property Name="imagen" Type="image" />
+          <Property Name="puesto" Type="varchar" MaxLength="30" />
+          <Property Name="paginaUrl" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="cotizacion">
           <Key>
@@ -136,6 +142,10 @@
           <Property Name="notas" Type="nvarchar" MaxLength="200" />
           <Property Name="notasCompras" Type="nvarchar" MaxLength="200" />
           <Property Name="estatus" Type="varchar" MaxLength="1" />
+          <Property Name="diasSeguimiento" Type="int" />
+          <Property Name="estatusCotizacion" Type="varchar" MaxLength="1" />
+          <Property Name="estatusSeguimiento" Type="varchar" MaxLength="1" />
+          <Property Name="fechaComienzoSeguimiento" Type="date" />
         </EntityType>
         <EntityType Name="detalleCotizacion">
           <Key>
@@ -530,6 +540,12 @@
           <Parameter Name="idProveedor" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_CompraConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CompraConsultaEditar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCompra" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CompraConsultaEditar2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCompra" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_CompraConsultaIndividual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idCompra" Type="int" Mode="In" />
         </Function>
@@ -541,6 +557,16 @@
         </Function>
         <Function Name="sp_CompraDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idCompra" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CompraDetalleEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCompra" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CompraEditar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCompra" Type="int" Mode="In" />
+          <Parameter Name="total" Type="money" Mode="In" />
+          <Parameter Name="fechaCompra" Type="date" Mode="In" />
+          <Parameter Name="idSucursal" Type="int" Mode="In" />
+          <Parameter Name="idProveedor" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_CompraEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idCompra" Type="int" Mode="In" />
@@ -857,6 +883,10 @@
           <Property Name="notasCompras" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF" FromRole="cotizacion" ToRole="detalleCotizacion" />
+          <Property Name="diasSeguimiento" Type="Int32" />
+          <Property Name="estatusCotizacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="estatusSeguimiento" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="fechaComienzoSeguimiento" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="factura">
           <Key>
@@ -1064,15 +1094,6 @@
             <End Role="existencia" EntitySet="existencia" />
           </AssociationSet>
           <EntitySet Name="Moneda" EntityType="crmconceptoseModel.Moneda" />
-          <EntitySet Name="configuracion" EntityType="crmconceptoseModel.configuracion" />
-          <AssociationSet Name="FK_ConfiguracionUsuario" Association="crmconceptoseModel.FK_ConfiguracionUsuario">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="configuracion" EntitySet="configuracion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ConfiguracionMoneda" Association="crmconceptoseModel.FK_ConfiguracionMoneda">
-            <End Role="Moneda" EntitySet="Moneda" />
-            <End Role="configuracion" EntitySet="configuracion" />
-          </AssociationSet>
           <EntitySet Name="texto" EntityType="crmconceptoseModel.texto" />
           <FunctionImport Name="sp_consultaEmailCliente" ReturnType="Collection(String)">
           <Parameter Name="idVenta" Mode="In" Type="Decimal" />
@@ -1192,10 +1213,35 @@
             <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
           </AssociationSet>
           <FunctionImport Name="sp_eliminarCotizacion">
-            <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+          <Parameter Name="IdVenta" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_preEliminarDC">
-            <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+          <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CompraConsultaEditar" ReturnType="Collection(crmconceptoseModel.sp_CompraConsultaEditar_Result)">
+          <Parameter Name="IdCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CompraConsultaEditar2" ReturnType="Collection(crmconceptoseModel.sp_CompraConsultaEditar2_Result)">
+          <Parameter Name="IdCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="configuracion" EntityType="crmconceptoseModel.configuracion" />
+          <AssociationSet Name="FK_ConfiguracionUsuario" Association="crmconceptoseModel.FK_ConfiguracionUsuario">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="configuracion" EntitySet="configuracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfiguracionMoneda" Association="crmconceptoseModel.FK_ConfiguracionMoneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="configuracion" EntitySet="configuracion" />
+          </AssociationSet>
+          <FunctionImport Name="sp_CompraDetalleEliminar">
+          <Parameter Name="IdCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CompraEditar">
+            <Parameter Name="idCompra" Mode="In" Type="Int32" />
+            <Parameter Name="total" Mode="In" Type="Decimal" />
+            <Parameter Name="fechaCompra" Mode="In" Type="DateTime" />
+            <Parameter Name="idSucursal" Mode="In" Type="Int32" />
+            <Parameter Name="idProveedor" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="SP_COTIZACION_HISTORIAL_Result">
@@ -1540,47 +1586,6 @@
           <Property Name="simbolo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="configuracion" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="Moneda" ToRole="configuracion" />
         </EntityType>
-        <EntityType Name="configuracion">
-          <Key>
-            <PropertyRef Name="idConfiguracion" />
-          </Key>
-          <Property Name="idConfiguracion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="moneda" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="requerir" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="impuesto" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="servidorSmtp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="puerto" Type="Int32" />
-          <Property Name="contrasena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="displayName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="configuracion" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Moneda1" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="configuracion" ToRole="Moneda" />
-        </EntityType>
-        <Association Name="FK_ConfiguracionUsuario">
-          <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="configuracion">
-              <PropertyRef Name="usuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ConfiguracionMoneda">
-          <End Type="crmconceptoseModel.Moneda" Role="Moneda" Multiplicity="0..1" />
-          <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Moneda">
-              <PropertyRef Name="abreviatura" />
-            </Principal>
-            <Dependent Role="configuracion">
-              <PropertyRef Name="moneda" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="texto">
           <Key>
             <PropertyRef Name="idTexto" />
@@ -1817,6 +1822,70 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_CompraConsultaEditar_Result">
+          <Property Type="String" Name="NP" Nullable="false" MaxLength="45" />
+          <Property Type="Int32" Name="idProveedor" Nullable="false" />
+          <Property Type="Int32" Name="idSucursal" Nullable="false" />
+          <Property Type="DateTime" Name="fechaCompra" Nullable="false" />
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="Decimal" Name="total" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_CompraConsultaEditar2_Result">
+          <Property Type="Int32" Name="idCompra" Nullable="false" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="19" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="idSucursal" Nullable="false" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <EntityType Name="configuracion">
+          <Key>
+            <PropertyRef Name="idConfiguracion" />
+          </Key>
+          <Property Name="idConfiguracion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="moneda" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="requerir" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="impuesto" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="servidorSmtp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="puerto" Type="Int32" />
+          <Property Name="contrasena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="displayName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="celular" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="puesto" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="paginaUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="configuracion" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Moneda1" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="configuracion" ToRole="Moneda" />
+        </EntityType>
+        <Association Name="FK_ConfiguracionUsuario">
+          <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="configuracion">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfiguracionMoneda">
+          <End Type="crmconceptoseModel.Moneda" Role="Moneda" Multiplicity="0..1" />
+          <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="abreviatura" />
+            </Principal>
+            <Dependent Role="configuracion">
+              <PropertyRef Name="moneda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1872,6 +1941,10 @@
           <EntitySetMapping Name="cotizacion">
             <EntityTypeMapping TypeName="crmconceptoseModel.cotizacion">
               <MappingFragment StoreEntitySet="cotizacion">
+                <ScalarProperty Name="fechaComienzoSeguimiento" ColumnName="fechaComienzoSeguimiento" />
+                <ScalarProperty Name="estatusSeguimiento" ColumnName="estatusSeguimiento" />
+                <ScalarProperty Name="estatusCotizacion" ColumnName="estatusCotizacion" />
+                <ScalarProperty Name="diasSeguimiento" ColumnName="diasSeguimiento" />
                 <ScalarProperty Name="estatus" ColumnName="estatus" />
                 <ScalarProperty Name="notasCompras" ColumnName="notasCompras" />
                 <ScalarProperty Name="notas" ColumnName="notas" />
@@ -2162,22 +2235,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="configuracion">
-            <EntityTypeMapping TypeName="crmconceptoseModel.configuracion">
-              <MappingFragment StoreEntitySet="configuracion">
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="displayName" ColumnName="displayName" />
-                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
-                <ScalarProperty Name="puerto" ColumnName="puerto" />
-                <ScalarProperty Name="servidorSmtp" ColumnName="servidorSmtp" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
-                <ScalarProperty Name="requerir" ColumnName="requerir" />
-                <ScalarProperty Name="moneda" ColumnName="moneda" />
-                <ScalarProperty Name="idConfiguracion" ColumnName="idConfiguracion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="texto">
             <EntityTypeMapping TypeName="crmconceptoseModel.texto">
               <MappingFragment StoreEntitySet="texto">
@@ -2456,6 +2513,55 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_eliminarCotizacion" FunctionName="crmconceptoseModel.Store.sp_eliminarCotizacion" />
           <FunctionImportMapping FunctionImportName="sp_preEliminarDC" FunctionName="crmconceptoseModel.Store.sp_preEliminarDC" />
+          <FunctionImportMapping FunctionImportName="sp_CompraConsultaEditar" FunctionName="crmconceptoseModel.Store.sp_CompraConsultaEditar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraConsultaEditar_Result">
+                <ScalarProperty Name="NP" ColumnName="NP" />
+                <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+                <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+                <ScalarProperty Name="fechaCompra" ColumnName="fechaCompra" />
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CompraConsultaEditar2" FunctionName="crmconceptoseModel.Store.sp_CompraConsultaEditar2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraConsultaEditar2_Result">
+                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="configuracion">
+            <EntityTypeMapping TypeName="crmconceptoseModel.configuracion">
+              <MappingFragment StoreEntitySet="configuracion">
+                <ScalarProperty Name="paginaUrl" ColumnName="paginaUrl" />
+                <ScalarProperty Name="puesto" ColumnName="puesto" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="celular" ColumnName="celular" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="puerto" ColumnName="puerto" />
+                <ScalarProperty Name="servidorSmtp" ColumnName="servidorSmtp" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="requerir" ColumnName="requerir" />
+                <ScalarProperty Name="moneda" ColumnName="moneda" />
+                <ScalarProperty Name="idConfiguracion" ColumnName="idConfiguracion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_CompraDetalleEliminar" FunctionName="crmconceptoseModel.Store.sp_CompraDetalleEliminar" />
+          <FunctionImportMapping FunctionImportName="sp_CompraEditar" FunctionName="crmconceptoseModel.Store.sp_CompraEditar" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

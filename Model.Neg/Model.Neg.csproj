@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoriaNeg.cs" />
+    <Compile Include="CompraDetalleNeg.cs" />
     <Compile Include="MarcaNeg.cs" />
     <Compile Include="ClienteNeg.cs" />
     <Compile Include="DetalleCotizacionNeg.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="CotizacionNeg.cs" />
     <Compile Include="ProductoNeg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SucursalNeg.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

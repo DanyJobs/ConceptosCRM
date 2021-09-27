@@ -14,10 +14,13 @@ namespace Model.Entity
         private decimal precio;
         private int cantidad;
         private string idproducto;
-        private int estado;
+        private int estado;      
         //JOIN
         private string nombreProducto;
-        [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        private int idSucursal;
+        private string descripcion;
+        private string nombreSucursal;
+        
         public int IdCompra
         {
             get
@@ -69,6 +72,18 @@ namespace Model.Entity
                 idproducto = value;
             }
         }
+        public string NombreSucursal
+        {
+            get
+            {
+                return nombreSucursal;
+            }
+
+            set
+            {
+                nombreSucursal = value;
+            }
+        }
         public string NombreProducto
         {
             get
@@ -95,18 +110,50 @@ namespace Model.Entity
                 estado = value;
             }
         }
+        public int IdSucursal
+        {
+            get
+            {
+                return idSucursal;
+            }
+
+            set
+            {
+                idSucursal = value;
+            }
+        }
+        public string Descripcion
+        {
+            get
+            {
+                return descripcion;
+            }
+
+            set
+            {
+                descripcion = value;
+            }
+        }
 
         public CompraDetalle()
         {
 
+        }
+        public CompraDetalle(int idcompra, string idproducto, int cantidad, decimal precio, int idSucursal)
+        {
+            this.idCompra = idcompra;
+            this.idproducto = idproducto;
+            this.precio = precio;
+            this.cantidad = cantidad;
+            this.idSucursal = idSucursal;
         }
         public CompraDetalle(int idcompra, string idproducto, int cantidad, decimal precio)
         {
             this.idCompra = idcompra;
             this.idproducto = idproducto;
             this.precio = precio;
-            this.cantidad = cantidad;
-        }        
+            this.cantidad = cantidad;            
+        }
         public CompraDetalle(int idCompra)
         {
             this.idCompra = idCompra;

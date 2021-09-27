@@ -50,6 +50,10 @@
     <EntitySetMapping Name="cotizacion">
       <EntityTypeMapping TypeName="crmconceptoseModel.cotizacion">
         <MappingFragment StoreEntitySet="cotizacion">
+          <ScalarProperty Name="fechaComienzoSeguimiento" ColumnName="fechaComienzoSeguimiento" />
+          <ScalarProperty Name="estatusSeguimiento" ColumnName="estatusSeguimiento" />
+          <ScalarProperty Name="estatusCotizacion" ColumnName="estatusCotizacion" />
+          <ScalarProperty Name="diasSeguimiento" ColumnName="diasSeguimiento" />
           <ScalarProperty Name="estatus" ColumnName="estatus" />
           <ScalarProperty Name="notasCompras" ColumnName="notasCompras" />
           <ScalarProperty Name="notas" ColumnName="notas" />
@@ -340,22 +344,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="configuracion">
-      <EntityTypeMapping TypeName="crmconceptoseModel.configuracion">
-        <MappingFragment StoreEntitySet="configuracion">
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="displayName" ColumnName="displayName" />
-          <ScalarProperty Name="contrasena" ColumnName="contrasena" />
-          <ScalarProperty Name="puerto" ColumnName="puerto" />
-          <ScalarProperty Name="servidorSmtp" ColumnName="servidorSmtp" />
-          <ScalarProperty Name="usuario" ColumnName="usuario" />
-          <ScalarProperty Name="impuesto" ColumnName="impuesto" />
-          <ScalarProperty Name="requerir" ColumnName="requerir" />
-          <ScalarProperty Name="moneda" ColumnName="moneda" />
-          <ScalarProperty Name="idConfiguracion" ColumnName="idConfiguracion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="texto">
       <EntityTypeMapping TypeName="crmconceptoseModel.texto">
         <MappingFragment StoreEntitySet="texto">
@@ -634,5 +622,54 @@
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_eliminarCotizacion" FunctionName="crmconceptoseModel.Store.sp_eliminarCotizacion" />
     <FunctionImportMapping FunctionImportName="sp_preEliminarDC" FunctionName="crmconceptoseModel.Store.sp_preEliminarDC" />
+    <FunctionImportMapping FunctionImportName="sp_CompraConsultaEditar" FunctionName="crmconceptoseModel.Store.sp_CompraConsultaEditar">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraConsultaEditar_Result">
+          <ScalarProperty Name="NP" ColumnName="NP" />
+          <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+          <ScalarProperty Name="fechaCompra" ColumnName="fechaCompra" />
+          <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_CompraConsultaEditar2" FunctionName="crmconceptoseModel.Store.sp_CompraConsultaEditar2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_CompraConsultaEditar2_Result">
+          <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="configuracion">
+      <EntityTypeMapping TypeName="crmconceptoseModel.configuracion">
+        <MappingFragment StoreEntitySet="configuracion">
+          <ScalarProperty Name="paginaUrl" ColumnName="paginaUrl" />
+          <ScalarProperty Name="puesto" ColumnName="puesto" />
+          <ScalarProperty Name="imagen" ColumnName="imagen" />
+          <ScalarProperty Name="celular" ColumnName="celular" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="displayName" ColumnName="displayName" />
+          <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+          <ScalarProperty Name="puerto" ColumnName="puerto" />
+          <ScalarProperty Name="servidorSmtp" ColumnName="servidorSmtp" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+          <ScalarProperty Name="requerir" ColumnName="requerir" />
+          <ScalarProperty Name="moneda" ColumnName="moneda" />
+          <ScalarProperty Name="idConfiguracion" ColumnName="idConfiguracion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_CompraDetalleEliminar" FunctionName="crmconceptoseModel.Store.sp_CompraDetalleEliminar" />
+    <FunctionImportMapping FunctionImportName="sp_CompraEditar" FunctionName="crmconceptoseModel.Store.sp_CompraEditar" />
   </EntityContainerMapping>
 </Mapping>

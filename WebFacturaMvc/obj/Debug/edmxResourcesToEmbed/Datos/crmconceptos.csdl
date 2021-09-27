@@ -64,6 +64,10 @@
     <Property Name="notasCompras" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF" FromRole="cotizacion" ToRole="detalleCotizacion" />
+    <Property Name="diasSeguimiento" Type="Int32" />
+    <Property Name="estatusCotizacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="estatusSeguimiento" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="fechaComienzoSeguimiento" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="factura">
     <Key>
@@ -271,15 +275,6 @@
       <End Role="existencia" EntitySet="existencia" />
     </AssociationSet>
     <EntitySet Name="Moneda" EntityType="crmconceptoseModel.Moneda" />
-    <EntitySet Name="configuracion" EntityType="crmconceptoseModel.configuracion" />
-    <AssociationSet Name="FK_ConfiguracionUsuario" Association="crmconceptoseModel.FK_ConfiguracionUsuario">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="configuracion" EntitySet="configuracion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ConfiguracionMoneda" Association="crmconceptoseModel.FK_ConfiguracionMoneda">
-      <End Role="Moneda" EntitySet="Moneda" />
-      <End Role="configuracion" EntitySet="configuracion" />
-    </AssociationSet>
     <EntitySet Name="texto" EntityType="crmconceptoseModel.texto" />
     <FunctionImport Name="sp_consultaEmailCliente" ReturnType="Collection(String)">
       <Parameter Name="idVenta" Mode="In" Type="Decimal" />
@@ -403,6 +398,31 @@
     </FunctionImport>
     <FunctionImport Name="sp_preEliminarDC">
       <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_CompraConsultaEditar" ReturnType="Collection(crmconceptoseModel.sp_CompraConsultaEditar_Result)">
+      <Parameter Name="IdCompra" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_CompraConsultaEditar2" ReturnType="Collection(crmconceptoseModel.sp_CompraConsultaEditar2_Result)">
+      <Parameter Name="IdCompra" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="configuracion" EntityType="crmconceptoseModel.configuracion" />
+    <AssociationSet Name="FK_ConfiguracionUsuario" Association="crmconceptoseModel.FK_ConfiguracionUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="configuracion" EntitySet="configuracion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConfiguracionMoneda" Association="crmconceptoseModel.FK_ConfiguracionMoneda">
+      <End Role="Moneda" EntitySet="Moneda" />
+      <End Role="configuracion" EntitySet="configuracion" />
+    </AssociationSet>
+    <FunctionImport Name="sp_CompraDetalleEliminar">
+      <Parameter Name="IdCompra" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_CompraEditar">
+      <Parameter Name="idCompra" Mode="In" Type="Int32" />
+      <Parameter Name="total" Mode="In" Type="Decimal" />
+      <Parameter Name="fechaCompra" Mode="In" Type="DateTime" />
+      <Parameter Name="idSucursal" Mode="In" Type="Int32" />
+      <Parameter Name="idProveedor" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SP_COTIZACION_HISTORIAL_Result">
@@ -747,47 +767,6 @@
     <Property Name="simbolo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="configuracion" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="Moneda" ToRole="configuracion" />
   </EntityType>
-  <EntityType Name="configuracion">
-    <Key>
-      <PropertyRef Name="idConfiguracion" />
-    </Key>
-    <Property Name="idConfiguracion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="moneda" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-    <Property Name="requerir" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-    <Property Name="impuesto" Type="Decimal" Precision="5" Scale="2" />
-    <Property Name="usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="servidorSmtp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="puerto" Type="Int32" />
-    <Property Name="contrasena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="displayName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="configuracion" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Moneda1" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="configuracion" ToRole="Moneda" />
-  </EntityType>
-  <Association Name="FK_ConfiguracionUsuario">
-    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-    <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="configuracion">
-        <PropertyRef Name="usuario" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ConfiguracionMoneda">
-    <End Type="crmconceptoseModel.Moneda" Role="Moneda" Multiplicity="0..1" />
-    <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Moneda">
-        <PropertyRef Name="abreviatura" />
-      </Principal>
-      <Dependent Role="configuracion">
-        <PropertyRef Name="moneda" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="texto">
     <Key>
       <PropertyRef Name="idTexto" />
@@ -1021,6 +1000,70 @@
       </Principal>
       <Dependent Role="detalleCotizacion">
         <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_CompraConsultaEditar_Result">
+    <Property Type="String" Name="NP" Nullable="false" MaxLength="45" />
+    <Property Type="Int32" Name="idProveedor" Nullable="false" />
+    <Property Type="Int32" Name="idSucursal" Nullable="false" />
+    <Property Type="DateTime" Name="fechaCompra" Nullable="false" />
+    <Property Type="Int32" Name="idCompra" Nullable="false" />
+    <Property Type="Decimal" Name="total" Nullable="false" Precision="19" />
+  </ComplexType>
+  <ComplexType Name="sp_CompraConsultaEditar2_Result">
+    <Property Type="Int32" Name="idCompra" Nullable="false" />
+    <Property Type="Int32" Name="cantidad" Nullable="false" />
+    <Property Type="String" Name="idProducto" Nullable="false" MaxLength="5" />
+    <Property Type="Decimal" Name="precio" Nullable="false" Precision="19" />
+    <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="idSucursal" Nullable="false" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <EntityType Name="configuracion">
+    <Key>
+      <PropertyRef Name="idConfiguracion" />
+    </Key>
+    <Property Name="idConfiguracion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="moneda" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="requerir" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="impuesto" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="servidorSmtp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="puerto" Type="Int32" />
+    <Property Name="contrasena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="displayName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="celular" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="puesto" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="paginaUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="configuracion" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Moneda1" Relationship="crmconceptoseModel.FK_ConfiguracionMoneda" FromRole="configuracion" ToRole="Moneda" />
+  </EntityType>
+  <Association Name="FK_ConfiguracionUsuario">
+    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="configuracion">
+        <PropertyRef Name="usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConfiguracionMoneda">
+    <End Type="crmconceptoseModel.Moneda" Role="Moneda" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.configuracion" Role="configuracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moneda">
+        <PropertyRef Name="abreviatura" />
+      </Principal>
+      <Dependent Role="configuracion">
+        <PropertyRef Name="moneda" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

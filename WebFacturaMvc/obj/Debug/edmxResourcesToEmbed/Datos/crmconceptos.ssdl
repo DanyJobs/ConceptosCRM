@@ -117,6 +117,12 @@
     <Property Name="contrasena" Type="nvarchar(max)" />
     <Property Name="displayName" Type="nvarchar" MaxLength="30" />
     <Property Name="email" Type="nvarchar" MaxLength="256" />
+    <Property Name="nombre" Type="varchar" MaxLength="40" />
+    <Property Name="telefono" Type="varchar" MaxLength="30" />
+    <Property Name="celular" Type="varchar" MaxLength="30" />
+    <Property Name="imagen" Type="image" />
+    <Property Name="puesto" Type="varchar" MaxLength="30" />
+    <Property Name="paginaUrl" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="cotizacion">
     <Key>
@@ -131,6 +137,10 @@
     <Property Name="notas" Type="nvarchar" MaxLength="200" />
     <Property Name="notasCompras" Type="nvarchar" MaxLength="200" />
     <Property Name="estatus" Type="varchar" MaxLength="1" />
+    <Property Name="diasSeguimiento" Type="int" />
+    <Property Name="estatusCotizacion" Type="varchar" MaxLength="1" />
+    <Property Name="estatusSeguimiento" Type="varchar" MaxLength="1" />
+    <Property Name="fechaComienzoSeguimiento" Type="date" />
   </EntityType>
   <EntityType Name="detalleCotizacion">
     <Key>
@@ -525,6 +535,12 @@
     <Parameter Name="idProveedor" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_CompraConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_CompraConsultaEditar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdCompra" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CompraConsultaEditar2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdCompra" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_CompraConsultaIndividual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />
   </Function>
@@ -536,6 +552,16 @@
   </Function>
   <Function Name="sp_CompraDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CompraDetalleEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdCompra" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CompraEditar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idCompra" Type="int" Mode="In" />
+    <Parameter Name="total" Type="money" Mode="In" />
+    <Parameter Name="fechaCompra" Type="date" Mode="In" />
+    <Parameter Name="idSucursal" Type="int" Mode="In" />
+    <Parameter Name="idProveedor" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_CompraEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />

@@ -19,8 +19,11 @@ namespace WebFacturaMvc.Controllers
         private ClienteNeg objClienteNeg;
         private ProductoNeg objProductoNeg;        
         private static int Paso = 0;
-        
-                
+        CategoriaNeg objCategoriaNeg = new CategoriaNeg();
+        MarcaNeg objMarcaNeg = new MarcaNeg();
+        CompraDetalleNeg cdNeg = new CompraDetalleNeg();
+
+
         public CompraController()
         {           
             objClienteNeg = new ClienteNeg();
@@ -61,35 +64,84 @@ namespace WebFacturaMvc.Controllers
                 return View(mP);
             }
 
-
-            [HttpPost]
-            public ActionResult Seleccionar(string idProducto)
-            {
-                Producto objProducto = new Producto(idProducto);
-                objProductoNeg.find(objProducto);
-                return Json(objProducto, JsonRequestBehavior.AllowGet);
-
-            }            
-
-            private void cargarSucursales()
-            {
-            //Consulta LINQ para obtener las sucursales
-            var cSucursal = (from mProveedor in db.sucursal                              
-                              select mProveedor);
-            List<sucursal> sC = cSucursal.AsEnumerable<sucursal>().ToList();            
-                SelectList lista = new SelectList(sC, "idSucursal", "descripcion");
-                ViewBag.ListaSucursal = lista;
-            }
-        private void cargarProductocmb()
+        public void cargarCategoria()
+        {
+            List<Categoria> data = objCategoriaNeg.findAll();
+            SelectList lista = new SelectList(data, "idCategoria", "nombre");
+            ViewBag.ListaCategoria = lista;
+        }
+        public void cargarMarca()
+        {
+            List<Marca> data = objMarcaNeg.findAll();
+            SelectList lista = new SelectList(data, "idMarca", "descripcion");
+            ViewBag.ListaMarca = lista;
+        }
+        public void cargarProductocmb()
         {
             List<Producto> data = objProductoNeg.findAll();
             SelectList lista = new SelectList(data, "idProducto", "nombre");
             ViewBag.ListaProducto = lista;
         }
+        [HttpGet]
+        public ActionResult ObtenerProductos()
+        {
+            List<Producto> lista = objProductoNeg.findAll();
+            cargarCategoria();
+            cargarMarca();
+            return View(lista);
+        }
+        [HttpPost]//para buscar clientes
+        public ActionResult ObtenerProductos(string txtcodigo, string txtnombre, string txtCategoria, string txtMarca)
+        {
 
+            if (txtcodigo == "")
+            {
+                txtcodigo = null;
+            }
+            if (txtnombre == "")
+            {
+                txtnombre = null;
+            }
+            if (txtCategoria == "")
+            {
+                txtCategoria = "-1";
+            }
+            if (txtMarca == "")
+            {
+                txtMarca = "-1";
+            }
+            Producto objProducto = new Producto();
+            objProducto.IdProducto = txtcodigo;
+            objProducto.Nombre = txtnombre;
+            objProducto.Categoria = txtCategoria;
+            objProducto.Marca = txtMarca;
+            List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
+            cargarCategoria();
+            cargarMarca();
+            //System.Diagnostics.Debug.WriteLine(objProducto.IdProducto +"    " +objProducto.Nombre+"    " +objProducto.Categoria+ "     "+objProducto.Marca);
+            return View(ListaProducto);
+        }
+        [HttpPost]
+        public ActionResult Seleccionar(string idProducto)
+        {
+            Producto objProducto = new Producto(idProducto);
+            objProductoNeg.find(objProducto);
+            return Json(objProducto, JsonRequestBehavior.AllowGet);
+        }
+        private void cargarSucursales()
+            {
+            //Consulta LINQ para obtener las sucursales
+            /*var cSucursal = (from mProveedor in db.sucursal                              
+                              select mProveedor);*/
+            SucursalNeg sn = new SucursalNeg();
+            List<Sucursal> list = sn.consulta();
+            //IEnumerable<SelectListItem> lst = (IEnumerable<SelectListItem>)list;
+                SelectList lista = new SelectList(list, "idSucursal", "descripcion");
+                ViewBag.ListaSucursal = lista;
+            }        
         public ActionResult Index()
             {
-            cargarProductocmb();
+                cargarProductocmb();
                 cargarSucursales();
                 return View();
             }
@@ -153,8 +205,16 @@ namespace WebFacturaMvc.Controllers
                                 string idProducto = data.idProducto.ToString();
                                 int pCantidad = Convert.ToInt32(data.cantidad.ToString());                                
                                 decimal precio = Convert.ToDecimal(data.precio.ToString());
-                                CompraDetalle objCompraDetalle = new CompraDetalle(pIdCompra, idProducto,pCantidad,precio);
-                                cDetalle.create(objCompraDetalle);
+                    CompraDetalle objCompraDetalle = new CompraDetalle(pIdCompra, idProducto, pCantidad, precio);
+                    try
+                    {                        
+                        cDetalle.create(objCompraDetalle);
+                    }
+                    catch(Exception ex)
+                    {
+                        mensaje = ex.Message.ToString();
+                    }
+                               
                             }
                             //mensaje = "VENTA GUARDADA CON EXITO...";
                         }
@@ -233,13 +293,13 @@ namespace WebFacturaMvc.Controllers
         //public static string prueba;
         
         [HttpGet]
-
         public ActionResult Consulta()
         {
             cargarFechas();
            // System.Diagnostics.Debug.WriteLine(prueba);
             return View(cargarCompras());
         }
+
         //Compras filtradas
         [HttpPost]
         public ActionResult Consulta(string txtMes, string txtyear)
@@ -278,32 +338,17 @@ namespace WebFacturaMvc.Controllers
             if(vyear!=null)
             {
                 year = txtyear;
-            }
-            
-            
-            cargarFechas();
-            /*System.Diagnostics.Debug.WriteLine(month);
-            System.Diagnostics.Debug.WriteLine(year);*/
+            }       
+            cargarFechas();       
             return View(cargarCompras(month,year));
         }
         private List<CompraDetalle> cargarComprasDetalle(int idCompra)
         {
-            //Dao
             CompraDetalleDao c = new CompraDetalleDao();
-            //Tabla
-            DataTable dtCompras = c.consultar(idCompra);
+            
             //Lista
             List<CompraDetalle> listCompras = new List<CompraDetalle>();
-            for (int i = 0; i < dtCompras.Rows.Count; i++)
-            {
-                //Entity
-                CompraDetalle compras = new CompraDetalle();
-                compras.IdCompra = int.Parse(dtCompras.Rows[i]["idCompra"].ToString());
-                compras.Precio = Convert.ToDecimal(dtCompras.Rows[i]["precio"].ToString());                
-                compras.IdProducto = dtCompras.Rows[i]["nombre"].ToString();
-                compras.Cantidad = int.Parse(dtCompras.Rows[i]["cantidad"].ToString());
-                listCompras.Add(compras);
-            }
+            listCompras = c.consultarDetalles(idCompra);            
             return listCompras;
         }
         public ActionResult CompraDetalle(int idCompra)
@@ -354,6 +399,103 @@ namespace WebFacturaMvc.Controllers
             }
                         
             return View();
+        }
+        //Mostrar la información actual de la compra
+        //Para mostrar la información de los productos de la compra
+        [HttpPost]
+        public ActionResult ListaProductos(string idCompra)
+        {
+            List<CompraDetalle> list = new List<CompraDetalle>();            
+            list = cdNeg.consultarDetalles(int.Parse(idCompra));
+            return Json(list, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult Editar(int idCompra)
+        {
+            cargarProductocmb();
+            cargarSucursales();
+            CompraDao cd = new CompraDao();
+            Compra registro = cd.consultaE(idCompra);
+            ViewData["Compra"] = registro.IdCompra.ToString();
+            ViewData["Fecha"] = registro.Fecha.ToString("MM/dd/yyyy");
+            ViewData["NombreP"] = registro.NombreProveedor.ToString();
+            ViewData["CP"] = registro.IdProveedor.ToString();
+            ViewData["Sucursal"] = registro.IdSucursal.ToString();
+            ViewData["TotalCompra"] = registro.Total.ToString();
+            ViewData["Sucursal"] = registro.IdSucursal.ToString();
+            return View();
+        }
+        //Para editar los campos de compra y de compradetalle
+        [HttpPost]
+        public ActionResult EditarCompra(string Fecha, string IdCompra, string IdProveedor, string Total, string Sucursal, List<compraDetalle> ListadoDetalle)
+        {
+            string mensaje = "";
+            double iva = 18;
+            string idVendedor = User.Identity.GetUserId();
+            int codigoPago = 0;
+            int codigoSucursal = 0;
+            int codigoProveedor = 0;
+            decimal total = 0;
+
+            if (Fecha == "" || IdProveedor == "" || Total == "" || Sucursal == "")
+            {
+                if (Fecha == "") mensaje = "ERROR EN EL CAMPO FECHA";
+                if (IdProveedor == "") mensaje = "ERROR CON EL CODIGO DEL CLIENTE";
+                if (Total == "") mensaje = "ERROR EN EL CAMPO TOTAL";
+                if (Sucursal == "") mensaje = "ERROR EN EL CAMPO SUCURSAL";
+            }
+            else if (Sucursal == null)
+            {
+                mensaje = "ERROR EN EL CAMPO SUCURSAL";
+            }
+            else
+            {
+                Paso = 1;
+                codigoProveedor = int.Parse(IdProveedor);
+                total = Convert.ToDecimal(Total);
+                codigoSucursal = int.Parse(Sucursal);
+                //REGISTRO DE COMPRA
+                //Datos del objeto
+                Compra objCompra = new Compra();                
+                //Se le pasan los datos al objeto
+                objCompra.IdCompra = int.Parse(IdCompra);
+                objCompra.IdProveedor = codigoProveedor;
+                objCompra.IdSucursal = codigoSucursal;                
+                objCompra.Total = total;
+                //Insercion
+                try
+                {
+                    CompraDao nCompra = new CompraDao();
+                    CompraDetalleDao ncd = new CompraDetalleDao();
+                    ncd.eliminar(objCompra.IdCompra);
+                    nCompra.editar(objCompra.IdCompra, objCompra.Total,Fecha, objCompra.IdSucursal, objCompra.IdProveedor);
+                    mensaje = "LA COMPRA FUE EDITADA CON ÉXITO";
+                }
+                catch (Exception ex)
+                {
+                    mensaje = ex.Message.ToString();
+                }               
+                //Objeto Dao
+                CompraDetalleDao cDetalle = new CompraDetalleDao();
+                foreach (var data in ListadoDetalle)
+                {
+                    string idProducto = data.idProducto.ToString();
+                    int pCantidad = Convert.ToInt32(data.cantidad.ToString());
+                    decimal precio = Convert.ToDecimal(data.precio.ToString());
+                    CompraDetalle objCompraDetalle = new CompraDetalle(int.Parse(IdCompra), idProducto, pCantidad, precio);
+                   try
+                   {
+                        cDetalle.create(objCompraDetalle);                        
+                   }
+                    catch (Exception e)
+                    {
+                        mensaje = e.Message.ToString();
+                    }                                       
+                }
+                //mensaje = "VENTA GUARDADA CON EXITO...";
+            }
+
+            return Json(mensaje);
         }
     }
     }

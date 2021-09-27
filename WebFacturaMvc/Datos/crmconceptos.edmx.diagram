@@ -38,14 +38,14 @@
         <AssociationConnector Association="crmconceptoseModel.fkProductoCompra" />
         <AssociationConnector Association="crmconceptoseModel.fkExistenciaidProducto" />
         <EntityTypeShape EntityType="crmconceptoseModel.Moneda" Width="1.5" PointX="6" PointY="9.375" />
-        <EntityTypeShape EntityType="crmconceptoseModel.configuracion" Width="1.5" PointX="8.25" PointY="7.75" />
-        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionUsuario" />
-        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionMoneda" />
         <EntityTypeShape EntityType="crmconceptoseModel.texto" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="crmconceptoseModel.detalleCotizacion" Width="1.5" PointX="19.125" PointY="12.75" />
         <AssociationConnector Association="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF" />
         <AssociationConnector Association="crmconceptoseModel.FK_detalleFactura_factura" />
         <AssociationConnector Association="crmconceptoseModel.FK_detalleFactura_producto" />
+        <EntityTypeShape EntityType="crmconceptoseModel.configuracion" Width="1.5" PointX="8.25" PointY="7.125" />
+        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionUsuario" />
+        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionMoneda" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

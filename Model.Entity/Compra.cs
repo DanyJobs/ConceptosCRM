@@ -19,7 +19,8 @@ namespace Model.Entity
         //Para JOIN
         private string nombreSucursal;
         private string nombreProveedor;
-                       
+        //Para el Editar
+        private string fechaCompra;
         public int IdCompra
         {
             get
@@ -42,6 +43,18 @@ namespace Model.Entity
             set
             {
                 total = value;
+            }
+        }
+        public string FechaCompra
+        {
+            get
+            {
+                return fechaCompra;
+            }
+
+            set
+            {
+                fechaCompra = value;
             }
         }
 

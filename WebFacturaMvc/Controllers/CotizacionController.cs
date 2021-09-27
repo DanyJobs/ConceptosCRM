@@ -37,9 +37,11 @@ namespace WebFacturaMvc.Controllers
         private static int Paso = 0;
         private DetalleCotizacionNeg objDetalleVentaNeg;
         private static string idVentaMail;
+        private cotizacion objCotizacion;
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         public CotizacionController()
         {
+            objCotizacion = new cotizacion();
             objMarcaNeg = new MarcaNeg();
             objCategoriaNeg = new CategoriaNeg();
             objCotizacionNeg = new CotizacionNeg();
@@ -49,6 +51,153 @@ namespace WebFacturaMvc.Controllers
             objFacturaNeg = new FacturaNeg();
             objDetalleVentaNeg = new DetalleCotizacionNeg();
         }
+
+        public string firma(configuracion objConfiguracion) {
+            string stCuerpoHTML="";
+            stCuerpoHTML += "<table cellpadding = '0' cellspacing = '0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += "style ='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial; min-width: 450px; text-align: center;''>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr>";
+            stCuerpoHTML += "<td>";
+            stCuerpoHTML += "<table cellpadding = '0' cellspacing= '0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += " style='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial; width: 100%;'>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr>";
+            stCuerpoHTML += "<td height = '30' ></td> ";
+            stCuerpoHTML += "</tr> ";
+            stCuerpoHTML += "<tr>";
+            stCuerpoHTML += "<td color='#5669e2' direction='horizontal' height='1' class='sc-jhAzac hmXDXQ'";
+            stCuerpoHTML += " style='width: 100%; border-bottom: 1px solid rgb(86, 105, 226); border-left: none; display: block;'>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "<tr>";
+            stCuerpoHTML += "<td height = '30' ></td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody>";
+            stCuerpoHTML += "</table> ";
+            stCuerpoHTML += "<table cellpadding='0' cellspacing='0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += " style='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial; width: 100%;'>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr style = 'text-align: center;' >";
+            stCuerpoHTML += "<td>";
+            stCuerpoHTML += "<img src='cid:Firma' alt='' width='200'  style='width:50px; height:50px; border-radius:150px; text-align:center;'/>";
+            stCuerpoHTML += "<h3 color='#000000' class='sc-fBuWsC eeihxG' style='margin: 0px; font-size: 18px; color: rgb(0, 0, 0);'>";
+            stCuerpoHTML += "<span>" + objConfiguracion.nombre;
+            stCuerpoHTML += "</span> ";
+            stCuerpoHTML += "</h3>";
+            stCuerpoHTML += "<p color = '#000000' font-size='medium' class='sc-fMiknA bxZCMx'";
+            stCuerpoHTML += "style='margin: 0px; color: rgb(0, 0, 0); font-size: 14px; line-height: 22px;'><span>" + objConfiguracion.puesto;
+            stCuerpoHTML += " </span></p>";
+            stCuerpoHTML += "<p color = '#000000' font-size= 'medium' class='sc-dVhcbM fghLuF'";
+            stCuerpoHTML += "style='margin: 0px; font-weight: 500; color: rgb(0, 0, 0); font-size: 14px; line-height: 22px;'>";
+            stCuerpoHTML += "<span>Conceptos Electronics</span>";
+            stCuerpoHTML += "</p>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "<tr style = 'vertical-align: middle;'>";
+            stCuerpoHTML += "<td>";
+            stCuerpoHTML += "<table cellpadding='0' cellspacing='0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += " style='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial;'>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr height = '25' style='width:500px;vertical-align: middle;'>";
+            stCuerpoHTML += "<td width = '30' style='vertical-align: middle;'>";
+            stCuerpoHTML += "<table cellpadding = '0' cellspacing='0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += " style='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial;'>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr>";
+            stCuerpoHTML += "<td style = 'vertical-align: bottom;' ><span color='#5669e2'";
+            stCuerpoHTML += " width='11' class='sc-jlyJG bbyJzT'";
+            stCuerpoHTML += " style='display: block; background-color: rgb(86, 105, 226);'><img";
+            stCuerpoHTML += " src = 'https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png'";
+            stCuerpoHTML += " color='#5669e2' width='13'";
+            stCuerpoHTML += " class='sc-iRbamj blSEcj'";
+            stCuerpoHTML += " style='display: block; background-color: rgb(86, 105, 226);'></span>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody>";
+            stCuerpoHTML += "</table>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "<td style = 'text-align: left;padding: 0px; color: rgb(0, 0, 0);' ><a href='tel:" + objConfiguracion.telefono + "'";
+            stCuerpoHTML += " color='#000000' class='sc-gipzik iyhjGb'";
+            stCuerpoHTML += " style='text-decoration: none; color: rgb(0, 0, 0); font-size: 12px;'><span>" + objConfiguracion.telefono + "</span></a>";
+            stCuerpoHTML += "  | <a href = 'tel:" + objConfiguracion.celular + "' color='#000000' class='sc-gipzik iyhjGb'";
+            stCuerpoHTML += "  style='text-decoration: none; color: rgb(0, 0, 0); font-size: 12px;'><span>" + objConfiguracion.celular + "</span></a>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "<tr height = '25' style='text-align: left;vertical-align: middle;'>";
+            stCuerpoHTML += "<td width = '30' style='text-align: left;vertical-align: middle;'>";
+            stCuerpoHTML += "<table cellpadding = '0' cellspacing='0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += " style='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial;'>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr>";
+            stCuerpoHTML += "<td style = 'text-align: left;vertical-align: bottom;' ><span color='#5669e2'";
+            stCuerpoHTML += " width='11' class='sc-jlyJG bbyJzT'";
+            stCuerpoHTML += " style='display: block; background-color: rgb(86, 105, 226);'><img";
+            stCuerpoHTML += " src = 'https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png'";
+            stCuerpoHTML += " color='#5669e2' width='13'";
+            stCuerpoHTML += "  class='sc-iRbamj blSEcj'";
+            stCuerpoHTML += " style='display: block; background-color: rgb(86, 105, 226);'></span>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody>";
+            stCuerpoHTML += "</table>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "<td style = 'text-align: left;padding: 0px;' ><a";
+            stCuerpoHTML += "  href='mailto:" + objConfiguracion.email + "' color='#000000'";
+            stCuerpoHTML += " class='sc-gipzik iyhjGb'";
+            stCuerpoHTML += " style='text-align: left;text-decoration: none; color: rgb(0, 0, 0); font-size: 12px;'><span>" + objConfiguracion.email + "</span></a>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "<tr height = '25' style= 'text-align: left;vertical-align: middle;' > ";
+            stCuerpoHTML += "<td width= '30' style= 'text-align: left;vertical-align: middle;' > ";
+            stCuerpoHTML += "<table cellpadding= '0' cellspacing= '0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += " style='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial;'>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr>";
+            stCuerpoHTML += " <td style = 'vertical-align: bottom;' ><span color='#5669e2'";
+            stCuerpoHTML += "  width='11' class='sc-jlyJG bbyJzT'";
+            stCuerpoHTML += " style='display: block; background-color: rgb(86, 105, 226);'><img";
+            stCuerpoHTML += "  src = 'https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png'";
+            stCuerpoHTML += "  color='#5669e2' width='13'";
+            stCuerpoHTML += "  class='sc-iRbamj blSEcj'";
+            stCuerpoHTML += "  style='display: block; background-color: rgb(86, 105, 226);'></span>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody>";
+            stCuerpoHTML += "</table>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "<td style = 'padding: 0px;' ><a href='" + objConfiguracion.paginaUrl + "'";
+            stCuerpoHTML += " color='#000000' class='sc-gipzik iyhjGb'";
+            stCuerpoHTML += " style='text-decoration: none; color: rgb(0, 0, 0); font-size: 12px;'><span>" + objConfiguracion.paginaUrl + "</span></a>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody>";
+            stCuerpoHTML += "</table>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody>";
+            stCuerpoHTML += "</table>";
+            stCuerpoHTML += "<table cellpadding = '0' cellspacing='0' class='sc-gPEVay eQYmiW'";
+            stCuerpoHTML += " style='vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Arial; width: 100%;'>";
+            stCuerpoHTML += "<tbody>";
+            stCuerpoHTML += "<tr> ";
+            stCuerpoHTML += "<td color='#5669e2' direction='horizontal' height='1' class='sc-jhAzac hmXDXQ'";
+            stCuerpoHTML += " style='width: 100%; border-bottom: 1px solid rgb(86, 105, 226); border-left: none; display: block;'>";
+            stCuerpoHTML += "</td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody> ";
+            stCuerpoHTML += "</table> ";
+            stCuerpoHTML += "</td> ";
+            stCuerpoHTML += "</tr> ";
+            stCuerpoHTML += "<tr> ";
+            stCuerpoHTML += "<td style='text-align: center;'></td>";
+            stCuerpoHTML += "</tr>";
+            stCuerpoHTML += "</tbody>";
+            stCuerpoHTML += "</table>";
+            return (stCuerpoHTML);
+        }
+
+
 
         public ActionResult Historial()
         {
@@ -83,7 +232,7 @@ namespace WebFacturaMvc.Controllers
             {
                 txtEstatus = null;
             }
-            System.Diagnostics.Debug.WriteLine(txtEstatus);
+        
             //Para meses 10-12
             if (txtMes != null)
             {
@@ -178,7 +327,7 @@ namespace WebFacturaMvc.Controllers
             return Json(objProducto, JsonRequestBehavior.AllowGet);
         }
 
-        private void EnviarCorreosMensaje(List<string> ListadoDetalle,configuracion objConfiguracion,string id) 
+        private string EnviarCorreosMensaje(List<string> ListadoDetalle,configuracion objConfiguracion,string id) 
         {
             string msge = "";
             foreach (var item in ListadoDetalle)
@@ -187,10 +336,12 @@ namespace WebFacturaMvc.Controllers
                 if (objConfiguracion == null)
                 {          
                     RedirectToAction("HttpNotFound");
+                    msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+                    return (msge);
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine(item.ToString());
+     
                     var lects = db.Database.SqlQuery<SendEmail>("sp_consultaEmailCliente @idVenta", new SqlParameter("@idVenta", item.ToString())).Single();
                     Paso = 0;
                     SendEmail email = new SendEmail();
@@ -211,27 +362,35 @@ namespace WebFacturaMvc.Controllers
                         stCuerpoHTML += "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>";
                         stCuerpoHTML += "<head> <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'>";
                         stCuerpoHTML += "<title>" + "Follow Up " + email.Subject + "</title>";
-                        stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}</style>";
+                        stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}p.centrado{text-align:center;}.imgRedonda{width: 300px; height: 300px; border - radius:150px;}</style>";
                         stCuerpoHTML += "</head>";
                         stCuerpoHTML += "<body style='margin:0;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr>";
-                        stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
-                        stCuerpoHTML += "<img src='cid:Fondo' alt='' width='600' style='height:auto;display:block;' /></td></tr><tr>";
+                        stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:390px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
+                        stCuerpoHTML += "<img src='cid:Fondo' alt='' width='520' style='height:auto;display:block;' /></td></tr><tr>";
                         stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
                         stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + email.Cliente + ".</h1>";
                         stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><br /> <br /> I hope you are well. <br /><br /> I wanted to know if you are still interested in the equipment. <br /> <br /> Let me know as soon as possible. <br /> <br /> Regards. </p>";
+                        stCuerpoHTML += firma(objConfiguracion);
                         stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
                         stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
                         stCuerpoHTML += "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>Copyright &reg; CRM Conceptos Electronics 2021<br /></p></td><td style='padding:0;width:50%;' align='right'>";
                         stCuerpoHTML += "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.twitter.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/tw_1.png' alt='Twitter' width='38' style='height:auto;display:block;border:0;' /></a>";
                         stCuerpoHTML += "</td><td style='padding:0 0 0 10px;width:38px;'><a href='https://www.facebook.com/Conceptos-Electronics-104154518135452' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a>";
                         stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
-                        stCuerpoHTML += "</td></tr></table></body></html>";
+                        stCuerpoHTML += "</td></tr></table>";
+                        stCuerpoHTML += "</body></html>";
+
+
                         AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
                         string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
                         string stIdImagen = "Fondo";
                         LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                        LinkedResource imgFirma = new LinkedResource(new MemoryStream(objConfiguracion.imagen), MediaTypeNames.Image.Jpeg);
+                        string stIdImagenFirma = "Firma";
+                        imgFirma.ContentId = stIdImagenFirma;
                         img.ContentId = stIdImagen;
                         htmlView.LinkedResources.Add(img);
+                        htmlView.LinkedResources.Add(imgFirma);
                         mail.AlternateViews.Add(htmlView);
                         mail.Body = stCuerpoHTML;
                         mail.IsBodyHtml = true;
@@ -239,24 +398,32 @@ namespace WebFacturaMvc.Controllers
                         client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
                         client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
                         client.Send(mail);
-                        msge = "¡Correo enviado exitosamente!";                       
+                        msge = "¡Correo enviado exitosamente!";
+                        return (msge);
+
                     }
-                    catch (Exception e) {
-                        TempData["msg"] = "<script>alert('Error: '" + e.Message.ToString() + "');</script>";
-                    }
+                    catch (Exception e)
+                {
+                        msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+                        return (msge);
+                }
+
                 }
             }
-            TempData["msg"] = "<script>alert('" + msge + "');</script>";
+            return (msge);
         }
 
 
         [HttpPost]
-        public ActionResult EnviarCorreos(List<string> ListadoDetalle)
+        public ActionResult EnviarCorreos(List<string> ListadoDetalle, int Dias)
         {         
-            string id = User.Identity.GetUserId();        
+            string id = User.Identity.GetUserId();
+            
             List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus();
             configuracion objConfiguracion = new configuracion();
             cargarFechas();
+            string mensaje="Error";           
+
             if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
             {
                 return RedirectToAction("Login", "Account");
@@ -265,20 +432,23 @@ namespace WebFacturaMvc.Controllers
             {
                 if (ListadoDetalle==null) {
                     System.Diagnostics.Debug.WriteLine("Lista vacia");
+                }else{
+                    Llenar();
+                    cargarFechas();
+                    foreach (var item in ListadoDetalle)
+                    {     
+                        var cotizacionItem = new cotizacion { idVenta = Convert.ToDecimal(item), diasSeguimiento = Dias, fechaComienzoSeguimiento= DateTime.Now};
+                        db.cotizacion.Attach(cotizacionItem);
+                        db.Entry(cotizacionItem).Property(x => x.fechaComienzoSeguimiento).IsModified = true;
+                        db.Entry(cotizacionItem).Property(x => x.diasSeguimiento).IsModified = true;
+                        db.SaveChanges();
+                    }
+                    mensaje=EnviarCorreosMensaje(ListadoDetalle, objConfiguracion, id);                    
+                    return View(mensaje);
                 }
-                else {
-                    EnviarCorreosMensaje(ListadoDetalle, objConfiguracion, id);
-                }               
-                Llenar();
-                cargarFechas();
-                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
-                return View("Historial", lista);
+                return View(mensaje);
             } 
-        }
-
-    
-           
-        
+        }           
 
         public ActionResult PruebaJson()
         {  // escribir la url directa  para ver el formato      
@@ -346,7 +516,6 @@ namespace WebFacturaMvc.Controllers
                 codigoPago = Convert.ToInt32(modoPago);
                 codigoCliente = Convert.ToInt64(IdCliente);
                 total = Convert.ToDouble(Total);
-
                 //REGISTRO DE VENTA
                 Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus);         
                 string codigoVenta = objCotizacionNeg.create(objVenta);
@@ -355,8 +524,7 @@ namespace WebFacturaMvc.Controllers
                     mensaje = "ERROR AL REGISTRAR LA VENTA";
                 }
                 else
-                {
-                   
+                {                   
                      Session["idVenta"] = codigoVenta;
                      idVentaMail= codigoVenta;
                     //REGISTRO DE FACTURA
@@ -382,7 +550,6 @@ namespace WebFacturaMvc.Controllers
                 }
 
             }
-
             return Json(mensaje);
         }
 
@@ -498,12 +665,10 @@ namespace WebFacturaMvc.Controllers
                     return HttpNotFound();
                 }
             }
-
             string msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
             string from = objConfiguracion.email;
             string displayName = objConfiguracion.displayName;
-            //try
-            //{
+   
                 using (var viewer = new LocalReport())
                 {
                     DateTime fechaActual = DateTime.Today;
@@ -527,50 +692,49 @@ namespace WebFacturaMvc.Controllers
                     stCuerpoHTML += "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>";
                     stCuerpoHTML += "<head> <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'>";
                     stCuerpoHTML += "<title>"  + objSendEmail.Subject + "</title>";
-                    stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}</style>";
+                    stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}p.centrado{text-align:center;}.imgRedonda{width: 300px; height: 300px; border - radius:150px;}</style>";
                     stCuerpoHTML += "</head>";
                     stCuerpoHTML += "<body style='margin:0;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr>";
-                    stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
-                    stCuerpoHTML += "<img src='cid:Fondo' alt='' width='600' style='height:auto;display:block;' /></td></tr><tr>";
+                    stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:390px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
+                    stCuerpoHTML += "<img src='cid:Fondo' alt='' width='520' style='height:auto;display:block;' /></td></tr><tr>";
                     stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
                     stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + objSendEmail.Cliente + ".</h1>";
                     stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><br /> <br /> I hope you are well. <br /><br /> Here is the quote you requested. <br /> <br /> Let me know as soon as you can. <br /> <br />Best Regards.  <br /><br /> ";
                     if (String.IsNullOrWhiteSpace(objSendEmail.Body)){
                         stCuerpoHTML += "</p>";
                     }else {                   
-                    stCuerpoHTML += "Note: " + objSendEmail.Body + "</p>";                  
+                    stCuerpoHTML += "Note: " + objSendEmail.Body + "</p>";               
                     }
+                    stCuerpoHTML += firma(objConfiguracion);
                     stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
                     stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
                     stCuerpoHTML += "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>Copyright &reg; CRM Conceptos Electronics 2021<br /></p></td><td style='padding:0;width:50%;' align='right'>";
                     stCuerpoHTML += "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.twitter.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/tw_1.png' alt='Twitter' width='38' style='height:auto;display:block;border:0;' /></a>";
                     stCuerpoHTML += "</td><td style='padding:0 0 0 10px;width:38px;'><a href='https://www.facebook.com/Conceptos-Electronics-104154518135452' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a>";
                     stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
-                    stCuerpoHTML += "</td></tr></table></body></html>";               
+                    stCuerpoHTML += "</td></tr></table></body></html>";
                     AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
-                    string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
-                    string stIdImagen = "Fondo";
-                    LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
-                    img.ContentId = stIdImagen;
-                    htmlView.LinkedResources.Add(img);
-                    mail.AlternateViews.Add(htmlView);
-                    mail.Body = HttpUtility.HtmlEncode(stCuerpoHTML);
-                    mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " + idVentaMail + fechaQuote + ".pdf"));
-                    mail.IsBodyHtml = true;
-                    SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
-                    client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
-                    client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
-                    client.Send(mail);
-                    msge = "¡Correo enviado exitosamente! Pronto te contactaremos.";
-                }
-                return RedirectToAction("VentaFactura", "Cotizacion"); ;
-            //}
-            //catch (Exception ex)
-            //{
-            //    TempData["msg"] = "<script>alert('" + ex.Message.ToString() + "');</script>";
-            //    msge = ex.Message + ". Por favor verifica tu conexión a internet y que tus datos sean correctos e intenta nuevamente.";
-            //    return RedirectToAction("VentaFactura", "Cotizacion"); ;
-            //}
+                string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
+                string stIdImagen = "Fondo";
+                LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                LinkedResource imgFirma = new LinkedResource(new MemoryStream(objConfiguracion.imagen), MediaTypeNames.Image.Jpeg);
+                string stIdImagenFirma = "Firma";
+                imgFirma.ContentId = stIdImagenFirma;
+                img.ContentId = stIdImagen;
+                htmlView.LinkedResources.Add(img);
+                htmlView.LinkedResources.Add(imgFirma);
+                mail.AlternateViews.Add(htmlView);
+                mail.Body = HttpUtility.HtmlEncode(stCuerpoHTML);
+                mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " + idVentaMail + fechaQuote + ".pdf"));
+                mail.IsBodyHtml = true;
+                SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
+                client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
+                client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                client.Send(mail);
+                msge = "¡Correo enviado exitosamente! Pronto te contactaremos.";
+                TempData["msg"] = "<script>alert('¡Correo enviado exitosamente!');</script>";
+            }
+                return RedirectToAction("VentaFactura", "Cotizacion");     
         }
 
 
@@ -659,11 +823,11 @@ namespace WebFacturaMvc.Controllers
                     stCuerpoHTML += "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>";
                     stCuerpoHTML += "<head> <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'>";
                     stCuerpoHTML += "<title>" + objSendEmail.Subject + "</title>";
-                    stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}</style>";
+                    stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}p.centrado{text-align:center;}.imgRedonda{width: 300px; height: 300px; border - radius:150px;}</style>";
                     stCuerpoHTML += "</head>";
                     stCuerpoHTML += "<body style='margin:0;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr>";
-                    stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
-                    stCuerpoHTML += "<img src='cid:Fondo' alt='' width='600' style='height:auto;display:block;' /></td></tr><tr>";
+                    stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:390px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
+                    stCuerpoHTML += "<img src='cid:Fondo' alt='' width='520' style='height:auto;display:block;' /></td></tr><tr>";
                     stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
                     stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + objSendEmail.Cliente + ".</h1>";
                     stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><br /> <br /> I hope you are well. <br /><br /> Here is the quote you requested. <br /> <br /> Let me know as soon as you can. <br /> <br />Best Regards.  <br /><br /> ";
@@ -675,6 +839,7 @@ namespace WebFacturaMvc.Controllers
                     {
                         stCuerpoHTML += "Note: " + objSendEmail.Body + "</p>";
                     }
+                    stCuerpoHTML += firma(objConfiguracion);
                     stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
                     stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
                     stCuerpoHTML += "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>Copyright &reg; CRM Conceptos Electronics 2021<br /></p></td><td style='padding:0;width:50%;' align='right'>";
@@ -682,12 +847,17 @@ namespace WebFacturaMvc.Controllers
                     stCuerpoHTML += "</td><td style='padding:0 0 0 10px;width:38px;'><a href='https://www.facebook.com/Conceptos-Electronics-104154518135452' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a>";
                     stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
                     stCuerpoHTML += "</td></tr></table></body></html>";
+
                     AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
                     string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
                     string stIdImagen = "Fondo";
                     LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                    LinkedResource imgFirma = new LinkedResource(new MemoryStream(objConfiguracion.imagen), MediaTypeNames.Image.Jpeg);
+                    string stIdImagenFirma = "Firma";
+                    imgFirma.ContentId = stIdImagenFirma;
                     img.ContentId = stIdImagen;
                     htmlView.LinkedResources.Add(img);
+                    htmlView.LinkedResources.Add(imgFirma);
                     mail.AlternateViews.Add(htmlView);
                     mail.Body = HttpUtility.HtmlEncode(stCuerpoHTML);
                     mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " +idVentaMail+fechaQuote + ".pdf"));
@@ -697,6 +867,7 @@ namespace WebFacturaMvc.Controllers
                     client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
                     client.Send(mail);
                     msge = "¡Correo enviado exitosamente! Pronto te contactaremos.";
+                    TempData["msg"] = "<script>alert('¡Correo enviado exitosamente!');</script>";
                 }
                 return RedirectToAction("NuevaCotizacion", "Cotizacion"); ;
             }
@@ -724,7 +895,7 @@ namespace WebFacturaMvc.Controllers
             lst.Add(new SelectListItem() { Text = "Medio", Value = "M" });
             lst.Add(new SelectListItem() { Text = "Bajo", Value = "B" });
             ViewBag.Estatus = lst;
-        }
+        }     
 
         [HttpPost]//para buscar clientes
         public ActionResult ObtenerProductos(string txtcodigo, string txtnombre, string txtCategoria, string txtMarca)
@@ -757,5 +928,36 @@ namespace WebFacturaMvc.Controllers
             //System.Diagnostics.Debug.WriteLine(objProducto.IdProducto +"    " +objProducto.Nombre+"    " +objProducto.Categoria+ "     "+objProducto.Marca);
             return View(ListaProducto);
         }
+
+        public ActionResult AgregarDias()
+        {       
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult EditarEstatusSeguimiento(string idVenta)
+        {
+            int codigo = Convert.ToInt32(idVenta);           
+            string id = User.Identity.GetUserId();
+            List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus();
+            configuracion objConfiguracion = new configuracion();
+            cargarFechas();
+            string mensaje = "Error";
+            try
+            {
+                    var cotizacionItem = new cotizacion {idVenta = codigo, estatusSeguimiento = "C"};
+                    System.Diagnostics.Debug.WriteLine("Cotizacion: "+cotizacionItem.idVenta+" "+ cotizacionItem.estatusSeguimiento);
+                    db.cotizacion.Attach(cotizacionItem);
+                    db.Entry(cotizacionItem).Property(x => x.estatusSeguimiento).IsModified = true;
+                    db.SaveChanges();
+                    mensaje ="¡Seguimiento cancelado correctamente!";
+            }
+            catch (Exception e){
+                    mensaje = "Error: "+ e.ToString();
+                    throw;
+             }
+            return Json(mensaje);            
+        }    
     }
 }

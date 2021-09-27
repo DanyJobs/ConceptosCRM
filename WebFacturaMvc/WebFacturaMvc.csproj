@@ -247,6 +247,8 @@
     <Content Include="Global.asax" />
     <Content Include="Img\CRM Logo.jpg" />
     <Content Include="Img\logo conceptos.png" />
+    <Content Include="Img\noimage.jpg" />
+    <Content Include="Img\not-available.png" />
     <Content Include="Img\user.jpeg" />
     <Content Include="Js\alertify.js" />
     <Content Include="Js\alertify.min.js" />
@@ -505,6 +507,7 @@
     <Compile Include="Datos\C__MigrationHistory.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\DBImagen.cs" />
     <Compile Include="Datos\detalleCotizacion.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -533,6 +536,12 @@
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\SP_Buscar_Cotizacion_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_CompraConsultaEditar2_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_CompraConsultaEditar_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_CompraConsultaIndividual_Result.cs">
@@ -790,6 +799,10 @@
     <Content Include="Views\Producto\View.cshtml" />
     <Content Include="Views\DetalleCotizacion\Editar.cshtml" />
     <Content Include="Views\DetalleCotizacion\PreEliminar.cshtml" />
+    <Content Include="Views\Cotizacion\AgregarDias.cshtml" />
+    <Content Include="Views\Cotizacion\EditarEstatusSeguimiento.cshtml" />
+    <Content Include="Views\Compra\Editar.cshtml" />
+    <Content Include="Views\Compra\ObtenerProductos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

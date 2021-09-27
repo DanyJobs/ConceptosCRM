@@ -54,16 +54,17 @@
     <tbody>
         @foreach (var objCompra in Model)
         {
-            <tr>
-                <td>@objCompra.IdCompra</td>
-                <td>@objCompra.Total</td>
-                <td>@objCompra.Fecha.ToString("MM/dd/yyyy")</td>
-                <td>@objCompra.NombreSucursal</td>
-                <td>@objCompra.NombreProveedor</td>
-                <td><a class="btn btn-info" href="~/Compra/CompraDetalle?idCompra=@objCompra.IdCompra"><span>|Ver detalles</span></a></td>
-                <td><a class="btn btn-danger" href="~/Compra/EliminarCompraPreview?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
+        <tr>
+            <td>@objCompra.IdCompra</td>
+            <td>@objCompra.Total</td>
+            <td>@objCompra.Fecha.ToString("MM/dd/yyyy")</td>
+            <td>@objCompra.NombreSucursal</td>
+            <td>@objCompra.NombreProveedor</td>
+            <td><a class="btn btn-info" href="~/Compra/CompraDetalle?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-eye-open">|Verdetalles</span></a></td>
+            <td><a class="btn btn-warning" href="~/Compra/Editar?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
+            <td><a class="btn btn-danger" href="~/Compra/EliminarCompraPreview?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
 
-            </tr>
+        </tr>
         }
 
     </tbody>

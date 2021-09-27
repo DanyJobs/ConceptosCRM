@@ -29,6 +29,10 @@ namespace WebFacturaMvc.Datos
         public string notas { get; set; }
         public string notasCompras { get; set; }
         public string estatus { get; set; }
+        public Nullable<int> diasSeguimiento { get; set; }
+        public string estatusCotizacion { get; set; }
+        public string estatusSeguimiento { get; set; }
+        public Nullable<System.DateTime> fechaComienzoSeguimiento { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual cliente cliente { get; set; }

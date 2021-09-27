@@ -24,14 +24,12 @@
                     envio += "ListadoDetalle:[{IdProducto:'" + $(this).find('td').eq(0).text() +
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
                         "',Descuento:'" + $(this).find('td').eq(4).text() +
-                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}";
-                    console.log(envio);
+                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}";              
                 } else {
                     envio += ",{IdProducto:'" + $(this).find('td').eq(0).text() +
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
                         "',Descuento:'" + $(this).find('td').eq(4).text() +
-                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}"
-                    console.log(envio);
+                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}"                   
                 }
                 i = 1;
             });
