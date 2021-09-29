@@ -22,7 +22,7 @@ namespace WebFacturaMvc.Reportes.Ingles
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            con = new SqlConnection("Data Source=den1.mssql8.gear.host;Initial Catalog=crmconceptose;User ID=crmconceptose;Password=Cj999l~!3ZA2;");
+            con = new SqlConnection("Data Source=192.185.6.136;Initial Catalog=clouderp_conceptoselectronics;User ID=clouderp_master;Password=Slim1989!;MultipleActiveResultSets=True");
             if (!IsPostBack)
             {
                 renderReport();
@@ -59,7 +59,7 @@ namespace WebFacturaMvc.Reportes.Ingles
         public static DataTable cargar(string codigoventa)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection cn = new SqlConnection("Data Source=den1.mssql8.gear.host;Initial Catalog=crmconceptose;User ID=crmconceptose;Password=Cj999l~!3ZA2;"))
+            using (SqlConnection cn = new SqlConnection("Data Source=192.185.6.136;Initial Catalog=clouderp_conceptoselectronics;User ID=clouderp_master;Password=Slim1989!;MultipleActiveResultSets=True"))
             {
 
                 SqlCommand cmd = new SqlCommand("sp_reporte_venta", con);
