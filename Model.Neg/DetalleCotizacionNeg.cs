@@ -26,8 +26,8 @@ namespace Model.Neg
             }
             else
             {
-                try
-                {
+                //try
+                //{
                     cant = Convert.ToInt32(objDetalleCotizacion.Cantidad);
                     verificacion = cant > 0 && cant < 999999;
                     if (!verificacion)
@@ -35,13 +35,13 @@ namespace Model.Neg
                         objDetalleCotizacion.Estado = 1;
                         return;
                     }
-                }
-                catch (Exception e)
-                {
+                //}
+                //catch (Exception e)
+                //{
 
-                    objDetalleCotizacion.Estado = 100;
-                    return;
-                }
+                //    objDetalleCotizacion.Estado = 100;
+                //    return;
+                //}
 
             }
             //fin verificacion de cantidad

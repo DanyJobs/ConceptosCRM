@@ -29,7 +29,7 @@
             //alertify.alert("Boton Iniciado");
             //console.info('hola');
             var i = 0;
-            var envio = "{Fecha:'" + $("#id_fecha").val() + "',IdProveedor:'" + $("#txtIdProveedor").val() + "',IdCabecera:'2',Total:'" + $('#TotalaPagar').val() + "',Sucursal:'" + $("#txtsucursal").val() + "',";
+            var envio = "{Fecha:'" + $("#id_fecha").val() + "',IdProveedor:'" + $("#txtIdProveedor").val() + "',IdCabecera:'2',Total:'" + $('#TotalaPagar').val() + "',Sucursal:'" + $("#txtsucursal").val() + "',Seccion:'" + $("#txtseccion").val() + "',";
             $("#detalle tbody tr").each(function (index) {
                 if (i == 0) {
                     envio += "ListadoDetalle:[{IdProducto:'" + $(this).find('td').eq(0).text() +
@@ -195,6 +195,7 @@
                     <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="Obtener Producto" />
                 </a>
             </td>
+            <td>Sección de almacén: <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtseccion" required /></td>
         </tr>
 
         </td>

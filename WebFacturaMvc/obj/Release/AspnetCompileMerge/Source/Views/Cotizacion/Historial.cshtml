@@ -1,0 +1,227 @@
+﻿@model List<Model.Entity.Cotizacion>
+@{
+    ViewBag.Title = "Index";
+
+} @*< script src = "~/Scripts/jquery-1.10.2.min.js" ></ script > *@
+<script src="~/Js/alertify.min.js">
+
+</script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+@*< script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></ script >
+*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script language="javascript">
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
+
+    window.onload = function () {
+
+        $("td").each(function () {
+
+            if ($(this).text() == 'Alto') {
+                this.style.backgroundColor = 'red'
+                this.style.color = 'White';
+
+            }
+            if ($(this).text() == 'Medio') {
+                this.style.backgroundColor = 'orange'
+                this.style.color = 'White';
+
+            } if ($(this).text() == 'Bajo') {
+                this.style.backgroundColor = 'green'
+                this.style.color = 'White';
+            }
+        });
+    }
+
+    $('document').ready(function () {
+        $("#checkTodos").change(function () {
+            $("input:checkbox").prop('checked', $(this).prop("checked"));
+        });
+    });
+
+    function Envio() {
+        if ($("#dias").val()!=null) {
+            ListaDetalle += "Dias:'" + $("#dias").val() + "'";
+
+        } else {
+            ListaDetalle += "Dias:'3'";
+        }        
+        ListaDetalle += "}";
+        console.log(ListaDetalle);
+        var json = eval("(" + ListaDetalle + ')'); //
+        console.info(json);
+        $.ajax({
+            url: "EnviarCorreos",
+            data: JSON.stringify(json),
+            type: "POST",
+            async: false,//this makes the ajax-call blocking
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alertify.alert(response);
+                valid = response.valid;
+            }
+        });
+        $('#exampleModal').modal('hide');
+        $('input').filter(':checkbox').prop('checked', false);
+        $("#dias").val("");
+    }
+
+    var ListaDetalle;
+
+    function preEnvio() {
+        if ($('input[type=checkbox]').is(':checked')) {
+            var i = 0;
+            var envio = "{";
+            /*         $("#table tbody tr").find("checkbox").each(function () {*/
+            $("input[type=checkbox]:checked").each(function () {
+                //cada elemento seleccionado
+                if ($(this).parent().parent().find('td').eq(1).text() != "") {
+                    if (i == 0) {
+                        envio += "ListadoDetalle:['" + $(this).parent().parent().find('td').eq(1).text() + "'";
+                    } else {
+                        envio += ",'" + $(this).parent().parent().find('td').eq(1).text() + "'"
+                    }
+                    i = 1;
+                }
+            });
+            envio += "],";
+            ListaDetalle = envio;
+
+            if (envio == "{") {
+                alert("Debes seleccionar minimo un registro");
+            } else {
+                $('#exampleModal').modal('show');
+            }
+        } else {
+            alertify.error("Debe seleccionar un registro");
+        }
+    }
+
+    function refrescar() {
+        location.reload();
+    }
+
+    function EditarEstatusSeguimiento(idVenta) {
+        var envio = "{";
+        console.log(idVenta);
+        if (idVenta != null) {
+            envio += "idVenta:'" + idVenta + "'";
+            envio += "}";
+            console.log(envio);
+            var json = eval("(" + envio + ')'); //
+            console.info(json);
+            $.ajax({
+                url: "EditarEstatusSeguimiento",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                }
+            });
+
+        } else {
+            alertify.error("Se debe seleccionar un registro");
+        }  
+        $('input').filter(':checkbox').prop('checked', false);     
+    }
+    
+</script>
+<h2 id="titulo" style="text-align:center; font-family:Arial; font-weight:700;">Cotizaciones realizadas</h2>
+@using (Html.BeginForm())
+{
+    <br>
+    <p id="mensaje"></p>
+    <h4 style="text-align:center; font-family:Arial; ">Filtrar por fecha:</h4>
+    <fieldset>
+        <div class="form-group col-md-3">
+            @Html.Label("Mes", new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.DropDownList("txtMes", (IEnumerable<SelectListItem>)ViewBag.ListaMeses, "Seleccionar", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            @Html.Label("Año", new { @class = "control-label col-md-4" })
+            <div class="col-md-8"> @Html.DropDownList("txtYear", (IEnumerable<SelectListItem>)ViewBag.ListaYears, "Seleccionar", htmlAttributes: new { @class = "form-control" }) </div>
+        </div>
+        <div class="form-group col-md-3">
+            @Html.Label("Estatus", new { @class = "control-label col-md-4" })
+            <div class="col-md-8"> @Html.DropDownList("txtEstatus", (IEnumerable<SelectListItem>)ViewBag.Estatus, "Seleccionar", new { @class = "form-control" }) </div>
+        </div>
+    </fieldset>
+    <input class="btn btn-primary" type="submit" value="Buscar" />
+}
+
+<a class="btn btn-primary" onclick="refrescar()"><span class="glyphicon glyphicon-refresh"></span>Refrescar</a>
+<input class="btn btn-primary" type="button" id="preEnvio" onclick="preEnvio()" value="Enviar Correos" />
+
+<br/>
+<br/>
+
+<table class="table" id="table">
+    <thead>
+        <tr class="bg-primary">
+            <th><input type="checkbox" id="checkTodos" value="checkTodos"></th>
+            <th>Id Venta</th>
+            <th>Total</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>IVA(%)</th>
+            <th>Estatus</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCotizacion in Model)
+        {
+            <tr align="center" id="tabla">
+                <td> @Html.CheckBox("Accion", new { @class = "control-label col-md-7", @value = @objCotizacion.IdVenta }) </td>
+                <td>@objCotizacion.IdVenta</td>
+                <td>@objCotizacion.Total</td>
+                <td>@objCotizacion.Cliente</td>
+                <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>
+                <td>@objCotizacion.Iva</td>
+                <td>@objCotizacion.estatus</td>
+                <td>
+                    <a class="btn btn-danger" onclick="EditarEstatusSeguimiento(@objCotizacion.IdVenta)"> 
+                    <span class="glyphicon glyphicon-remove"> Cancelar Seguimiento</span></a>
+                </td>               
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿En cuantos dias es el siguiente seguimiento?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" type="number" id="dias" min="0" max="30" placeholder="0"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input class="btn btn-primary" type="button" id="Envio" onclick="Envio()" value="Aceptar" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/jquery/jquery.min.js"></script>

@@ -154,7 +154,6 @@
     <EntitySet Name="compra" EntityType="crmconceptoseModel.compra" />
     <EntitySet Name="compraDetalle" EntityType="crmconceptoseModel.compraDetalle" />
     <EntitySet Name="existencia" EntityType="crmconceptoseModel.existencia" />
-    <EntitySet Name="sysdiagrams" EntityType="crmconceptoseModel.sysdiagrams" />
     <AssociationSet Name="fkCOMPRA_DETALLEidCompra" Association="crmconceptoseModel.fkCOMPRA_DETALLEidCompra">
       <End Role="compra" EntitySet="compra" />
       <End Role="compraDetalle" EntitySet="compraDetalle" />
@@ -224,15 +223,6 @@
       <Parameter Name="Email" Mode="In" Type="String" />
       <Parameter Name="Telefono" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="sucursal" EntityType="crmconceptoseModel.sucursal" />
-    <AssociationSet Name="fkidSucursalCompra" Association="crmconceptoseModel.fkidSucursalCompra">
-      <End Role="sucursal" EntitySet="sucursal" />
-      <End Role="compra" EntitySet="compra" />
-    </AssociationSet>
-    <AssociationSet Name="fkExistenciaidSucursal" Association="crmconceptoseModel.fkExistenciaidSucursal">
-      <End Role="sucursal" EntitySet="sucursal" />
-      <End Role="existencia" EntitySet="existencia" />
-    </AssociationSet>
     <FunctionImport Name="spusuario" ReturnType="Collection(crmconceptoseModel.spusuario_Result)" />
     <EntitySet Name="AspNetUsers" EntityType="crmconceptoseModel.AspNetUsers" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="crmconceptoseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -290,6 +280,7 @@
       <Parameter Name="precio" Mode="In" Type="Decimal" />
       <Parameter Name="idproducto" Mode="In" Type="String" />
       <Parameter Name="cantidad" Mode="In" Type="Int32" />
+      <Parameter Name="seccion" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_consultaExistencias" ReturnType="Collection(crmconceptoseModel.sp_consultaExistencias_Result)" />
     <FunctionImport Name="sp_consultaExistenciasSucursal" ReturnType="Collection(crmconceptoseModel.sp_consultaExistenciasSucursal_Result)">
@@ -424,6 +415,189 @@
       <Parameter Name="idSucursal" Mode="In" Type="Int32" />
       <Parameter Name="idProveedor" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="ciudad" EntityType="crmconceptoseModel.ciudad" />
+    <EntitySet Name="estado" EntityType="crmconceptoseModel.estado" />
+    <EntitySet Name="pais" EntityType="crmconceptoseModel.pais" />
+    <EntitySet Name="venta" EntityType="crmconceptoseModel.venta" />
+    <AssociationSet Name="fk_CiudadEstado" Association="crmconceptoseModel.fk_CiudadEstado">
+      <End Role="estado" EntitySet="estado" />
+      <End Role="ciudad" EntitySet="ciudad" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VentaCiudad" Association="crmconceptoseModel.fk_VentaCiudad">
+      <End Role="ciudad" EntitySet="ciudad" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VentaCliente" Association="crmconceptoseModel.fk_VentaCliente">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PaisEstado" Association="crmconceptoseModel.fk_PaisEstado">
+      <End Role="pais" EntitySet="pais" />
+      <End Role="estado" EntitySet="estado" />
+    </AssociationSet>
+    <FunctionImport Name="sp_cargarCiudades" ReturnType="Collection(crmconceptoseModel.sp_cargarCiudades_Result)">
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cargarEstados" ReturnType="Collection(crmconceptoseModel.sp_cargarEstados_Result)">
+      <Parameter Name="IdPais" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cargarPaises" ReturnType="Collection(crmconceptoseModel.sp_cargarPaises_Result)" />
+    <FunctionImport Name="sp_consultaVentas" ReturnType="Collection(crmconceptoseModel.sp_consultaVentas_Result)">
+      <Parameter Name="pMonth" Mode="In" Type="String" />
+      <Parameter Name="pYear" Mode="In" Type="String" />
+    </FunctionImport>
+    <AssociationSet Name="FK_VendedorVenta" Association="crmconceptoseModel.FK_VendedorVenta">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+    <FunctionImport Name="sp_consultaSalesPerson" ReturnType="Collection(crmconceptoseModel.sp_consultaSalesPerson_Result)">
+      <Parameter Name="IdCotizacion" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaVC" ReturnType="Collection(crmconceptoseModel.sp_consultaVC_Result)">
+      <Parameter Name="IdCotizacion" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaVI" ReturnType="Collection(crmconceptoseModel.sp_consultaVI_Result)">
+      <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaVT" ReturnType="Collection(crmconceptoseModel.sp_consultaVT_Result)">
+      <Parameter Name="pMonth" Mode="In" Type="String" />
+      <Parameter Name="pYear" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cotizacionG">
+      <Parameter Name="IdCotizacion" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_editarVenta">
+      <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+      <Parameter Name="CP" Mode="In" Type="String" />
+      <Parameter Name="IdCiudad" Mode="In" Type="Int32" />
+      <Parameter Name="Calle" Mode="In" Type="String" />
+      <Parameter Name="NumExt" Mode="In" Type="String" />
+      <Parameter Name="NumInt" Mode="In" Type="String" />
+      <Parameter Name="Colonia" Mode="In" Type="String" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+      <Parameter Name="Archivo" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_eliminarVenta">
+      <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_guardarVenta">
+      <Parameter Name="IdCotizacion" Mode="In" Type="Int32" />
+      <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+      <Parameter Name="CP" Mode="In" Type="String" />
+      <Parameter Name="IdCiudad" Mode="In" Type="Int32" />
+      <Parameter Name="Calle" Mode="In" Type="String" />
+      <Parameter Name="NumExt" Mode="In" Type="String" />
+      <Parameter Name="NumInt" Mode="In" Type="String" />
+      <Parameter Name="Colonia" Mode="In" Type="String" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+      <Parameter Name="Archivo" Mode="In" Type="Binary" />
+      <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+      <Parameter Name="Vendedor" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_traerBytes" ReturnType="Collection(Binary)">
+      <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_VerOrdenCompra" ReturnType="Collection(crmconceptoseModel.sp_VerOrdenCompra_Result)">
+      <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_agregarPais">
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cargarPais" ReturnType="Collection(crmconceptoseModel.sp_cargarPais_Result)">
+      <Parameter Name="IdPais" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_editarPais">
+      <Parameter Name="IdPais" Mode="In" Type="Int32" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_eliminarPais">
+      <Parameter Name="IdPais" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_filtrarCiudades" ReturnType="Collection(crmconceptoseModel.sp_filtrarCiudades_Result)">
+      <Parameter Name="Parametro" Mode="In" Type="String" />
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_filtrarEstados" ReturnType="Collection(crmconceptoseModel.sp_filtrarEstados_Result)">
+      <Parameter Name="Parametro" Mode="In" Type="String" />
+      <Parameter Name="IdPais" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_filtrarPaises" ReturnType="Collection(crmconceptoseModel.sp_filtrarPaises_Result)">
+      <Parameter Name="Parametro" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AgregarRFQ">
+      <Parameter Name="idVenta" Mode="In" Type="Decimal" />
+      <Parameter Name="idVendedor" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="RFQ" EntityType="crmconceptoseModel.RFQ" />
+    <EntitySet Name="RFQItem" EntityType="crmconceptoseModel.RFQItem" />
+    <AssociationSet Name="fk_idVendedorRFQ" Association="crmconceptoseModel.fk_idVendedorRFQ">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="RFQ" EntitySet="RFQ" />
+    </AssociationSet>
+    <AssociationSet Name="fk_IdProductoRFQItem" Association="crmconceptoseModel.fk_IdProductoRFQItem">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_IdProveedorRFQItem" Association="crmconceptoseModel.fk_IdProveedorRFQItem">
+      <End Role="proveedor" EntitySet="proveedor" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RFQItemRFQ" Association="crmconceptoseModel.fk_RFQItemRFQ">
+      <End Role="RFQ" EntitySet="RFQ" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <FunctionImport Name="sp_cargarEstado" ReturnType="Collection(crmconceptoseModel.sp_cargarEstado_Result)">
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_editarEstado">
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_correosEnvioMarketing" ReturnType="Collection(crmconceptoseModel.sp_correosEnvioMarketing_Result)">
+      <Parameter Name="idMarketing" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <EntitySet Name="EmailMarketing" EntityType="crmconceptoseModel.EmailMarketing" />
+    <FunctionImport Name="sp_agregarCiudad">
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cargarCiudad" ReturnType="Collection(crmconceptoseModel.sp_cargarCiudad_Result)">
+      <Parameter Name="IdCiudad" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_editarCiudad">
+      <Parameter Name="IdCiudad" Mode="In" Type="Int32" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_hayCiudad" ReturnType="Collection(crmconceptoseModel.sp_hayCiudad_Result)">
+      <Parameter Name="IdCiudad" Mode="In" Type="Int32" />
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+      <Parameter Name="IdPais" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <AssociationSet Name="FK_EmailMarketingIdUsuario" Association="crmconceptoseModel.FK_EmailMarketingIdUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="EmailMarketing" EntitySet="EmailMarketing" />
+    </AssociationSet>
+    <FunctionImport Name="sp_eliminarCiudad">
+      <Parameter Name="IdCiudad" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_eliminarEstado">
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_hayEstadoPais" ReturnType="Collection(crmconceptoseModel.sp_hayEstadoPais_Result)">
+      <Parameter Name="IdPais" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="sucursal" EntityType="crmconceptoseModel.sucursal" />
+    <AssociationSet Name="fkidSucursalCompra" Association="crmconceptoseModel.fkidSucursalCompra">
+      <End Role="sucursal" EntitySet="sucursal" />
+      <End Role="compra" EntitySet="compra" />
+    </AssociationSet>
+    <AssociationSet Name="fkExistenciaidSucursal" Association="crmconceptoseModel.fkExistenciaidSucursal">
+      <End Role="sucursal" EntitySet="sucursal" />
+      <End Role="existencia" EntitySet="existencia" />
+    </AssociationSet>
+    <FunctionImport Name="consultaEmailMarketing" ReturnType="Collection(crmconceptoseModel.consultaEmailMarketing_Result)">
+      <Parameter Name="idUsuario" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SP_COTIZACION_HISTORIAL_Result">
     <Property Type="DateTime" Name="fechaCotizacion" Nullable="false" />
@@ -472,8 +646,8 @@
     <Property Name="idSucursal" Type="Int32" />
     <Property Name="idProveedor" Type="Int32" />
     <NavigationProperty Name="compraDetalle" Relationship="crmconceptoseModel.fkCOMPRA_DETALLEidCompra" FromRole="compra" ToRole="compraDetalle" />
-    <NavigationProperty Name="sucursal" Relationship="crmconceptoseModel.fkidSucursalCompra" FromRole="compra" ToRole="sucursal" />
     <NavigationProperty Name="proveedor" Relationship="crmconceptoseModel.fkidProvedoorCompra" FromRole="compra" ToRole="proveedor" />
+    <NavigationProperty Name="sucursal" Relationship="crmconceptoseModel.fkidSucursalCompra" FromRole="compra" ToRole="sucursal" />
   </EntityType>
   <EntityType Name="compraDetalle">
     <Key>
@@ -486,6 +660,7 @@
     <Property Name="precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <NavigationProperty Name="compra" Relationship="crmconceptoseModel.fkCOMPRA_DETALLEidCompra" FromRole="compraDetalle" ToRole="compra" />
     <NavigationProperty Name="producto" Relationship="crmconceptoseModel.fkProductoCompra" FromRole="compraDetalle" ToRole="producto" />
+    <Property Name="seccion" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="existencia">
     <Key>
@@ -496,18 +671,8 @@
     <Property Name="idSucursal" Type="Int32" Nullable="false" />
     <Property Name="cantidad" Type="Int32" Nullable="false" />
     <Property Name="seccion" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="sucursal" Relationship="crmconceptoseModel.fkExistenciaidSucursal" FromRole="existencia" ToRole="sucursal" />
     <NavigationProperty Name="producto" Relationship="crmconceptoseModel.fkExistenciaidProducto" FromRole="existencia" ToRole="producto" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="sucursal" Relationship="crmconceptoseModel.fkExistenciaidSucursal" FromRole="existencia" ToRole="sucursal" />
   </EntityType>
   <Association Name="fkCOMPRA_DETALLEidCompra">
     <End Type="crmconceptoseModel.compra" Role="compra" Multiplicity="1" />
@@ -540,45 +705,6 @@
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
-  <EntityType Name="sucursal">
-    <Key>
-      <PropertyRef Name="idSucursal" />
-    </Key>
-    <Property Name="idSucursal" Type="Int32" Nullable="false" />
-    <Property Name="descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="calle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="numExt" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-    <Property Name="colonia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="cp" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="compra" Relationship="crmconceptoseModel.fkidSucursalCompra" FromRole="sucursal" ToRole="compra" />
-    <NavigationProperty Name="existencia" Relationship="crmconceptoseModel.fkExistenciaidSucursal" FromRole="sucursal" ToRole="existencia" />
-  </EntityType>
-  <Association Name="fkidSucursalCompra">
-    <End Type="crmconceptoseModel.sucursal" Role="sucursal" Multiplicity="0..1" />
-    <End Type="crmconceptoseModel.compra" Role="compra" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="sucursal">
-        <PropertyRef Name="idSucursal" />
-      </Principal>
-      <Dependent Role="compra">
-        <PropertyRef Name="idSucursal" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fkExistenciaidSucursal">
-    <End Type="crmconceptoseModel.sucursal" Role="sucursal" Multiplicity="1" />
-    <End Type="crmconceptoseModel.existencia" Role="existencia" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="sucursal">
-        <PropertyRef Name="idSucursal" />
-      </Principal>
-      <Dependent Role="existencia">
-        <PropertyRef Name="idSucursal" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <ComplexType Name="spusuario_Result">
     <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
     <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
@@ -610,6 +736,9 @@
     <NavigationProperty Name="cotizacion" Relationship="crmconceptoseModel.FK_venta_vendedor" FromRole="AspNetUsers" ToRole="cotizacion" />
     <NavigationProperty Name="AspNetRoles" Relationship="crmconceptoseModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
     <NavigationProperty Name="configuracion" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="AspNetUsers" ToRole="configuracion" />
+    <NavigationProperty Name="venta" Relationship="crmconceptoseModel.FK_VendedorVenta" FromRole="AspNetUsers" ToRole="venta" />
+    <NavigationProperty Name="RFQ" Relationship="crmconceptoseModel.fk_idVendedorRFQ" FromRole="AspNetUsers" ToRole="RFQ" />
+    <NavigationProperty Name="EmailMarketing" Relationship="crmconceptoseModel.FK_EmailMarketingIdUsuario" FromRole="AspNetUsers" ToRole="EmailMarketing" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -669,6 +798,7 @@
     <Property Name="email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="compra" Relationship="crmconceptoseModel.fkidProvedoorCompra" FromRole="proveedor" ToRole="compra" />
+    <NavigationProperty Name="RFQItem" Relationship="crmconceptoseModel.fk_IdProveedorRFQItem" FromRole="proveedor" ToRole="RFQItem" />
   </EntityType>
   <Association Name="fkidProvedoorCompra">
     <End Type="crmconceptoseModel.proveedor" Role="proveedor" Multiplicity="0..1" />
@@ -693,6 +823,7 @@
     <Property Name="telefono" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="cotizacion" Relationship="crmconceptoseModel.FK_venta_cliente" FromRole="cliente" ToRole="cotizacion" />
+    <NavigationProperty Name="venta" Relationship="crmconceptoseModel.fk_VentaCliente" FromRole="cliente" ToRole="venta" />
   </EntityType>
   <Association Name="FK_venta_cliente">
     <End Type="crmconceptoseModel.cliente" Role="cliente" Multiplicity="1" />
@@ -722,6 +853,7 @@
     <NavigationProperty Name="compraDetalle" Relationship="crmconceptoseModel.fkProductoCompra" FromRole="producto" ToRole="compraDetalle" />
     <NavigationProperty Name="existencia" Relationship="crmconceptoseModel.fkExistenciaidProducto" FromRole="producto" ToRole="existencia" />
     <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="producto" ToRole="detalleCotizacion" />
+    <NavigationProperty Name="RFQItem" Relationship="crmconceptoseModel.fk_IdProductoRFQItem" FromRole="producto" ToRole="RFQItem" />
   </EntityType>
   <Association Name="FK__producto__idCate__164452B1">
     <End Type="crmconceptoseModel.categoria" Role="categoria" Multiplicity="1" />
@@ -1029,7 +1161,7 @@
     <Property Name="requerir" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="impuesto" Type="Decimal" Precision="5" Scale="2" />
     <Property Name="usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="servidorSmtp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="servidorSmtp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="puerto" Type="Int32" />
     <Property Name="contrasena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="displayName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -1067,4 +1199,379 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="ciudad">
+    <Key>
+      <PropertyRef Name="idCiudad" />
+    </Key>
+    <Property Name="idCiudad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="idEstado" Type="Int32" />
+    <NavigationProperty Name="estado" Relationship="crmconceptoseModel.fk_CiudadEstado" FromRole="ciudad" ToRole="estado" />
+    <NavigationProperty Name="venta" Relationship="crmconceptoseModel.fk_VentaCiudad" FromRole="ciudad" ToRole="venta" />
+  </EntityType>
+  <EntityType Name="estado">
+    <Key>
+      <PropertyRef Name="idEstado" />
+    </Key>
+    <Property Name="idEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="idPais" Type="Int32" />
+    <NavigationProperty Name="ciudad" Relationship="crmconceptoseModel.fk_CiudadEstado" FromRole="estado" ToRole="ciudad" />
+    <NavigationProperty Name="pais" Relationship="crmconceptoseModel.fk_PaisEstado" FromRole="estado" ToRole="pais" />
+  </EntityType>
+  <EntityType Name="pais">
+    <Key>
+      <PropertyRef Name="idPais" />
+    </Key>
+    <Property Name="idPais" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="estado" Relationship="crmconceptoseModel.fk_PaisEstado" FromRole="pais" ToRole="estado" />
+  </EntityType>
+  <EntityType Name="venta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idCotizacion" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="idCliente" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="codigoPostal" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="idCiudad" Type="Int32" />
+    <Property Name="calle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="numeroExt" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="numeroInt" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="colonia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="telefonoContacto" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="archivo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="ciudad" Relationship="crmconceptoseModel.fk_VentaCiudad" FromRole="venta" ToRole="ciudad" />
+    <NavigationProperty Name="cliente" Relationship="crmconceptoseModel.fk_VentaCliente" FromRole="venta" ToRole="cliente" />
+    <Property Name="fecha" Type="DateTime" Precision="0" />
+    <Property Name="vendedor" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_VendedorVenta" FromRole="venta" ToRole="AspNetUsers" />
+  </EntityType>
+  <Association Name="fk_CiudadEstado">
+    <End Type="crmconceptoseModel.estado" Role="estado" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.ciudad" Role="ciudad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="estado">
+        <PropertyRef Name="idEstado" />
+      </Principal>
+      <Dependent Role="ciudad">
+        <PropertyRef Name="idEstado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VentaCiudad">
+    <End Type="crmconceptoseModel.ciudad" Role="ciudad" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.venta" Role="venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ciudad">
+        <PropertyRef Name="idCiudad" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="idCiudad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VentaCliente">
+    <End Type="crmconceptoseModel.cliente" Role="cliente" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.venta" Role="venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="idCliente" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="idCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PaisEstado">
+    <End Type="crmconceptoseModel.pais" Role="pais" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.estado" Role="estado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pais">
+        <PropertyRef Name="idPais" />
+      </Principal>
+      <Dependent Role="estado">
+        <PropertyRef Name="idPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_cargarCiudades_Result">
+    <Property Type="Int32" Name="idCiudad" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="idEstado" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_cargarEstados_Result">
+    <Property Type="Int32" Name="idEstado" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="idPais" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_cargarPaises_Result">
+    <Property Type="Int32" Name="idPais" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaVentas_Result">
+    <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="Single" Name="total" Nullable="false" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="61" />
+    <Property Type="DateTime" Name="fecha" Nullable="false" />
+    <Property Type="Decimal" Name="IVA" Nullable="false" Precision="19" />
+    <Property Type="String" Name="estatusCotizacion" Nullable="true" MaxLength="1" />
+  </ComplexType>
+  <Association Name="FK_VendedorVenta">
+    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.venta" Role="venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="vendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_consultaSalesPerson_Result">
+    <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Id" Nullable="false" MaxLength="128" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaVC_Result">
+    <Property Type="Decimal" Name="idVenta" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="Single" Name="total" Nullable="false" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="61" />
+    <Property Type="Decimal" Name="idCliente" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaVI_Result">
+    <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="idCotizacion" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="61" />
+    <Property Type="Decimal" Name="idCliente" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="codigoPostal" Nullable="true" MaxLength="5" />
+    <Property Type="Int32" Name="idCiudad" Nullable="true" />
+    <Property Type="String" Name="colonia" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="calle" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="numeroExt" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="numeroInt" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="telefonoContacto" Nullable="true" MaxLength="15" />
+    <Property Type="Single" Name="total" Nullable="false" />
+    <Property Type="Int32" Name="idEstado" Nullable="false" />
+    <Property Type="Int32" Name="idPais" Nullable="false" />
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaVT_Result">
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+    <Property Type="Decimal" Name="idCotizacion" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="String" Name="vendedor" Nullable="true" MaxLength="128" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="Single" Name="total" Nullable="false" />
+    <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="61" />
+  </ComplexType>
+  <ComplexType Name="sp_VerOrdenCompra_Result">
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+    <Property Type="Binary" Name="archivo" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_cargarPais_Result">
+    <Property Type="Int32" Name="idPais" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+  </ComplexType>
+  <ComplexType Name="sp_filtrarCiudades_Result">
+    <Property Type="Int32" Name="idCiudad" Nullable="false" />
+    <Property Type="Int32" Name="idEstado" Nullable="true" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="Pais" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_filtrarEstados_Result">
+    <Property Type="Int32" Name="idEstado" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="idPais" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_filtrarPaises_Result">
+    <Property Type="Int32" Name="idPais" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+  </ComplexType>
+  <EntityType Name="RFQ">
+    <Key>
+      <PropertyRef Name="idRFQ" />
+    </Key>
+    <Property Name="idRFQ" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idVendedor" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="fecha" Type="DateTime" Precision="0" />
+    <Property Name="estatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.fk_idVendedorRFQ" FromRole="RFQ" ToRole="AspNetUsers" />
+    <NavigationProperty Name="RFQItem" Relationship="crmconceptoseModel.fk_RFQItemRFQ" FromRole="RFQ" ToRole="RFQItem" />
+  </EntityType>
+  <EntityType Name="RFQItem">
+    <Key>
+      <PropertyRef Name="idRFQItem" />
+    </Key>
+    <Property Name="idRFQItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idRfq" Type="Int32" />
+    <Property Name="idProveedor" Type="Int32" />
+    <Property Name="idProducto" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="precio" Type="Single" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="notas" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="producto" Relationship="crmconceptoseModel.fk_IdProductoRFQItem" FromRole="RFQItem" ToRole="producto" />
+    <NavigationProperty Name="proveedor" Relationship="crmconceptoseModel.fk_IdProveedorRFQItem" FromRole="RFQItem" ToRole="proveedor" />
+    <NavigationProperty Name="RFQ" Relationship="crmconceptoseModel.fk_RFQItemRFQ" FromRole="RFQItem" ToRole="RFQ" />
+  </EntityType>
+  <Association Name="fk_idVendedorRFQ">
+    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.RFQ" Role="RFQ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RFQ">
+        <PropertyRef Name="idVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_IdProductoRFQItem">
+    <End Type="crmconceptoseModel.producto" Role="producto" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.RFQItem" Role="RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_IdProveedorRFQItem">
+    <End Type="crmconceptoseModel.proveedor" Role="proveedor" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.RFQItem" Role="RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RFQItemRFQ">
+    <End Type="crmconceptoseModel.RFQ" Role="RFQ" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.RFQItem" Role="RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RFQ">
+        <PropertyRef Name="idRFQ" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idRfq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_cargarEstado_Result">
+    <Property Type="Int32" Name="idEstado" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="idPais" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_correosEnvioMarketing_Result">
+    <Property Type="Int32" Name="idCotizacion" Nullable="false" />
+    <Property Type="String" Name="To" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Subject" Nullable="false" MaxLength="21" />
+    <Property Type="String" Name="Body" Nullable="false" MaxLength="17" />
+    <Property Type="String" Name="Cliente" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <EntityType Name="EmailMarketing">
+    <Key>
+      <PropertyRef Name="idMarketing" />
+    </Key>
+    <Property Name="idMarketing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="dias" Type="Int32" />
+    <Property Name="fechaComienzo" Type="DateTime" Precision="0" />
+    <Property Name="idUsuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_EmailMarketingIdUsuario" FromRole="EmailMarketing" ToRole="AspNetUsers" />
+  </EntityType>
+  <ComplexType Name="sp_cargarCiudad_Result">
+    <Property Type="Int32" Name="idCiudad" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="idEstado" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_hayCiudad_Result">
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+    <Property Type="Decimal" Name="idCotizacion" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="idCliente" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="String" Name="codigoPostal" Nullable="true" MaxLength="5" />
+    <Property Type="Int32" Name="idCiudad" Nullable="true" />
+    <Property Type="String" Name="calle" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="numeroExt" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="numeroInt" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="colonia" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="telefonoContacto" Nullable="true" MaxLength="15" />
+    <Property Type="Binary" Name="archivo" Nullable="true" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="vendedor" Nullable="true" MaxLength="128" />
+  </ComplexType>
+  <Association Name="FK_EmailMarketingIdUsuario">
+    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.EmailMarketing" Role="EmailMarketing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmailMarketing">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_hayEstadoPais_Result">
+    <Property Type="Int32" Name="idEstado" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="idPais" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="sucursal">
+    <Key>
+      <PropertyRef Name="idSucursal" />
+    </Key>
+    <Property Name="idSucursal" Type="Int32" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="calle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="numExt" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="colonia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="cp" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="compra" Relationship="crmconceptoseModel.fkidSucursalCompra" FromRole="sucursal" ToRole="compra" />
+    <NavigationProperty Name="existencia" Relationship="crmconceptoseModel.fkExistenciaidSucursal" FromRole="sucursal" ToRole="existencia" />
+  </EntityType>
+  <Association Name="fkidSucursalCompra">
+    <End Type="crmconceptoseModel.sucursal" Role="sucursal" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.compra" Role="compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sucursal">
+        <PropertyRef Name="idSucursal" />
+      </Principal>
+      <Dependent Role="compra">
+        <PropertyRef Name="idSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkExistenciaidSucursal">
+    <End Type="crmconceptoseModel.sucursal" Role="sucursal" Multiplicity="1" />
+    <End Type="crmconceptoseModel.existencia" Role="existencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sucursal">
+        <PropertyRef Name="idSucursal" />
+      </Principal>
+      <Dependent Role="existencia">
+        <PropertyRef Name="idSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="consultaEmailMarketing_Result">
+    <Property Type="Int32" Name="idMarketing" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="dias" Nullable="true" />
+    <Property Type="DateTime" Name="fechaComienzo" Nullable="true" />
+    <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="100" />
+  </ComplexType>
 </Schema>

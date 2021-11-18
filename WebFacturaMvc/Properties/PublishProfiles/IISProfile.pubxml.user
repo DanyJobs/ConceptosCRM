@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Este archivo se usa en el proceso de publicación y empaquetado del proyecto web. Para personalizar el comportamiento de este proceso,
+edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 para obtener más información. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAALrz9nlgM8UeH1VzPjoKUVAAAAAACAAAAAAAQZgAAAAEAACAAAACC1XlEyJjWp04x/vVg3GNH3a1oMDfez9Lkh0guLVTphgAAAAAOgAAAAAIAACAAAADpExkZGOo4QktQrCGjSmmNSayrWqcGOIxrxz2ISJ2xmSAAAABnFkCluKlGk43gdfC/nPYd64VUqqknQREyXovBYh/hS0AAAABxoDEqJKV7ChiQO1FZZ8ySbpSsU6ur9RCkfeRcX2ZKVs5WnMNYZrD1KUIqVPxHvtXdNr/sO7VjsQJQgsYe1Apa</EncryptedPassword>
+    <History>False|2021-10-04T19:27:22.4675262Z;False|2021-10-04T14:23:56.6703365-05:00;False|2021-10-04T14:21:59.3233293-05:00;False|2021-09-30T14:24:29.4141090-05:00;</History>
+    <_PublishTargetUrl>ftp://192.185.11.141/httpdocs</_PublishTargetUrl>
+  </PropertyGroup>
+</Project>

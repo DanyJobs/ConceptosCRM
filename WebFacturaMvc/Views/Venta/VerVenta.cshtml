@@ -1,0 +1,165 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMy.cshtml";
+}
+
+@using Model.Entity
+@model List<Producto>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+@*<meta http-equiv="refresh" content="6">*@
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("a[rel='pop-up']").click(function () {
+            var caracteristicas = "height=550,width=1000,scrollTo,resizable=1,scrollbars=1,location=0";
+            nueva = window.open(this.href, 'popup', caracteristicas);
+
+
+            return false;
+        });
+        //botones        
+    });    
+</script>
+<table id="encabezado" class="table">
+    <thead>
+
+        <tr style="font-size:20px;">
+            <th>SALES PERSON <input style="color:red; font-size:20px;" class="form-control" type="text" id="SP" readonly value="@ViewData["Vendedor"]" /></th>
+            <th>ID Cotización <input style="color:red; font-size:20px;" class="form-control" type="text" id="id_cotizacion" readonly value="@ViewData["IDC"]" /></th>            
+            <th>
+                @Lenguaje.Recurso.Cotizacion_fecha
+                <input style="color:red;font-size:20px;" class="form-control" type="text" id="id_fecha" readonly value="@ViewData["FechaVenta"]" />
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="font-size:20px;">
+            <td>Nombre del Cliente <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtnombre" readonly required value="@ViewData["NC"]" /></td>
+            <td>Email <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtEmail" readonly required value="@ViewData["Mail"]" /></td>
+            <th>ID Venta <input style="color:red; font-size:20px;" class="form-control" type="text" id="id_venta" readonly value="@ViewData["IDV"]" /></th>
+        </tr>
+        <tr style="font-size:20px;">
+            <td>
+                País
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtPais", ViewBag.Paises as SelectList, "Seleccione pais", htmlAttributes: new { @class = "form-control", @required = "required" })
+                </div>
+            </td>
+            <td>
+                Estado
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtEstado", ViewBag.Estados as SelectList, "Seleccione estado", htmlAttributes: new { @class = "form-control", @required = "required" })
+                </div>
+            </td>
+            <td>
+                Ciudad
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtCiudad", ViewBag.Ciudades as SelectList, "Seleccione ciudad", htmlAttributes: new { @class = "form-control", @required = "required" })
+                </div>
+            </td>
+        </tr>
+        <tr style="font-size:20px;">
+            <td>Código Postal <input style="font-size:20px; font-weight:350;" class="form-control" type="number" id="cp" readonly required value="@ViewData["codigoP"]" /></td>
+            <td>Colonia <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="colonia" readonly required value="@ViewData["colonia"]" /></td>
+            <td>Calle <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="calle" readonly required value="@ViewData["calle"]" /></td>            
+        </tr>
+        <tr style="font-size:20px;">
+            <td>Número Exterior <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="numExt" readonly required value="@ViewData["numExt"]" /></td>
+            <td>Número Interior <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="numInt" readonly value="@ViewData["numInt"]" /></td>
+            <td>Télefono<input style="font-size:20px; font-weight:350;" class="form-control" type="number" id="telefono" required readonly value="@ViewData["telefono"]" /></td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="detalle" class="lista table" border="1">
+    <thead style="font-size:18px;">
+        <tr class="bg-success">
+            <td>Productos Vendidos</td>
+        </tr>
+        <tr class="bg-danger">
+            <th>Id</th>
+            <th>@Lenguaje.Recurso.Cotizacion_detalleProducto</th>
+            <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
+            <th>@Lenguaje.Recurso.Cotizacion_precio</th>
+            <th>@Lenguaje.Recurso.Cotizacion_descuento</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<table class="table">
+    <tr>
+        <td style="float:right;font-size:20px;">Total</td>
+        <th></th>
+        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly value="@ViewData["TotalVenta"]" /></td>
+    </tr>
+    <tr style="font-size:20px;">
+        <td>Orden de compra </td>
+        <td><input style="font-size:20px; font-weight:20px;" class="form-control" type="text" id="txtArchivo" readonly required value="@ViewData["Archivo"]" /></td>
+        
+        <td><a class="btn btn-info" href="~/Venta/VerOrdenCompra?idVenta=@ViewData["IDV"]" target="_blank" name="btnVer" id="btnVer" type="button">Ver</a></td>
+    </tr>
+</table>
+
+<a href="~/Venta/Consulta"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtPais").val('@ViewData["Pais"]');
+        $("#txtEstado").val('@ViewData["Estado"]');
+        $("#txtCiudad").val('@ViewData["Ciudad"]');
+        const pais = document.getElementById('txtPais');
+        const estado = document.getElementById('txtEstado');
+        const ciudad = document.getElementById('txtCiudad');
+        pais.disabled = true;
+        estado.disabled = true;
+        ciudad.disabled = true;
+        //const Ver = document.querySelector('#btnVer');
+        if ($("#txtArchivo").val() == "Vacio") {
+            $("#btnVer").css('pointer-events', 'none');
+            $("#btnVer").css('cursor', 'not-allowed');
+        }
+        else {
+            
+        }        
+
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "ListaProductos",
+            data: { idVenta: $("#id_cotizacion").val() },
+            success: function (mensaje) {
+                //alert(mensaje);
+                //$("#idproducto").val(mensaje.Nombre);
+                $(mensaje).each(function (index, item) {
+                    //recibir datos json
+                    cadena = "<tr>"
+                    cadena = cadena + "<td>" + item.IdProducto + "</td>";
+                    cadena = cadena + "<td>" + item.Nombre + "</td>";
+                    cadena = cadena + "<td>" + item.Cantidad + "</td>";
+                    cadena = cadena + "<td>" + item.PrecioUnitario + "</td>";
+                    cadena = cadena + "<td>" + item.Descuento + "</td>";
+                    cadena = cadena + "<td>" + ((item.Cantidad * item.PrecioUnitario) - item.Descuento) + "</td>";
+                    var y = 0;
+                    var x = 0;
+                    var des = 0;
+                    y = $("#cantidad").val();
+                    x = $("#precio").val();
+                    des = $("#descuento").val();
+                    subtotal = (x * y) - des;
+                    $("#detalle tbody").append(cadena);
+                });
+            }
+        });
+    });
+</script>

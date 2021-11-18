@@ -1,0 +1,49 @@
+﻿@model List<Model.Entity.Ciudad>
+@{
+    ViewBag.Title = "Lista de Ciudades";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Ciudades disponibles</h2>
+<h4 style="text-align:center; font-family:Arial; ">Filtrar por nombre:</h4>
+<center>
+    @using (Html.BeginForm())
+    {
+        <div class="row col-md-12">
+            <div class="col-md-2">
+                @Html.Label("ID Estado:", new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-md-2">
+                @Html.TextBox("txtEstado", ViewData["EstadoPrincipal"], new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("txtParametro", "", new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+        <input type="submit" value="Buscar" />
+    }</center>
+    <center>
+        <br />
+        <a class="btn btn-success" href="~/Ciudad/AgregarCiudad?idEstado=@ViewData["EstadoPrincipal"]">Agregar</a> <a class="btn btn-info" href="~/Estado/Index?idPais=@ViewData["Estado"]">Regresar</a>
+        <table class="table">
+            <thead>
+                <tr class="bg-primary">
+                    <th>ID Ciudad</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var objCiudad in Model)
+                {
+                    <tr>
+                        <td>@objCiudad.IdCiudad</td>
+                        <td>@objCiudad.NombreCiudad</td>
+                        <td><a class="btn btn-warning" href="~/Ciudad/EditarCiudad?idCiudad=@objCiudad.IdCiudad"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
+                        <td><a class="btn btn-danger" href="~/Ciudad/EliminarCiudad?idCiudad=@objCiudad.IdCiudad"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </center>

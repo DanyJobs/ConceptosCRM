@@ -1,0 +1,70 @@
+﻿@model Model.Entity.SendEmail
+@{
+
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Send Email</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>configuracion</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.idCotizacion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.idCotizacion, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.idCotizacion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cliente, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.Cliente, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Cliente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.To, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.Subject, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(x => x.Body, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+</body>
+</html>

@@ -50,7 +50,7 @@
     });
 
     function Envio() {
-        if ($("#dias").val()==null) {
+        if ($("#dias").val()!=null) {
             ListaDetalle += "Dias:'" + $("#dias").val() + "'";
 
         } else {
@@ -139,7 +139,37 @@
         }  
         $('input').filter(':checkbox').prop('checked', false);     
     }
-    
+
+
+    function RFQ(idVenta) {
+        var envio = "{";
+        console.log(idVenta);
+        if (idVenta != null) {
+            envio += "idVenta:'" + idVenta + "'";
+            envio += "}";
+            console.log(envio);
+            var json = eval("(" + envio + ')'); //
+            console.info(json);
+            $.ajax({
+                url: "AgregarRfq",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                }
+            });
+
+        } else {
+            alertify.error("Se debe seleccionar un registro");
+        }
+        $('input').filter(':checkbox').prop('checked', false);
+    }
+
+
 </script>
 <h2 id="titulo" style="text-align:center; font-family:Arial; font-weight:700;">Cotizaciones realizadas</h2>
 @using (Html.BeginForm())
@@ -179,6 +209,7 @@
             <th>Id Venta</th>
             <th>Total</th>
             <th>Cliente</th>
+            <th>Cliente</th>
             <th>Fecha</th>
             <th>IVA(%)</th>
             <th>Estatus</th>
@@ -189,7 +220,7 @@
         @foreach (var objCotizacion in Model)
         {
             <tr align="center" id="tabla">
-                <td> @Html.CheckBox("Accion", new { @class = "control-label col-md-7", @value = @objCotizacion.IdVenta }) </td>
+                <td> @Html.CheckBox("Accion", new { @class = "control-label col-md-7", @value = @objCotizacion.IdVenta}) </td>
                 <td>@objCotizacion.IdVenta</td>
                 <td>@objCotizacion.Total</td>
                 <td>@objCotizacion.Cliente</td>
@@ -197,8 +228,9 @@
                 <td>@objCotizacion.Iva</td>
                 <td>@objCotizacion.estatus</td>
                 <td>
-                    <a class="btn btn-danger" onclick="EditarEstatusSeguimiento(@objCotizacion.IdVenta)"> 
-                    <span class="glyphicon glyphicon-remove"> Cancelar Seguimiento</span></a>
+                    <a class="btn btn-danger" onclick="EditarEstatusSeguimiento(@objCotizacion.IdVenta)">
+                        <span class="glyphicon glyphicon-remove"> Cancelar Seguimiento</span>
+                    </a>                
                 </td>               
             </tr>
         }

@@ -19,7 +19,7 @@ namespace WebFacturaMvc.Datos
         public int cantidad { get; set; }
         public string seccion { get; set; }
     
-        public virtual sucursal sucursal { get; set; }
         public virtual producto producto { get; set; }
+        public virtual sucursal sucursal { get; set; }
     }
 }

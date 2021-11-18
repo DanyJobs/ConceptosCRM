@@ -173,6 +173,7 @@
     <EntitySetMapping Name="compraDetalle">
       <EntityTypeMapping TypeName="crmconceptoseModel.compraDetalle">
         <MappingFragment StoreEntitySet="compraDetalle">
+          <ScalarProperty Name="seccion" ColumnName="seccion" />
           <ScalarProperty Name="precio" ColumnName="precio" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
           <ScalarProperty Name="idProducto" ColumnName="idProducto" />
@@ -190,18 +191,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="crmconceptoseModel.sysdiagrams">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="definition" ColumnName="definition" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="crmconceptoseModel.Store.sp_alterdiagram" />
     <FunctionImportMapping FunctionImportName="SP_Buscar_Cotizacion" FunctionName="crmconceptoseModel.Store.SP_Buscar_Cotizacion">
       <ResultMapping>
         <ComplexTypeMapping TypeName="crmconceptoseModel.SP_Buscar_Cotizacion_Result">
@@ -214,47 +203,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="crmconceptoseModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="crmconceptoseModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="crmconceptoseModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="crmconceptoseModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="crmconceptoseModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="crmconceptoseModel.Store.sp_upgraddiagrams" />
     <FunctionImportMapping FunctionImportName="spAgregarCompra" FunctionName="crmconceptoseModel.Store.spAgregarCompra" />
     <FunctionImportMapping FunctionImportName="spAgregarCompraDetalle" FunctionName="crmconceptoseModel.Store.spAgregarCompraDetalle" />
-    <FunctionImportMapping FunctionImportName="spAgregarProveedor" FunctionName="crmconceptoseModel.Store.spAgregarProveedor" />
     <FunctionImportMapping FunctionImportName="spAgregarSucursal" FunctionName="crmconceptoseModel.Store.spAgregarSucursal" />
-    <EntitySetMapping Name="sucursal">
-      <EntityTypeMapping TypeName="crmconceptoseModel.sucursal">
-        <MappingFragment StoreEntitySet="sucursal">
-          <ScalarProperty Name="telefono" ColumnName="telefono" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="cp" ColumnName="cp" />
-          <ScalarProperty Name="colonia" ColumnName="colonia" />
-          <ScalarProperty Name="numExt" ColumnName="numExt" />
-          <ScalarProperty Name="calle" ColumnName="calle" />
-          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="spusuario" FunctionName="crmconceptoseModel.Store.spusuario">
       <ResultMapping>
         <ComplexTypeMapping TypeName="crmconceptoseModel.spusuario_Result">
@@ -671,5 +622,318 @@
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_CompraDetalleEliminar" FunctionName="crmconceptoseModel.Store.sp_CompraDetalleEliminar" />
     <FunctionImportMapping FunctionImportName="sp_CompraEditar" FunctionName="crmconceptoseModel.Store.sp_CompraEditar" />
+    <EntitySetMapping Name="ciudad">
+      <EntityTypeMapping TypeName="crmconceptoseModel.ciudad">
+        <MappingFragment StoreEntitySet="ciudad">
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="estado">
+      <EntityTypeMapping TypeName="crmconceptoseModel.estado">
+        <MappingFragment StoreEntitySet="estado">
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pais">
+      <EntityTypeMapping TypeName="crmconceptoseModel.pais">
+        <MappingFragment StoreEntitySet="pais">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="venta">
+      <EntityTypeMapping TypeName="crmconceptoseModel.venta">
+        <MappingFragment StoreEntitySet="venta">
+          <ScalarProperty Name="vendedor" ColumnName="vendedor" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="archivo" ColumnName="archivo" />
+          <ScalarProperty Name="telefonoContacto" ColumnName="telefonoContacto" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="numeroInt" ColumnName="numeroInt" />
+          <ScalarProperty Name="numeroExt" ColumnName="numeroExt" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+          <ScalarProperty Name="codigoPostal" ColumnName="codigoPostal" />
+          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+          <ScalarProperty Name="idCotizacion" ColumnName="idCotizacion" />
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_cargarCiudades" FunctionName="crmconceptoseModel.Store.sp_cargarCiudades">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_cargarCiudades_Result">
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_cargarEstados" FunctionName="crmconceptoseModel.Store.sp_cargarEstados">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_cargarEstados_Result">
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_cargarPaises" FunctionName="crmconceptoseModel.Store.sp_cargarPaises">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_cargarPaises_Result">
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_consultaVentas" FunctionName="crmconceptoseModel.Store.sp_consultaVentas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaVentas_Result">
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="estatusCotizacion" ColumnName="estatusCotizacion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_consultaSalesPerson" FunctionName="crmconceptoseModel.Store.sp_consultaSalesPerson">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaSalesPerson_Result">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_consultaVC" FunctionName="crmconceptoseModel.Store.sp_consultaVC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaVC_Result">
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_consultaVI" FunctionName="crmconceptoseModel.Store.sp_consultaVI">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaVI_Result">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="idCotizacion" ColumnName="idCotizacion" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="codigoPostal" ColumnName="codigoPostal" />
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="numeroExt" ColumnName="numeroExt" />
+          <ScalarProperty Name="numeroInt" ColumnName="numeroInt" />
+          <ScalarProperty Name="telefonoContacto" ColumnName="telefonoContacto" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_consultaVT" FunctionName="crmconceptoseModel.Store.sp_consultaVT">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_consultaVT_Result">
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+          <ScalarProperty Name="idCotizacion" ColumnName="idCotizacion" />
+          <ScalarProperty Name="vendedor" ColumnName="vendedor" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_cotizacionG" FunctionName="crmconceptoseModel.Store.sp_cotizacionG" />
+    <FunctionImportMapping FunctionImportName="sp_editarVenta" FunctionName="crmconceptoseModel.Store.sp_editarVenta" />
+    <FunctionImportMapping FunctionImportName="sp_eliminarVenta" FunctionName="crmconceptoseModel.Store.sp_eliminarVenta" />
+    <FunctionImportMapping FunctionImportName="sp_guardarVenta" FunctionName="crmconceptoseModel.Store.sp_guardarVenta" />
+    <FunctionImportMapping FunctionImportName="sp_traerBytes" FunctionName="crmconceptoseModel.Store.sp_traerBytes" />
+    <FunctionImportMapping FunctionImportName="sp_VerOrdenCompra" FunctionName="crmconceptoseModel.Store.sp_VerOrdenCompra">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_VerOrdenCompra_Result">
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+          <ScalarProperty Name="archivo" ColumnName="archivo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_agregarPais" FunctionName="crmconceptoseModel.Store.sp_agregarPais" />
+    <FunctionImportMapping FunctionImportName="sp_cargarPais" FunctionName="crmconceptoseModel.Store.sp_cargarPais">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_cargarPais_Result">
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_editarPais" FunctionName="crmconceptoseModel.Store.sp_editarPais" />
+    <FunctionImportMapping FunctionImportName="sp_eliminarPais" FunctionName="crmconceptoseModel.Store.sp_eliminarPais" />
+    <FunctionImportMapping FunctionImportName="sp_filtrarCiudades" FunctionName="crmconceptoseModel.Store.sp_filtrarCiudades">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_filtrarCiudades_Result">
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="Pais" ColumnName="Pais" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_filtrarEstados" FunctionName="crmconceptoseModel.Store.sp_filtrarEstados">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_filtrarEstados_Result">
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_filtrarPaises" FunctionName="crmconceptoseModel.Store.sp_filtrarPaises">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_filtrarPaises_Result">
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="AgregarRFQ" FunctionName="crmconceptoseModel.Store.AgregarRFQ" />
+    <EntitySetMapping Name="RFQ">
+      <EntityTypeMapping TypeName="crmconceptoseModel.RFQ">
+        <MappingFragment StoreEntitySet="RFQ">
+          <ScalarProperty Name="estatus" ColumnName="estatus" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="idVendedor" ColumnName="idVendedor" />
+          <ScalarProperty Name="idRFQ" ColumnName="idRFQ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RFQItem">
+      <EntityTypeMapping TypeName="crmconceptoseModel.RFQItem">
+        <MappingFragment StoreEntitySet="RFQItem">
+          <ScalarProperty Name="notas" ColumnName="notas" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+          <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+          <ScalarProperty Name="idRfq" ColumnName="idRfq" />
+          <ScalarProperty Name="idRFQItem" ColumnName="idRFQItem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_cargarEstado" FunctionName="crmconceptoseModel.Store.sp_cargarEstado">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_cargarEstado_Result">
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_editarEstado" FunctionName="crmconceptoseModel.Store.sp_editarEstado" />
+    <FunctionImportMapping FunctionImportName="sp_correosEnvioMarketing" FunctionName="crmconceptoseModel.Store.sp_correosEnvioMarketing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_correosEnvioMarketing_Result">
+          <ScalarProperty Name="idCotizacion" ColumnName="idCotizacion" />
+          <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="EmailMarketing">
+      <EntityTypeMapping TypeName="crmconceptoseModel.EmailMarketing">
+        <MappingFragment StoreEntitySet="EmailMarketing">
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="fechaComienzo" ColumnName="fechaComienzo" />
+          <ScalarProperty Name="dias" ColumnName="dias" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idMarketing" ColumnName="idMarketing" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_agregarCiudad" FunctionName="crmconceptoseModel.Store.sp_agregarCiudad" />
+    <FunctionImportMapping FunctionImportName="sp_cargarCiudad" FunctionName="crmconceptoseModel.Store.sp_cargarCiudad">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_cargarCiudad_Result">
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_editarCiudad" FunctionName="crmconceptoseModel.Store.sp_editarCiudad" />
+    <FunctionImportMapping FunctionImportName="sp_hayCiudad" FunctionName="crmconceptoseModel.Store.sp_hayCiudad">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_hayCiudad_Result">
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+          <ScalarProperty Name="idCotizacion" ColumnName="idCotizacion" />
+          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+          <ScalarProperty Name="codigoPostal" ColumnName="codigoPostal" />
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="numeroExt" ColumnName="numeroExt" />
+          <ScalarProperty Name="numeroInt" ColumnName="numeroInt" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="telefonoContacto" ColumnName="telefonoContacto" />
+          <ScalarProperty Name="archivo" ColumnName="archivo" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="vendedor" ColumnName="vendedor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_eliminarCiudad" FunctionName="crmconceptoseModel.Store.sp_eliminarCiudad" />
+    <FunctionImportMapping FunctionImportName="sp_eliminarEstado" FunctionName="crmconceptoseModel.Store.sp_eliminarEstado" />
+    <FunctionImportMapping FunctionImportName="sp_hayEstadoPais" FunctionName="crmconceptoseModel.Store.sp_hayEstadoPais">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.sp_hayEstadoPais_Result">
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idPais" ColumnName="idPais" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="sucursal">
+      <EntityTypeMapping TypeName="crmconceptoseModel.sucursal">
+        <MappingFragment StoreEntitySet="sucursal">
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="cp" ColumnName="cp" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="numExt" ColumnName="numExt" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="consultaEmailMarketing" FunctionName="crmconceptoseModel.Store.consultaEmailMarketing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="crmconceptoseModel.consultaEmailMarketing_Result">
+          <ScalarProperty Name="idMarketing" ColumnName="idMarketing" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dias" ColumnName="dias" />
+          <ScalarProperty Name="fechaComienzo" ColumnName="fechaComienzo" />
+          <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -1,0 +1,24 @@
+﻿@model List<Model.Entity.Historial>
+@{
+    ViewBag.Title = "BuscarHistorial";
+}
+
+<table class="table">
+    <tr class="bg-primary">
+        <th>Fecha Cotizacion</th>
+        <th>Cliente</th>
+        <th>Numero de Cotizacion</th>
+        <th>Producto</th>
+        <th>Precio Unitario</th>
+    </tr>
+    @foreach (var objHistorial in Model)
+    {
+     <tr>
+    <th>@objHistorial.FechaCotizacion.ToString("MM/dd/yyyy")</th>
+    <th>@objHistorial.Cliente</th>
+    <th>@objHistorial.NumCotizacion</th>
+    <th>@objHistorial.Producto</th>
+    <th>@objHistorial.PrecioUnitario</th>
+    </tr>
+    }
+</table>

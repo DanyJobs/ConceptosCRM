@@ -19,22 +19,22 @@ namespace Model.Dao
         public void create(DetalleCotizacion objDetalleVenta)
         {
             string create = "insert into detalleCotizacion values('" + objDetalleVenta.NumFacura + "','" + objDetalleVenta.IdVenta + "','" + objDetalleVenta.SubTotal + "','" + objDetalleVenta.IdProducto + "','" + objDetalleVenta.Descuento + "','" + objDetalleVenta.Cantidad + "')";
-            try
-            {
+            //try
+            //{
                 comando = new SqlCommand(create, objConexionDB.getCon());
                 objConexionDB.getCon().Open();
                 comando.ExecuteNonQuery();
 
-            }
-            catch (Exception e)
-            {
-                objDetalleVenta.Estado = 1;
-            }
-            finally
-            {
+            //}
+            //catch (Exception e)
+            //{
+            //    objDetalleVenta.Estado = 1;
+            //}
+            //finally
+            //{
                 objConexionDB.getCon().Close();
                 objConexionDB.closeDB();
-            }
+            //}
         }
         public void delete(DetalleCotizacion objDetalleVenta)
         {

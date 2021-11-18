@@ -1,0 +1,30 @@
+﻿@model List<Model.Entity.CompraDetalle>
+@{
+    ViewBag.Title = "Compras detalle";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Compra detallada:</h2>
+<center><a class="btn btn-success" href="~/Compra/Consulta"><span>Regresar</span></a></center>
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>ID Compra</th>
+            <th>ID Producto</th>
+            <th>Nombre Producto</th>
+            <th>Cantidad comprada</th>
+            <th>Precio unitario</th>            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCompra in Model)
+        {
+        <tr>
+            <td>@objCompra.IdCompra</td>
+            <td>@objCompra.IdProducto</td>
+            <td>@objCompra.NombreProducto</td>
+            <td>@objCompra.Cantidad</td>
+            <td>@objCompra.Precio</td>            
+        </tr>
+        }
+
+    </tbody>
+</table>

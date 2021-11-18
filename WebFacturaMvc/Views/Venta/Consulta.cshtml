@@ -1,0 +1,57 @@
+﻿@model List<Model.Entity.Venta>
+@{
+    ViewBag.Title = "Lista de Ventas";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Ventas realizadas</h2>
+@using (Html.BeginForm())
+{
+
+    <h4 style="text-align:center; font-family:Arial; ">Filtrar por fecha:</h4>
+    <fieldset>
+        <div class="form-group col-md-3">
+            @Html.Label("Mes", new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.DropDownList("txtMes", (IEnumerable<SelectListItem>)ViewBag.ListaMeses,
+             "Seleccionar", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            @Html.Label("Año", new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.DropDownList("txtYear", (IEnumerable<SelectListItem>)ViewBag.ListaYears,
+             "Seleccionar", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </fieldset>
+
+    <input type="submit" value="Buscar" />
+}
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>ID Venta</th>
+            <th>ID Cotizacion</th>
+            <th>Sales Person</th>
+            <th>Total</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objVenta in Model)
+        {
+        <tr>
+            <td>@objVenta.IdVenta</td>
+            <td>@objVenta.IdCotizacion</td>
+            <td>@objVenta.Vendedor</td>
+            <td>@objVenta.Total</td>
+            <td>@objVenta.NombreCliente</td>
+            <td>@objVenta.Fecha.ToString("MM/dd/yyyy")</td>
+            <td><a class="btn btn-info" href="~/Venta/VerVenta?idVenta=@objVenta.IdVenta"><span class="glyphicon glyphicon-eye-open">|Ver</span></a></td>
+            <td><a class="btn btn-warning" href="~/Venta/EditarVenta?idVenta=@objVenta.IdVenta"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
+            <td><a class="btn btn-danger" href="~/Venta/EliminarPreview?idVenta=@objVenta.IdVenta"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
+        </tr>
+        }
+
+    </tbody>
+</table>

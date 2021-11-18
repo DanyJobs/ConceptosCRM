@@ -33,7 +33,8 @@ namespace Model.Dao
             command.Parameters.AddWithValue("idcompra", objCompraDetalle.IdCompra);
             command.Parameters.AddWithValue("idproducto", objCompraDetalle.IdProducto);
             command.Parameters.AddWithValue("cantidad", objCompraDetalle.Cantidad);
-            command.Parameters.AddWithValue("precio", objCompraDetalle.Precio);            
+            command.Parameters.AddWithValue("precio", objCompraDetalle.Precio);
+            command.Parameters.AddWithValue("seccion", objCompraDetalle.Seccion);
             //Se abre la conexión
             objConexinDB.getCon().Open();
             //Se ejecuta el comando
@@ -116,6 +117,7 @@ namespace Model.Dao
                 cd.IdSucursal= int.Parse(dtCompras.Rows[i]["idSucursal"].ToString());
                 cd.NombreSucursal = dtCompras.Rows[i]["descripcion"].ToString();
                 cd.Descripcion= dtCompras.Rows[i]["idCompra"].ToString();
+                cd.Seccion= dtCompras.Rows[i]["seccion"].ToString();
                 list.Add(cd);
             }
 

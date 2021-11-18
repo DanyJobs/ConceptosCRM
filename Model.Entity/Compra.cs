@@ -19,6 +19,7 @@ namespace Model.Entity
         //Para JOIN
         private string nombreSucursal;
         private string nombreProveedor;
+        private string seccion;
         //Para el Editar
         private string fechaCompra;
         public int IdCompra
@@ -120,6 +121,18 @@ namespace Model.Entity
             set
             {
                 nombreSucursal = value;
+            }
+        }
+        public string Seccion
+        {
+            get
+            {
+                return seccion;
+            }
+
+            set
+            {
+                seccion = value;
             }
         }
         public string NombreProveedor

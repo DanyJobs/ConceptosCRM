@@ -9,6 +9,7 @@ namespace Model.Neg
     {
         private CotizacionDao objCotizacionDao;
         private DetalleCotizacionDao objDetalleCotizacionDao;
+
         public CotizacionNeg()
         {
             objCotizacionDao = new CotizacionDao();
@@ -211,6 +212,10 @@ namespace Model.Neg
         public List<Cotizacion> buscarConEstatus(string Month, string Year, string Estatus)
         {
             return objCotizacionDao.buscarConEstatus(Month, Year, Estatus);
+        }
+        public List<EmailMarketingCorreos> buscarEmailMarketing(string id)
+        {
+            return objCotizacionDao.buscarEmailMarketing(id);
         }
 
     }

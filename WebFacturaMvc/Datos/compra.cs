@@ -28,7 +28,7 @@ namespace WebFacturaMvc.Datos
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<compraDetalle> compraDetalle { get; set; }
-        public virtual sucursal sucursal { get; set; }
         public virtual proveedor proveedor { get; set; }
+        public virtual sucursal sucursal { get; set; }
     }
 }

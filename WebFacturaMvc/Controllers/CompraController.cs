@@ -146,7 +146,7 @@ namespace WebFacturaMvc.Controllers
                 return View();
             }
         [HttpPost]
-        public ActionResult GuardarCompra(string Fecha, string IdProveedor, string Total, string Sucursal, List<compraDetalle> ListadoDetalle)
+        public ActionResult GuardarCompra(string Fecha, string IdProveedor, string Total, string Sucursal, string Seccion, List<compraDetalle> ListadoDetalle)
         {
             string mensaje = "";
             double iva = 18;
@@ -155,13 +155,15 @@ namespace WebFacturaMvc.Controllers
             int codigoSucursal = 0;
             int codigoProveedor = 0;
             decimal total = 0;
+            string seccionAlmacen = "";
 
-            if (Fecha == "" || IdProveedor == "" || Total == "" || Sucursal == "")
+            if (Fecha == "" || IdProveedor == "" || Total == "" || Sucursal == "" || Seccion=="")
             {
                 if (Fecha == "") mensaje = "ERROR EN EL CAMPO FECHA";                
                 if (IdProveedor == "") mensaje = "ERROR CON EL CODIGO DEL CLIENTE";
                 if (Total == "") mensaje = "ERROR EN EL CAMPO TOTAL";
                 if (Sucursal == "") mensaje = "ERROR EN EL CAMPO SUCURSAL";
+                if (Seccion == "") mensaje = "ERROR EN EL CAMPO SECCIÓN ALMACÉN";
             }
             else if (Sucursal == null)
             {
@@ -173,6 +175,7 @@ namespace WebFacturaMvc.Controllers
                 codigoProveedor = int.Parse(IdProveedor);
                 total = Convert.ToDecimal(Total);
                 codigoSucursal = int.Parse(Sucursal);
+                seccionAlmacen = Seccion;
                 //REGISTRO DE COMPRA
                 //Datos del objeto
                 Compra objCompra = new Compra();
@@ -205,7 +208,7 @@ namespace WebFacturaMvc.Controllers
                                 string idProducto = data.idProducto.ToString();
                                 int pCantidad = Convert.ToInt32(data.cantidad.ToString());                                
                                 decimal precio = Convert.ToDecimal(data.precio.ToString());
-                    CompraDetalle objCompraDetalle = new CompraDetalle(pIdCompra, idProducto, pCantidad, precio);
+                    CompraDetalle objCompraDetalle = new CompraDetalle(pIdCompra, idProducto, pCantidad, precio,seccionAlmacen);
                     try
                     {                        
                         cDetalle.create(objCompraDetalle);
@@ -422,12 +425,13 @@ namespace WebFacturaMvc.Controllers
             ViewData["CP"] = registro.IdProveedor.ToString();
             ViewData["Sucursal"] = registro.IdSucursal.ToString();
             ViewData["TotalCompra"] = registro.Total.ToString();
-            ViewData["Sucursal"] = registro.IdSucursal.ToString();
+            ViewData["Seccion"] = registro.Seccion.ToString();
+
             return View();
         }
         //Para editar los campos de compra y de compradetalle
         [HttpPost]
-        public ActionResult EditarCompra(string Fecha, string IdCompra, string IdProveedor, string Total, string Sucursal, List<compraDetalle> ListadoDetalle)
+        public ActionResult EditarCompra(string Fecha, string IdCompra, string IdProveedor, string Total, string Sucursal, string Seccion, List<compraDetalle> ListadoDetalle)
         {
             string mensaje = "";
             double iva = 18;
@@ -436,13 +440,15 @@ namespace WebFacturaMvc.Controllers
             int codigoSucursal = 0;
             int codigoProveedor = 0;
             decimal total = 0;
+            string seccionAlmacen = "";
 
-            if (Fecha == "" || IdProveedor == "" || Total == "" || Sucursal == "")
+            if (Fecha == "" || IdProveedor == "" || Total == "" || Sucursal == "" || Seccion=="")
             {
                 if (Fecha == "") mensaje = "ERROR EN EL CAMPO FECHA";
                 if (IdProveedor == "") mensaje = "ERROR CON EL CODIGO DEL CLIENTE";
                 if (Total == "") mensaje = "ERROR EN EL CAMPO TOTAL";
                 if (Sucursal == "") mensaje = "ERROR EN EL CAMPO SUCURSAL";
+                if (Seccion == "") mensaje = "ERROR EN EL CAMPO SECCIÓN ALMACÉN";
             }
             else if (Sucursal == null)
             {
@@ -454,6 +460,7 @@ namespace WebFacturaMvc.Controllers
                 codigoProveedor = int.Parse(IdProveedor);
                 total = Convert.ToDecimal(Total);
                 codigoSucursal = int.Parse(Sucursal);
+                seccionAlmacen = Seccion;
                 //REGISTRO DE COMPRA
                 //Datos del objeto
                 Compra objCompra = new Compra();                
@@ -482,7 +489,7 @@ namespace WebFacturaMvc.Controllers
                     string idProducto = data.idProducto.ToString();
                     int pCantidad = Convert.ToInt32(data.cantidad.ToString());
                     decimal precio = Convert.ToDecimal(data.precio.ToString());
-                    CompraDetalle objCompraDetalle = new CompraDetalle(int.Parse(IdCompra), idProducto, pCantidad, precio);
+                    CompraDetalle objCompraDetalle = new CompraDetalle(int.Parse(IdCompra), idProducto, pCantidad, precio, seccionAlmacen);
                    try
                    {
                         cDetalle.create(objCompraDetalle);                        

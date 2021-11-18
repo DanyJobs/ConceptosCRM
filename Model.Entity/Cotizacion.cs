@@ -23,6 +23,12 @@ namespace Model.Entity
         //Para la parte de mostrar las cotizaciones y editar
         private string cliente;
 
+        public Nullable<int> diasSeguimiento { get; set; }
+        public string estatusCotizacion { get; set; }
+        public string estatusSeguimiento { get; set; }
+        public Nullable<System.DateTime> fechaComienzoSeguimiento { get; set; }
+
+
         public long IdVenta
         {
             get
@@ -148,8 +154,8 @@ namespace Model.Entity
         {
 
         }
-        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva,string notas,string notasCompras,string estatus)
-        {           
+        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva, string notas, string notasCompras, string estatus, int diasSeguimiento, string estatusCotizacion, string estatusSeguimiento, System.DateTime fechaComienzoSeguimiento)
+        {
             this.total = total;
             this.idCliente = idCliente;
             this.idVendedor = idVendedor;
@@ -158,7 +164,12 @@ namespace Model.Entity
             this.notas = notas;
             this.notasCompras = notasCompras;
             this.estatus = estatus;
+            this.diasSeguimiento = diasSeguimiento;
+            this.estatusCotizacion = estatusCotizacion;
+            this.estatusSeguimiento = estatusSeguimiento;
+            this.fechaComienzoSeguimiento = fechaComienzoSeguimiento;
         }
+           
         //Para la parte de mostrar las cotizaciones y editar
         public Cotizacion(double total, string Cliente, string idVendedor, string fecha, double iva)
         {

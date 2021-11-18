@@ -56,8 +56,7 @@ namespace WebFacturaMvc.Controllers
         }
 
         //
-        // GET: /Account/Login
-        [AllowAnonymous]
+        // GET: /Account/Login    
         public ActionResult Login(string returnUrl)
         {
             if (Request.IsAuthenticated)
@@ -92,23 +91,21 @@ namespace WebFacturaMvc.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost]  
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Inicio");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -168,7 +165,7 @@ namespace WebFacturaMvc.Controllers
         // GET: /Account/Register
         //
         // GET: /Account/Register        
-        [AllowAnonymous]
+ 
         public ActionResult Register()
         {
             if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
@@ -207,8 +204,7 @@ namespace WebFacturaMvc.Controllers
         //
         // POST: /Account/Register
         [Authorize(Roles = "ADMIN")]
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost]     
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

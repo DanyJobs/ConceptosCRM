@@ -19,8 +19,8 @@ namespace Model.Dao
         {
             string codigoFactura = "";
             string create = "insert into factura (fecha,IVA,total,numPago)values('" + objFactura.Fecha + "','" + objFactura.Iva + "','" + objFactura.Total + "','" + objFactura.NumPago + "') SELECT SCOPE_IDENTITY();";
-            try
-            {
+            //try
+            //{
                 comando = new SqlCommand(create, objConexionDB.getCon());
                 objConexionDB.getCon().Open();
                 reader = comando.ExecuteReader();
@@ -28,17 +28,17 @@ namespace Model.Dao
                 {
                     codigoFactura = reader[0].ToString();
                 }
-            }
-            catch (Exception)
-            {
+            //}
+            //catch (Exception)
+            //{
 
-                throw;
-            }
-            finally
-            {
+            //    throw;
+            //}
+            //finally
+            //{
                 objConexionDB.getCon().Close();
                 objConexionDB.closeDB();
-            }
+            //}
             return codigoFactura;
         }
 

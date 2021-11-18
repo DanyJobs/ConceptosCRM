@@ -73,7 +73,7 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Dao.dll.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.pdb
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\Model.Entity.dll.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\bin\Debug\en\Model.Entity.resources.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csprojAssemblyReference.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.AssemblyReference.cache
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CoreCompileInputs.cache
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.csproj.CopyComplete
 E:\Proycto\FACTURA_JHONNYv2\Model.Neg\obj\Debug\Model.Neg.dll

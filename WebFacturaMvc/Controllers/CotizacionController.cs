@@ -1,19 +1,24 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Reporting.WebForms;
+using MimeKit;
 using Model.Dao;
 using Model.Entity;
 using Model.Neg;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -24,6 +29,7 @@ using WebFacturaMvc.Reportes.Espanol;
 namespace WebFacturaMvc.Controllers
 {
     [Authorize(Roles = "ADMIN,STANDARD")]
+    [OverrideAuthentication]
     public class CotizacionController : Controller
     {
         private CotizacionNeg objCotizacionNeg;
@@ -38,10 +44,12 @@ namespace WebFacturaMvc.Controllers
         private DetalleCotizacionNeg objDetalleVentaNeg;
         private static string idVentaMail;
         private cotizacion objCotizacion;
+        private EmailMarketing objMarketing;
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         public CotizacionController()
         {
             objCotizacion = new cotizacion();
+            objMarketing = new EmailMarketing();
             objMarcaNeg = new MarcaNeg();
             objCategoriaNeg = new CategoriaNeg();
             objCotizacionNeg = new CotizacionNeg();
@@ -50,6 +58,7 @@ namespace WebFacturaMvc.Controllers
             objModoPagoNeg = new ModoPagoNeg();
             objFacturaNeg = new FacturaNeg();
             objDetalleVentaNeg = new DetalleCotizacionNeg();
+
         }
 
         public string firma(configuracion objConfiguracion) {
@@ -340,8 +349,7 @@ namespace WebFacturaMvc.Controllers
                     return (msge);
                 }
                 else
-                {
-     
+                {     
                     var lects = db.Database.SqlQuery<SendEmail>("sp_consultaEmailCliente @idVenta", new SqlParameter("@idVenta", item.ToString())).Single();
                     Paso = 0;
                     SendEmail email = new SendEmail();
@@ -350,8 +358,8 @@ namespace WebFacturaMvc.Controllers
                     msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
                     string from = objConfiguracion.email;
                     string displayName = objConfiguracion.displayName;
-                    try
-                    {
+                try
+                {
                         //parameters                                     
                         MailMessage mail = new MailMessage();
                         mail.From = new MailAddress(from, displayName);
@@ -379,8 +387,6 @@ namespace WebFacturaMvc.Controllers
                         stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
                         stCuerpoHTML += "</td></tr></table>";
                         stCuerpoHTML += "</body></html>";
-
-
                         AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
                         string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
                         string stIdImagen = "Fondo";
@@ -400,9 +406,8 @@ namespace WebFacturaMvc.Controllers
                         client.Send(mail);
                         msge = "¡Correo enviado exitosamente!";
                         return (msge);
-
                     }
-                    catch (Exception e)
+                catch (Exception e)
                 {
                         msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
                         return (msge);
@@ -482,7 +487,6 @@ namespace WebFacturaMvc.Controllers
             ViewBag.ListaMarca = lista;
         }
 
-
         public ActionResult NuevaCotizacion()
         {
             Llenar();
@@ -492,7 +496,7 @@ namespace WebFacturaMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult GuardarCotizacion(string Fecha, string modoPago, string IdCliente, string Total,string notas, string notasCompras,string estatus, List<DetalleCotizacion> ListadoDetalle)
+        public ActionResult GuardarCotizacion(string Fecha, string modoPago, string IdCliente, string Total,string notas, string notasCompras,string estatus, List<DetalleCotizacion> ListadoDetalle, int dias)
         {
             Llenar();
             string mensaje = "";
@@ -517,7 +521,7 @@ namespace WebFacturaMvc.Controllers
                 codigoCliente = Convert.ToInt64(IdCliente);
                 total = Convert.ToDouble(Total);
                 //REGISTRO DE VENTA
-                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus);         
+                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus,dias,"N","A", DateTime.Now);         
                 string codigoVenta = objCotizacionNeg.create(objVenta);
                 if (codigoVenta == "" || codigoVenta == null)
                 {
@@ -545,7 +549,7 @@ namespace WebFacturaMvc.Controllers
                             DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
                             objDetalleVentaNeg.create(objDetalleVenta);
                         }
-                        mensaje = "VENTA GUARDADA CON EXITO...";
+                        mensaje = "VENTA "+ codigoVenta + " GUARDADA CON EXITO...";
                     }
                 }
 
@@ -564,8 +568,7 @@ namespace WebFacturaMvc.Controllers
                     return Redirect("~/Reportes/Espanol/frmReporteEs.aspx?IdVenta=" + idVenta);
                 }
                 else
-                {
-                    cargarModoPagocmb();
+                {                    cargarModoPagocmb();
                     cargarProductocmb();
                     TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
                     return View("NuevaCotizacion");
@@ -716,7 +719,7 @@ namespace WebFacturaMvc.Controllers
                     AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
                 string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
                 string stIdImagen = "Fondo";
-                LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);    
                 LinkedResource imgFirma = new LinkedResource(new MemoryStream(objConfiguracion.imagen), MediaTypeNames.Image.Jpeg);
                 string stIdImagenFirma = "Firma";
                 imgFirma.ContentId = stIdImagenFirma;
@@ -727,16 +730,33 @@ namespace WebFacturaMvc.Controllers
                 mail.Body = HttpUtility.HtmlEncode(stCuerpoHTML);
                 mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " + idVentaMail + fechaQuote + ".pdf"));
                 mail.IsBodyHtml = true;
-                SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
+                SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto);//Aquí debes sustituir tu servidor SMTP y el puerto
                 client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
+                //client.UseDefaultCredentials = true;                
                 client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                NEVER_EAT_POISON_Disable_CertificateValidation();
                 client.Send(mail);
                 msge = "¡Correo enviado exitosamente! Pronto te contactaremos.";
                 TempData["msg"] = "<script>alert('¡Correo enviado exitosamente!');</script>";
             }
                 return RedirectToAction("VentaFactura", "Cotizacion");     
         }
-
+      
+        static void NEVER_EAT_POISON_Disable_CertificateValidation()
+        {
+            // Disabling certificate validation can expose you to a man-in-the-middle attack
+            // which may allow your encrypted message to be read by an attacker
+            // https://stackoverflow.com/a/14907718/740639
+            ServicePointManager.ServerCertificateValidationCallback =
+                delegate (
+                    object s,
+                    X509Certificate certificate,
+                    X509Chain chain,
+                    SslPolicyErrors sslPolicyErrors
+                ) {
+                    return true;
+                };
+        }
 
         public ActionResult SendEmail()
         {
@@ -928,12 +948,7 @@ namespace WebFacturaMvc.Controllers
             //System.Diagnostics.Debug.WriteLine(objProducto.IdProducto +"    " +objProducto.Nombre+"    " +objProducto.Categoria+ "     "+objProducto.Marca);
             return View(ListaProducto);
         }
-
-        public ActionResult AgregarDias()
-        {       
-            return View();
-        }
-
+            
 
         [HttpPost]
         public ActionResult EditarEstatusSeguimiento(string idVenta)
@@ -947,7 +962,7 @@ namespace WebFacturaMvc.Controllers
             try
             {
                     var cotizacionItem = new cotizacion {idVenta = codigo, estatusSeguimiento = "C"};
-                    System.Diagnostics.Debug.WriteLine("Cotizacion: "+cotizacionItem.idVenta+" "+ cotizacionItem.estatusSeguimiento);
+                    //System.Diagnostics.Debug.WriteLine("Cotizacion: "+cotizacionItem.idVenta+" "+ cotizacionItem.estatusSeguimiento);
                     db.cotizacion.Attach(cotizacionItem);
                     db.Entry(cotizacionItem).Property(x => x.estatusSeguimiento).IsModified = true;
                     db.SaveChanges();
@@ -958,6 +973,180 @@ namespace WebFacturaMvc.Controllers
                     throw;
              }
             return Json(mensaje);            
-        }    
+        }
+
+
+
+        [HttpPost]
+        public ActionResult AgregarRfq(string idVenta)
+        {
+            int codigo = Convert.ToInt32(idVenta);
+            string id = User.Identity.GetUserId();
+            List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus();
+            configuracion objConfiguracion = new configuracion();
+            cargarFechas();
+            string mensaje = "Error";
+            try
+            {
+                var rfq = new RFQ { idVendedor = id , fecha = DateTime.Now, estatus="A"};
+                //System.Diagnostics.Debug.WriteLine("Cotizacion: " + cotizacionItem.idVenta + " " + cotizacionItem.estatusSeguimiento);
+                db.RFQ.Add(rfq);        
+                db.SaveChanges();
+
+                //foreach (var data in ListadoDetalle)
+                //{
+                //    string idProducto = data.IdProducto.ToString();
+                //    int cantidad = Convert.ToInt32(data.Cantidad.ToString());
+                //    double descuento = Convert.ToDouble(data.Descuento.ToString());
+                //    double subtotal = Convert.ToDouble(data.SubTotal.ToString());
+                //    DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
+                //    objDetalleVentaNeg.create(objDetalleVenta);
+                //}
+
+                mensaje = "¡Seguimiento cancelado correctamente!";
+            }
+            catch (Exception e)
+            {
+                mensaje = "Error: " + e.ToString();
+                throw;
+            }
+            return Json(mensaje);
+        }
+
+
+
+
+        private string EnviarCorreosMarketing(List<string> ListadoDetalle, configuracion objConfiguracion)
+        {
+            string id = User.Identity.GetUserId();
+            string msge = "";
+            foreach (var item in ListadoDetalle)
+            {
+                objConfiguracion = db.configuracion.First(p => p.usuario == id);
+                if (objConfiguracion == null)
+                {
+                    RedirectToAction("HttpNotFound");
+                    msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+                    return (msge);
+                }
+                else
+                {                    
+                    var lects = db.Database.SqlQuery<SendEmailMarketing>("sp_correosEnvioMarketing @idMarketing", new SqlParameter("@idMarketing", Convert.ToDecimal(item.ToString()))).Single();
+                    Paso = 0;
+                    SendEmailMarketing email = new SendEmailMarketing();
+                    email = lects;
+
+                    msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+                    string from = objConfiguracion.email;
+                    string displayName = objConfiguracion.displayName;
+                    try
+                    {
+                        //parameters                                     
+                        MailMessage mail = new MailMessage();
+                        mail.From = new MailAddress(from, displayName);
+                        mail.To.Add(email.To);
+                        mail.Subject = "Conceptos Electronics - Test Equipment";
+                        mail.IsBodyHtml = true;
+                        string stCuerpoHTML = "<!DOCTYPE html>";
+                        stCuerpoHTML += "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>";
+                        stCuerpoHTML += "<head> <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'>";
+                        stCuerpoHTML += "<title>Conceptos Electronics</title>";
+                        stCuerpoHTML += "<style> table, td, div, h1, p {font-family: Arial, sans-serif;}p.centrado{text-align:center;}.imgRedonda{width: 300px; height: 300px; border - radius:150px;}</style>";
+                        stCuerpoHTML += "</head>";
+                        stCuerpoHTML += "<body style='margin:0;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr>";
+                        stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:390px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
+                        stCuerpoHTML += "<img src='cid:Fondo' alt='' width='520' style='height:auto;display:block;' /></td></tr><tr>";
+                        stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
+                        stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + email.Cliente + ".</h1>";
+                        stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'>I hope you are well. <br /><br /> I am an " + objConfiguracion.puesto + " with Conceptos Electronics. <br /> <br /> We buy and sell reconditioned and new test equipment. <br /> <br /> We have over 20 years experience and can help you with your application specific needs.";
+                        stCuerpoHTML += "<br/> <br />We also can train, install, and service your equipment.<br/><br/>We have an accredited test laboratory.<br/><br/>Please take a look at our website and please let me know how we can help.<br/><br/>I look forward to working with you.<br/><br/> <a href='https://conceptoselectronics.com/reconditioned/' style='color:#ffffff;'>Test Equipment Reconditioned</a></p>";
+                        stCuerpoHTML += firma(objConfiguracion);
+                        stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
+                        stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
+                        stCuerpoHTML += "<p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>Copyright &reg; CRM Conceptos Electronics 2021<br /></p></td><td style='padding:0;width:50%;' align='right'>";
+                        stCuerpoHTML += "<table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.twitter.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/tw_1.png' alt='Twitter' width='38' style='height:auto;display:block;border:0;' /></a>";
+                        stCuerpoHTML += "</td><td style='padding:0 0 0 10px;width:38px;'><a href='https://www.facebook.com/Conceptos-Electronics-104154518135452' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a>";
+                        stCuerpoHTML += "</td></tr></table></td></tr></table></td></tr></table>";
+                        stCuerpoHTML += "</td></tr></table>";
+                        stCuerpoHTML += "</body></html>";
+                        AlternateView htmlView = AlternateView.CreateAlternateViewFromString(stCuerpoHTML, Encoding.UTF8, MediaTypeNames.Text.Html);
+                        string stImagen = Server.MapPath("~") + @"\Img\CRM Logo.jpg";
+                        string stIdImagen = "Fondo";
+                        LinkedResource img = new LinkedResource(stImagen, MediaTypeNames.Image.Jpeg);
+                        LinkedResource imgFirma = new LinkedResource(new MemoryStream(objConfiguracion.imagen), MediaTypeNames.Image.Jpeg);
+                        string stIdImagenFirma = "Firma";
+                        imgFirma.ContentId = stIdImagenFirma;
+                        img.ContentId = stIdImagen;
+                        htmlView.LinkedResources.Add(img);
+                        htmlView.LinkedResources.Add(imgFirma);
+                        mail.AlternateViews.Add(htmlView);
+                        mail.Body = stCuerpoHTML;
+                        mail.IsBodyHtml = true;
+                        SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
+                        client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
+                        client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                        NEVER_EAT_POISON_Disable_CertificateValidation();
+                        client.Send(mail);
+                        msge = "¡Correo enviado exitosamente!";
+                    return (msge);
+                }
+                    catch (Exception e)
+                {
+                    msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+                    return (msge);
+                }
+
+            }
+            }
+            return (msge);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarCorreosMarketing(List<string> ListadoDetalle, int Dias)
+        {
+            string id = User.Identity.GetUserId();
+            db.EmailMarketing.AsNoTracking().ToList();
+            configuracion objConfiguracion = new configuracion();
+            cargarFechas();
+            string mensaje = "Error";
+
+            if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                if (ListadoDetalle == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Lista vacia");
+                }
+                else
+                {
+                    Llenar();
+                    cargarFechas();
+                    foreach (var item in ListadoDetalle)
+                    {
+                        var marketingItem = new EmailMarketing {idMarketing = Convert.ToInt32(item), dias = Dias, fechaComienzo = DateTime.Now,idUsuario=id};
+                        db.EmailMarketing.Attach(marketingItem);
+                        db.Entry(marketingItem).Property(x => x.fechaComienzo).IsModified = true;
+                        db.Entry(marketingItem).Property(x => x.dias).IsModified = true;
+                        db.Entry(marketingItem).Property(x => x.idUsuario).IsModified = true;
+
+
+                        db.SaveChanges();
+                    }
+                    mensaje = EnviarCorreosMarketing(ListadoDetalle, objConfiguracion);
+                    return View(mensaje);
+                }
+                return View(mensaje);
+            }
+        }
+
+        public ActionResult EnviarCorreosMarketing()
+        {
+            string id = User.Identity.GetUserId();
+            List<EmailMarketingCorreos> lista = objCotizacionNeg.buscarEmailMarketing(id);
+            return View(lista);
+        }
     }
 }

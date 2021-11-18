@@ -1,0 +1,30 @@
+﻿@model List<Model.Entity.DetalleCotizacion>
+@{
+    ViewBag.Title = "Cotización detalle";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Cotización detallada:</h2>
+<center><a class="btn btn-success" href="~/DetalleCotizacion/Index"><span>Regresar</span></a></center>
+    <table class="table">
+        <thead>
+            <tr class="bg-primary">
+                <th>ID Venta</th>
+                <th>Subtotal</th>
+                <th>Producto</th>
+                <th>Descuento</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var objCompra in Model)
+            {
+                <tr>
+                    <td>@objCompra.IdVenta</td>
+                    <td>@objCompra.SubTotal</td>
+                    <td>@objCompra.IdProducto</td>
+                    <td>@objCompra.Descuento</td>
+                    <td>@objCompra.Cantidad</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>

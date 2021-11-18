@@ -19,7 +19,7 @@
     <AssemblyName>WebFacturaMvc</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44368</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -50,6 +50,9 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EASendMail, Version=7.7.0.9, Culture=neutral, PublicKeyToken=88adb80ecd66540b, processorArchitecture=MSIL">
       <HintPath>..\packages\EASendMail.7.7.0.9\lib\net45\EASendMail.dll</HintPath>
     </Reference>
@@ -61,6 +64,9 @@
     </Reference>
     <Reference Include="FontAwesome.Sharp, Version=5.15.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.5.15.3\lib\net45\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=2.15.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.2.15.0\lib\net45\MailKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -126,6 +132,9 @@
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
+    <Reference Include="MimeKit, Version=2.15.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.15.1\lib\net45\MimeKit.dll</HintPath>
+    </Reference>
     <Reference Include="Model.Entity">
       <HintPath>..\Model.Entity\bin\Debug\Model.Entity.dll</HintPath>
     </Reference>
@@ -137,6 +146,9 @@
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\netstandard1.1\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
@@ -354,6 +366,7 @@
     <Content Include="ProcDataSet.xss">
       <DependentUpon>ProcDataSet.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="ReporteDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ReporteDataSet.Designer.cs</LastGenOutput>
@@ -446,19 +459,24 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ConfiguracionController.cs" />
     <Compile Include="Controllers\DetalleCotizacionController.cs" />
+    <Compile Include="Controllers\EmailMarketingController.cs" />
+    <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\ExistenciaController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\ModoPagoController.cs" />
+    <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
+    <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Datos\AspNetRoles.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -474,6 +492,9 @@
     <Compile Include="Datos\categoria.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\ciudad.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\cliente.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -484,6 +505,9 @@
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\configuracion.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\consultaEmailMarketing_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\cotizacion.cs">
@@ -511,6 +535,12 @@
     <Compile Include="Datos\detalleCotizacion.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\EmailMarketing.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\estado.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\existencia.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -526,16 +556,43 @@
     <Compile Include="Datos\Moneda.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\pais.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\producto.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\proveedor.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\RFQ.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\RFQItem.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\spusuario_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\SP_Buscar_Cotizacion_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarCiudades_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarCiudad_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarEstados_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarEstado_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarPaises_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarPais_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_CompraConsultaEditar2_Result.cs">
@@ -580,16 +637,49 @@
     <Compile Include="Datos\sp_consultaProducto_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_consultaSalesPerson_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_consultaSucursales_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_consultaSucursal_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_consultaVC_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaVentas_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaVI_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaVT_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_correosEnvioMarketing_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_CotizacionDetalleConsulta_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\SP_COTIZACION_HISTORIAL_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_filtrarCiudades_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_filtrarEstados_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_filtrarPaises_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_hayCiudad_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_hayEstadoPais_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_helpdiagramdefinition_Result.cs">
@@ -625,10 +715,10 @@
     <Compile Include="Datos\SP_PRODUCTO_CONSULTA_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Datos\sucursal.cs">
+    <Compile Include="Datos\sp_VerOrdenCompra_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Datos\sysdiagrams.cs">
+    <Compile Include="Datos\sucursal.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\texto.cs">
@@ -638,6 +728,9 @@
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\Usuario.cs" />
+    <Compile Include="Datos\venta.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="dbventasDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -799,10 +892,35 @@
     <Content Include="Views\Producto\View.cshtml" />
     <Content Include="Views\DetalleCotizacion\Editar.cshtml" />
     <Content Include="Views\DetalleCotizacion\PreEliminar.cshtml" />
-    <Content Include="Views\Cotizacion\AgregarDias.cshtml" />
     <Content Include="Views\Cotizacion\EditarEstatusSeguimiento.cshtml" />
     <Content Include="Views\Compra\Editar.cshtml" />
     <Content Include="Views\Compra\ObtenerProductos.cshtml" />
+    <Content Include="Views\Cotizacion\EnviarCorreosMarketing.cshtml" />
+    <Content Include="Views\EmailMarketing\Create.cshtml" />
+    <Content Include="Views\EmailMarketing\Delete.cshtml" />
+    <Content Include="Views\EmailMarketing\Details.cshtml" />
+    <Content Include="Views\EmailMarketing\Edit.cshtml" />
+    <Content Include="Views\EmailMarketing\Index.cshtml" />
+    <Content Include="Views\Pais\AgregarPais.cshtml" />
+    <Content Include="Views\Pais\EditarPais.cshtml" />
+    <Content Include="Views\Pais\EliminarPais.cshtml" />
+    <Content Include="Views\Pais\Index.cshtml" />
+    <Content Include="Views\Ciudad\AgregarCiudad.cshtml" />
+    <Content Include="Views\Ciudad\EditarCiudad.cshtml" />
+    <Content Include="Views\Ciudad\EliminarCiudad.cshtml" />
+    <Content Include="Views\Ciudad\Index.cshtml" />
+    <Content Include="Views\Estado\AgregarEstado.cshtml" />
+    <Content Include="Views\Estado\EditarEstado.cshtml" />
+    <Content Include="Views\Estado\EliminarEstado.cshtml" />
+    <Content Include="Views\Estado\Index.cshtml" />
+    <Content Include="Views\Venta\Consulta.cshtml" />
+    <Content Include="Views\Venta\EditarVenta.cshtml" />
+    <Content Include="Views\Venta\Eliminar.cshtml" />
+    <Content Include="Views\Venta\EliminarPreview.cshtml" />
+    <Content Include="Views\Venta\HacerVenta.cshtml" />
+    <Content Include="Views\Venta\Index.cshtml" />
+    <Content Include="Views\Venta\VerOrdenCompra.cshtml" />
+    <Content Include="Views\Venta\VerVenta.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

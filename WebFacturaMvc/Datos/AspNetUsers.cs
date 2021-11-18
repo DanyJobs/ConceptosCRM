@@ -22,6 +22,9 @@ namespace WebFacturaMvc.Datos
             this.cotizacion = new HashSet<cotizacion>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
             this.configuracion = new HashSet<configuracion>();
+            this.venta = new HashSet<venta>();
+            this.RFQ = new HashSet<RFQ>();
+            this.EmailMarketing = new HashSet<EmailMarketing>();
         }
     
         public string Id { get; set; }
@@ -50,5 +53,11 @@ namespace WebFacturaMvc.Datos
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<configuracion> configuracion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<venta> venta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RFQ> RFQ { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmailMarketing> EmailMarketing { get; set; }
     }
 }

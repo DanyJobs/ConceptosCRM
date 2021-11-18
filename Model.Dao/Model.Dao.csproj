@@ -65,20 +65,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoriaDao.cs" />
+    <Compile Include="CiudadDao.cs" />
     <Compile Include="ClienteDao.cs" />
     <Compile Include="CompraDao.cs" />
     <Compile Include="CompraDetalleDao.cs" />
     <Compile Include="ConexionDB.cs" />
     <Compile Include="DetalleCotizacionDao.cs" />
+    <Compile Include="EstadoDao.cs" />
     <Compile Include="ExistenciaDao.cs" />
     <Compile Include="FacturaDao.cs" />
     <Compile Include="MarcaDao.cs" />
     <Compile Include="ModoPagoDao.cs" />
     <Compile Include="Obligatorio.cs" />
     <Compile Include="CotizacionDao.cs" />
+    <Compile Include="PaisDao.cs" />
     <Compile Include="ProductoDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SucursalDao.cs" />
+    <Compile Include="VentaDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,0 +1,59 @@
+﻿@model List<Model.Entity.Cotizacion>
+@{
+    ViewBag.Title = "Index";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Cotizaciones realizadas</h2>
+@using (Html.BeginForm())
+{
+
+    <h4 style="text-align:center; font-family:Arial; ">Filtrar por fecha:</h4>
+    <fieldset>
+        <div class="form-group col-md-3">
+            @Html.Label("Mes", new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.DropDownList("txtMes", (IEnumerable<SelectListItem>)ViewBag.ListaMeses,
+             "Seleccionar", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            @Html.Label("Año", new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.DropDownList("txtYear", (IEnumerable<SelectListItem>)ViewBag.ListaYears,
+             "Seleccionar", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+    </fieldset>
+
+    <input type="submit" value="Buscar" />
+}
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>Id Venta</th>
+            <th>Total</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>IVA(%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCotizacion in Model)
+        {
+            <tr>
+                <td>@objCotizacion.IdVenta</td>
+                <td>@objCotizacion.Total</td>
+                <td>@objCotizacion.Cliente</td>
+                <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>
+                <td>@objCotizacion.Iva</td>
+
+                <td><a class="btn btn-info" href="~/DetalleCotizacion/DetalleCotizacion?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-eye-open">|Verdetalles</span></a></td>
+                <td><a class="btn btn-warning" href="~/DetalleCotizacion/Editar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
+                <td><a class="btn btn-danger" href="~/DetalleCotizacion/PreEliminar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+

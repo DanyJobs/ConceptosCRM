@@ -18,6 +18,7 @@ namespace WebFacturaMvc.Datos
         public cliente()
         {
             this.cotizacion = new HashSet<cotizacion>();
+            this.venta = new HashSet<venta>();
         }
     
         public decimal idCliente { get; set; }
@@ -29,5 +30,7 @@ namespace WebFacturaMvc.Datos
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cotizacion> cotizacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<venta> venta { get; set; }
     }
 }

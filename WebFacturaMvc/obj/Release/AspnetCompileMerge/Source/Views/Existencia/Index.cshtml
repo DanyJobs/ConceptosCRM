@@ -1,0 +1,113 @@
+﻿@model List<Model.Entity.ExistenciaT>
+@{
+    ViewBag.Title = "Existencia";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Js/alertify.min.js"></script>
+    <link href="~/Css/alertify.core.css" rel="stylesheet" />
+    <link href="~/Css/alertify.default.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Existencia de productos</title>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $("#btnSucursal").click(function () {
+            //alertify.alert("Boton Iniciado");
+            //console.info('hola');
+            var i = 0;
+            var envio = "{idSucursal:'" + $('#txtsucursal').val()
+            envio += "'}";
+            var json = eval("(" + envio + ')');
+            //alertify.alert("INGRESE DATOS");
+            console.info(json);
+            $.ajax({
+                type: "POST",
+                url: "Filtrado",
+                data: JSON.stringify(json),                
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (result) {
+                    alert(result.d);
+                },
+                error: function (result) {
+                    //Log the error to the console
+                }
+            });
+        });
+        });
+
+    </script>
+    <center><h2>Existencias de productos</h2></center>
+    <center><h4>Filtrar por:</h4></center>
+    <table id="encabezado" class="table">
+        <tbody>
+            <tr style="font-size:20px;">
+                <td style="float:right; vertical-align:middle;">Nombre de producto:</td>
+                <td>
+                    @*<a class="btn_productos btn btn-primary" href="#">
+                           Obtener Productos
+                        </a>*@
+
+                    <div class="form-group col-md-12">
+                        <div class="col-md-9 dropdown">
+                            @Html.TextBox("nombreProducto", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-warning btn-lg" name="btnproductos" id="btnproductos">Filtrar</button>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr style="font-size:20px;">
+                <td style="float:right; vertical-align:middle;">Sucursal:</td>
+                <td>
+                    @*<a class="btn_productos btn btn-primary" href="#">
+                           Obtener Productos
+                        </a>*@
+
+                    <div class="form-group col-md-12">
+                        <div class="col-md-9 dropdown">
+                            @Html.DropDownList("txtsucursal", ViewBag.ListaSucursal as SelectList, "Seleccione sucursal", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-warning btn-lg" name="btnSucursal" id="btnSucursal">Filtrar</button>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <tr class="bg-primary">
+                <th>Nombre de producto</th>
+                <th>Sucursal</th>
+                <th>Cantidad</th>
+                <th>Seccion</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var objCompra in Model)
+            {
+                <tr>
+                    <td>@objCompra.Nombre</td>
+                    <td>@objCompra.Sucursal</td>
+                    <td>@objCompra.Cantidad</td>
+                    <td>@objCompra.Seccion</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</body>
+</html >

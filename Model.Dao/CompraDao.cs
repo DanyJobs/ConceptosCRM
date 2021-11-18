@@ -188,6 +188,7 @@ namespace Model.Dao
             c.NombreProveedor = dtCompras.Rows[0]["NP"].ToString();
             c.IdSucursal= int.Parse(dtCompras.Rows[0]["idSucursal"].ToString());
             c.Total = Convert.ToDecimal(dtCompras.Rows[0]["total"].ToString());
+            c.Seccion= dtCompras.Rows[0]["seccion"].ToString();
             //Se regresa el objeto            
             return c;
         }
@@ -218,5 +219,6 @@ namespace Model.Dao
             command.Connection.Close();
 
         }
+
     }
 }

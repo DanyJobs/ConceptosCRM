@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b8090fb44af54685a2ac947498a9e665" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="crmconceptoseModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.categoria" Width="1.5" PointX="8.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.cotizacion" Width="1.5" PointX="10.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.factura" Width="1.5" PointX="14.875" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.marca" Width="1.5" PointX="2.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.modoPago" Width="1.5" PointX="17.125" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="crmconceptoseModel.tipoEmpleado" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="crmconceptoseModel.FK_factura_modoPago" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="crmconceptoseModel.compra" Width="1.5" PointX="16.125" PointY="9.875" />
+        <EntityTypeShape EntityType="crmconceptoseModel.compraDetalle" Width="1.5" PointX="14" PointY="11.625" />
+        <EntityTypeShape EntityType="crmconceptoseModel.existencia" Width="1.5" PointX="16" PointY="13.875" />
+        <EntityTypeShape EntityType="crmconceptoseModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="9.75" />
+        <AssociationConnector Association="crmconceptoseModel.fkCOMPRA_DETALLEidCompra" />
+        <EntityTypeShape EntityType="crmconceptoseModel.sucursal" Width="1.5" PointX="21.375" PointY="11.875" />
+        <AssociationConnector Association="crmconceptoseModel.fkidSucursalCompra" />
+        <AssociationConnector Association="crmconceptoseModel.fkExistenciaidSucursal" />
+        <EntityTypeShape EntityType="crmconceptoseModel.AspNetUsers" Width="1.5" PointX="3" PointY="3.75" />
+        <AssociationConnector Association="crmconceptoseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="crmconceptoseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="crmconceptoseModel.FK_venta_vendedor" />
+        <AssociationConnector Association="crmconceptoseModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="crmconceptoseModel.proveedor" Width="1.5" PointX="18.5" PointY="8.375" />
+        <AssociationConnector Association="crmconceptoseModel.fkidProvedoorCompra" />
+        <EntityTypeShape EntityType="crmconceptoseModel.cliente" Width="1.5" PointX="7.375" PointY="4" />
+        <AssociationConnector Association="crmconceptoseModel.FK_venta_cliente" />
+        <EntityTypeShape EntityType="crmconceptoseModel.producto" Width="1.5" PointX="13.25" PointY="14.625" />
+        <AssociationConnector Association="crmconceptoseModel.FK__producto__idCate__164452B1" />
+        <AssociationConnector Association="crmconceptoseModel.fkProductoCompra" />
+        <AssociationConnector Association="crmconceptoseModel.fkExistenciaidProducto" />
+        <EntityTypeShape EntityType="crmconceptoseModel.Moneda" Width="1.5" PointX="6" PointY="9.375" />
+        <EntityTypeShape EntityType="crmconceptoseModel.texto" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="crmconceptoseModel.detalleCotizacion" Width="1.5" PointX="19.125" PointY="12.75" />
+        <AssociationConnector Association="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF" />
+        <AssociationConnector Association="crmconceptoseModel.FK_detalleFactura_factura" />
+        <AssociationConnector Association="crmconceptoseModel.FK_detalleFactura_producto" />
+        <EntityTypeShape EntityType="crmconceptoseModel.configuracion" Width="1.5" PointX="8.25" PointY="7.125" />
+        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionUsuario" />
+        <AssociationConnector Association="crmconceptoseModel.FK_ConfiguracionMoneda" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

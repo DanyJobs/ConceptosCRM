@@ -14,12 +14,14 @@ namespace Model.Entity
         private decimal precio;
         private int cantidad;
         private string idproducto;
-        private int estado;      
+        private int estado;
+        private string seccion;
         //JOIN
         private string nombreProducto;
         private int idSucursal;
         private string descripcion;
         private string nombreSucursal;
+
         
         public int IdCompra
         {
@@ -70,6 +72,18 @@ namespace Model.Entity
             set
             {
                 idproducto = value;
+            }
+        }
+        public string Seccion
+        {
+            get
+            {
+                return seccion;
+            }
+
+            set
+            {
+                seccion = value;
             }
         }
         public string NombreSucursal
@@ -146,13 +160,15 @@ namespace Model.Entity
             this.precio = precio;
             this.cantidad = cantidad;
             this.idSucursal = idSucursal;
+            
         }
-        public CompraDetalle(int idcompra, string idproducto, int cantidad, decimal precio)
+        public CompraDetalle(int idcompra, string idproducto, int cantidad, decimal precio, string seccion)
         {
             this.idCompra = idcompra;
             this.idproducto = idproducto;
             this.precio = precio;
-            this.cantidad = cantidad;            
+            this.cantidad = cantidad;
+            this.seccion = seccion;
         }
         public CompraDetalle(int idCompra)
         {

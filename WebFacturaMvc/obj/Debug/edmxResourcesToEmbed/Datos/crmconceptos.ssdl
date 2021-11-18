@@ -72,6 +72,14 @@
     <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="ciudad">
+    <Key>
+      <PropertyRef Name="idCiudad" />
+    </Key>
+    <Property Name="idCiudad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="40" />
+    <Property Name="idEstado" Type="int" />
+  </EntityType>
   <EntityType Name="cliente">
     <Key>
       <PropertyRef Name="idCliente" />
@@ -102,6 +110,7 @@
     <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="precio" Type="money" Nullable="false" />
+    <Property Name="seccion" Type="varchar" MaxLength="9" />
   </EntityType>
   <EntityType Name="configuracion">
     <Key>
@@ -112,7 +121,7 @@
     <Property Name="requerir" Type="char" MaxLength="1" />
     <Property Name="impuesto" Type="decimal" Precision="5" Scale="2" />
     <Property Name="usuario" Type="nvarchar" MaxLength="128" />
-    <Property Name="servidorSmtp" Type="nvarchar" MaxLength="20" />
+    <Property Name="servidorSmtp" Type="varchar" MaxLength="50" />
     <Property Name="puerto" Type="int" />
     <Property Name="contrasena" Type="nvarchar(max)" />
     <Property Name="displayName" Type="nvarchar" MaxLength="30" />
@@ -154,6 +163,25 @@
     <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="descuento" Type="money" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmailMarketing">
+    <Key>
+      <PropertyRef Name="idMarketing" />
+    </Key>
+    <Property Name="idMarketing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="20" />
+    <Property Name="email" Type="nvarchar" MaxLength="128" />
+    <Property Name="dias" Type="int" />
+    <Property Name="fechaComienzo" Type="date" />
+    <Property Name="idUsuario" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="estado">
+    <Key>
+      <PropertyRef Name="idEstado" />
+    </Key>
+    <Property Name="idEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="40" />
+    <Property Name="idPais" Type="int" />
   </EntityType>
   <EntityType Name="existencia">
     <Key>
@@ -198,6 +226,13 @@
     <Property Name="abreviatura" Type="nvarchar" MaxLength="3" Nullable="false" />
     <Property Name="simbolo" Type="nvarchar" MaxLength="4" />
   </EntityType>
+  <EntityType Name="pais">
+    <Key>
+      <PropertyRef Name="idPais" />
+    </Key>
+    <Property Name="idPais" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="40" />
+  </EntityType>
   <EntityType Name="producto">
     <Key>
       <PropertyRef Name="idProducto" />
@@ -225,6 +260,27 @@
     <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="telefono" Type="char" MaxLength="10" />
   </EntityType>
+  <EntityType Name="RFQ">
+    <Key>
+      <PropertyRef Name="idRFQ" />
+    </Key>
+    <Property Name="idRFQ" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idVendedor" Type="nvarchar" MaxLength="128" />
+    <Property Name="fecha" Type="date" />
+    <Property Name="estatus" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="RFQItem">
+    <Key>
+      <PropertyRef Name="idRFQItem" />
+    </Key>
+    <Property Name="idRFQItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idRfq" Type="int" />
+    <Property Name="idProveedor" Type="int" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="5" />
+    <Property Name="precio" Type="real" />
+    <Property Name="cantidad" Type="int" />
+    <Property Name="notas" Type="nvarchar" MaxLength="128" />
+  </EntityType>
   <EntityType Name="sucursal">
     <Key>
       <PropertyRef Name="idSucursal" />
@@ -237,16 +293,6 @@
     <Property Name="cp" Type="char" MaxLength="5" />
     <Property Name="email" Type="varchar" MaxLength="30" />
     <Property Name="telefono" Type="char" MaxLength="10" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="texto">
     <Key>
@@ -262,6 +308,24 @@
     </Key>
     <Property Name="idTipo" Type="varchar" MaxLength="5" Nullable="false" />
     <Property Name="descripcion" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="venta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idCotizacion" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="idCliente" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="codigoPostal" Type="char" MaxLength="5" />
+    <Property Name="idCiudad" Type="int" />
+    <Property Name="calle" Type="varchar" MaxLength="20" />
+    <Property Name="numeroExt" Type="varchar" MaxLength="6" />
+    <Property Name="numeroInt" Type="varchar" MaxLength="6" />
+    <Property Name="colonia" Type="varchar" MaxLength="30" />
+    <Property Name="telefonoContacto" Type="varchar" MaxLength="15" />
+    <Property Name="archivo" Type="varbinary(max)" />
+    <Property Name="fecha" Type="date" />
+    <Property Name="vendedor" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <Association Name="FK__detalleFa__idPed__239E4DCF">
     <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="1" />
@@ -284,6 +348,18 @@
       </Principal>
       <Dependent Role="producto">
         <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_CiudadEstado">
+    <End Role="estado" Type="Self.estado" Multiplicity="0..1" />
+    <End Role="ciudad" Type="Self.ciudad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="estado">
+        <PropertyRef Name="idEstado" />
+      </Principal>
+      <Dependent Role="ciudad">
+        <PropertyRef Name="idEstado" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -391,6 +467,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_EmailMarketingIdUsuario">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="EmailMarketing" Type="Self.EmailMarketing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmailMarketing">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_factura_modoPago">
     <End Role="modoPago" Type="Self.modoPago" Multiplicity="1" />
     <End Role="factura" Type="Self.factura" Multiplicity="*" />
@@ -400,6 +488,78 @@
       </Principal>
       <Dependent Role="factura">
         <PropertyRef Name="numPago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_IdProductoRFQItem">
+    <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_IdProveedorRFQItem">
+    <End Role="proveedor" Type="Self.proveedor" Multiplicity="0..1" />
+    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_idVendedorRFQ">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="RFQ" Type="Self.RFQ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RFQ">
+        <PropertyRef Name="idVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PaisEstado">
+    <End Role="pais" Type="Self.pais" Multiplicity="0..1" />
+    <End Role="estado" Type="Self.estado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pais">
+        <PropertyRef Name="idPais" />
+      </Principal>
+      <Dependent Role="estado">
+        <PropertyRef Name="idPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RFQItemRFQ">
+    <End Role="RFQ" Type="Self.RFQ" Multiplicity="0..1" />
+    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RFQ">
+        <PropertyRef Name="idRFQ" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idRfq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VendedorVenta">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="vendedor" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -424,6 +584,30 @@
       </Principal>
       <Dependent Role="cotizacion">
         <PropertyRef Name="idVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VentaCiudad">
+    <End Role="ciudad" Type="Self.ciudad" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ciudad">
+        <PropertyRef Name="idCiudad" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="idCiudad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VentaCliente">
+    <End Role="cliente" Type="Self.cliente" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="idCliente" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="idCliente" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -499,7 +683,134 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_agregarCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEstado" Type="int" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_agregarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_agregarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_cargarCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCiudad" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cargarCiudades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEstado" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cargarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEstado" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cargarEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cargarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cargarPaises" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master" />
+  <Function Name="sp_consultaSalesPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCotizacion" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaVC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCotizacion" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaVentas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="pMonth" Type="varchar" Mode="In" />
+    <Parameter Name="pYear" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaVI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaVT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="pMonth" Type="varchar" Mode="In" />
+    <Parameter Name="pYear" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_cotizacionG" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCotizacion" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_editarCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCiudad" Type="int" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_editarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEstado" Type="int" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_editarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_editarVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+    <Parameter Name="CP" Type="char" Mode="In" />
+    <Parameter Name="IdCiudad" Type="int" Mode="In" />
+    <Parameter Name="Calle" Type="varchar" Mode="In" />
+    <Parameter Name="NumExt" Type="varchar" Mode="In" />
+    <Parameter Name="NumInt" Type="varchar" Mode="In" />
+    <Parameter Name="Colonia" Type="varchar" Mode="In" />
+    <Parameter Name="Telefono" Type="varchar" Mode="In" />
+    <Parameter Name="Archivo" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminarCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCiudad" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEstado" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminarVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_filtrarCiudades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="Parametro" Type="varchar" Mode="In" />
+    <Parameter Name="IdEstado" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_filtrarEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="Parametro" Type="varchar" Mode="In" />
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_filtrarPaises" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="Parametro" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_guardarVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCotizacion" Type="int" Mode="In" />
+    <Parameter Name="IdCliente" Type="int" Mode="In" />
+    <Parameter Name="CP" Type="char" Mode="In" />
+    <Parameter Name="IdCiudad" Type="int" Mode="In" />
+    <Parameter Name="Calle" Type="varchar" Mode="In" />
+    <Parameter Name="NumExt" Type="varchar" Mode="In" />
+    <Parameter Name="NumInt" Type="varchar" Mode="In" />
+    <Parameter Name="Colonia" Type="varchar" Mode="In" />
+    <Parameter Name="Telefono" Type="varchar" Mode="In" />
+    <Parameter Name="Archivo" Type="varbinary(max)" Mode="In" />
+    <Parameter Name="Fecha" Type="date" Mode="In" />
+    <Parameter Name="Vendedor" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_hayCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdCiudad" Type="int" Mode="In" />
+    <Parameter Name="IdEstado" Type="int" Mode="In" />
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_hayEstadoPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdPais" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_traerBytes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_VerOrdenCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="AgregarRFQ" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idVenta" Type="numeric" Mode="In" />
+    <Parameter Name="idVendedor" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="consultaEmailMarketing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsuario" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="reporte_factura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idPedido" Type="nvarchar" Mode="In" />
   </Function>
@@ -520,12 +831,6 @@
     <Parameter Name="IdProducto" Type="nvarchar" Mode="In" />
     <Parameter Name="Descuento" Type="money" Mode="In" />
     <Parameter Name="Cantidad" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
   </Function>
   <Function Name="SP_Buscar_Cotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_CompraAlta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -549,6 +854,7 @@
     <Parameter Name="precio" Type="money" Mode="In" />
     <Parameter Name="idproducto" Type="nvarchar" Mode="In" />
     <Parameter Name="cantidad" Type="int" Mode="In" />
+    <Parameter Name="seccion" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_CompraDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />
@@ -602,6 +908,9 @@
     <Parameter Name="idSucursal" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_consultaSucursales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_correosEnvioMarketing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idMarketing" Type="decimal" Mode="In" />
+  </Function>
   <Function Name="SP_COTIZACION_HISTORIAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idProducto" Type="varchar" Mode="In" />
   </Function>
@@ -609,26 +918,8 @@
   <Function Name="sp_CotizacionDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
   </Function>
-  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
   <Function Name="sp_eliminarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_lista_clientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="pageIndex" Type="int" Mode="In" />
@@ -664,15 +955,9 @@
     <Parameter Name="categoria" Type="nvarchar" Mode="In" />
     <Parameter Name="idMarca" Type="nvarchar" Mode="In" />
   </Function>
-  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-  </Function>
   <Function Name="sp_reporte_venta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idVenta" Type="numeric" Mode="In" />
   </Function>
-  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="spAgregarCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />
     <Parameter Name="total" Type="money" Mode="In" />
@@ -685,18 +970,6 @@
     <Parameter Name="idProducto" Type="int" Mode="In" />
     <Parameter Name="cantidad" Type="int" Mode="In" />
     <Parameter Name="precio" Type="int" Mode="In" />
-  </Function>
-  <Function Name="spAgregarProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="idProveedor" Type="int" Mode="In" />
-    <Parameter Name="nombre" Type="varchar" Mode="In" />
-    <Parameter Name="calle" Type="varchar" Mode="In" />
-    <Parameter Name="numExt" Type="varchar" Mode="In" />
-    <Parameter Name="colonia" Type="varchar" Mode="In" />
-    <Parameter Name="cp" Type="char" Mode="In" />
-    <Parameter Name="email" Type="varchar" Mode="In" />
-    <Parameter Name="telefono" Type="char" Mode="In" />
-    <Parameter Name="app" Type="varchar" Mode="In" />
-    <Parameter Name="apm" Type="varchar" Mode="In" />
   </Function>
   <Function Name="spAgregarSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdSucursal" Type="int" Mode="In" />
@@ -716,23 +989,29 @@
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="categoria" EntityType="Self.categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ciudad" EntityType="Self.ciudad" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="compra" EntityType="Self.compra" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="compraDetalle" EntityType="Self.compraDetalle" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="configuracion" EntityType="Self.configuracion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cotizacion" EntityType="Self.cotizacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="detalleCotizacion" EntityType="Self.detalleCotizacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailMarketing" EntityType="Self.EmailMarketing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="estado" EntityType="Self.estado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="existencia" EntityType="Self.existencia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="factura" EntityType="Self.factura" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="marca" EntityType="Self.marca" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="modoPago" EntityType="Self.modoPago" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Moneda" EntityType="Self.Moneda" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pais" EntityType="Self.pais" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="proveedor" EntityType="Self.proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RFQ" EntityType="Self.RFQ" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RFQItem" EntityType="Self.RFQItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sucursal" EntityType="Self.sucursal" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="texto" EntityType="Self.texto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tipoEmpleado" EntityType="Self.tipoEmpleado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="venta" EntityType="Self.venta" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__detalleFa__idPed__239E4DCF" Association="Self.FK__detalleFa__idPed__239E4DCF">
       <End Role="cotizacion" EntitySet="cotizacion" />
       <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
@@ -740,6 +1019,10 @@
     <AssociationSet Name="FK__producto__idCate__164452B1" Association="Self.FK__producto__idCate__164452B1">
       <End Role="categoria" EntitySet="categoria" />
       <End Role="producto" EntitySet="producto" />
+    </AssociationSet>
+    <AssociationSet Name="fk_CiudadEstado" Association="Self.fk_CiudadEstado">
+      <End Role="estado" EntitySet="estado" />
+      <End Role="ciudad" EntitySet="ciudad" />
     </AssociationSet>
     <AssociationSet Name="FK_ConfiguracionMoneda" Association="Self.FK_ConfiguracionMoneda">
       <End Role="Moneda" EntitySet="Moneda" />
@@ -773,9 +1056,37 @@
       <End Role="producto" EntitySet="producto" />
       <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
     </AssociationSet>
+    <AssociationSet Name="FK_EmailMarketingIdUsuario" Association="Self.FK_EmailMarketingIdUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="EmailMarketing" EntitySet="EmailMarketing" />
+    </AssociationSet>
     <AssociationSet Name="FK_factura_modoPago" Association="Self.FK_factura_modoPago">
       <End Role="modoPago" EntitySet="modoPago" />
       <End Role="factura" EntitySet="factura" />
+    </AssociationSet>
+    <AssociationSet Name="fk_IdProductoRFQItem" Association="Self.fk_IdProductoRFQItem">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_IdProveedorRFQItem" Association="Self.fk_IdProveedorRFQItem">
+      <End Role="proveedor" EntitySet="proveedor" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_idVendedorRFQ" Association="Self.fk_idVendedorRFQ">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="RFQ" EntitySet="RFQ" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PaisEstado" Association="Self.fk_PaisEstado">
+      <End Role="pais" EntitySet="pais" />
+      <End Role="estado" EntitySet="estado" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RFQItemRFQ" Association="Self.fk_RFQItemRFQ">
+      <End Role="RFQ" EntitySet="RFQ" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VendedorVenta" Association="Self.FK_VendedorVenta">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="venta" EntitySet="venta" />
     </AssociationSet>
     <AssociationSet Name="FK_venta_cliente" Association="Self.FK_venta_cliente">
       <End Role="cliente" EntitySet="cliente" />
@@ -784,6 +1095,14 @@
     <AssociationSet Name="FK_venta_vendedor" Association="Self.FK_venta_vendedor">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="cotizacion" EntitySet="cotizacion" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VentaCiudad" Association="Self.fk_VentaCiudad">
+      <End Role="ciudad" EntitySet="ciudad" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VentaCliente" Association="Self.fk_VentaCliente">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="venta" EntitySet="venta" />
     </AssociationSet>
     <AssociationSet Name="fkCOMPRA_DETALLEidCompra" Association="Self.fkCOMPRA_DETALLEidCompra">
       <End Role="compra" EntitySet="compra" />

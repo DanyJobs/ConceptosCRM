@@ -4,6 +4,13 @@
 @{
     ViewBag.Title = "ReporteVentas";
 }
+<script src="~/Js/alertify.min.js">
+
+</script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <h2>Reporte de Ventas</h2>
 
 <table class="table">
@@ -20,18 +27,19 @@
     </thead>
     <tbody>
         @foreach (var objCotizacion in Model)
-            {
-        <tr>
-            <td>@objCotizacion.IdVenta</td>
-            <td>@objCotizacion.IdCliente</td>
-            <td>@objCotizacion.Fecha</td>
-            <td>@objCotizacion.IdVendedor</td>
-            <td>@objCotizacion.Iva</td>
-            <td>@objCotizacion.Total</td>     
-            <td><a style="float:right;" class="btn btn-success" href="~/Cotizacion/SendEmailFactura?IdVenta=@objCotizacion.IdVenta" target="_blank" rel="noopener noreferrer">Enviar Email</a></td>
-            <td><a class="btn btn-success" href="~/Reportes/Ingles/frmReporteEn.aspx?IdVenta=@objCotizacion.IdVenta" target="_blank" rel="noopener noreferrer"><span class="glyphicon glyphicon-eye-open"></span>|Imprimir Ingles</a></td>
-            <td><a class="btn btn-success" href="~/Reportes/Espanol/frmReporteEs.aspx?IdVenta=@objCotizacion.IdVenta" target="_blank" rel="noopener noreferrer"><span class="glyphicon glyphicon-eye-open"></span>|Imprimir Español</a></td>
-        </tr>
+        {
+            <tr>
+                <td>@objCotizacion.IdVenta</td>
+                <td>@objCotizacion.IdCliente</td>
+                <td>@objCotizacion.Fecha</td>
+                <td>@objCotizacion.IdVendedor</td>
+                <td>@objCotizacion.Iva</td>
+                <td>@objCotizacion.Total</td>
+                <td><a style="float:right;" class="btn btn-success" href="~/Cotizacion/SendEmailFactura?IdVenta=@objCotizacion.IdVenta" target="_blank" rel="noopener noreferrer">Enviar Email</a></td>
+                <td><a class="btn btn-success" href="~/Reportes/Ingles/frmReporteEn.aspx?IdVenta=@objCotizacion.IdVenta" target="_blank" rel="noopener noreferrer"><span class="glyphicon glyphicon-eye-open"></span>|Imprimir Ingles</a></td>
+                <td><a class="btn btn-success" href="~/Reportes/Espanol/frmReporteEs.aspx?IdVenta=@objCotizacion.IdVenta" target="_blank" rel="noopener noreferrer"><span class="glyphicon glyphicon-eye-open"></span>|Imprimir Español</a></td>
+                <td><a class="btn btn-danger" onclick="RFQ(@objCotizacion.IdVenta)"><span class="glyphicon glyphicon-remove"> Cancelar Seguimiento</span></a></td>
+            </tr>
         }
 
     </tbody>

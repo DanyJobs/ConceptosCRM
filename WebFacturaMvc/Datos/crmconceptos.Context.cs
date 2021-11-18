@@ -40,8 +40,6 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<compra> compra { get; set; }
         public virtual DbSet<compraDetalle> compraDetalle { get; set; }
         public virtual DbSet<existencia> existencia { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<sucursal> sucursal { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<proveedor> proveedor { get; set; }
         public virtual DbSet<cliente> cliente { get; set; }
@@ -50,6 +48,14 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<texto> texto { get; set; }
         public virtual DbSet<detalleCotizacion> detalleCotizacion { get; set; }
         public virtual DbSet<configuracion> configuracion { get; set; }
+        public virtual DbSet<ciudad> ciudad { get; set; }
+        public virtual DbSet<estado> estado { get; set; }
+        public virtual DbSet<pais> pais { get; set; }
+        public virtual DbSet<venta> venta { get; set; }
+        public virtual DbSet<RFQ> RFQ { get; set; }
+        public virtual DbSet<RFQItem> RFQItem { get; set; }
+        public virtual DbSet<EmailMarketing> EmailMarketing { get; set; }
+        public virtual DbSet<sucursal> sucursal { get; set; }
     
         public virtual int reporte_factura(string idPedido)
         {
@@ -377,7 +383,7 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraAlta", totalParameter, fechaCompraParameter, idSucursalParameter, idProveedorParameter);
         }
     
-        public virtual int sp_CompraDetalleAlta(Nullable<int> idcompra, Nullable<decimal> precio, string idproducto, Nullable<int> cantidad)
+        public virtual int sp_CompraDetalleAlta(Nullable<int> idcompra, Nullable<decimal> precio, string idproducto, Nullable<int> cantidad, string seccion)
         {
             var idcompraParameter = idcompra.HasValue ?
                 new ObjectParameter("idcompra", idcompra) :
@@ -395,7 +401,11 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("cantidad", cantidad) :
                 new ObjectParameter("cantidad", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraDetalleAlta", idcompraParameter, precioParameter, idproductoParameter, cantidadParameter);
+            var seccionParameter = seccion != null ?
+                new ObjectParameter("seccion", seccion) :
+                new ObjectParameter("seccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraDetalleAlta", idcompraParameter, precioParameter, idproductoParameter, cantidadParameter, seccionParameter);
         }
     
         public virtual ObjectResult<sp_consultaExistencias_Result> sp_consultaExistencias()
@@ -762,6 +772,419 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("idProveedor", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompraEditar", idCompraParameter, totalParameter, fechaCompraParameter, idSucursalParameter, idProveedorParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarCiudades_Result> sp_cargarCiudades(Nullable<int> idEstado)
+        {
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("IdEstado", idEstado) :
+                new ObjectParameter("IdEstado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarCiudades_Result>("sp_cargarCiudades", idEstadoParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarEstados_Result> sp_cargarEstados(Nullable<int> idPais)
+        {
+            var idPaisParameter = idPais.HasValue ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarEstados_Result>("sp_cargarEstados", idPaisParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarPaises_Result> sp_cargarPaises()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarPaises_Result>("sp_cargarPaises");
+        }
+    
+        public virtual ObjectResult<sp_consultaVentas_Result> sp_consultaVentas(string pMonth, string pYear)
+        {
+            var pMonthParameter = pMonth != null ?
+                new ObjectParameter("pMonth", pMonth) :
+                new ObjectParameter("pMonth", typeof(string));
+    
+            var pYearParameter = pYear != null ?
+                new ObjectParameter("pYear", pYear) :
+                new ObjectParameter("pYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaVentas_Result>("sp_consultaVentas", pMonthParameter, pYearParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaSalesPerson_Result> sp_consultaSalesPerson(Nullable<int> idCotizacion)
+        {
+            var idCotizacionParameter = idCotizacion.HasValue ?
+                new ObjectParameter("IdCotizacion", idCotizacion) :
+                new ObjectParameter("IdCotizacion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaSalesPerson_Result>("sp_consultaSalesPerson", idCotizacionParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaVC_Result> sp_consultaVC(Nullable<int> idCotizacion)
+        {
+            var idCotizacionParameter = idCotizacion.HasValue ?
+                new ObjectParameter("IdCotizacion", idCotizacion) :
+                new ObjectParameter("IdCotizacion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaVC_Result>("sp_consultaVC", idCotizacionParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaVI_Result> sp_consultaVI(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaVI_Result>("sp_consultaVI", idVentaParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaVT_Result> sp_consultaVT(string pMonth, string pYear)
+        {
+            var pMonthParameter = pMonth != null ?
+                new ObjectParameter("pMonth", pMonth) :
+                new ObjectParameter("pMonth", typeof(string));
+    
+            var pYearParameter = pYear != null ?
+                new ObjectParameter("pYear", pYear) :
+                new ObjectParameter("pYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaVT_Result>("sp_consultaVT", pMonthParameter, pYearParameter);
+        }
+    
+        public virtual int sp_cotizacionG(Nullable<int> idCotizacion)
+        {
+            var idCotizacionParameter = idCotizacion.HasValue ?
+                new ObjectParameter("IdCotizacion", idCotizacion) :
+                new ObjectParameter("IdCotizacion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_cotizacionG", idCotizacionParameter);
+        }
+    
+        public virtual int sp_editarVenta(Nullable<int> idVenta, string cP, Nullable<int> idCiudad, string calle, string numExt, string numInt, string colonia, string telefono, byte[] archivo)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            var cPParameter = cP != null ?
+                new ObjectParameter("CP", cP) :
+                new ObjectParameter("CP", typeof(string));
+    
+            var idCiudadParameter = idCiudad.HasValue ?
+                new ObjectParameter("IdCiudad", idCiudad) :
+                new ObjectParameter("IdCiudad", typeof(int));
+    
+            var calleParameter = calle != null ?
+                new ObjectParameter("Calle", calle) :
+                new ObjectParameter("Calle", typeof(string));
+    
+            var numExtParameter = numExt != null ?
+                new ObjectParameter("NumExt", numExt) :
+                new ObjectParameter("NumExt", typeof(string));
+    
+            var numIntParameter = numInt != null ?
+                new ObjectParameter("NumInt", numInt) :
+                new ObjectParameter("NumInt", typeof(string));
+    
+            var coloniaParameter = colonia != null ?
+                new ObjectParameter("Colonia", colonia) :
+                new ObjectParameter("Colonia", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var archivoParameter = archivo != null ?
+                new ObjectParameter("Archivo", archivo) :
+                new ObjectParameter("Archivo", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editarVenta", idVentaParameter, cPParameter, idCiudadParameter, calleParameter, numExtParameter, numIntParameter, coloniaParameter, telefonoParameter, archivoParameter);
+        }
+    
+        public virtual int sp_eliminarVenta(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarVenta", idVentaParameter);
+        }
+    
+        public virtual int sp_guardarVenta(Nullable<int> idCotizacion, Nullable<int> idCliente, string cP, Nullable<int> idCiudad, string calle, string numExt, string numInt, string colonia, string telefono, byte[] archivo, Nullable<System.DateTime> fecha, string vendedor)
+        {
+            var idCotizacionParameter = idCotizacion.HasValue ?
+                new ObjectParameter("IdCotizacion", idCotizacion) :
+                new ObjectParameter("IdCotizacion", typeof(int));
+    
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var cPParameter = cP != null ?
+                new ObjectParameter("CP", cP) :
+                new ObjectParameter("CP", typeof(string));
+    
+            var idCiudadParameter = idCiudad.HasValue ?
+                new ObjectParameter("IdCiudad", idCiudad) :
+                new ObjectParameter("IdCiudad", typeof(int));
+    
+            var calleParameter = calle != null ?
+                new ObjectParameter("Calle", calle) :
+                new ObjectParameter("Calle", typeof(string));
+    
+            var numExtParameter = numExt != null ?
+                new ObjectParameter("NumExt", numExt) :
+                new ObjectParameter("NumExt", typeof(string));
+    
+            var numIntParameter = numInt != null ?
+                new ObjectParameter("NumInt", numInt) :
+                new ObjectParameter("NumInt", typeof(string));
+    
+            var coloniaParameter = colonia != null ?
+                new ObjectParameter("Colonia", colonia) :
+                new ObjectParameter("Colonia", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var archivoParameter = archivo != null ?
+                new ObjectParameter("Archivo", archivo) :
+                new ObjectParameter("Archivo", typeof(byte[]));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var vendedorParameter = vendedor != null ?
+                new ObjectParameter("Vendedor", vendedor) :
+                new ObjectParameter("Vendedor", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_guardarVenta", idCotizacionParameter, idClienteParameter, cPParameter, idCiudadParameter, calleParameter, numExtParameter, numIntParameter, coloniaParameter, telefonoParameter, archivoParameter, fechaParameter, vendedorParameter);
+        }
+    
+        public virtual ObjectResult<byte[]> sp_traerBytes(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("sp_traerBytes", idVentaParameter);
+        }
+    
+        public virtual ObjectResult<sp_VerOrdenCompra_Result> sp_VerOrdenCompra(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_VerOrdenCompra_Result>("sp_VerOrdenCompra", idVentaParameter);
+        }
+    
+        public virtual int sp_agregarPais(string nombre)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarPais", nombreParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarPais_Result> sp_cargarPais(Nullable<int> idPais)
+        {
+            var idPaisParameter = idPais.HasValue ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarPais_Result>("sp_cargarPais", idPaisParameter);
+        }
+    
+        public virtual int sp_editarPais(Nullable<int> idPais, string nombre)
+        {
+            var idPaisParameter = idPais.HasValue ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editarPais", idPaisParameter, nombreParameter);
+        }
+    
+        public virtual int sp_eliminarPais(Nullable<int> idPais)
+        {
+            var idPaisParameter = idPais.HasValue ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarPais", idPaisParameter);
+        }
+    
+        public virtual ObjectResult<sp_filtrarCiudades_Result> sp_filtrarCiudades(string parametro, Nullable<int> idEstado)
+        {
+            var parametroParameter = parametro != null ?
+                new ObjectParameter("Parametro", parametro) :
+                new ObjectParameter("Parametro", typeof(string));
+    
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("IdEstado", idEstado) :
+                new ObjectParameter("IdEstado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_filtrarCiudades_Result>("sp_filtrarCiudades", parametroParameter, idEstadoParameter);
+        }
+    
+        public virtual ObjectResult<sp_filtrarEstados_Result> sp_filtrarEstados(string parametro, Nullable<int> idPais)
+        {
+            var parametroParameter = parametro != null ?
+                new ObjectParameter("Parametro", parametro) :
+                new ObjectParameter("Parametro", typeof(string));
+    
+            var idPaisParameter = idPais.HasValue ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_filtrarEstados_Result>("sp_filtrarEstados", parametroParameter, idPaisParameter);
+        }
+    
+        public virtual ObjectResult<sp_filtrarPaises_Result> sp_filtrarPaises(string parametro)
+        {
+            var parametroParameter = parametro != null ?
+                new ObjectParameter("Parametro", parametro) :
+                new ObjectParameter("Parametro", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_filtrarPaises_Result>("sp_filtrarPaises", parametroParameter);
+        }
+    
+        public virtual int AgregarRFQ(Nullable<decimal> idVenta, string idVendedor)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("idVenta", idVenta) :
+                new ObjectParameter("idVenta", typeof(decimal));
+    
+            var idVendedorParameter = idVendedor != null ?
+                new ObjectParameter("idVendedor", idVendedor) :
+                new ObjectParameter("idVendedor", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarRFQ", idVentaParameter, idVendedorParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarEstado_Result> sp_cargarEstado(Nullable<int> idEstado)
+        {
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("IdEstado", idEstado) :
+                new ObjectParameter("IdEstado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarEstado_Result>("sp_cargarEstado", idEstadoParameter);
+        }
+    
+        public virtual int sp_editarEstado(Nullable<int> idEstado, string nombre)
+        {
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("IdEstado", idEstado) :
+                new ObjectParameter("IdEstado", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editarEstado", idEstadoParameter, nombreParameter);
+        }
+    
+        public virtual ObjectResult<sp_correosEnvioMarketing_Result> sp_correosEnvioMarketing(Nullable<decimal> idMarketing)
+        {
+            var idMarketingParameter = idMarketing.HasValue ?
+                new ObjectParameter("idMarketing", idMarketing) :
+                new ObjectParameter("idMarketing", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_correosEnvioMarketing_Result>("sp_correosEnvioMarketing", idMarketingParameter);
+        }
+    
+        public virtual int sp_agregarCiudad(Nullable<int> idEstado, string nombre)
+        {
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("IdEstado", idEstado) :
+                new ObjectParameter("IdEstado", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarCiudad", idEstadoParameter, nombreParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarCiudad_Result> sp_cargarCiudad(Nullable<int> idCiudad)
+        {
+            var idCiudadParameter = idCiudad.HasValue ?
+                new ObjectParameter("IdCiudad", idCiudad) :
+                new ObjectParameter("IdCiudad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarCiudad_Result>("sp_cargarCiudad", idCiudadParameter);
+        }
+    
+        public virtual int sp_editarCiudad(Nullable<int> idCiudad, string nombre)
+        {
+            var idCiudadParameter = idCiudad.HasValue ?
+                new ObjectParameter("IdCiudad", idCiudad) :
+                new ObjectParameter("IdCiudad", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editarCiudad", idCiudadParameter, nombreParameter);
+        }
+    
+        public virtual ObjectResult<sp_hayCiudad_Result> sp_hayCiudad(Nullable<int> idCiudad, Nullable<int> idEstado, Nullable<int> idPais)
+        {
+            var idCiudadParameter = idCiudad.HasValue ?
+                new ObjectParameter("IdCiudad", idCiudad) :
+                new ObjectParameter("IdCiudad", typeof(int));
+    
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("IdEstado", idEstado) :
+                new ObjectParameter("IdEstado", typeof(int));
+    
+            var idPaisParameter = idPais.HasValue ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_hayCiudad_Result>("sp_hayCiudad", idCiudadParameter, idEstadoParameter, idPaisParameter);
+        }
+    
+        public virtual int sp_eliminarCiudad(Nullable<int> idCiudad)
+        {
+            var idCiudadParameter = idCiudad.HasValue ?
+                new ObjectParameter("IdCiudad", idCiudad) :
+                new ObjectParameter("IdCiudad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarCiudad", idCiudadParameter);
+        }
+    
+        public virtual int sp_eliminarEstado(Nullable<int> idEstado)
+        {
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("IdEstado", idEstado) :
+                new ObjectParameter("IdEstado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarEstado", idEstadoParameter);
+        }
+    
+        public virtual ObjectResult<sp_hayEstadoPais_Result> sp_hayEstadoPais(Nullable<int> idPais)
+        {
+            var idPaisParameter = idPais.HasValue ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_hayEstadoPais_Result>("sp_hayEstadoPais", idPaisParameter);
+        }
+    
+        public virtual ObjectResult<consultaEmailMarketing_Result> consultaEmailMarketing(string idUsuario)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("idUsuario", idUsuario) :
+                new ObjectParameter("idUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<consultaEmailMarketing_Result>("consultaEmailMarketing", idUsuarioParameter);
         }
     }
 }

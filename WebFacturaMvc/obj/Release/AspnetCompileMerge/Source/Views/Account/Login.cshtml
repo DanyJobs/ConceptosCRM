@@ -1,0 +1,151 @@
+﻿@using WebFacturaMvc.Models
+
+
+@model LoginViewModel
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+    
+<head>
+    <link rel="shortcut icon" href="~/Utilidades/Imagenes/logo conceptos Icon.png">
+</head>
+
+<!--<link href="~/Content/login.css" rel="stylesheet" type="text/css">-->
+<center><h2>@Lenguaje.Recurso.Inicio_de_sesion</h2></center>
+<style>
+    body {
+        background-color: #E1DCDC;
+        background-size: cover;
+    }
+
+    .main-section {
+        margin: 0 auto;
+        margin-top: 5%;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background-color: #000000;
+        opacity: .85;
+        padding: 0 20px;
+        box-shadow: 0px 0px 3px #848484;
+    }
+
+    .user-img {
+        margin-top: -50px;
+        margin-bottom: 35px;
+    }
+
+        .user-img img {
+            width: 100px;
+            height: 100px;
+            box-shadow: 0px 0px 3px #848484;
+            border-radius: 50%;
+        }
+
+    .form-group input {
+        height: 42px;
+        font-size: 18px;
+        border: 0;
+        padding-left: 54px;
+        border-radius: 5px;
+    }
+
+    .form-group::before {
+        font-family: "Font Awesome\ 5 Free";
+        position: absolute;
+        left: 28px;
+        font-size: 22px;
+        padding-top: 4px;
+    }
+
+    .form-group#user-group::before {
+        content: "\f007";
+    }
+
+    .form-group#contrasena-group::before {
+        content: "\f023";
+    }
+
+    button {
+        width: 40%;
+        margin-bottom: 5%;
+    }
+
+    .btn {
+        width: 40%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    .forgot {
+        padding: 5px 0;
+    }
+
+        .forgot a {
+            color: white;
+        }
+
+    .checkbox {
+        color: aliceblue;
+    }
+</style>
+<center>
+    <h2>@Lenguaje.Recurso.Cuenta_Local</h2>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+</center>
+<div class="container">
+    <center>
+        <div class="row">
+            <!--<div class="modal-dialog text-center">-->
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-12 main-section">
+                    <div class="modal-content">
+                        <div class="col-12 user-img">
+                            <img src="~/Img/user.jpeg" />
+                        </div>
+                        <form class="col-12">
+                            <div class="form-group" id="user-group">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group" id="contrasena-group">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>@Lenguaje.Recurso.Ingresar</button>
+                        </form>
+                    </div>
+                </div>
+            }
+            <!--</div>-->
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <img src="~/Img/logo conceptos.png" />
+            </div>
+        </div>
+    </center>
+</div>
+
+
+<!--<div class="col-md-4">
+    <section id="socialLoginForm">
+        Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+</div>-->
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

@@ -57,18 +57,18 @@
     </tr>
     @foreach (var objCliente in Model)
     {
-        <tr>
-            <th>@objCliente.IdCliente</th>
-            <th>@objCliente.Nombre</th>
-            <th>@objCliente.Appaterno</th>
-            <th>@objCliente.Dni</th>
-            <th>@objCliente.Direccion</th>
-            <th>@objCliente.Telefono</th>
-            <td><a class="btn btn-success" href="~/Cliente/Find/@objCliente.IdCliente"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-            <td><a class="btn btn-info" href="~/Cliente/Update/@objCliente.IdCliente"><span class="fa fa-edit"></span></a></td>
-            <td><a class="btn btn-danger" href="~/Cliente/Eliminar/@objCliente.IdCliente"><span class="fa fa-book"></span></a></td>
+<tr>
+    <td>@objCliente.IdCliente</td>
+    <td>@objCliente.Nombre</td>
+    <td>@objCliente.Apellido</td>
+    <td>@objCliente.Email</td>
+    <td>@objCliente.Direccion</td>
+    <td>@objCliente.Telefono</td>
+    <td><a class="btn btn-success" href="~/Cliente/Find/@objCliente.IdCliente"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+    <td><a class="btn btn-info" href="~/Cliente/Update/@objCliente.IdCliente"><span class="fa fa-edit"></span></a></td>
+    <td><a class="btn btn-danger" href="~/Cliente/Eliminar/@objCliente.IdCliente"><span class="fa fa-book"></span></a></td>
 
-        </tr>
+</tr>
     }
     <tr></tr>
 </table>

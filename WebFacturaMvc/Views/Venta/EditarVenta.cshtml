@@ -1,0 +1,291 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMy.cshtml";
+}
+
+@using Model.Entity
+@model List<Producto>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+@*<meta http-equiv="refresh" content="6">*@
+
+
+<script type="text/javascript">
+   $(document).ready(function () {
+
+        $("a[rel='pop-up']").click(function () {
+            var caracteristicas = "height=550,width=1000,scrollTo,resizable=1,scrollbars=1,location=0";
+            nueva = window.open(this.href, 'popup', caracteristicas);
+
+
+            return false;
+        });
+        //botones
+        //$("#finalizar").click(function () {
+        const btnTob64 = document.querySelector('#finalizar');
+        btnTob64.addEventListener('click', async (e) => {
+            // var oMiBlob = new Blob(pdf, { type: 'application/pdf' }); // el blob
+            const blobToBase64 = (blob) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        resolve(reader.result.split(',')[1]);
+                        // "data:image/jpg;base64,    =sdCXDSAsadsadsa"
+                    };
+                });
+            };
+            const fileInput = document.querySelector('#files');
+            if (fileInput.files.length == 0) {                
+                
+                var envio = "{IdVenta:'" + $("#id_venta").val() +
+                    "',CP:'" + $("#cp").val() + "',IdCiudad:'" + $("#txtCiudad").val() + "',Colonia:'" + $("#colonia").val() + "',Calle:'" + $("#calle").val() +
+                    "',NumExt:'" + $("#numExt").val() + "',NumInt:'" + $("#numInt").val() + "',Telefono:'" + $("#telefono").val() + "',OrdenCompra:'" + 'Vacio' + "'";
+
+                envio += "}";
+
+                
+
+                var json = eval("(" + envio + ')');
+
+                
+
+                $.ajax({
+                    url: "EditarVenta",
+                    data: JSON.stringify(json),
+                    type: "POST",
+                    async: false,//this makes the ajax-call blocking
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        alertify.alert(response);
+                        valid = response.valid;
+                    },
+                    error: function (error) {
+                        alertify.alert(error);
+
+                    }
+                });
+                btnTob64.disabled = true;
+            }
+            else {
+
+
+                //const btnTob64 = document.querySelector('#btnprueba');
+                //btnTob64.addEventListener('click', async (e) => {
+                console.log(btnTob64.innerText);
+                console.log('Convirtiendo mi blob');
+                const myBlob = fileInput.files[0];
+                const myB64 = await blobToBase64(myBlob);
+                console.log(myB64);
+                //});
+                var envio = "{IdVenta:'" + $("#id_venta").val() +
+                    "',CP:'" + $("#cp").val() + "',IdCiudad:'" + $("#txtCiudad").val() + "',Colonia:'" + $("#colonia").val() + "',Calle:'" + $("#calle").val() +
+                    "',NumExt:'" + $("#numExt").val() + "',NumInt:'" + $("#numInt").val() + "',Telefono:'" + $("#telefono").val() + "',OrdenCompra:'" + myB64 + "'";
+
+                envio += "}";
+
+                console.log(envio);
+
+                var json = eval("(" + envio + ')');
+
+                //alertify.alert("INGRESE DATOS");
+                console.info(json);
+
+                $.ajax({
+                    url: "EditarVenta",
+                    data: JSON.stringify(json),
+                    type: "POST",
+                    async: false,//this makes the ajax-call blocking
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        alertify.alert(response);
+                        valid = response.valid;
+                    },
+                    error: function (error) {
+                        alertify.alert(error);
+
+                    }
+                });
+                btnTob64.disabled = true;
+            }
+            });
+    });
+</script>
+
+<table id="encabezado" class="table">
+    <thead>
+
+        <tr style="font-size:20px;">
+            <th>SALES PERSON <input style="color:red; font-size:20px;" class="form-control" type="text" id="SP" readonly value="@ViewData["Vendedor"]" /></th>
+            <th>ID Cotización <input style="color:red; font-size:20px;" class="form-control" type="text" id="id_cotizacion" readonly value="@ViewData["IDC"]" /></th>
+            <th>
+                @Lenguaje.Recurso.Cotizacion_fecha
+                <input style="color:red;font-size:20px;" class="form-control" type="text" id="id_fecha" readonly value="@ViewData["FechaVenta"]" />
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="font-size:20px;">
+            <td>Nombre del Cliente <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtnombre" readonly required value="@ViewData["NC"]" /></td>
+            <td>Email <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtEmail" readonly required value="@ViewData["Mail"]" /></td>
+            <th>ID Venta <input style="color:red; font-size:20px;" class="form-control" type="text" id="id_venta" readonly value="@ViewData["IDV"]" /></th>
+        </tr>
+        <tr style="font-size:20px;">
+            <td>
+                País
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtPais", ViewBag.Paises as SelectList, "Seleccione pais", htmlAttributes: new { @class = "form-control", @required = "required" })
+                </div>
+            </td>
+            <td>
+                Estado
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtEstado", ViewBag.Estados as SelectList, "Seleccione estado", htmlAttributes: new { @class = "form-control", @required = "required" })
+                </div>
+            </td>
+            <td>
+                Ciudad
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtCiudad", ViewBag.Ciudades as SelectList, "Seleccione ciudad", htmlAttributes: new { @class = "form-control", @required = "required" })
+                </div>
+            </td>
+        </tr>
+        <tr style="font-size:20px;">
+            <td>Código Postal <input style="font-size:20px; font-weight:350;" class="form-control" type="number" id="cp" required value="@ViewData["codigoP"]" /></td>
+            <td>Colonia <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="colonia" required value="@ViewData["colonia"]" /></td>
+            <td>Calle <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="calle" required value="@ViewData["calle"]" /></td>
+        </tr>
+        <tr style="font-size:20px;">
+            <td>Número Exterior <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="numExt" required value="@ViewData["numExt"]" /></td>
+            <td>Número Interior <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="numInt" value="@ViewData["numInt"]" /></td>
+            <td>Télefono<input style="font-size:20px; font-weight:350;" class="form-control" type="number" id="telefono" required value="@ViewData["telefono"]" /></td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="detalle" class="lista table" border="1">
+    <thead style="font-size:18px;">
+        <tr class="bg-success">
+            <td>Productos Vendidos</td>
+        </tr>
+        <tr class="bg-danger">
+            <th>Id</th>
+            <th>@Lenguaje.Recurso.Cotizacion_detalleProducto</th>
+            <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
+            <th>@Lenguaje.Recurso.Cotizacion_precio</th>
+            <th>@Lenguaje.Recurso.Cotizacion_descuento</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<table class="table">
+    <tr>
+        <td style="float:right;font-size:20px;">Total</td>
+        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly value="@ViewData["TotalVenta"]" /></td>
+    </tr>
+    <tr style="font-size:20px;">
+        <td>Orden de compra </td>
+        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="file" name="files" id="files" accept="application/pdf"/></td>
+    </tr>
+</table>
+<input class="btn btn-success btn-lg" type="button" id="finalizar" value=@Lenguaje.Recurso.Cotizacion_guardar />
+<a href="~/Venta/Consulta"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>
+
+<script type="text/javascript">
+    $("#txtPais").val('@ViewData["Pais"]');
+    $("#txtEstado").val('@ViewData["Estado"]');
+    $("#txtCiudad").val('@ViewData["Ciudad"]');
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#txtPais").change(function () {
+            $("#txtCiudad").empty();
+            $("#txtEstado").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("cargarEstados")',
+                dataType: 'json',
+                data: { idPais: $("#txtPais").val() },
+                success: function (citys) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $.each(citys, function (i, city) {
+                        $("#txtEstado").append('<option value="'
++ city.Value + '">'
++ city.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#txtEstado").change(function () {
+            $("#txtCiudad").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("cargarCiudades")',
+                dataType: 'json',
+                data: { idEstado: $("#txtEstado").val() },
+                success: function (citys) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $.each(citys, function (i, city) {
+                        $("#txtCiudad").append('<option value="'
++ city.Value + '">'
++ city.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "ListaProductos",
+            data: { idVenta: $("#id_cotizacion").val() },
+            success: function (mensaje) {
+                //alert(mensaje);
+                //$("#idproducto").val(mensaje.Nombre);
+                $(mensaje).each(function (index, item) {
+                    //recibir datos json
+                    cadena = "<tr>"
+                    cadena = cadena + "<td>" + item.IdProducto + "</td>";
+                    cadena = cadena + "<td>" + item.Nombre + "</td>";
+                    cadena = cadena + "<td>" + item.Cantidad + "</td>";
+                    cadena = cadena + "<td>" + item.PrecioUnitario + "</td>";
+                    cadena = cadena + "<td>" + item.Descuento + "</td>";
+                    cadena = cadena + "<td>" + ((item.Cantidad * item.PrecioUnitario) - item.Descuento) + "</td>";
+                    var y = 0;
+                    var x = 0;
+                    var des = 0;
+                    y = $("#cantidad").val();
+                    x = $("#precio").val();
+                    des = $("#descuento").val();
+                    subtotal = (x * y) - des;
+                    $("#detalle tbody").append(cadena);
+                });
+            }
+        });
+    });
+</script>

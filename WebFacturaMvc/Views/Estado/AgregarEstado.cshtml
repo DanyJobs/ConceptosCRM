@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Agregar Estado";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        //botones
+        $("#finalizar").click(function () {
+            var i = 0;
+            var envio = "{Nombre:'" + $("#txtNombre").val() + "',IdPais:'" + $("#txtidpais").val() + "'}";
+            var json = eval("(" + envio + ')');            
+            $.ajax({
+                url: "GuardarEstado",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                    const nombre = document.getElementById('txtNombre');
+                    nombre.disabled = true;
+                },
+                error: function (error) {
+                    alertify.alert(error);
+                }
+            });
+        });
+    });
+</script>
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Agregar Estado</h2>
+<center>
+    <div class="row col-md-12">
+        <div class="col-md-4">
+            ID: <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtidpais" required value="@ViewData["Pais2"]" readonly />
+        </div>
+        <div class="col-md-4">
+            Nombre: <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtNombre" required />
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+    <br />
+    <input class="btn btn-success" type="button" id="finalizar" name="finalizar" value="Agregar" />
+    <a class="btn btn-info" href="~/Pais/Index">Regresar</a>
+</center>

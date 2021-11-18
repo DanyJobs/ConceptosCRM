@@ -20,7 +20,7 @@ namespace Model.Dao
         public string create(Cotizacion objVenta)
         {
             string idVenta = "";
-            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA,notas,notasCompras,estatus) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','" + objVenta.Iva + "','" + objVenta.notas + "','" + objVenta.notasCompras + "','" + objVenta.estatus+"') SELECT SCOPE_IDENTITY();";
+            string create = "insert into cotizacion(total,idCliente,idVendedor,fecha,IVA,notas,notasCompras,estatus,diasSeguimiento,estatusCotizacion,estatusSeguimiento,fechaComienzoSeguimiento) values('" + objVenta.Total + "','" + objVenta.IdCliente + "','" + objVenta.IdVendedor + "','" + objVenta.Fecha + "','" + objVenta.Iva + "','" + objVenta.notas + "','" + objVenta.notasCompras + "','" + objVenta.estatus+ "'," + objVenta.diasSeguimiento + ",'" + objVenta.estatusCotizacion + "','" + objVenta.estatusSeguimiento + "','" + objVenta.fechaComienzoSeguimiento + "') SELECT SCOPE_IDENTITY();";
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
@@ -492,7 +492,41 @@ namespace Model.Dao
             }
             return objListaCotizacion;
         }
-    
 
-}
+        public List<EmailMarketingCorreos> buscarEmailMarketing(string id)
+        {
+            List<EmailMarketingCorreos> objListaCotizacion = new List<EmailMarketingCorreos>();
+            try
+            {
+                //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
+                SqlCommand cmd = new SqlCommand("consultaEmailMarketing", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idUsuario", id);
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    EmailMarketingCorreos objEmailMarketing = new EmailMarketingCorreos();
+                    objEmailMarketing.idMarketing = int.Parse(reader[0].ToString());
+                    objEmailMarketing.nombre = reader[1].ToString();
+                    objEmailMarketing.email = reader[2].ToString();
+                    objEmailMarketing.fechaComienzo = Convert.ToDateTime(reader[4].ToString());
+                    objEmailMarketing.dias = int.Parse(reader[3].ToString());
+                    objEmailMarketing.idUsuario = reader[5].ToString();
+                    objListaCotizacion.Add(objEmailMarketing);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return objListaCotizacion;
+        }
+
+    }
 }
