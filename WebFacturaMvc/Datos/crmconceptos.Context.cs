@@ -52,10 +52,12 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<estado> estado { get; set; }
         public virtual DbSet<pais> pais { get; set; }
         public virtual DbSet<venta> venta { get; set; }
-        public virtual DbSet<RFQ> RFQ { get; set; }
-        public virtual DbSet<RFQItem> RFQItem { get; set; }
         public virtual DbSet<EmailMarketing> EmailMarketing { get; set; }
         public virtual DbSet<sucursal> sucursal { get; set; }
+        public virtual DbSet<envio> envio { get; set; }
+        public virtual DbSet<paqueteria> paqueteria { get; set; }
+        public virtual DbSet<agenda> agenda { get; set; }
+        public virtual DbSet<ventaDetalle> ventaDetalle { get; set; }
     
         public virtual int reporte_factura(string idPedido)
         {
@@ -647,11 +649,11 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaCotizacionProductos_Result>("sp_consultaCotizacionProductos", idVentaParameter);
         }
     
-        public virtual ObjectResult<sp_consultaProducto_Result> sp_consultaProducto(Nullable<int> idProducto)
+        public virtual ObjectResult<sp_consultaProducto_Result> sp_consultaProducto(string idProducto)
         {
-            var idProductoParameter = idProducto.HasValue ?
+            var idProductoParameter = idProducto != null ?
                 new ObjectParameter("IdProducto", idProducto) :
-                new ObjectParameter("IdProducto", typeof(int));
+                new ObjectParameter("IdProducto", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaProducto_Result>("sp_consultaProducto", idProductoParameter);
         }
@@ -1185,6 +1187,334 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("idUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<consultaEmailMarketing_Result>("consultaEmailMarketing", idUsuarioParameter);
+        }
+    
+        public virtual int sp_agregarEnvio(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarEnvio", idVentaParameter);
+        }
+    
+        public virtual int sp_agregarGuia(Nullable<int> idEnvio, string numeroGuia, Nullable<System.DateTime> fecha, Nullable<int> paqueteria, string usuario)
+        {
+            var idEnvioParameter = idEnvio.HasValue ?
+                new ObjectParameter("IdEnvio", idEnvio) :
+                new ObjectParameter("IdEnvio", typeof(int));
+    
+            var numeroGuiaParameter = numeroGuia != null ?
+                new ObjectParameter("NumeroGuia", numeroGuia) :
+                new ObjectParameter("NumeroGuia", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var paqueteriaParameter = paqueteria.HasValue ?
+                new ObjectParameter("Paqueteria", paqueteria) :
+                new ObjectParameter("Paqueteria", typeof(int));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarGuia", idEnvioParameter, numeroGuiaParameter, fechaParameter, paqueteriaParameter, usuarioParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarPaqueterias_Result> sp_cargarPaqueterias()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarPaqueterias_Result>("sp_cargarPaqueterias");
+        }
+    
+        public virtual ObjectResult<sp_consultaEnvio_Result> sp_consultaEnvio(Nullable<int> idEnvio)
+        {
+            var idEnvioParameter = idEnvio.HasValue ?
+                new ObjectParameter("IdEnvio", idEnvio) :
+                new ObjectParameter("IdEnvio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaEnvio_Result>("sp_consultaEnvio", idEnvioParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaEnvios_Result> sp_consultaEnvios(Nullable<int> idEnvio, string pMonth, string pYear)
+        {
+            var idEnvioParameter = idEnvio.HasValue ?
+                new ObjectParameter("IdEnvio", idEnvio) :
+                new ObjectParameter("IdEnvio", typeof(int));
+    
+            var pMonthParameter = pMonth != null ?
+                new ObjectParameter("pMonth", pMonth) :
+                new ObjectParameter("pMonth", typeof(string));
+    
+            var pYearParameter = pYear != null ?
+                new ObjectParameter("pYear", pYear) :
+                new ObjectParameter("pYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaEnvios_Result>("sp_consultaEnvios", idEnvioParameter, pMonthParameter, pYearParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaEnviosN_Result> sp_consultaEnviosN()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaEnviosN_Result>("sp_consultaEnviosN");
+        }
+    
+        public virtual ObjectResult<sp_datosEmail_Result> sp_datosEmail(Nullable<int> idEnvio)
+        {
+            var idEnvioParameter = idEnvio.HasValue ?
+                new ObjectParameter("IdEnvio", idEnvio) :
+                new ObjectParameter("IdEnvio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_datosEmail_Result>("sp_datosEmail", idEnvioParameter);
+        }
+    
+        public virtual int sp_editarEnvio(Nullable<int> idEnvio, string numeroGuia, Nullable<int> paqueteria)
+        {
+            var idEnvioParameter = idEnvio.HasValue ?
+                new ObjectParameter("IdEnvio", idEnvio) :
+                new ObjectParameter("IdEnvio", typeof(int));
+    
+            var numeroGuiaParameter = numeroGuia != null ?
+                new ObjectParameter("NumeroGuia", numeroGuia) :
+                new ObjectParameter("NumeroGuia", typeof(string));
+    
+            var paqueteriaParameter = paqueteria.HasValue ?
+                new ObjectParameter("Paqueteria", paqueteria) :
+                new ObjectParameter("Paqueteria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editarEnvio", idEnvioParameter, numeroGuiaParameter, paqueteriaParameter);
+        }
+    
+        public virtual int sp_eliminarEnvio(Nullable<int> idEnvio)
+        {
+            var idEnvioParameter = idEnvio.HasValue ?
+                new ObjectParameter("IdEnvio", idEnvio) :
+                new ObjectParameter("IdEnvio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarEnvio", idEnvioParameter);
+        }
+    
+        public virtual ObjectResult<RFQConsultas_Result> RFQConsultas(string opcion, Nullable<int> idRfq)
+        {
+            var opcionParameter = opcion != null ?
+                new ObjectParameter("opcion", opcion) :
+                new ObjectParameter("opcion", typeof(string));
+    
+            var idRfqParameter = idRfq.HasValue ?
+                new ObjectParameter("idRfq", idRfq) :
+                new ObjectParameter("idRfq", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RFQConsultas_Result>("RFQConsultas", opcionParameter, idRfqParameter);
+        }
+    
+        public virtual int sp_agregarEventoAgenda(string usuario, string titulo, string descripcion, Nullable<System.DateTime> fecha, string hora, string link, string direccion)
+        {
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("Titulo", titulo) :
+                new ObjectParameter("Titulo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var horaParameter = hora != null ?
+                new ObjectParameter("Hora", hora) :
+                new ObjectParameter("Hora", typeof(string));
+    
+            var linkParameter = link != null ?
+                new ObjectParameter("Link", link) :
+                new ObjectParameter("Link", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarEventoAgenda", usuarioParameter, tituloParameter, descripcionParameter, fechaParameter, horaParameter, linkParameter, direccionParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarAgendaHoy_Result> sp_cargarAgendaHoy(string idUsuario, string fecha)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var fechaParameter = fecha != null ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarAgendaHoy_Result>("sp_cargarAgendaHoy", idUsuarioParameter, fechaParameter);
+        }
+    
+        public virtual ObjectResult<sp_cargarEventoAgenda_Result> sp_cargarEventoAgenda(Nullable<int> idEvento)
+        {
+            var idEventoParameter = idEvento.HasValue ?
+                new ObjectParameter("IdEvento", idEvento) :
+                new ObjectParameter("IdEvento", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarEventoAgenda_Result>("sp_cargarEventoAgenda", idEventoParameter);
+        }
+    
+        public virtual int sp_editarEventoAgenda(Nullable<int> idEvento, string titulo, string descripcion, Nullable<System.DateTime> fecha, string hora, string link, string direccion)
+        {
+            var idEventoParameter = idEvento.HasValue ?
+                new ObjectParameter("IdEvento", idEvento) :
+                new ObjectParameter("IdEvento", typeof(int));
+    
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("Titulo", titulo) :
+                new ObjectParameter("Titulo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var horaParameter = hora != null ?
+                new ObjectParameter("Hora", hora) :
+                new ObjectParameter("Hora", typeof(string));
+    
+            var linkParameter = link != null ?
+                new ObjectParameter("Link", link) :
+                new ObjectParameter("Link", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editarEventoAgenda", idEventoParameter, tituloParameter, descripcionParameter, fechaParameter, horaParameter, linkParameter, direccionParameter);
+        }
+    
+        public virtual int sp_eliminarEventoAgenda(Nullable<int> idEvento)
+        {
+            var idEventoParameter = idEvento.HasValue ?
+                new ObjectParameter("IdEvento", idEvento) :
+                new ObjectParameter("IdEvento", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarEventoAgenda", idEventoParameter);
+        }
+    
+        public virtual ObjectResult<sp_filtrarEventos_Result> sp_filtrarEventos(string pMonth, string pYear, string pDay, string pUsuario)
+        {
+            var pMonthParameter = pMonth != null ?
+                new ObjectParameter("pMonth", pMonth) :
+                new ObjectParameter("pMonth", typeof(string));
+    
+            var pYearParameter = pYear != null ?
+                new ObjectParameter("pYear", pYear) :
+                new ObjectParameter("pYear", typeof(string));
+    
+            var pDayParameter = pDay != null ?
+                new ObjectParameter("pDay", pDay) :
+                new ObjectParameter("pDay", typeof(string));
+    
+            var pUsuarioParameter = pUsuario != null ?
+                new ObjectParameter("pUsuario", pUsuario) :
+                new ObjectParameter("pUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_filtrarEventos_Result>("sp_filtrarEventos", pMonthParameter, pYearParameter, pDayParameter, pUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<sp_verificarEvento_Result> sp_verificarEvento(Nullable<System.DateTime> fecha, string hora, string usuario)
+        {
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var horaParameter = hora != null ?
+                new ObjectParameter("Hora", hora) :
+                new ObjectParameter("Hora", typeof(string));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_verificarEvento_Result>("sp_verificarEvento", fechaParameter, horaParameter, usuarioParameter);
+        }
+    
+        public virtual ObjectResult<sp_verificarEvento2_Result> sp_verificarEvento2(Nullable<System.DateTime> fecha, string hora, string usuario, Nullable<int> idEvento)
+        {
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var horaParameter = hora != null ?
+                new ObjectParameter("Hora", hora) :
+                new ObjectParameter("Hora", typeof(string));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var idEventoParameter = idEvento.HasValue ?
+                new ObjectParameter("IdEvento", idEvento) :
+                new ObjectParameter("IdEvento", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_verificarEvento2_Result>("sp_verificarEvento2", fechaParameter, horaParameter, usuarioParameter, idEventoParameter);
+        }
+    
+        public virtual int sp_EditarRFQ(string opcion, string estatus, Nullable<int> idRFQItem, Nullable<int> idRFQ, Nullable<int> idProveedor, string idProducto, Nullable<decimal> precio, Nullable<int> cantidad, string notas, string fecha)
+        {
+            var opcionParameter = opcion != null ?
+                new ObjectParameter("opcion", opcion) :
+                new ObjectParameter("opcion", typeof(string));
+    
+            var estatusParameter = estatus != null ?
+                new ObjectParameter("estatus", estatus) :
+                new ObjectParameter("estatus", typeof(string));
+    
+            var idRFQItemParameter = idRFQItem.HasValue ?
+                new ObjectParameter("idRFQItem", idRFQItem) :
+                new ObjectParameter("idRFQItem", typeof(int));
+    
+            var idRFQParameter = idRFQ.HasValue ?
+                new ObjectParameter("idRFQ", idRFQ) :
+                new ObjectParameter("idRFQ", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("idProveedor", idProveedor) :
+                new ObjectParameter("idProveedor", typeof(int));
+    
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(string));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("precio", precio) :
+                new ObjectParameter("precio", typeof(decimal));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var notasParameter = notas != null ?
+                new ObjectParameter("notas", notas) :
+                new ObjectParameter("notas", typeof(string));
+    
+            var fechaParameter = fecha != null ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarRFQ", opcionParameter, estatusParameter, idRFQItemParameter, idRFQParameter, idProveedorParameter, idProductoParameter, precioParameter, cantidadParameter, notasParameter, fechaParameter);
+        }
+    
+        public virtual ObjectResult<SP_RFQ_HISTORIAL_Result> SP_RFQ_HISTORIAL(string idProducto)
+        {
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RFQ_HISTORIAL_Result>("SP_RFQ_HISTORIAL", idProductoParameter);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Model.Entity
         public string Subject { get; set; }
         public string Body { get; set; }
         public string Cliente { get; set; }
+        public string NoCotizacion { get; set; }
 
     }
 }

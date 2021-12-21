@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Detalles del Evento";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtDescripcion").val('@ViewData["Descripcion"]');
+        if ($("#txtLink").val() == "") {
+            $("#btnIr").css('pointer-events', 'none');
+            $("#btnIr").css('cursor', 'not-allowed');
+        }
+        else {
+
+        }
+    });
+</script>
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Detalles del evento</h2>
+<table id="encabezado" class="table">
+    <thead>
+
+        <tr style="font-size:20px;">
+            <th>ID Evento <input style="color:red; font-size:20px;" class="form-control" type="text" id="txtEvento" readonly value="@ViewData["Evento"]" /></th>
+            <th>
+                @Lenguaje.Recurso.Cotizacion_fecha
+                <input style="color:red;font-size:20px;" class="form-control" type="text" id="txtFecha" readonly value="@ViewData["Fecha"]" />
+            </th>
+            <th>Título: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtTitulo" readonly value="@ViewData["Titulo"]" /></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="font-size:20px;">
+            <th>Hora: <input style="color:red; font-size:20px;" class="form-control" type="text" id="txtHora" readonly value="@ViewData["Hora"]" /></th>
+            <th></th>
+            <td>Descripción: <textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="txtDescripcion" id="txtDescripcion" maxlength="200" readonly></textarea></td>
+        </tr>
+        <tr style="font-size:20px;">
+            <th></th>
+            <th></th>
+            <th>Link de reunión: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtLink" readonly value="@ViewData["Link"]" />
+            <a class="btn btn-info" href="@ViewData["Link"]" target="_blank" name="btnIr" id="btnIr" type="button">Ir</a></th>
+        </tr>
+    </tbody>
+    <tbody>         
+        <tr style="font-size:20px;">
+            <th>
+            </th>
+            <th></th>
+            <th>Dirección del evento: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtDireccion" readonly value="@ViewData["Direccion"]" /></th>            
+        </tr>
+    </tbody>
+</table>
+<a href="~/Agenda/Index"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>
+<a href="~/Agenda/EnviarInvitacion?idEvento=@ViewData["Evento"]"><input class="btn btn-danger btn-lg" type="button" id="btnCorreo" value="Enviar invitación" /></a>

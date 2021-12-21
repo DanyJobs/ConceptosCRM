@@ -11,7 +11,7 @@
         private double descuento;
         private int cantidad;
         private int estado;
-
+        public string notas { get; set; }     
         public long NumFacura
         {
             get
@@ -123,7 +123,7 @@
             this.idDetalleVenta = idDetalleVenta;
 
         }
-        public DetalleCotizacion(long numFacura, long idVenta, string idProducto, double subTotal, double descuento, int cantidad)
+        public DetalleCotizacion(int numFacura, int idVenta, string idProducto, double subTotal, double descuento, int cantidad,string notas)
         {
             this.numFacura = numFacura;
             this.idVenta = idVenta;
@@ -131,6 +131,7 @@
             this.subTotal = subTotal;
             this.descuento = descuento;
             this.cantidad = cantidad;
+            this.notas = notas;
         }
     }
 }

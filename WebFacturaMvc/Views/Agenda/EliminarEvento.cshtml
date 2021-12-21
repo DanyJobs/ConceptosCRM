@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Eliminar Evento";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtDescripcion").val('@ViewData["Descripcion"]');
+        $("#finalizar").click(function () {
+            var i = 0;
+            var envio = "{IdEvento:'" + $("#txtEvento").val() + "'}";
+            var json = eval("(" + envio + ')');
+            console.log(envio);
+            $.ajax({
+                url: "Eliminar",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                    const nombre = document.getElementById('finalizar');
+                    nombre.disabled = true;
+                },
+                error: function (error) {
+                    alertify.alert(error);
+                }
+            });
+        });
+    });
+</script>
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">¿Seguro que desea eliminar el evento?</h2>
+<table id="encabezado" class="table">
+    <thead>
+
+        <tr style="font-size:20px;">
+            <th>ID Evento <input style="color:red; font-size:20px;" class="form-control" type="text" id="txtEvento" readonly value="@ViewData["Evento"]" /></th>
+            <th>
+                @Lenguaje.Recurso.Cotizacion_fecha
+                <input style="color:red;font-size:20px;" class="form-control" type="text" id="txtFecha" readonly value="@ViewData["Fecha"]" />
+            </th>
+            <th>Título: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtTitulo" readonly value="@ViewData["Titulo"]" /></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="font-size:20px;">
+            <th>Hora: <input style="color:red; font-size:20px;" class="form-control" type="text" id="txtHora" readonly value="@ViewData["Hora"]" /></th>
+            <th></th>
+            <td>Descripción: <textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="txtDescripcion" id="txtDescripcion" maxlength="200" readonly></textarea></td>
+        </tr>
+        <tr style="font-size:20px;">
+            <th></th>
+            <th></th>
+            <th>
+                Link de reunión: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtLink" readonly value="@ViewData["Link"]" />                
+            </th>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr style="font-size:20px;">
+            <th>
+            </th>
+            <th></th>
+            <th>Dirección del evento: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtDireccion" readonly value="@ViewData["Direccion"]" /></th>
+        </tr>
+    </tbody>
+</table>
+<input class="btn btn-danger btn-lg" type="button" id="finalizar" value="Eliminar Evento" />
+<a href="~/Agenda/Index"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>

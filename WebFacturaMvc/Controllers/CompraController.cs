@@ -411,7 +411,6 @@ namespace WebFacturaMvc.Controllers
             List<CompraDetalle> list = new List<CompraDetalle>();            
             list = cdNeg.consultarDetalles(int.Parse(idCompra));
             return Json(list, JsonRequestBehavior.AllowGet);
-
         }
         public ActionResult Editar(int idCompra)
         {
@@ -426,7 +425,6 @@ namespace WebFacturaMvc.Controllers
             ViewData["Sucursal"] = registro.IdSucursal.ToString();
             ViewData["TotalCompra"] = registro.Total.ToString();
             ViewData["Seccion"] = registro.Seccion.ToString();
-
             return View();
         }
         //Para editar los campos de compra y de compradetalle

@@ -68,6 +68,7 @@
             <th>Codigo</th>
             <th>Nombre</th>
             <th>Apellido</th>
+            <th>Empresa</th>
             <th>Calle</th>
             <th>#Exterior</th>
             <th>Colonia</th>
@@ -79,17 +80,18 @@
     <tbody>        
             @foreach (var objProveedor in Model)
             {
-                <tr>
-                    <td>@objProveedor.idProveedor</td>
-                    <td>@objProveedor.nombre</td>
-                    <td>@objProveedor.apellido</td>
-                    <td>@objProveedor.calle</td>
-                    <td>@objProveedor.numExt</td>
-                    <td>@objProveedor.colonia</td>
-                    <td>@objProveedor.cp</td>
-                    <td>@objProveedor.email</td>
-                    <td>@objProveedor.telefono</td>
-                </tr>
+        <tr>
+            <td>@objProveedor.idProveedor</td>
+            <td>@objProveedor.nombre</td>
+            <td>@objProveedor.apellido</td>
+            <td>@objProveedor.empresa</td>
+            <td>@objProveedor.calle</td>
+            <td>@objProveedor.numExt</td>
+            <td>@objProveedor.colonia</td>
+            <td>@objProveedor.cp</td>
+            <td>@objProveedor.email</td>
+            <td>@objProveedor.telefono</td>
+        </tr>
             }        
 
     </tbody>

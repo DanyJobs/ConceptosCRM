@@ -18,7 +18,7 @@ namespace Model.Dao
 
         public void create(DetalleCotizacion objDetalleVenta)
         {
-            string create = "insert into detalleCotizacion values('" + objDetalleVenta.NumFacura + "','" + objDetalleVenta.IdVenta + "','" + objDetalleVenta.SubTotal + "','" + objDetalleVenta.IdProducto + "','" + objDetalleVenta.Descuento + "','" + objDetalleVenta.Cantidad + "')";
+            string create = "insert into detalleCotizacion values('" + objDetalleVenta.NumFacura + "','" + objDetalleVenta.IdVenta + "'," + objDetalleVenta.SubTotal + ",'" + objDetalleVenta.IdProducto + "'," + objDetalleVenta.Descuento + "," + objDetalleVenta.Cantidad + ",'"+ objDetalleVenta.notas+"')";
             //try
             //{
                 comando = new SqlCommand(create, objConexionDB.getCon());
@@ -32,7 +32,7 @@ namespace Model.Dao
             //}
             //finally
             //{
-                objConexionDB.getCon().Close();
+            objConexionDB.getCon().Close();
                 objConexionDB.closeDB();
             //}
         }
@@ -287,7 +287,7 @@ namespace Model.Dao
                     objHistorial.Cliente = reader[1].ToString();
                     objHistorial.NumCotizacion = reader[2].ToString();
                     objHistorial.Producto = reader[3].ToString();
-                    objHistorial.PrecioUnitario = reader[4].ToString();
+                    objHistorial.PrecioUnitario = Convert.ToDecimal(reader[4].ToString());
                     listaHistorial.Add(objHistorial);
                 }
             }
@@ -319,7 +319,7 @@ namespace Model.Dao
                     objHistorial.Cliente = reader[0].ToString();
                     objHistorial.NumCotizacion = reader[1].ToString();
                     objHistorial.Producto = reader[2].ToString();
-                    objHistorial.PrecioUnitario = reader[3].ToString();
+                    objHistorial.PrecioUnitario = Convert.ToDecimal(reader[3].ToString());
                     listaHistorial.Add(objHistorial);
                 }
             }
@@ -516,6 +516,40 @@ namespace Model.Dao
             command.Connection.Close();
         }
 
-
+        public List<RFQHistorial> findRFQ(RFQHistorial rfqitem)
+        {
+            List<RFQHistorial> listaHistorial = new List<RFQHistorial>();
+            //string find = "select*from producto order by nombre asc";
+            try
+            {
+                comando = new SqlCommand("SP_RFQ_HISTORIAL", objConexionDB.getCon());
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@idProducto", SqlDbType.VarChar).Value = rfqitem.idProducto;
+                objConexionDB.getCon().Open();
+                reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    RFQHistorial objHistorial = new RFQHistorial();
+                    objHistorial.fechaRFQ = reader.GetDateTime(0);
+                    objHistorial.Comprador = reader[1].ToString();
+                    objHistorial.Productos = reader[2].ToString();
+                    objHistorial.precio = Convert.ToDecimal(reader[3].ToString());
+                    objHistorial.empresa = reader[4].ToString();
+                    objHistorial.nombreProveedor = reader[5].ToString();                   
+                    listaHistorial.Add(objHistorial);
+                }
+            }
+            catch (Exception)
+            {
+                RFQHistorial objHistorial2 = new RFQHistorial();
+                objHistorial2.Estado = 1000;
+            }
+            finally
+            {
+                objConexionDB.getCon().Close();
+                objConexionDB.closeDB();
+            }
+            return listaHistorial;
+        }
     }
 }

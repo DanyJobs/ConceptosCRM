@@ -26,7 +26,7 @@ namespace Model.Entity
         public Nullable<int> diasSeguimiento { get; set; }
         public string estatusCotizacion { get; set; }
         public string estatusSeguimiento { get; set; }
-        public Nullable<System.DateTime> fechaComienzoSeguimiento { get; set; }
+        public string fechaComienzoSeguimiento { get; set; }
 
 
         public long IdVenta
@@ -154,7 +154,7 @@ namespace Model.Entity
         {
 
         }
-        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva, string notas, string notasCompras, string estatus, int diasSeguimiento, string estatusCotizacion, string estatusSeguimiento, System.DateTime fechaComienzoSeguimiento)
+        public Cotizacion(double total, long idCliente, string idVendedor, string fecha, double iva, string notas, string notasCompras, string estatus, int diasSeguimiento, string estatusCotizacion, string estatusSeguimiento, string fechaComienzoSeguimiento)
         {
             this.total = total;
             this.idCliente = idCliente;

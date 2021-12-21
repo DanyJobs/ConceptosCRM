@@ -9,7 +9,7 @@ namespace Model.Entity
         private string cliente;
         private string numCotizacion;
         private string producto;
-        private string precioUnitario;
+        private decimal precioUnitario;
         [DisplayFormat(DataFormatString = "{MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaCotizacion { get; set; }
 
@@ -67,7 +67,7 @@ namespace Model.Entity
                 producto = value;
             }
         }
-        public string PrecioUnitario
+        public decimal PrecioUnitario
         {
             get
             {
@@ -100,7 +100,7 @@ namespace Model.Entity
         {
 
         }
-        public Historial(string idProducto, string cliente, string numCotizacion, string producto, string precioUnitario, DateTime fechaCotizacion)
+        public Historial(string idProducto, string cliente, string numCotizacion, string producto, decimal precioUnitario, DateTime fechaCotizacion)
         {
             this.idProducto = idProducto;
             this.cliente = cliente;

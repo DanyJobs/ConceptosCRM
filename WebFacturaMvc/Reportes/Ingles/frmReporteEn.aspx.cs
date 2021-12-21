@@ -18,6 +18,7 @@ namespace WebFacturaMvc.Reportes.Ingles
         SqlDataAdapter adapter;
         SqlParameter param;
         string idVenta;
+        string NoCotizacion;
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -32,16 +33,14 @@ namespace WebFacturaMvc.Reportes.Ingles
 
         public void renderReport()
         {
-            DateTime fechaActual = DateTime.Today;
-            string fechaQuote = string.Format("{0}{1}{2}", fechaActual.Month, fechaActual.Day, fechaActual.Year);
-
+           
             idVenta = Request.QueryString.Get("IdVenta");
-
             DataTable dt = cargar(idVenta);
             ReportDataSource rds = new ReportDataSource("DataSet1", dt);
             Reporte1.LocalReport.DataSources.Add(rds);
             Reporte1.LocalReport.ReportPath = "Reportes/Ingles/rptFacturaEn.rdlc";
-            Reporte1.LocalReport.DisplayName = "Quote " + idVenta.ToString() + fechaQuote;
+            NoCotizacion = dt.Rows[0]["NoCotizacion"].ToString();
+            Reporte1.LocalReport.DisplayName = NoCotizacion;
             //parameters
             ReportParameter[] rptParams = new ReportParameter[]
             {

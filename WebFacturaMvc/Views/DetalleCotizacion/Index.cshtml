@@ -2,6 +2,42 @@
 @{
     ViewBag.Title = "Index";
 }
+<script src="~/Js/alertify.min.js">
+
+</script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script language="javascript">
+    function RFQ(idVenta) {
+        var envio = "{";
+        console.log(idVenta);
+        if (idVenta != null) {
+            envio += "idVenta:'" + idVenta + "'";
+            envio += "}";
+            console.log(envio);
+            var json = eval("(" + envio + ')'); //
+            console.info(json);
+            $.ajax({
+                url: "AgregarRfq",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                }
+            });
+
+        } else {
+            alertify.error("Se debe seleccionar un registro");
+        }
+        $('input').filter(':checkbox').prop('checked', false);
+    }
+</script>
 <h2 style="text-align:center; font-family:Arial; font-weight:700;">Cotizaciones realizadas</h2>
 @using (Html.BeginForm())
 {
@@ -50,7 +86,7 @@
                 <td><a class="btn btn-info" href="~/DetalleCotizacion/DetalleCotizacion?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-eye-open">|Verdetalles</span></a></td>
                 <td><a class="btn btn-warning" href="~/DetalleCotizacion/Editar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
                 <td><a class="btn btn-danger" href="~/DetalleCotizacion/PreEliminar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
-
+                <td><a class="btn btn-info" onclick="RFQ(@objCotizacion.IdVenta)"><span class="glyphicon glyphicon-check">Enviar a RFQ</span></a></td>
             </tr>
         }
 

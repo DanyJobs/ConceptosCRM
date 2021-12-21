@@ -24,19 +24,16 @@
     })
 
     window.onload = function () {
-
         $("td").each(function () {
-
             if ($(this).text() == 'Alto') {
                 this.style.backgroundColor = 'red'
                 this.style.color = 'White';
-
             }
             if ($(this).text() == 'Medio') {
                 this.style.backgroundColor = 'orange'
                 this.style.color = 'White';
-
-            } if ($(this).text() == 'Bajo') {
+            }
+            if ($(this).text() == 'Bajo') {
                 this.style.backgroundColor = 'green'
                 this.style.color = 'White';
             }
@@ -208,10 +205,8 @@
             <th><input type="checkbox" id="checkTodos" value="checkTodos"></th>
             <th>Id Venta</th>
             <th>Total</th>
-            <th>Cliente</th>
-            <th>Cliente</th>
-            <th>Fecha</th>
-            <th>IVA(%)</th>
+            <th>Cliente</th>     
+            <th>Fecha</th>       
             <th>Estatus</th>
             <th></th>
         </tr>
@@ -224,8 +219,7 @@
                 <td>@objCotizacion.IdVenta</td>
                 <td>@objCotizacion.Total</td>
                 <td>@objCotizacion.Cliente</td>
-                <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>
-                <td>@objCotizacion.Iva</td>
+                <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>             
                 <td>@objCotizacion.estatus</td>
                 <td>
                     <a class="btn btn-danger" onclick="EditarEstatusSeguimiento(@objCotizacion.IdVenta)">

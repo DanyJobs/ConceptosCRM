@@ -190,6 +190,10 @@ namespace Model.Neg
         {
             return objDetalleCotizacionDao.findHistorial(historial);
         }
+        public List<RFQHistorial> findRFQ(RFQHistorial rfqitem)
+        {
+            return objDetalleCotizacionDao.findRFQ(rfqitem);
+        }
 
         public List<Historial> findAllHistorial()
         {
@@ -217,6 +221,45 @@ namespace Model.Neg
         {
             return objCotizacionDao.buscarEmailMarketing(id);
         }
+        public List<RFQItem> buscarListaProductosRFQ(string id)
+        {
+            return objCotizacionDao.buscarListaProductosRFQ(id);
+        }
+        public RFQ buscarListaRFQ(string id)
+        {
+            return objCotizacionDao.buscarListaRFQ(id);
+        }
+        public List<RFQ> buscarListaRFQ()
+        {
+            return objCotizacionDao.buscarListaRFQ();
+        }
+        
+        public string agregarRFQ(string idVenta, string idVendedor)
+        {
+            string mensaje = "";
 
+            if (idVendedor.Equals(null) || idVenta.Equals(null))
+            {                             
+                mensaje = "RFQ no se ha podido efectuar correctamente";
+            }
+            else
+            {
+                mensaje=objCotizacionDao.agregarRFQ(idVenta, idVendedor);        
+            }
+            return mensaje;
+        }
+
+        public string updateRFQ(RFQ objRFQ)
+        {           
+            return objCotizacionDao.updateRFQ(objRFQ);
+        }
+        public string updateRFQItem(RFQItem objRFQ)
+        {
+            return objCotizacionDao.updateRFQItem(objRFQ);
+        }
+        public string eliminadosRFQ(RFQItemEliminado objRFQ)
+        {
+            return objCotizacionDao.eliminadosRFQ(objRFQ);
+        }
     }
 }

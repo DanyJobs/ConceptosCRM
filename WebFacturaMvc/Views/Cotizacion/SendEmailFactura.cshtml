@@ -22,13 +22,19 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
+            @Html.LabelFor(model => model.NoCotizacion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.NoCotizacion, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.NoCotizacion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
             @Html.LabelFor(model => model.idCotizacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(x => x.idCotizacion, new { @class = "form-control", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.idCotizacion, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Cliente, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -36,7 +42,6 @@
                 @Html.ValidationMessageFor(model => model.Cliente, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -44,7 +49,6 @@
                 @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -59,7 +63,6 @@
                 @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

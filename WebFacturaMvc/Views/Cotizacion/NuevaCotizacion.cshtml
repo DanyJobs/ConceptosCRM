@@ -21,39 +21,44 @@
     })
 
     function Envio() {
-        if ($("#dias").val() != null) {
-            ListaDetalle += "dias:'" + $("#dias").val() + "'";
-
+        if (j == 0) {
+            alertify.alert("Debe agregar productos a la cotizacion");
         } else {
-            ListaDetalle += "Dias:'3'";
-        }
-        ListaDetalle += "}";
-        console.log(ListaDetalle);
-        var json = eval("(" + ListaDetalle + ')');
-        //alertify.alert("INGRESE DATOS");
-        console.info(json);
-        $.ajax({
-            url: "GuardarCotizacion",
-            data: JSON.stringify(json),
-            type: "POST",
-            async: false,//this makes the ajax-call blocking
-            contentType: 'application/json;charset=UTF-8',
-            dataType: 'json',
-            success: function (response) {
-                alertify.alert(response);
-                valid = response.valid;
-            },
-            error: function (error) {
-                alertify.alert(error);
+            if ($("#dias").val() != null) {
+                ListaDetalle += "dias:'" + $("#dias").val() + "'";
+
+            } else {
+                ListaDetalle += "Dias:'3'";
             }
-        });
-        $('#exampleModal').modal('hide');
-        $('input').filter(':checkbox').prop('checked', false);
-        $("#dias").val("");
+            ListaDetalle += "}";
+            console.log(ListaDetalle);
+            var json = eval("(" + ListaDetalle + ')');
+            console.log(json);
+            //alertify.alert("INGRESE DATOS");
+            console.info(json);
+            $.ajax({
+                url: "GuardarCotizacion",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                },
+                error: function (error) {
+                    alertify.alert(error);
+                }
+            });
+            $('#exampleModal').modal('hide');
+            $('input').filter(':checkbox').prop('checked', false);
+            $("#dias").val("");
+        }
     }
 
     var ListaDetalle;
-
+    var j = 0;
     function preEnvio() {
 
         var i = 0;
@@ -63,18 +68,22 @@
                 envio += "ListadoDetalle:[{IdProducto:'" + $(this).find('td').eq(0).text() +
                     "',Cantidad:'" + $(this).find('td').eq(2).text() +
                     "',Descuento:'" + $(this).find('td').eq(4).text() +
-                    "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}";
+                    "',SubTotal:'" + $(this).find('td').eq(6).text() +
+                    "',notas:'" + $(this).find('td').eq(5).text() + 
+                    "'}";
             } else {
                 envio += ",{IdProducto:'" + $(this).find('td').eq(0).text() +
                     "',Cantidad:'" + $(this).find('td').eq(2).text() +
                     "',Descuento:'" + $(this).find('td').eq(4).text() +
-                    "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}"
+                    "',SubTotal:'" + $(this).find('td').eq(6).text() +
+                    "',notas:'" + $(this).find('td').eq(5).text() + 
+                    "'}";
             }
             i = 1;
+            j = 1;
         });
-        console.log(envio + "Gasaaaa");
+        console.log(envio);
         envio += "],";
-
         ListaDetalle = envio;
         $('#exampleModal').modal('show');
     }
@@ -96,37 +105,44 @@
                     envio += "ListadoDetalle:[{IdProducto:'" + $(this).find('td').eq(0).text() +
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
                         "',Descuento:'" + $(this).find('td').eq(4).text() +
-                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}";
+                        "',SubTotal:'" + $(this).find('td').eq(6).text()  +
+                        "',notas:'" + $(this).find('td').eq(5).text() +
+                        "'}";
                 } else {
                     envio += ",{IdProducto:'" + $(this).find('td').eq(0).text() +
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
                         "',Descuento:'" + $(this).find('td').eq(4).text() +
-                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}"
+                        "',SubTotal:'" + $(this).find('td').eq(6).text()  +
+                        "',notas:'" + $(this).find('td').eq(5).text()  +
+                        "'}";
                 }
                 i = 1;
             });
-            envio += "]}";
-            var json = eval("(" + envio + ')');
-            console.log(envio);
-            //alertify.alert("INGRESE DATOS");
-            console.info(json);
-            $.ajax({
-                url: "GuardarCotizacion",
-                data: JSON.stringify(json),
-                type: "POST",
-                async: false,//this makes the ajax-call blocking
-                contentType: 'application/json;charset=UTF-8',
-                dataType: 'json',
-                success: function (response) {
-                    alertify.alert(response);
-                    valid = response.valid;
-                },
-                error: function (error) {
-                    alertify.alert(error);
-                }
-            });
-        });
-
+            if (j == 0) {
+                alertify.alert("Debe agregar productos a la cotizacion");
+            } else {
+                envio += "]}";
+                var json = eval("(" + envio + ')');
+                console.log(envio);
+                //alertify.alert("INGRESE DATOS");
+                console.info(json);
+                $.ajax({
+                    url: "GuardarCotizacion",
+                    data: JSON.stringify(json),
+                    type: "POST",
+                    async: false,//this makes the ajax-call blocking
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        alertify.alert(response);
+                        valid = response.valid;
+                    },
+                    error: function (error) {
+                        alertify.alert(error);
+                    }
+                });
+            }
+            }); 
     });
     //variables
     var total = 0;
@@ -137,7 +153,6 @@
         $("#txtnombre").val(Cliente.DatosPersonales);
         $("#idCliente").val(Cliente.Identificacion);
         $("#codigoCliente").val(Cliente.Codigo);
-
         /*       });*/
     }
 
@@ -157,6 +172,7 @@
         cadena = cadena + "<td>" + $("#cantidad").val() + "</td>";
         cadena = cadena + "<td>" + $("#precio").val() + "</td>";
         cadena = cadena + "<td>" + $("#descuento").val() + "</td>";
+        cadena = cadena + "<td>" + $("#notas").val() + "</td>";
         var y = 0;
         var x = 0;
         var des = 0;
@@ -180,6 +196,7 @@
         $("#ListaProducto").val("");
         $("#cantidad").val("");
         $("#descuento").val("");
+        $("#notas").val("");
     }
     function limpiarCliente() {
         $("tbody tr #txtnombre").val('');
@@ -262,19 +279,20 @@
 </table>
 <form action="javascript:fn_agregar()" ; method="post" id="frm_usu" class="form-horizontal">
     <table class="table">
-        <tr style="font-size:20px;">
-            <td>Id <input style="font-size:20px; font-weight:700;" type="text" id="idproducto" class="form-control" readonly required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_nombreProducto <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:20px; font-weight:700;" type="number" id="precio" class="form-control" required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="descuento" onfocus="this.value = '';" required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="cantidad" onfocus="this.value = '';" required /></td>
+        <tr style="font-size:12px;">
+            <td>Id <input style="font-size:12px; font-weight:700;" type="text" id="idproducto" class="form-control" readonly required /></td>
+            <td>Producto<input style="font-size:12px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:12px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:12px; font-weight:700;" type="number" id="precio" class="form-control" required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:12px; font-weight:700;" class="form-control" type="number" id="descuento" onfocus="this.value = '';" required /></td>
+            <td>Notas<input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="notas" /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:12px; font-weight:700;" class="form-control" type="number" id="cantidad" onfocus="this.value = '';" required /></td>
             <td colspan="2"><input class="btn btn-primary btn-lg" type="submit" name="agregar" id="agregar" value=@Lenguaje.Recurso.Cotizacion_agregar /></td>
         </tr>
     </table>
 </form>
 <table id="detalle" class="lista table" border="1">
-    <thead style="font-size:18px;">
+    <thead style="font-size:12px;">
         <tr class="bg-success">
             <td>@Lenguaje.Recurso.Cotizacion_detalleCompra</td>
         </tr>
@@ -284,12 +302,12 @@
             <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
             <th>@Lenguaje.Recurso.Cotizacion_precio</th>
             <th>@Lenguaje.Recurso.Cotizacion_descuento</th>
+            <th>Notas</th>
             <th>Total</th>
         </tr>
     </thead>
     <tbody></tbody>
 </table>
-
 <table class="table">
     <tr>
         <td style="font-size:20px; font-weight: 700;">@Lenguaje.Recurso.Cotizacion_totalPagar</td>
@@ -306,11 +324,9 @@
         </td>
     </tr>
 </table>
-
-
 @*<input class="btn btn-success btn-lg" type="button" id="finalizar" value=@Lenguaje.Recurso.Cotizacion_guardar />*@
 <input class="btn btn-success btn-lg" type="button" id="txtnueva" value=@Lenguaje.Recurso.Nuevo />
-<input class="btn btn-primary" type="button" id="preEnvio" onclick="preEnvio()" value="Enviar Correos" />
+<input class="btn btn-success btn-lg" type="button" id="preEnvio" onclick="preEnvio()" value="Guardar" />
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -329,10 +345,6 @@
         </div>
     </div>
 </div>
-
-
-
-
 <script>
     $(document).ready(function () {
         $("#txtnueva").click(function () {
@@ -345,7 +357,6 @@
         });
     });
 </script>
-
 <script>
     $(document).ready(function () {
         $("#btnproductos").click(function () {
@@ -359,16 +370,15 @@
                     $(mensaje).each(function (index, item) {
                         //recibir datos json
                         $("#nombreproducto").val(item.Nombre),
-                            $("#idproducto").val(item.IdProducto),
-                            $("#precio").val(item.PrecioUnitario),
-                            $("#marca").val(item.Marca)
+                        $("#idproducto").val(item.IdProducto),
+                        $("#precio").val(item.PrecioUnitario),
+                        $("#marca").val(item.Marca)
                     });
                 }
             });
         });
     });
 </script>
-
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>
 

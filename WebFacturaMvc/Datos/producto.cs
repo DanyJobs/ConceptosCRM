@@ -20,7 +20,7 @@ namespace WebFacturaMvc.Datos
             this.compraDetalle = new HashSet<compraDetalle>();
             this.existencia = new HashSet<existencia>();
             this.detalleCotizacion = new HashSet<detalleCotizacion>();
-            this.RFQItem = new HashSet<RFQItem>();
+            this.ventaDetalle = new HashSet<ventaDetalle>();
         }
     
         public string idProducto { get; set; }
@@ -40,6 +40,6 @@ namespace WebFacturaMvc.Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RFQItem> RFQItem { get; set; }
+        public virtual ICollection<ventaDetalle> ventaDetalle { get; set; }
     }
 }

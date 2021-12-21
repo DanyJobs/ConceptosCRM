@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgendaDao.cs" />
     <Compile Include="CategoriaDao.cs" />
     <Compile Include="CiudadDao.cs" />
     <Compile Include="ClienteDao.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="CompraDetalleDao.cs" />
     <Compile Include="ConexionDB.cs" />
     <Compile Include="DetalleCotizacionDao.cs" />
+    <Compile Include="EnvioDao.cs" />
     <Compile Include="EstadoDao.cs" />
     <Compile Include="ExistenciaDao.cs" />
     <Compile Include="FacturaDao.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Obligatorio.cs" />
     <Compile Include="CotizacionDao.cs" />
     <Compile Include="PaisDao.cs" />
+    <Compile Include="PaqueteriaDao.cs" />
     <Compile Include="ProductoDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SucursalDao.cs" />

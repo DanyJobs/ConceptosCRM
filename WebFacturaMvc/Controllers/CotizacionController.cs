@@ -45,6 +45,7 @@ namespace WebFacturaMvc.Controllers
         private static string idVentaMail;
         private cotizacion objCotizacion;
         private EmailMarketing objMarketing;
+        private Model.Entity.RFQItem objRFQItem;
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         public CotizacionController()
         {
@@ -403,6 +404,7 @@ namespace WebFacturaMvc.Controllers
                         SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
                         client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
                         client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                         NEVER_EAT_POISON_Disable_CertificateValidation();
                         client.Send(mail);
                         msge = "¡Correo enviado exitosamente!";
                         return (msge);
@@ -505,7 +507,9 @@ namespace WebFacturaMvc.Controllers
             int codigoPago = 0;
             long codigoCliente = 0;
             double total = 0;
-       
+            string nota;
+
+
 
             if (Fecha == "" || modoPago == "" || IdCliente == "" || Total == "")
             {
@@ -521,16 +525,17 @@ namespace WebFacturaMvc.Controllers
                 codigoCliente = Convert.ToInt64(IdCliente);
                 total = Convert.ToDouble(Total);
                 //REGISTRO DE VENTA
-                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus,dias,"N","A", DateTime.Now);         
+                Cotizacion objVenta = new Cotizacion(total, codigoCliente, idVendedor, Fecha, iva,notas,notasCompras, estatus,dias,"N","A", DateTime.Now.ToString("yyyy-MM-dd"));         
                 string codigoVenta = objCotizacionNeg.create(objVenta);
+
                 if (codigoVenta == "" || codigoVenta == null)
                 {
                     mensaje = "ERROR AL REGISTRAR LA VENTA";
                 }
                 else
-                {                   
-                     Session["idVenta"] = codigoVenta;
-                     idVentaMail= codigoVenta;
+                {
+                    Session["idVenta"] = codigoVenta;
+                    idVentaMail = codigoVenta;
                     //REGISTRO DE FACTURA
                     Factura objFactura = new Factura(Fecha, iva, total, codigoPago);
                     string codigoFactura = objFacturaNeg.create(objFactura);
@@ -546,10 +551,18 @@ namespace WebFacturaMvc.Controllers
                             int cantidad = Convert.ToInt32(data.Cantidad.ToString());
                             double descuento = Convert.ToDouble(data.Descuento.ToString());
                             double subtotal = Convert.ToDouble(data.SubTotal.ToString());
-                            DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
+                            if (String.IsNullOrWhiteSpace(data.notas))
+                            {
+                                nota = "";
+                            }
+                            else {
+                                nota = data.notas.ToString();
+                            }
+                           
+                            DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt32(codigoFactura), Convert.ToInt32(codigoVenta), idProducto, subtotal, descuento, cantidad,nota);
                             objDetalleVentaNeg.create(objDetalleVenta);
                         }
-                        mensaje = "VENTA "+ codigoVenta + " GUARDADA CON EXITO...";
+                        mensaje = "VENTA " + codigoVenta + " GUARDADA CON EXITO...";
                     }
                 }
 
@@ -636,6 +649,13 @@ namespace WebFacturaMvc.Controllers
             List<Historial> Cotizacion = objCotizacionNeg.findHistorial(objHistorial);
             return View(Cotizacion);
         }
+        public ActionResult BuscarRFQ(string idProducto)
+        {
+            RFQHistorial objHistorial = new RFQHistorial();
+            objHistorial.idProducto = idProducto;
+            List<RFQHistorial> Cotizacion = objCotizacionNeg.findRFQ(objHistorial);
+            return View(Cotizacion);
+        }
 
         public ActionResult SendEmailFactura(decimal IdVenta)
         {       //string id = Session["idVenta"].ToString();
@@ -643,13 +663,14 @@ namespace WebFacturaMvc.Controllers
                 Paso = 0;
                 SendEmail email = new SendEmail();
                 email = lects;
+                //lects.NoCotizacion
                 return View("SendEmailFactura", lects);       
         }
 
         [HttpPost]
         public ActionResult SendEmailFactura(SendEmail objSendEmail)
         {
-            Llenar();
+            Llenar();        
             configuracion objConfiguracion = new configuracion();
             if (!(Request.IsAuthenticated || User.IsInRole("ADMIN")))
             {
@@ -674,8 +695,8 @@ namespace WebFacturaMvc.Controllers
    
                 using (var viewer = new LocalReport())
                 {
-                    DateTime fechaActual = DateTime.Today;
-                    string fechaQuote = string.Format("{0}{1}{2}", fechaActual.Month, fechaActual.Day, fechaActual.Year);
+             
+                    string fechaQuote = objSendEmail.NoCotizacion;
 
                     DataTable dt = frmReporteEs.cargar(objSendEmail.idCotizacion.ToString());
                     ReportDataSource rds = new ReportDataSource("DataSet1", dt);
@@ -728,7 +749,7 @@ namespace WebFacturaMvc.Controllers
                 htmlView.LinkedResources.Add(imgFirma);
                 mail.AlternateViews.Add(htmlView);
                 mail.Body = HttpUtility.HtmlEncode(stCuerpoHTML);
-                mail.Attachments.Add(new Attachment(new MemoryStream(bytes), "Quote " + idVentaMail + fechaQuote + ".pdf"));
+                mail.Attachments.Add(new Attachment(new MemoryStream(bytes), fechaQuote + ".pdf"));
                 mail.IsBodyHtml = true;
                 SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto);//Aquí debes sustituir tu servidor SMTP y el puerto
                 client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
@@ -743,10 +764,7 @@ namespace WebFacturaMvc.Controllers
         }
       
         static void NEVER_EAT_POISON_Disable_CertificateValidation()
-        {
-            // Disabling certificate validation can expose you to a man-in-the-middle attack
-            // which may allow your encrypted message to be read by an attacker
-            // https://stackoverflow.com/a/14907718/740639
+        {         
             ServicePointManager.ServerCertificateValidationCallback =
                 delegate (
                     object s,
@@ -975,47 +993,6 @@ namespace WebFacturaMvc.Controllers
             return Json(mensaje);            
         }
 
-
-
-        [HttpPost]
-        public ActionResult AgregarRfq(string idVenta)
-        {
-            int codigo = Convert.ToInt32(idVenta);
-            string id = User.Identity.GetUserId();
-            List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus();
-            configuracion objConfiguracion = new configuracion();
-            cargarFechas();
-            string mensaje = "Error";
-            try
-            {
-                var rfq = new RFQ { idVendedor = id , fecha = DateTime.Now, estatus="A"};
-                //System.Diagnostics.Debug.WriteLine("Cotizacion: " + cotizacionItem.idVenta + " " + cotizacionItem.estatusSeguimiento);
-                db.RFQ.Add(rfq);        
-                db.SaveChanges();
-
-                //foreach (var data in ListadoDetalle)
-                //{
-                //    string idProducto = data.IdProducto.ToString();
-                //    int cantidad = Convert.ToInt32(data.Cantidad.ToString());
-                //    double descuento = Convert.ToDouble(data.Descuento.ToString());
-                //    double subtotal = Convert.ToDouble(data.SubTotal.ToString());
-                //    DetalleCotizacion objDetalleVenta = new DetalleCotizacion(Convert.ToInt64(codigoFactura), Convert.ToInt64(codigoVenta), idProducto, subtotal, descuento, cantidad);
-                //    objDetalleVentaNeg.create(objDetalleVenta);
-                //}
-
-                mensaje = "¡Seguimiento cancelado correctamente!";
-            }
-            catch (Exception e)
-            {
-                mensaje = "Error: " + e.ToString();
-                throw;
-            }
-            return Json(mensaje);
-        }
-
-
-
-
         private string EnviarCorreosMarketing(List<string> ListadoDetalle, configuracion objConfiguracion)
         {
             string id = User.Identity.GetUserId();
@@ -1059,7 +1036,7 @@ namespace WebFacturaMvc.Controllers
                         stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
                         stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + email.Cliente + ".</h1>";
                         stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'>I hope you are well. <br /><br /> I am an " + objConfiguracion.puesto + " with Conceptos Electronics. <br /> <br /> We buy and sell reconditioned and new test equipment. <br /> <br /> We have over 20 years experience and can help you with your application specific needs.";
-                        stCuerpoHTML += "<br/> <br />We also can train, install, and service your equipment.<br/><br/>We have an accredited test laboratory.<br/><br/>Please take a look at our website and please let me know how we can help.<br/><br/>I look forward to working with you.<br/><br/> <a href='https://conceptoselectronics.com/reconditioned/' style='color:#ffffff;'>Test Equipment Reconditioned</a></p>";
+                        stCuerpoHTML += "<br/> <br />We also can train, install, and service your equipment.<br/><br/>We have an accredited test laboratory.<br/><br/>Please take a look at our website and please let me know how we can help.<br/><br/>I look forward to working with you.<br/><br/> <center><a href='https://conceptoselectronics.com/reconditioned/'>Test Equipment Reconditioned</a><center/></p>";
                         stCuerpoHTML += firma(objConfiguracion);
                         stCuerpoHTML += "</td></tr></table></td> </tr><tr><td style='padding:30px;background:#ee4c50;'>";
                         stCuerpoHTML += " <table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>";
@@ -1147,6 +1124,156 @@ namespace WebFacturaMvc.Controllers
             string id = User.Identity.GetUserId();
             List<EmailMarketingCorreos> lista = objCotizacionNeg.buscarEmailMarketing(id);
             return View(lista);
+        }
+        public ActionResult RFQEditar(string idRFQ)
+        {
+            Llenar();
+            //CompraDao cd = new CompraDao();
+            Model.Entity.RFQ registro = objCotizacionNeg.buscarListaRFQ(idRFQ);
+            ViewData["IdRFQ"] = registro.idRFQ.ToString();
+            ViewData["Fecha"] = registro.fecha.ToString("MM/dd/yyyy");
+            ViewData["Vendedor"] = registro.idVendedor.ToString();
+            //ViewData["CP"] = registro.IdProveedor.ToString();
+            ViewData["EstatusSeleccionado"] = registro.estatus.ToString();
+            //ViewData["TotalCompra"] = registro.Total.ToString();
+            //ViewData["Seccion"] = registro.Seccion.ToString();
+            return View();       
+        }
+
+        [HttpPost]
+        public ActionResult RFQEditarSinEliminados(string idRFQ, string estatus, List<Model.Entity.RFQItem> ListaItems)
+        {
+            
+            Model.Entity.RFQ objRFQ = new Model.Entity.RFQ();
+            objRFQ.idRFQ = int.Parse(idRFQ);
+            objRFQ.estatus = estatus;
+            string notas;
+            string mensaje = "";
+            try
+            {               
+                objCotizacionNeg.updateRFQ(objRFQ);
+                mensaje = "RFQ MODIFICADO CON ÉXITO";
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message.ToString();
+            } 
+            foreach (var data in ListaItems)
+            {               
+                int idRFQItem = Convert.ToInt32(data.idRFQItem);
+                int idRFQLista = Convert.ToInt32(idRFQ);
+                int? idProveedor = Convert.ToInt32(data.idProveedor);
+                if (idProveedor==0)
+                {
+                    idProveedor = null;
+                }
+                string idProducto = data.idProducto.ToString();
+                decimal precio = Convert.ToDecimal(data.precio.ToString());
+                int pCantidad = Convert.ToInt32(data.cantidad.ToString());
+                if (data.notas==null)
+                {
+                    notas = null;
+
+                }
+                else {
+                    notas = data.notas.ToString();
+                }
+                string fecha = DateTime.Now.ToString();
+                Model.Entity.RFQItem objCompraDetalle = new Model.Entity.RFQItem(idRFQItem,idRFQLista,idProveedor,idProducto,precio,pCantidad,notas,fecha);
+                try
+                { 
+                    mensaje = objCotizacionNeg.updateRFQItem(objCompraDetalle);
+                    mensaje = "Actualizado Correctamente";
+            
+                }
+                catch (Exception ex)
+                {
+                    mensaje = ex.Message.ToString();
+                }
+            } 
+            return Json(mensaje);
+        }
+
+        [HttpPost]
+        public ActionResult RFQEditarConEliminados(string idRFQ, string estatus, List<Model.Entity.RFQItem> ListaItems, List<string> ListaEliminados)
+        {
+            Model.Entity.RFQ objRFQ = new Model.Entity.RFQ(int.Parse(idRFQ), estatus);         
+            string notas;
+            string mensaje = "";
+            try
+            {
+                objCotizacionNeg.updateRFQ(objRFQ);
+                mensaje = "RFQ MODIFICADO CON ÉXITO";
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message.ToString();
+            }
+            foreach (var data in ListaItems)
+            {
+                int idRFQItem = Convert.ToInt32(data.idRFQItem);
+                int idRFQLista = Convert.ToInt32(idRFQ);
+                int? idProveedor = Convert.ToInt32(data.idProveedor);
+                if (idProveedor == 0)
+                {
+                    idProveedor = null;
+                }
+                string idProducto = data.idProducto.ToString();
+                decimal precio = Convert.ToDecimal(data.precio.ToString());
+                int pCantidad = Convert.ToInt32(data.cantidad.ToString());
+                if (data.notas == null)
+                {
+                    notas = null;
+
+                }
+                else
+                {
+                    notas = data.notas.ToString();
+                }
+
+                string fecha = DateTime.Now.ToString();
+                Model.Entity.RFQItem objCompraDetalle = new Model.Entity.RFQItem(idRFQItem, idRFQLista, idProveedor, idProducto, precio, pCantidad, notas, fecha);
+                try
+                {
+                    mensaje = objCotizacionNeg.updateRFQItem(objCompraDetalle);
+
+                }
+                catch (Exception ex)
+                {
+                    mensaje = ex.Message.ToString();
+                }
+            }
+            foreach (var data in ListaEliminados)
+                {
+                    int idRFQItem = Convert.ToInt32(data);
+                    int idRFQLista = Convert.ToInt32(idRFQ);
+                    RFQItemEliminado objRFQItemEliminados = new RFQItemEliminado(idRFQItem, idRFQLista);
+                    try
+                    {
+                        mensaje = objCotizacionNeg.eliminadosRFQ(objRFQItemEliminados);                      
+                    }
+                    catch (Exception ex)
+                    {
+                        mensaje = ex.Message.ToString();
+                    }
+            }
+        
+            return Json(mensaje);
+        }
+        public ActionResult RFQLista()
+        {
+                     
+            List<Model.Entity.RFQ> registro = objCotizacionNeg.buscarListaRFQ();      
+            return View(registro);
+        }
+
+        [HttpPost]
+        public ActionResult ListaProductosRFQ(string idRFQ)
+        {
+            List<Model.Entity.RFQItem> list = new List<Model.Entity.RFQItem>();
+            list = objCotizacionNeg.buscarListaProductosRFQ(idRFQ);
+            return Json(list,JsonRequestBehavior.AllowGet);
+
         }
     }
 }

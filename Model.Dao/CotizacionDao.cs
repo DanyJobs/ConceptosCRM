@@ -24,10 +24,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+               objConexinDB.getCon().Open();
 
                 //RECUPERAR EL CODIGO AUTOGENERADO
-                SqlDataReader reader = comando.ExecuteReader();
+                reader = comando.ExecuteReader();
                 if (reader.Read())
                 {
                     idVenta = reader[0].ToString();
@@ -527,6 +527,239 @@ namespace Model.Dao
             }
             return objListaCotizacion;
         }
+
+        public string agregarRFQ(string idVenta,string idVendedor)
+        {
+            string mensaje = "";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("AgregarRFQ", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idVenta", Convert.ToInt32(idVenta));
+                cmd.Parameters.AddWithValue("@idVendedor", idVendedor);
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    mensaje = reader[0].ToString();           
+                }
+            }
+            catch (Exception e)
+            {
+                mensaje = e.ToString();
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return mensaje;
+        }
+        public List<RFQItem> buscarListaProductosRFQ(string id)
+        {
+            List<RFQItem> objListaRFQItem = new List<RFQItem>();
+            //try
+            //{
+                //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
+                SqlCommand cmd = new SqlCommand("RFQConsultas", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@opcion", "I");
+                cmd.Parameters.AddWithValue("@idRfq", Convert.ToInt32(id));
+            if (objConexinDB.getCon().State == ConnectionState.Closed) {
+                objConexinDB.getCon().Open();
+            }                
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                RFQItem objRFQ = new RFQItem();
+                objRFQ.idRFQItem = int.Parse(reader[0].ToString());
+                objRFQ.idProducto = reader[1].ToString();
+                objRFQ.nombre = reader[2].ToString();
+                if (!reader.IsDBNull(3))
+                {
+                    objRFQ.precio = reader.GetDecimal(3);
+                }
+            
+                    objRFQ.cantidad = int.Parse(reader[4].ToString());
+                    objRFQ.notas = reader[5].ToString();
+                if (!reader.IsDBNull(6))
+                {
+                    objRFQ.idProveedor = int.Parse(reader[6].ToString());
+                    objRFQ.empresa = reader[7].ToString();
+                    objRFQ.empresaNombre = reader[8].ToString();      
+                }
+                else {
+                    objRFQ.empresa = "N/A";
+                    objRFQ.idProveedor = 0;
+                    objRFQ.empresaNombre = "N/A";
+                }
+                objRFQ.marca = reader[9].ToString();
+                objListaRFQItem.Add(objRFQ);
+                }
+
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            //}
+            return objListaRFQItem;
+        }
+        public RFQ buscarListaRFQ(string id)
+        {
+            RFQ objRFQ = new RFQ();
+            try
+            {
+            //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
+            SqlCommand cmd = new SqlCommand("RFQConsultas", objConexinDB.getCon());
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@opcion", "R");
+            cmd.Parameters.AddWithValue("@idRfq",int.Parse(id));
+            objConexinDB.getCon().Open();
+            reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                objRFQ.idRFQ = int.Parse(reader[0].ToString());
+                objRFQ.idVendedor = reader[1].ToString();
+                objRFQ.fecha = DateTime.Parse(reader[2].ToString());
+                objRFQ.estatus = reader[3].ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message.ToString());
+                throw;
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return objRFQ;
+        }
+
+        public List<RFQ> buscarListaRFQ()
+        {
+            List<RFQ> objListaRFQ = new List<RFQ>();
+            try
+            {
+                //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
+                SqlCommand cmd = new SqlCommand("RFQConsultas", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@opcion", "T");            
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    RFQ objRFQ = new RFQ();
+                    objRFQ.idRFQ = int.Parse(reader[0].ToString());
+                    objRFQ.idVendedor = reader[1].ToString();
+                    objRFQ.fecha = DateTime.Parse(reader[2].ToString());
+                    objRFQ.estatus = reader[3].ToString();
+                    objListaRFQ.Add(objRFQ);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return objListaRFQ;
+        }
+        public string updateRFQ(RFQ rfq)
+        {
+            string mensaje = "";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("sp_EditarRFQ", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@opcion", "R");
+                cmd.Parameters.AddWithValue("@estatus", rfq.estatus);
+                cmd.Parameters.AddWithValue("@idRFQ", Convert.ToInt32(rfq.idRFQ)); 
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                mensaje = "Actualizado Correctamente";
+            }
+            catch (Exception e)
+            {
+                mensaje = e.ToString();
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return mensaje;
+        }
+
+        public string updateRFQItem(RFQItem rfqItem)
+        {
+            string mensaje = "";
+            try
+            {
+                SqlCommand cmd = new SqlCommand("sp_EditarRFQ", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@opcion", "I");
+                cmd.Parameters.AddWithValue("@idRFQ", rfqItem.idRfq);
+                cmd.Parameters.AddWithValue("@idRFQItem", rfqItem.idRFQItem);
+                cmd.Parameters.AddWithValue("@idProveedor", rfqItem.idProveedor);
+                cmd.Parameters.AddWithValue("@idProducto",rfqItem.idProducto);
+                cmd.Parameters.AddWithValue("@precio", rfqItem.precio);
+                cmd.Parameters.AddWithValue("@cantidad", rfqItem.cantidad);
+                cmd.Parameters.AddWithValue("@notas", rfqItem.notas);
+                cmd.Parameters.AddWithValue("@fecha", rfqItem.fecha);        
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                mensaje = "Actualizado Correctamente";
+            }
+            catch (Exception e)
+            {
+                mensaje = e.ToString();
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return mensaje;
+        }
+
+        public string eliminadosRFQ(RFQItemEliminado rfqItem)
+        {
+            string mensaje = "";
+            try
+            {
+                SqlCommand cmd = new SqlCommand("sp_EditarRFQ", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@opcion", "E");
+                cmd.Parameters.AddWithValue("@idRFQ", rfqItem.idRfq);
+                cmd.Parameters.AddWithValue("@idRFQItem", rfqItem.idRFQItem);                
+                objConexinDB.getCon().Open();
+                reader = cmd.ExecuteReader();
+                mensaje = "Actualizado Correctamente";
+            }
+            catch (Exception e)
+            {
+                mensaje = e.ToString();
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return mensaje;
+        }
+
 
     }
 }

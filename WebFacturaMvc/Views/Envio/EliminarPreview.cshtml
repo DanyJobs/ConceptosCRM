@@ -1,0 +1,31 @@
+﻿@model List<Model.Entity.Envio>
+@{
+    ViewBag.Title = "Eliminar Preview";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">¿Seguro que desea eliminar este envío?</h2>
+<a class="btn btn-success" href="~/Envio/Index">Regresar</a>
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>ID Envio</th>
+            <th>ID Venta</th>
+            <th>Cliente</th>
+            <th>Paquetería</th>
+            <th>No.Tracking</th>                        
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objEnvios in Model)
+        {
+            <tr>
+                <td>@objEnvios.IdEnvio</td>
+                <td>@objEnvios.IdVenta</td>
+                <td>@objEnvios.NombreCliente</td>
+                <td>@objEnvios.Paqueteria</td>
+                <td>@objEnvios.NumeroGuia</td>                                             
+                <td><a class="btn btn-danger" href="~/Envio/Eliminar?idEnvio=@objEnvios.IdEnvio"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>

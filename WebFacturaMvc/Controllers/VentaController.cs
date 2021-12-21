@@ -335,21 +335,16 @@ namespace WebFacturaMvc.Controllers
         
         
         public ActionResult VerOrdenCompra(int idVenta)
-        {
-            
-                Venta v = objVentaNeg.VerOrdenCompra(idVenta);
-            
+        {            
+            Venta v = objVentaNeg.VerOrdenCompra(idVenta);            
             //Este es el bueno por fin traerBytes()
-            byte[] byteArray = objVentaNeg.traerBytes(idVenta);
-            
+            byte[] byteArray = objVentaNeg.traerBytes(idVenta);            
             MemoryStream pdfStream = new MemoryStream();            
                 pdfStream.Write(byteArray, 0, byteArray.Length);
                 pdfStream.Position = 0;
-                return new FileStreamResult(pdfStream, "application/pdf");
-            
+                return new FileStreamResult(pdfStream, "application/pdf");            
             //string pdf = Convert.ToBase64String(v.Archivo);
-            //System.Diagnostics.Debug.WriteLine("Archivo: " + v.Archivo.Length);
-            
+            //System.Diagnostics.Debug.WriteLine("Archivo: " + v.Archivo.Length);            
         }
         //Para el ver Venta
         public void cargarEstado(string idPais)
@@ -519,6 +514,12 @@ namespace WebFacturaMvc.Controllers
             return Json(mensaje);
         }
 
+        [HttpPost]
+        public ActionResult ListaProductosVenta(string idVenta)
+        {
+            List<Model.Entity.RFQItem> list = new List<Model.Entity.RFQItem>();
+            list = objCotizacionNeg.buscarListaProductosRFQ(idVenta);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
     }
-
     }

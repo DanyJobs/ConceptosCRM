@@ -187,3 +187,5 @@ E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csproj.CoreCom
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.csproj.CopyComplete
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.dll
 E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\WebFacturaMvc.pdb
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.cache
+E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\obj\Debug\RdlCompile.compiled

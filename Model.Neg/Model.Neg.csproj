@@ -68,9 +68,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgendaNeg.cs" />
     <Compile Include="CategoriaNeg.cs" />
     <Compile Include="CiudadNeg.cs" />
     <Compile Include="CompraDetalleNeg.cs" />
+    <Compile Include="EnvioNeg.cs" />
     <Compile Include="EstadoNeg.cs" />
     <Compile Include="MarcaNeg.cs" />
     <Compile Include="ClienteNeg.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="ModoPagoNeg.cs" />
     <Compile Include="CotizacionNeg.cs" />
     <Compile Include="PaisNeg.cs" />
+    <Compile Include="PaqueteriaNeg.cs" />
     <Compile Include="ProductoNeg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SucursalNeg.cs" />

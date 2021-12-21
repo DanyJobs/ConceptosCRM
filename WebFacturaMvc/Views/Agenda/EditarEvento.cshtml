@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "Editar Evento";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../../Scripts/ClockPicker/bootstrap-clockpicker.min.css">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtDescripcion").val('@ViewData["Descripcion"]');
+        $("#txtFecha").val('@ViewData["Fecha"]');
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //botones
+        $("#finalizar").click(function () {
+            var i = 0;
+            var envio = "{IdEvento:'" + $("#txtEvento").val() + "',Fecha:'" + $("#txtFecha").val() + "',Hora:'" + $("#txtHora").val() + "',Titulo:'" + $("#txtTitulo").val() + "',Descripcion:'" + $("#txtDescripcion").val() + "',Link:'" + $("#txtLink").val() + "',Direccion:'" + $("#txtDireccion").val() + "'}";
+            var json = eval("(" + envio + ')');
+            console.log(envio);
+            $.ajax({
+                url: "Editar",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                },
+                error: function (error) {
+                    alertify.alert(error);
+                }
+            });
+        });
+    });
+</script>
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Editar evento</h2>
+<table id="encabezado" class="table">
+    <thead>
+
+        <tr style="font-size:20px;">
+            <th>ID Evento <input style="color:red; font-size:20px;" class="form-control" type="text" id="txtEvento" readonly value="@ViewData["Evento"]" /></th>
+            <th>
+                @Lenguaje.Recurso.Cotizacion_fecha
+                <!--<input style="color:red;font-size:20px;" class="form-control" type="text" id="txtFecha" />-->
+                <input type="date" id="txtFecha" name="trip-start"
+                       value=""
+                       min="@DateTime.Now.Date.ToString("yyyy-MM-dd")" max="2099-12-31">
+            </th>
+            <th>Título: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtTitulo" value="@ViewData["Titulo"]" /></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="font-size:20px;">
+            <th>Hora:</th>
+            <th>
+                <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                    <input type="text" class="form-control" value="@ViewData["Hora"]" id="txtHora">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+                <script type="text/javascript">
+                    $('.clockpicker').clockpicker();
+                </script>
+            </th>            
+            <td>Descripción(MÁX 200): <textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="txtDescripcion" id="txtDescripcion" maxlength="200"></textarea></td>
+        </tr>
+        <tr style="font-size:20px;">
+            <th></th>
+            <th></th>
+            <th>
+                Link de reunión: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtLink" value="@ViewData["Link"]" />
+            </th>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr style="font-size:20px;">
+            <th>
+            </th>
+            <th></th>
+            <th>Dirección del evento: <input style="color:black; font-size:20px;" class="form-control" type="text" id="txtDireccion" value="@ViewData["Direccion"]" /></th>
+        </tr>
+    </tbody>
+</table>
+<input class="btn btn-success btn-lg" type="button" id="finalizar" value=@Lenguaje.Recurso.Cotizacion_guardar />
+<a href="~/Agenda/Index"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>
+<script type="text/javascript" src="../../Scripts/ClockPicker/bootstrap-clockpicker.min.js"></script>
+<script type="text/javascript">
+    $('.clockpicker').clockpicker()
+        .find('input').change(function () {
+            console.log(this.value);
+        });
+    var input = $('#single-input').clockpicker({
+        placement: 'bottom',
+        align: 'left',
+        autoclose: true,
+        'default': 'now'
+    });
+
+    $('.clockpicker-with-callbacks').clockpicker({
+        donetext: 'Done',
+        init: function () {
+            console.log("colorpicker initiated");
+        },
+        beforeShow: function () {
+            console.log("before show");
+        },
+        afterShow: function () {
+            console.log("after show");
+        },
+        beforeHide: function () {
+            console.log("before hide");
+        },
+        afterHide: function () {
+            console.log("after hide");
+        },
+        beforeHourSelect: function () {
+            console.log("before hour selected");
+        },
+        afterHourSelect: function () {
+            console.log("after hour selected");
+        },
+        beforeDone: function () {
+            console.log("before done");
+        },
+        afterDone: function () {
+            console.log("after done");
+        }
+    })
+        .find('input').change(function () {
+            console.log(this.value);
+        });
+
+    // Manually toggle to the minutes view
+    $('#check-minutes').click(function (e) {
+        // Have to stop propagation here
+        e.stopPropagation();
+        input.clockpicker('show')
+            .clockpicker('toggleView', 'minutes');
+    });
+    if (/mobile/i.test(navigator.userAgent)) {
+        $('input').prop('readOnly', true);
+    }
+</script>
+<script type="text/javascript" src="../../Scripts/ClockPicker/highlight.min.js"></script>
+<script type="text/javascript">
+    hljs.configure({ tabReplace: '    ' });
+    hljs.initHighlightingOnLoad();
+</script>
+

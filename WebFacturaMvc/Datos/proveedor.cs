@@ -18,7 +18,7 @@ namespace WebFacturaMvc.Datos
         public proveedor()
         {
             this.compra = new HashSet<compra>();
-            this.RFQItem = new HashSet<RFQItem>();
+            this.ventaDetalle = new HashSet<ventaDetalle>();
         }
     
         public int idProveedor { get; set; }
@@ -30,10 +30,11 @@ namespace WebFacturaMvc.Datos
         public string cp { get; set; }
         public string email { get; set; }
         public string telefono { get; set; }
+        public string empresa { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<compra> compra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RFQItem> RFQItem { get; set; }
+        public virtual ICollection<ventaDetalle> ventaDetalle { get; set; }
     }
 }

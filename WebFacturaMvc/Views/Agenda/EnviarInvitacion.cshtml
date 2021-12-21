@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Hacer guía";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        //botones
+        $("#finalizar").click(function () {
+            var i = 0;
+            var envio = "{idEvento:'" + $("#txtEvento").val() + "',nombreDestinatario:'" + $("#txtNombre").val() + "',correoDestinatario:'" + $("#txtCorreo").val() +"'}";
+            var json = eval("(" + envio + ')');
+            console.log(envio);
+            $.ajax({
+                url: "Enviar",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                    const nombre = document.getElementById('finalizar');
+                    nombre.disabled = true;
+                },
+                error: function (error) {
+                    alertify.alert(error);
+                }
+            });
+        });
+    });
+</script>
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Enviar invitación</h2>
+<table id="encabezado" class="table">
+    <thead>
+        <tr style="font-size:20px;">
+            <th>ID Evento <input style="color:red; font-size:20px;" class="form-control" type="text" id="txtEvento" readonly value="@ViewData["Evento"]" /></th>
+            <th>
+                Título
+                <input style="color:red;font-size:20px;" class="form-control" type="text" id="txtFecha" readonly value="@ViewData["Titulo"]" />
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="font-size:20px;">
+            <td>
+                Nombre del destinatario
+                <input style="color:black;font-size:20px;" class="form-control" type="text" id="txtNombre" value="" />
+            </td>
+            <td>Correo eléctronico: <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtCorreo" required value="" /></td>
+        </tr>
+    </tbody>
+</table>
+
+<input class="btn btn-success btn-lg" type="button" id="finalizar" value="Enviar" />
+<a href="~/Agenda/Index"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>

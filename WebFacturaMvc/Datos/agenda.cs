@@ -12,21 +12,17 @@ namespace WebFacturaMvc.Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class RFQ
+    public partial class agenda
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RFQ()
-        {
-            this.RFQItem = new HashSet<RFQItem>();
-        }
-    
-        public int idRFQ { get; set; }
-        public string idVendedor { get; set; }
+        public int idEvento { get; set; }
+        public string idUsuario { get; set; }
+        public string titulo { get; set; }
+        public string descripcion { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
-        public string estatus { get; set; }
+        public string hora { get; set; }
+        public string link_reunion { get; set; }
+        public string direccion { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RFQItem> RFQItem { get; set; }
     }
 }

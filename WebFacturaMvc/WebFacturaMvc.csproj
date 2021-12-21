@@ -333,6 +333,17 @@
     <Content Include="Datos\crmconceptos.edmx.diagram">
       <DependentUpon>crmconceptos.edmx</DependentUpon>
     </Content>
+    <Content Include="clouderp_conceptoselectronicsDataSet.xsc">
+      <DependentUpon>clouderp_conceptoselectronicsDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="clouderp_conceptoselectronicsDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>clouderp_conceptoselectronicsDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="clouderp_conceptoselectronicsDataSet.xss">
+      <DependentUpon>clouderp_conceptoselectronicsDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="dbventasDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dbventasDataSet.Designer.cs</LastGenOutput>
@@ -344,6 +355,7 @@
     <Content Include="Js\script.js" />
     <Content Include="Reportes\Espanol\frmReporteEs.aspx" />
     <Content Include="Reportes\Ingles\frmReporteEn.aspx" />
+    <Content Include="Reportes\Ingles\frmReportePo.aspx" />
     <Content Include="RPTDataset\dsPrincipal.xsc">
       <DependentUpon>dsPrincipal.xsd</DependentUpon>
     </Content>
@@ -365,6 +377,17 @@
     </None>
     <Content Include="ProcDataSet.xss">
       <DependentUpon>ProcDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="ProcedimientoDataSet.xsc">
+      <DependentUpon>ProcedimientoDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="ProcedimientoDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProcedimientoDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ProcedimientoDataSet.xss">
+      <DependentUpon>ProcedimientoDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="ReporteDataSet.xsd">
@@ -457,7 +480,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="clouderp_conceptoselectronicsDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>clouderp_conceptoselectronicsDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
@@ -465,6 +494,7 @@
     <Compile Include="Controllers\ConfiguracionController.cs" />
     <Compile Include="Controllers\DetalleCotizacionController.cs" />
     <Compile Include="Controllers\EmailMarketingController.cs" />
+    <Compile Include="Controllers\EnvioController.cs" />
     <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\ExistenciaController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
@@ -477,6 +507,9 @@
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\VentaController.cs" />
+    <Compile Include="Datos\agenda.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\AspNetRoles.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -538,6 +571,9 @@
     <Compile Include="Datos\EmailMarketing.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\envio.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\estado.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -559,22 +595,25 @@
     <Compile Include="Datos\pais.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\paqueteria.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\producto.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\proveedor.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Datos\RFQ.cs">
-      <DependentUpon>crmconceptos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Datos\RFQItem.cs">
+    <Compile Include="Datos\RFQConsultas_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\spusuario_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\SP_Buscar_Cotizacion_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarAgendaHoy_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_cargarCiudades_Result.cs">
@@ -589,10 +628,16 @@
     <Compile Include="Datos\sp_cargarEstado_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_cargarEventoAgenda_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_cargarPaises_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_cargarPais_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_cargarPaqueterias_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_CompraConsultaEditar2_Result.cs">
@@ -626,6 +671,15 @@
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_consultaCotizacion_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaEnviosN_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaEnvios_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaEnvio_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_consultaExistenciasSucursal_Result.cs">
@@ -667,10 +721,16 @@
     <Compile Include="Datos\SP_COTIZACION_HISTORIAL_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_datosEmail_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_filtrarCiudades_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_filtrarEstados_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_filtrarEventos_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_filtrarPaises_Result.cs">
@@ -715,6 +775,15 @@
     <Compile Include="Datos\SP_PRODUCTO_CONSULTA_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\SP_RFQ_HISTORIAL_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_verificarEvento2_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_verificarEvento_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_VerOrdenCompra_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -729,6 +798,9 @@
     </Compile>
     <Compile Include="Datos\Usuario.cs" />
     <Compile Include="Datos\venta.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\ventaDetalle.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="dbventasDataSet.Designer.cs">
@@ -752,6 +824,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProcDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ProcedimientoDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProcedimientoDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReporteDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -771,6 +848,13 @@
     </Compile>
     <Compile Include="Reportes\Ingles\frmReporteEn.aspx.designer.cs">
       <DependentUpon>frmReporteEn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Ingles\frmReportePo.aspx.cs">
+      <DependentUpon>frmReportePo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes\Ingles\frmReportePo.aspx.designer.cs">
+      <DependentUpon>frmReportePo.aspx</DependentUpon>
     </Compile>
     <Compile Include="RPTDataset\dsPrincipal.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -921,6 +1005,21 @@
     <Content Include="Views\Venta\Index.cshtml" />
     <Content Include="Views\Venta\VerOrdenCompra.cshtml" />
     <Content Include="Views\Venta\VerVenta.cshtml" />
+    <Content Include="Views\Cotizacion\RFQEditar.cshtml" />
+    <Content Include="Views\Cotizacion\RFQLista.cshtml" />
+    <Content Include="Views\Cotizacion\BuscarRFQ.cshtml" />
+    <Content Include="Views\Agenda\AgregarEvento.cshtml" />
+    <Content Include="Views\Agenda\EditarEvento.cshtml" />
+    <Content Include="Views\Agenda\EliminarEvento.cshtml" />
+    <Content Include="Views\Agenda\EnviarInvitacion.cshtml" />
+    <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\Agenda\VerDetalles.cshtml" />
+    <Content Include="Views\Envio\Editar.cshtml" />
+    <Content Include="Views\Envio\Eliminar.cshtml" />
+    <Content Include="Views\Envio\EliminarPreview.cshtml" />
+    <Content Include="Views\Envio\EnviosCompletados.cshtml" />
+    <Content Include="Views\Envio\HacerGuia.cshtml" />
+    <Content Include="Views\Envio\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -935,6 +1034,7 @@
     <EmbeddedResource Include="Migrations\202107202100101_Test.resx">
       <DependentUpon>202107202100101_Test.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Ingles\ReportPO.rdlc" />
     <EmbeddedResource Include="Reportes\Ingles\rptFacturaEn.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

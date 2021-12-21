@@ -66,14 +66,12 @@
                 }
             });
         });
-
     });
     //variables
     var total = 0;
     var valor = 0;
     var subtotal = 0;
     function obtenerCliente(Cliente) {
-
         var watchclose = setInterval(function () {
             $("#txtnombre").val(Cliente.DatosPersonales);
             $("#txtIdProveedor").val(Cliente.Codigo);
@@ -187,7 +185,7 @@
         <tr style="font-size:20px;">
 
             <td>Nombre de proveedor <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtnombre" readonly required value="@ViewData["NombreP"]" /></td>
-            <td>Código de proveedor <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtIdProveedor" readonly required value="@ViewData["CP"]" /></td>
+            <td>Código de proveedor <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtIdProveedor" readonly required value="@ViewData["CP"]" /></td>
             <td>
                 Sucursal:
                 <div class="col-md-12 dropdown">
@@ -202,7 +200,7 @@
                     <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="Obtener Producto" />
                 </a>
             </td>
-            <td>Sección de almacén: <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtseccion" required /></td>
+            <td>Sección de almacén: <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="txtseccion" required /></td>
         </tr>
     </tbody>
 </table>
@@ -279,7 +277,6 @@
                 //$("#idproducto").val(mensaje.Nombre);
                 $(mensaje).each(function (index, item) {
                     //recibir datos json
-
                     cadena = "<tr>"
                     cadena = cadena + "<td>" + item.IdProducto + "</td>";
                     cadena = cadena + "<td>" + item.NombreProducto + "</td>";

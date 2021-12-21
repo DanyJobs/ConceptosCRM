@@ -380,7 +380,6 @@ namespace WebFacturaMvc.Controllers
                     ReportDataSource rds = new ReportDataSource("DataSet1", dt);
                     viewer.DataSources.Add(rds);
                     viewer.ReportPath = "Reportes/Ingles/rptFacturaEn.rdlc";
-
                     //parameters
                     ReportParameter[] rptParams = new ReportParameter[] { new ReportParameter("idVenta", idVentaMail) };
                     viewer.Refresh();
@@ -403,7 +402,7 @@ namespace WebFacturaMvc.Controllers
             catch (Exception ex)
             {
                 TempData["msg"] = "<script>alert('" + ex.Message.ToString() + "');</script>";
-                msge = ex.Message + ". Por favor verifica tu conexión a internet y que tus datos sean correctos e intenta nuevamente.";
+                msge = ex.Message + "Por favor verifica tu conexión a internet y que tus datos sean correctos e intenta nuevamente.";
                 return RedirectToAction("NuevaCotizacion", "Cotizacion"); ;
             }
         }
@@ -634,6 +633,26 @@ namespace WebFacturaMvc.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AgregarRfq(string idVenta)
+        {
+            string id = User.Identity.GetUserId();
+            List<Cotizacion> lista = objCotizacionNeg.buscarConEstatus();
+
+            cargarFechas();
+            string mensaje = "Error";
+            try
+            {
+                mensaje = objCotizacionNeg.agregarRFQ(idVenta, id);
+            }
+
+            catch (Exception e)
+            {
+                mensaje = "Error: " + e.ToString();
+            }
+            return Json(mensaje);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace WebFacturaMvc.Datos
         public int cantidad { get; set; }
         public decimal precio { get; set; }
         public string seccion { get; set; }
+        public string UnidadMedida { get; set; }
     
         public virtual compra compra { get; set; }
         public virtual producto producto { get; set; }

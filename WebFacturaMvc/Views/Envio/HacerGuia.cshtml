@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Hacer guía";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        //botones
+        $("#finalizar").click(function () {
+            var i = 0;
+            var envio = "{IdEnvio:'" + $("#txtEnvio").val() + "',NumeroGuia:'" + $("#txtGuia").val() + "',Paqueteria:'" + $("#txtPaqueteria").val() + "',Fecha:'" + $("#txtFecha").val() +"'}";
+            var json = eval("(" + envio + ')');
+            console.log(envio);
+            $.ajax({
+                url: "InsertarGuia",
+                data: JSON.stringify(json),
+                type: "POST",
+                async: false,//this makes the ajax-call blocking
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (response) {
+                    alertify.alert(response);
+                    valid = response.valid;
+                    const nombre = document.getElementById('finalizar');
+                    nombre.disabled = true;
+                },
+                error: function (error) {
+                    alertify.alert(error);
+                }
+            });
+        });
+    });
+</script>
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Agregar número de rastreo de paquetería</h2>
+<table id="encabezado" class="table">
+    <thead>
+
+        <tr style="font-size:20px;">
+            <th>ID Envío <input style="color:red; font-size:20px;" class="form-control" type="text" id="txtEnvio" readonly value="@ViewData["IdEnvio"]" /></th>            
+            <th>
+                @Lenguaje.Recurso.Cotizacion_fecha
+                <input style="color:red;font-size:20px;" class="form-control" type="text" id="txtFecha" readonly value="@DateTime.Now.Year-@DateTime.Now.Month-@DateTime.Now.Day @DateTime.Now.Hour:@DateTime.Now.Minute:@DateTime.Now.Second" />
+            </th>
+        </tr>
+    </thead>
+    <tbody>        
+        <tr style="font-size:20px;">
+            <td>
+                Paquetería
+                <div class="col-md-12 dropdown">
+                    @Html.DropDownList("txtPaqueteria", ViewBag.Paqueterias as SelectList, "Seleccione paqueteria", htmlAttributes: new { @class = "form-control", @required = "required" })
+                </div>
+            </td>     
+            <td>Número de guía: <input style="font-size:20px; font-weight:350;" class="form-control" type="text" id="txtGuia" required value="" /></td>
+        </tr>        
+    </tbody>
+</table>
+
+<input class="btn btn-success btn-lg" type="button" id="finalizar" value=@Lenguaje.Recurso.Cotizacion_guardar />
+<a href="~/Envio/Index"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>

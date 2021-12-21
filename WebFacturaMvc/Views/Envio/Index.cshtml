@@ -1,0 +1,30 @@
+﻿@model List<Model.Entity.Envio>
+@{
+    ViewBag.Title = "Envíos pendientes";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Envíos pendientes</h2>
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>ID Envio</th>
+            <th>ID Venta</th>
+            <th>Cliente</th>
+            <th>Correo electrónico</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objEnvios in Model)
+        {
+        <tr>
+            <td>@objEnvios.IdEnvio</td>
+            <td>@objEnvios.IdVenta</td>
+            <td>@objEnvios.NombreCliente</td>
+            <td>@objEnvios.Correo</td>
+            <td><a class="btn btn-success" href="~/Envio/HacerGuia?idEnvio=@objEnvios.IdEnvio"><span class="glyphicon glyphicon-map-marker">Insertar-Guia</span></a></td>
+            <td><a class="btn btn-danger" href="~/Envio/EliminarPreview?idEnvio=@objEnvios.IdEnvio"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+

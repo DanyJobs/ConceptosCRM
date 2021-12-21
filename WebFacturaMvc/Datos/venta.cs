@@ -14,6 +14,13 @@ namespace WebFacturaMvc.Datos
     
     public partial class venta
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public venta()
+        {
+            this.envio = new HashSet<envio>();
+            this.ventaDetalle = new HashSet<ventaDetalle>();
+        }
+    
         public int idVenta { get; set; }
         public Nullable<decimal> idCotizacion { get; set; }
         public Nullable<decimal> idCliente { get; set; }
@@ -27,9 +34,14 @@ namespace WebFacturaMvc.Datos
         public byte[] archivo { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
         public string vendedor { get; set; }
+        public string terminos { get; set; }
     
         public virtual ciudad ciudad { get; set; }
         public virtual cliente cliente { get; set; }
         public virtual AspNetUsers AspNetUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<envio> envio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ventaDetalle> ventaDetalle { get; set; }
     }
 }

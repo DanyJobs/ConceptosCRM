@@ -1,0 +1,66 @@
+﻿
+
+@model List<Model.Entity.RFQ>
+@{
+    ViewBag.Title = "Lista de RFQ";
+}
+<script src="~/Js/alertify.min.js">
+
+</script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script language="javascript">
+
+    window.onload = function () {
+        $("td").each(function () {
+
+            if ($(this).text() == 'A') {
+                this.style.backgroundColor = 'red'
+                this.style.color = 'White';
+
+            }
+            if ($(this).text() == 'edio') {
+                this.style.backgroundColor = 'orange'
+                this.style.color = 'White';
+
+            } if ($(this).text() == 'B') {
+                this.style.backgroundColor = 'green'
+                this.style.color = 'White';
+            }
+        });
+    }
+
+</script>
+
+<h2 class="text-center text-success">Listado de RFQ</h2>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr class="bg-primary">
+            <th>Código</th>
+            <th>Vendedor</th>
+            <th>Fecha</th>
+            <th>Estatus</th>
+            <th colspan="3">Operaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objRFQ in Model)
+        {
+            <tr>
+                <td>@objRFQ.idRFQ</td>
+                <td>@objRFQ.idVendedor</td>
+                <td>@objRFQ.fecha</td>
+                <td>@objRFQ.estatus</td>
+                <td><a class="btn btn-success" href="~/Cotizacion/RFQEditar?idRFQ=@objRFQ.idRFQ"><span class="glyphicon glyphicon-eye-open"></span>Agregar Proveedor</a></td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+

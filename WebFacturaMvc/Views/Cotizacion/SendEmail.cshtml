@@ -21,6 +21,15 @@
         <h4>configuracion</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoCotizacion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.NoCotizacion, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.NoCotizacion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.idCotizacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

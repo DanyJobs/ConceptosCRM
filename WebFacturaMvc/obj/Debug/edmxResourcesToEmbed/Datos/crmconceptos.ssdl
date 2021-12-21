@@ -10,6 +10,19 @@
     <Property Name="Model" Type="varbinary(max)" Nullable="false" />
     <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
   </EntityType>
+  <EntityType Name="agenda">
+    <Key>
+      <PropertyRef Name="idEvento" />
+    </Key>
+    <Property Name="idEvento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idUsuario" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="titulo" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="200" />
+    <Property Name="fecha" Type="date" />
+    <Property Name="hora" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="link_reunion" Type="nvarchar(max)" />
+    <Property Name="direccion" Type="nvarchar" MaxLength="100" />
+  </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
@@ -111,6 +124,7 @@
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="precio" Type="money" Nullable="false" />
     <Property Name="seccion" Type="varchar" MaxLength="9" />
+    <Property Name="UnidadMedida" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="configuracion">
     <Key>
@@ -163,6 +177,7 @@
     <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="descuento" Type="money" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="notas" Type="varchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="EmailMarketing">
     <Key>
@@ -174,6 +189,18 @@
     <Property Name="dias" Type="int" />
     <Property Name="fechaComienzo" Type="date" />
     <Property Name="idUsuario" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="envio">
+    <Key>
+      <PropertyRef Name="idEnvio" />
+    </Key>
+    <Property Name="idEnvio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idVenta" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="date" />
+    <Property Name="estado" Type="varchar" MaxLength="1" />
+    <Property Name="numeroGuia" Type="varchar" MaxLength="20" />
+    <Property Name="paqueteria" Type="int" />
+    <Property Name="usuarioEnvio" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="estado">
     <Key>
@@ -233,6 +260,14 @@
     <Property Name="idPais" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nombre" Type="varchar" MaxLength="40" />
   </EntityType>
+  <EntityType Name="paqueteria">
+    <Key>
+      <PropertyRef Name="idPaqueteria" />
+    </Key>
+    <Property Name="idPaqueteria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="20" />
+    <Property Name="link" Type="nvarchar" MaxLength="60" />
+  </EntityType>
   <EntityType Name="producto">
     <Key>
       <PropertyRef Name="idProducto" />
@@ -259,27 +294,7 @@
     <Property Name="cp" Type="char" MaxLength="5" Nullable="false" />
     <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="telefono" Type="char" MaxLength="10" />
-  </EntityType>
-  <EntityType Name="RFQ">
-    <Key>
-      <PropertyRef Name="idRFQ" />
-    </Key>
-    <Property Name="idRFQ" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="idVendedor" Type="nvarchar" MaxLength="128" />
-    <Property Name="fecha" Type="date" />
-    <Property Name="estatus" Type="char" MaxLength="1" />
-  </EntityType>
-  <EntityType Name="RFQItem">
-    <Key>
-      <PropertyRef Name="idRFQItem" />
-    </Key>
-    <Property Name="idRFQItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="idRfq" Type="int" />
-    <Property Name="idProveedor" Type="int" />
-    <Property Name="idProducto" Type="nvarchar" MaxLength="5" />
-    <Property Name="precio" Type="real" />
-    <Property Name="cantidad" Type="int" />
-    <Property Name="notas" Type="nvarchar" MaxLength="128" />
+    <Property Name="empresa" Type="nvarchar" MaxLength="40" />
   </EntityType>
   <EntityType Name="sucursal">
     <Key>
@@ -326,6 +341,21 @@
     <Property Name="archivo" Type="varbinary(max)" />
     <Property Name="fecha" Type="date" />
     <Property Name="vendedor" Type="nvarchar" MaxLength="128" />
+    <Property Name="terminos" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="ventaDetalle">
+    <Key>
+      <PropertyRef Name="idDetalleVenta" />
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idDetalleVenta" Type="int" Nullable="false" />
+    <Property Name="idVenta" Type="int" Nullable="false" />
+    <Property Name="idProveedor" Type="int" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="5" />
+    <Property Name="precio" Type="money" />
+    <Property Name="cantidad" Type="int" />
+    <Property Name="unidadMedida" Type="nvarchar" MaxLength="20" />
+    <Property Name="notas" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <Association Name="FK__detalleFa__idPed__239E4DCF">
     <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="1" />
@@ -348,6 +378,18 @@
       </Principal>
       <Dependent Role="producto">
         <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agenda_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="agenda" Type="Self.agenda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="agenda">
+        <PropertyRef Name="idUsuario" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -479,6 +521,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_envio_venta">
+    <End Role="venta" Type="Self.venta" Multiplicity="1" />
+    <End Role="envio" Type="Self.envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="envio">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EnvioPaqueteria">
+    <End Role="paqueteria" Type="Self.paqueteria" Multiplicity="0..1" />
+    <End Role="envio" Type="Self.envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="paqueteria">
+        <PropertyRef Name="idPaqueteria" />
+      </Principal>
+      <Dependent Role="envio">
+        <PropertyRef Name="paqueteria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EnvioUsuario">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="envio" Type="Self.envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="envio">
+        <PropertyRef Name="usuarioEnvio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_factura_modoPago">
     <End Role="modoPago" Type="Self.modoPago" Multiplicity="1" />
     <End Role="factura" Type="Self.factura" Multiplicity="*" />
@@ -491,42 +569,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_IdProductoRFQItem">
-    <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
-    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="producto">
-        <PropertyRef Name="idProducto" />
-      </Principal>
-      <Dependent Role="RFQItem">
-        <PropertyRef Name="idProducto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_IdProveedorRFQItem">
-    <End Role="proveedor" Type="Self.proveedor" Multiplicity="0..1" />
-    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="proveedor">
-        <PropertyRef Name="idProveedor" />
-      </Principal>
-      <Dependent Role="RFQItem">
-        <PropertyRef Name="idProveedor" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_idVendedorRFQ">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-    <End Role="RFQ" Type="Self.RFQ" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="RFQ">
-        <PropertyRef Name="idVendedor" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_PaisEstado">
     <End Role="pais" Type="Self.pais" Multiplicity="0..1" />
     <End Role="estado" Type="Self.estado" Multiplicity="*" />
@@ -536,18 +578,6 @@
       </Principal>
       <Dependent Role="estado">
         <PropertyRef Name="idPais" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_RFQItemRFQ">
-    <End Role="RFQ" Type="Self.RFQ" Multiplicity="0..1" />
-    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RFQ">
-        <PropertyRef Name="idRFQ" />
-      </Principal>
-      <Dependent Role="RFQItem">
-        <PropertyRef Name="idRfq" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -623,6 +653,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkdetalleVentaidProducto">
+    <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+    <End Role="ventaDetalle" Type="Self.ventaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="ventaDetalle">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdetalleVentaidProveedor">
+    <End Role="proveedor" Type="Self.proveedor" Multiplicity="0..1" />
+    <End Role="ventaDetalle" Type="Self.ventaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="ventaDetalle">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdetalleVentaidVenta">
+    <End Role="venta" Type="Self.venta" Multiplicity="1" />
+    <End Role="ventaDetalle" Type="Self.ventaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="ventaDetalle">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkExistenciaidProducto">
     <End Role="producto" Type="Self.producto" Multiplicity="1" />
     <End Role="existencia" Type="Self.existencia" Multiplicity="*" />
@@ -687,12 +753,35 @@
     <Parameter Name="IdEstado" Type="int" Mode="In" />
     <Parameter Name="Nombre" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_agregarEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_agregarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdPais" Type="int" Mode="In" />
     <Parameter Name="Nombre" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_agregarEventoAgenda" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="Usuario" Type="nvarchar" Mode="In" />
+    <Parameter Name="Titulo" Type="nvarchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fecha" Type="date" Mode="In" />
+    <Parameter Name="Hora" Type="nvarchar" Mode="In" />
+    <Parameter Name="Link" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_agregarGuia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEnvio" Type="int" Mode="In" />
+    <Parameter Name="NumeroGuia" Type="varchar" Mode="In" />
+    <Parameter Name="Fecha" Type="date" Mode="In" />
+    <Parameter Name="Paqueteria" Type="int" Mode="In" />
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_agregarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_cargarAgendaHoy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdUsuario" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fecha" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_cargarCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdCiudad" Type="int" Mode="In" />
@@ -706,10 +795,23 @@
   <Function Name="sp_cargarEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdPais" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_cargarEventoAgenda" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEvento" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_cargarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdPais" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_cargarPaises" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master" />
+  <Function Name="sp_cargarPaqueterias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master" />
+  <Function Name="sp_consultaEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEnvio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaEnvios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEnvio" Type="int" Mode="In" />
+    <Parameter Name="pMonth" Type="varchar" Mode="In" />
+    <Parameter Name="pYear" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_consultaEnviosN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master" />
   <Function Name="sp_consultaSalesPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdCotizacion" Type="int" Mode="In" />
   </Function>
@@ -730,13 +832,30 @@
   <Function Name="sp_cotizacionG" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdCotizacion" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_datosEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEnvio" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_editarCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdCiudad" Type="int" Mode="In" />
     <Parameter Name="Nombre" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_editarEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEnvio" Type="int" Mode="In" />
+    <Parameter Name="NumeroGuia" Type="varchar" Mode="In" />
+    <Parameter Name="Paqueteria" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_editarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdEstado" Type="int" Mode="In" />
     <Parameter Name="Nombre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_editarEventoAgenda" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEvento" Type="int" Mode="In" />
+    <Parameter Name="Titulo" Type="nvarchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fecha" Type="date" Mode="In" />
+    <Parameter Name="Hora" Type="nvarchar" Mode="In" />
+    <Parameter Name="Link" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_editarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdPais" Type="int" Mode="In" />
@@ -756,8 +875,14 @@
   <Function Name="sp_eliminarCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdCiudad" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_eliminarEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEnvio" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_eliminarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdEstado" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminarEventoAgenda" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdEvento" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_eliminarPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdPais" Type="int" Mode="In" />
@@ -772,6 +897,12 @@
   <Function Name="sp_filtrarEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="Parametro" Type="varchar" Mode="In" />
     <Parameter Name="IdPais" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_filtrarEventos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="pMonth" Type="varchar" Mode="In" />
+    <Parameter Name="pYear" Type="varchar" Mode="In" />
+    <Parameter Name="pDay" Type="varchar" Mode="In" />
+    <Parameter Name="pUsuario" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_filtrarPaises" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="Parametro" Type="varchar" Mode="In" />
@@ -801,6 +932,17 @@
   <Function Name="sp_traerBytes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_verificarEvento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="Fecha" Type="date" Mode="In" />
+    <Parameter Name="Hora" Type="nvarchar" Mode="In" />
+    <Parameter Name="Usuario" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_verificarEvento2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="Fecha" Type="date" Mode="In" />
+    <Parameter Name="Hora" Type="nvarchar" Mode="In" />
+    <Parameter Name="Usuario" Type="nvarchar" Mode="In" />
+    <Parameter Name="IdEvento" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_VerOrdenCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
   </Function>
@@ -813,6 +955,10 @@
   </Function>
   <Function Name="reporte_factura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idPedido" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="RFQConsultas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opcion" Type="varchar" Mode="In" />
+    <Parameter Name="idRfq" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_actualizarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
@@ -902,7 +1048,7 @@
     <Parameter Name="idSucursal" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_consultaProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="IdProducto" Type="int" Mode="In" />
+    <Parameter Name="IdProducto" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_consultaSucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idSucursal" Type="int" Mode="In" />
@@ -917,6 +1063,18 @@
   <Function Name="SP_COTIZACION_HISTORIAL_TODO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_CotizacionDetalleConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_EditarRFQ" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opcion" Type="varchar" Mode="In" />
+    <Parameter Name="estatus" Type="varchar" Mode="In" />
+    <Parameter Name="idRFQItem" Type="int" Mode="In" />
+    <Parameter Name="idRFQ" Type="int" Mode="In" />
+    <Parameter Name="idProveedor" Type="int" Mode="In" />
+    <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+    <Parameter Name="precio" Type="money" Mode="In" />
+    <Parameter Name="cantidad" Type="int" Mode="In" />
+    <Parameter Name="notas" Type="nvarchar" Mode="In" />
+    <Parameter Name="fecha" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_eliminarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
@@ -958,6 +1116,9 @@
   <Function Name="sp_reporte_venta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idVenta" Type="numeric" Mode="In" />
   </Function>
+  <Function Name="SP_RFQ_HISTORIAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idProducto" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="spAgregarCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />
     <Parameter Name="total" Type="money" Mode="In" />
@@ -983,6 +1144,7 @@
   <Function Name="spusuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="crmconceptoseModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="agenda" EntityType="Self.agenda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -997,6 +1159,7 @@
     <EntitySet Name="cotizacion" EntityType="Self.cotizacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="detalleCotizacion" EntityType="Self.detalleCotizacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmailMarketing" EntityType="Self.EmailMarketing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="envio" EntityType="Self.envio" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="estado" EntityType="Self.estado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="existencia" EntityType="Self.existencia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="factura" EntityType="Self.factura" Schema="dbo" store:Type="Tables" />
@@ -1004,14 +1167,14 @@
     <EntitySet Name="modoPago" EntityType="Self.modoPago" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Moneda" EntityType="Self.Moneda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="pais" EntityType="Self.pais" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="paqueteria" EntityType="Self.paqueteria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="proveedor" EntityType="Self.proveedor" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="RFQ" EntityType="Self.RFQ" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="RFQItem" EntityType="Self.RFQItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sucursal" EntityType="Self.sucursal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="texto" EntityType="Self.texto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tipoEmpleado" EntityType="Self.tipoEmpleado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="venta" EntityType="Self.venta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ventaDetalle" EntityType="Self.ventaDetalle" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__detalleFa__idPed__239E4DCF" Association="Self.FK__detalleFa__idPed__239E4DCF">
       <End Role="cotizacion" EntitySet="cotizacion" />
       <End Role="detalleCotizacion" EntitySet="detalleCotizacion" />
@@ -1019,6 +1182,10 @@
     <AssociationSet Name="FK__producto__idCate__164452B1" Association="Self.FK__producto__idCate__164452B1">
       <End Role="categoria" EntitySet="categoria" />
       <End Role="producto" EntitySet="producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agenda_AspNetUsers" Association="Self.FK_agenda_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="agenda" EntitySet="agenda" />
     </AssociationSet>
     <AssociationSet Name="fk_CiudadEstado" Association="Self.fk_CiudadEstado">
       <End Role="estado" EntitySet="estado" />
@@ -1060,29 +1227,25 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="EmailMarketing" EntitySet="EmailMarketing" />
     </AssociationSet>
+    <AssociationSet Name="FK_envio_venta" Association="Self.FK_envio_venta">
+      <End Role="venta" EntitySet="venta" />
+      <End Role="envio" EntitySet="envio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EnvioPaqueteria" Association="Self.FK_EnvioPaqueteria">
+      <End Role="paqueteria" EntitySet="paqueteria" />
+      <End Role="envio" EntitySet="envio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EnvioUsuario" Association="Self.FK_EnvioUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="envio" EntitySet="envio" />
+    </AssociationSet>
     <AssociationSet Name="FK_factura_modoPago" Association="Self.FK_factura_modoPago">
       <End Role="modoPago" EntitySet="modoPago" />
       <End Role="factura" EntitySet="factura" />
     </AssociationSet>
-    <AssociationSet Name="fk_IdProductoRFQItem" Association="Self.fk_IdProductoRFQItem">
-      <End Role="producto" EntitySet="producto" />
-      <End Role="RFQItem" EntitySet="RFQItem" />
-    </AssociationSet>
-    <AssociationSet Name="fk_IdProveedorRFQItem" Association="Self.fk_IdProveedorRFQItem">
-      <End Role="proveedor" EntitySet="proveedor" />
-      <End Role="RFQItem" EntitySet="RFQItem" />
-    </AssociationSet>
-    <AssociationSet Name="fk_idVendedorRFQ" Association="Self.fk_idVendedorRFQ">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="RFQ" EntitySet="RFQ" />
-    </AssociationSet>
     <AssociationSet Name="fk_PaisEstado" Association="Self.fk_PaisEstado">
       <End Role="pais" EntitySet="pais" />
       <End Role="estado" EntitySet="estado" />
-    </AssociationSet>
-    <AssociationSet Name="fk_RFQItemRFQ" Association="Self.fk_RFQItemRFQ">
-      <End Role="RFQ" EntitySet="RFQ" />
-      <End Role="RFQItem" EntitySet="RFQItem" />
     </AssociationSet>
     <AssociationSet Name="FK_VendedorVenta" Association="Self.FK_VendedorVenta">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1107,6 +1270,18 @@
     <AssociationSet Name="fkCOMPRA_DETALLEidCompra" Association="Self.fkCOMPRA_DETALLEidCompra">
       <End Role="compra" EntitySet="compra" />
       <End Role="compraDetalle" EntitySet="compraDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="fkdetalleVentaidProducto" Association="Self.fkdetalleVentaidProducto">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="ventaDetalle" EntitySet="ventaDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="fkdetalleVentaidProveedor" Association="Self.fkdetalleVentaidProveedor">
+      <End Role="proveedor" EntitySet="proveedor" />
+      <End Role="ventaDetalle" EntitySet="ventaDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="fkdetalleVentaidVenta" Association="Self.fkdetalleVentaidVenta">
+      <End Role="venta" EntitySet="venta" />
+      <End Role="ventaDetalle" EntitySet="ventaDetalle" />
     </AssociationSet>
     <AssociationSet Name="fkExistenciaidProducto" Association="Self.fkExistenciaidProducto">
       <End Role="producto" EntitySet="producto" />

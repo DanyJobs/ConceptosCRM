@@ -42,7 +42,7 @@
                             <TextRun>
                               <Value>Id</Value>
                               <Style>
-                                <FontFamily>Arial Black</FontFamily>
+                                <FontFamily>Montserrat ExtraBold</FontFamily>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -56,7 +56,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#576fec</BackgroundColor>
+                        <BackgroundColor>#213a5d</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -76,7 +76,7 @@
                             <TextRun>
                               <Value>Name</Value>
                               <Style>
-                                <FontFamily>Arial Black</FontFamily>
+                                <FontFamily>Montserrat ExtraBold</FontFamily>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -90,7 +90,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#576fec</BackgroundColor>
+                        <BackgroundColor>#213a5d</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -110,7 +110,7 @@
                             <TextRun>
                               <Value>Description</Value>
                               <Style>
-                                <FontFamily>Arial Black</FontFamily>
+                                <FontFamily>Montserrat ExtraBold</FontFamily>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -124,7 +124,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#576fec</BackgroundColor>
+                        <BackgroundColor>#213a5d</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -144,7 +144,7 @@
                             <TextRun>
                               <Value>Unit Price</Value>
                               <Style>
-                                <FontFamily>Arial Black</FontFamily>
+                                <FontFamily>Montserrat ExtraBold</FontFamily>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -158,7 +158,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#576fec</BackgroundColor>
+                        <BackgroundColor>#213a5d</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -192,7 +192,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#576fec</BackgroundColor>
+                        <BackgroundColor>#213a5d</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -212,7 +212,7 @@
                             <TextRun>
                               <Value>Discount</Value>
                               <Style>
-                                <FontFamily>Arial Black</FontFamily>
+                                <FontFamily>Montserrat ExtraBold</FontFamily>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -226,7 +226,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#576fec</BackgroundColor>
+                        <BackgroundColor>#213a5d</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -246,7 +246,7 @@
                             <TextRun>
                               <Value>Total</Value>
                               <Style>
-                                <FontFamily>Arial Black</FontFamily>
+                                <FontFamily>Montserrat ExtraBold</FontFamily>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -260,7 +260,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#576fec</BackgroundColor>
+                        <BackgroundColor>#213a5d</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -284,7 +284,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!idProducto.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -314,7 +316,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!nombre.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -344,7 +348,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!descripcion.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -375,6 +381,7 @@
                             <TextRun>
                               <Value>=Fields!precioUnitario.Value</Value>
                               <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
                                 <Format>#,0.00;#,0.00-</Format>
                               </Style>
                             </TextRun>
@@ -406,7 +413,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!cantidad.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -437,6 +446,7 @@
                             <TextRun>
                               <Value>=Fields!descuento.Value</Value>
                               <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
                                 <Format>#,0.00;#,0.00-</Format>
                               </Style>
                             </TextRun>
@@ -469,6 +479,7 @@
                             <TextRun>
                               <Value>=Fields!total_Producto.Value</Value>
                               <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
                                 <Format>#,0.00;#,0.00-</Format>
                               </Style>
                             </TextRun>
@@ -514,14 +525,15 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>7.31752cm</Top>
-        <Left>0.95274cm</Left>
+        <Top>7.50274cm</Top>
+        <Left>2.29782cm</Left>
         <Height>1.54396cm</Height>
         <Width>17.39795cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
+          <FontFamily>Montserrat Light</FontFamily>
         </Style>
       </Tablix>
       <Textbox Name="Cliente">
@@ -532,15 +544,17 @@
             <TextRuns>
               <TextRun>
                 <Value>=Fields!Cliente.Value</Value>
-                <Style />
+                <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Cliente</rd:DefaultName>
-        <Top>4.95335cm</Top>
-        <Left>3.88046cm</Left>
+        <Top>5.65947cm</Top>
+        <Left>5.63132cm</Left>
         <Height>0.6cm</Height>
         <Width>4.09937cm</Width>
         <ZIndex>1</ZIndex>
@@ -563,7 +577,7 @@
               <TextRun>
                 <Value>Customer:</Value>
                 <Style>
-                  <FontFamily>Arial Black</FontFamily>
+                  <FontFamily>Montserrat SemiBold</FontFamily>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -574,8 +588,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>4.84752cm</Top>
-        <Left>1.57868cm</Left>
+        <Top>5.58892cm</Top>
+        <Left>3.32954cm</Left>
         <Height>0.6cm</Height>
         <Width>2.16067cm</Width>
         <ZIndex>2</ZIndex>
@@ -598,19 +612,19 @@
               <TextRun>
                 <Value>Phone:</Value>
                 <Style>
-                  <FontFamily>Arial Black</FontFamily>
+                  <FontFamily>Montserrat SemiBold</FontFamily>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Right</TextAlign>
+              <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>5.43842cm</Top>
-        <Left>10.71858cm</Left>
+        <Top>6.4444cm</Top>
+        <Left>12.42968cm</Left>
         <Height>0.6cm</Height>
         <Width>1.51223cm</Width>
         <ZIndex>3</ZIndex>
@@ -639,8 +653,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>direccion</rd:DefaultName>
-        <Top>5.58863cm</Top>
-        <Left>3.88046cm</Left>
+        <Top>6.33003cm</Top>
+        <Left>5.63132cm</Left>
         <Height>0.6cm</Height>
         <Width>4.09937cm</Width>
         <ZIndex>4</ZIndex>
@@ -662,15 +676,17 @@
             <TextRuns>
               <TextRun>
                 <Value>=Fields!TelefonoVendedor.Value</Value>
-                <Style />
+                <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>telefono</rd:DefaultName>
-        <Top>5.43842cm</Top>
-        <Left>12.26608cm</Left>
+        <Top>6.4444cm</Top>
+        <Left>13.97718cm</Left>
         <Height>0.6cm</Height>
         <Width>4.92979cm</Width>
         <ZIndex>5</ZIndex>
@@ -691,8 +707,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Fields!numFactura.Value</Value>
+                <Value>=Fields!NoCotizacion.Value</Value>
                 <Style>
+                  <FontFamily>Montserrat ExtraBold</FontFamily>
                   <FontWeight>Bold</FontWeight>
                   <Color>White</Color>
                 </Style>
@@ -704,99 +721,16 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>numFactura</rd:DefaultName>
-        <Top>1.44321cm</Top>
-        <Left>14.69552cm</Left>
+        <Top>1.55787cm</Top>
+        <Left>16.08312cm</Left>
         <Height>0.6cm</Height>
-        <Width>1.73585cm</Width>
+        <Width>3.42918cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
           <BackgroundColor>Orange</BackgroundColor>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox16">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Conceptos Electronics</Value>
-                <Style>
-                  <FontFamily>Arial Black</FontFamily>
-                  <FontSize>16pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox16</rd:DefaultName>
-        <Top>1.29674cm</Top>
-        <Left>5.41507cm</Left>
-        <Height>0.92632cm</Height>
-        <Width>7.49483cm</Width>
-        <ZIndex>7</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox17">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Email: info@conceptoselectronics.com</Value>
-                <Style>
-                  <FontFamily>tahoma</FontFamily>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>www.conceptoselectronics.com</Value>
-                <Style>
-                  <FontFamily>tahoma</FontFamily>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox17</rd:DefaultName>
-        <Top>2.81396cm</Top>
-        <Left>5.41507cm</Left>
-        <Height>1.27909cm</Height>
-        <Width>7.49483cm</Width>
-        <ZIndex>8</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
           <PaddingLeft>2pt</PaddingLeft>
           <PaddingRight>2pt</PaddingRight>
           <PaddingTop>2pt</PaddingTop>
@@ -812,6 +746,7 @@
               <TextRun>
                 <Value>=Fields!fecha.Value</Value>
                 <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
                   <Format>d</Format>
                 </Style>
               </TextRun>
@@ -822,11 +757,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>fecha</rd:DefaultName>
-        <Top>10.52807cm</Top>
-        <Left>2.29296cm</Left>
+        <Top>10.7133cm</Top>
+        <Left>3.519cm</Left>
         <Height>0.6cm</Height>
         <Width>4.95395cm</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -845,18 +780,20 @@
             <TextRuns>
               <TextRun>
                 <Value>=Fields!Trabajador.Value</Value>
-                <Style />
+                <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Trabajador</rd:DefaultName>
-        <Top>4.69731cm</Top>
-        <Left>13.41695cm</Left>
+        <Top>5.70329cm</Top>
+        <Left>15.12805cm</Left>
         <Height>0.6cm</Height>
         <Width>4.29045cm</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -876,7 +813,7 @@
               <TextRun>
                 <Value>Date:</Value>
                 <Style>
-                  <FontFamily>Arial Black</FontFamily>
+                  <FontFamily>Montserrat ExtraBold</FontFamily>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -886,11 +823,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>10.52807cm</Top>
-        <Left>1.0365cm</Left>
+        <Top>10.7133cm</Top>
+        <Left>2.29782cm</Left>
         <Height>0.6cm</Height>
         <Width>1.1859cm</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -910,21 +847,21 @@
               <TextRun>
                 <Value>Salesperson:</Value>
                 <Style>
-                  <FontFamily>Arial Black</FontFamily>
+                  <FontFamily>Montserrat SemiBold</FontFamily>
                 </Style>
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Right</TextAlign>
+              <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox30</rd:DefaultName>
-        <Top>4.58294cm</Top>
-        <Left>10.67882cm</Left>
+        <Top>5.58892cm</Top>
+        <Left>12.38992cm</Left>
         <Height>0.6cm</Height>
         <Width>2.70285cm</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -935,36 +872,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Image Name="Image1">
-        <Source>Embedded</Source>
-        <Value>logoconceptos</Value>
-        <Sizing>FitProportional</Sizing>
-        <Top>1.44321cm</Top>
-        <Left>0.50733cm</Left>
-        <Height>1.5cm</Height>
-        <Width>4.32145cm</Width>
-        <ZIndex>13</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
-      <Image Name="Image2">
-        <Source>Embedded</Source>
-        <Value>header</Value>
-        <Sizing>FitProportional</Sizing>
-        <Top>0.29063cm</Top>
-        <Left>1.57868cm</Left>
-        <Height>0.72389cm</Height>
-        <Width>14.56399cm</Width>
-        <ZIndex>14</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Textbox Name="Textbox4">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -975,6 +882,7 @@
                 <Value>This quote is valid 30 days from the delivery date. All orders are subject to change until the order is processed. Delivery time 2-3 weeks FOB: Factory Note: Shipping cost is based on UPS prices Terms: Cash in advance / credit card / or bank transfer to </Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
+                  <FontFamily>Montserrat Light</FontFamily>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextDecoration>None</TextDecoration>
@@ -985,6 +893,7 @@
                 <Value>Chase Manhattan</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
+                  <FontFamily>Montserrat ExtraBold</FontFamily>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <TextDecoration>None</TextDecoration>
@@ -1002,7 +911,18 @@
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>Bank.</Value>
+                <Value>Bank</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Montserrat ExtraBold</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>.</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>12pt</FontSize>
@@ -1012,7 +932,9 @@
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
           <Paragraph>
             <TextRuns>
@@ -1021,14 +943,12 @@
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>12pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
+                  <FontWeight>Bold</FontWeight>
                   <TextDecoration>None</TextDecoration>
                   <Color>#000000</Color>
                 </Style>
               </TextRun>
             </TextRuns>
-            <LeftIndent>1.62631cm</LeftIndent>
-            <RightIndent>0cm</RightIndent>
             <Style>
               <TextAlign>Left</TextAlign>
             </Style>
@@ -1036,7 +956,18 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>For any clarification or doubt: </Value>
+                <Value>For any clarification or doubt:</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Montserrat Light</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>12pt</FontSize>
@@ -1049,6 +980,7 @@
                 <Value>info@conceptoselectronics.com</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
+                  <FontFamily>Montserrat Light</FontFamily>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextDecoration>Underline</TextDecoration>
@@ -1084,11 +1016,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Top>13.4112cm</Top>
-        <Left>1.0365cm</Left>
-        <Height>3.43077cm</Height>
-        <Width>15.87839cm</Width>
-        <ZIndex>15</ZIndex>
+        <Top>12.6792cm</Top>
+        <Left>2.96501cm</Left>
+        <Height>3.69535cm</Height>
+        <Width>15.62124cm</Width>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1108,6 +1040,7 @@
               <TextRun>
                 <Value>=Fields!total_parcial.Value</Value>
                 <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
                   <Format>#,0.00;#,0.00-</Format>
                 </Style>
               </TextRun>
@@ -1116,11 +1049,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>total_parcial1</rd:DefaultName>
-        <Top>9.7164cm</Top>
-        <Left>13.86674cm</Left>
+        <Top>9.90163cm</Top>
+        <Left>15.12806cm</Left>
         <Height>0.6cm</Height>
         <Width>3.80538cm</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1139,7 +1072,9 @@
             <TextRuns>
               <TextRun>
                 <Value>Subtotal</Value>
-                <Style />
+                <Style>
+                  <FontFamily>Montserrat SemiBold</FontFamily>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style>
@@ -1148,11 +1083,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox41</rd:DefaultName>
-        <Top>9.78696cm</Top>
-        <Left>11.26091cm</Left>
+        <Top>9.97219cm</Top>
+        <Left>12.52223cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1171,7 +1106,9 @@
             <TextRuns>
               <TextRun>
                 <Value>Taxes</Value>
-                <Style />
+                <Style>
+                  <FontFamily>Montserrat SemiBold</FontFamily>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style>
@@ -1180,11 +1117,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox41</rd:DefaultName>
-        <Top>10.52807cm</Top>
-        <Left>11.2609cm</Left>
+        <Top>10.7133cm</Top>
+        <Left>12.52222cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1204,6 +1141,7 @@
               <TextRun>
                 <Value>=Fields!Taxas.Value</Value>
                 <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
                   <Format>#,0.00;#,0.00-</Format>
                 </Style>
               </TextRun>
@@ -1212,11 +1150,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>total_parcial2</rd:DefaultName>
-        <Top>10.45752cm</Top>
-        <Left>13.90201cm</Left>
+        <Top>10.64275cm</Top>
+        <Left>15.16333cm</Left>
         <Height>0.6cm</Height>
         <Width>3.80538cm</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1236,12 +1174,14 @@
               <TextRun>
                 <Value>Total: </Value>
                 <Style>
+                  <FontFamily>Montserrat ExtraBold</FontFamily>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Fields!Simbolo.Value</Value>
                 <Style>
+                  <FontFamily>Montserrat ExtraBold</FontFamily>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -1252,11 +1192,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox41</rd:DefaultName>
-        <Top>11.22509cm</Top>
-        <Left>11.2609cm</Left>
+        <Top>11.38386cm</Top>
+        <Left>12.48694cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1276,6 +1216,7 @@
               <TextRun>
                 <Value>=Fields!TotalPagar.Value</Value>
                 <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
                   <Format>#,0.00;#,0.00-</Format>
                 </Style>
               </TextRun>
@@ -1284,11 +1225,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>total_parcial3</rd:DefaultName>
-        <Top>11.22508cm</Top>
-        <Left>13.86673cm</Left>
+        <Top>11.41031cm</Top>
+        <Left>15.12805cm</Left>
         <Height>0.6cm</Height>
         <Width>2.73971cm</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1308,6 +1249,7 @@
               <TextRun>
                 <Value>=Fields!abreviatura.Value</Value>
                 <Style>
+                  <FontFamily>Montserrat ExtraBold</FontFamily>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -1318,11 +1260,111 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox41</rd:DefaultName>
-        <Top>11.22508cm</Top>
-        <Left>16.71228cm</Left>
+        <Top>11.41031cm</Top>
+        <Left>17.9736cm</Left>
         <Height>0.6cm</Height>
         <Width>0.95984cm</Width>
-        <ZIndex>22</ZIndex>
+        <ZIndex>18</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Image Name="Image5">
+        <Source>Embedded</Source>
+        <Value>logoconceptos</Value>
+        <Sizing>FitProportional</Sizing>
+        <Top>0.81705cm</Top>
+        <Left>2.03323cm</Left>
+        <Height>1.34082cm</Height>
+        <Width>4.85127cm</Width>
+        <ZIndex>19</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
+      <Textbox Name="Textbox17">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>info@conceptoselectronics.com</Value>
+                <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>www.conceptoselectronics.com</Value>
+                <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox17</rd:DefaultName>
+        <Top>2.59003cm</Top>
+        <Left>7.96209cm</Left>
+        <Height>1.22618cm</Height>
+        <Width>6.6368cm</Width>
+        <ZIndex>20</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox16">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Conceptos Electronics Distributing L.L.C</Value>
+                <Style>
+                  <FontFamily>Montserrat Light</FontFamily>
+                  <FontSize>16pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox16</rd:DefaultName>
+        <Top>0.88761cm</Top>
+        <Left>7.59794cm</Left>
+        <Height>1.70242cm</Height>
+        <Width>7.49483cm</Width>
+        <ZIndex>21</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1334,24 +1376,41 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>16.97426cm</Height>
-    <Style />
+    <Height>16.58621cm</Height>
+    <Style>
+      <Border>
+        <Color>#213a5d</Color>
+        <Style>Solid</Style>
+      </Border>
+      <TopBorder>
+        <Width>20pt</Width>
+      </TopBorder>
+      <BottomBorder>
+        <Style>None</Style>
+      </BottomBorder>
+      <LeftBorder>
+        <Width>20pt</Width>
+      </LeftBorder>
+      <RightBorder>
+        <Width>20pt</Width>
+      </RightBorder>
+    </Style>
   </Body>
-  <Width>19.31305cm</Width>
+  <Width>21.42434cm</Width>
   <Page>
     <PageFooter>
-      <Height>1.82604cm</Height>
+      <Height>2.06375cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Image Name="Image3">
+        <Image Name="Image1">
           <Source>Embedded</Source>
           <Value>logoconceptos</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.14111cm</Top>
-          <Left>6.74756cm</Left>
-          <Height>1.5cm</Height>
-          <Width>5.06872cm</Width>
+          <Top>0.10583cm</Top>
+          <Left>8.86905cm</Left>
+          <Height>1.5434cm</Height>
+          <Width>5.41682cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1363,14 +1422,29 @@
         <Border>
           <Style>None</Style>
         </Border>
+        <BottomBorder>
+          <Color>#213a5d</Color>
+          <Style>Solid</Style>
+          <Width>20pt</Width>
+        </BottomBorder>
+        <LeftBorder>
+          <Color>#213a5d</Color>
+          <Style>Solid</Style>
+          <Width>20pt</Width>
+        </LeftBorder>
+        <RightBorder>
+          <Color>#213a5d</Color>
+          <Style>Solid</Style>
+          <Width>20pt</Width>
+        </RightBorder>
       </Style>
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0.5cm</LeftMargin>
-    <RightMargin>0.5cm</RightMargin>
-    <TopMargin>0.5cm</TopMargin>
-    <BottomMargin>0.5cm</BottomMargin>
+    <PageWidth>22.3cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -1459,27 +1533,15 @@
           <DataField>subTotal</DataField>
           <rd:TypeName>System.Single</rd:TypeName>
         </Field>
-        <Field Name="total_parcial">
-          <DataField>total_parcial</DataField>
-          <rd:TypeName>System.Single</rd:TypeName>
-        </Field>
         <Field Name="Taxas">
           <DataField>Taxas</DataField>
-          <rd:TypeName>System.Single</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="TotalPagar">
           <DataField>TotalPagar</DataField>
-          <rd:TypeName>System.Single</rd:TypeName>
-        </Field>
-        <Field Name="Taxas1">
-          <DataField>Taxas</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TotalPagar1">
-          <DataField>TotalPagar</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="total_parcial1">
+        <Field Name="total_parcial">
           <DataField>total_parcial</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
@@ -1495,10 +1557,14 @@
           <DataField>Simbolo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="NoCotizacion">
+          <DataField>NoCotizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>ProcDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\ProcDataSet.xsd</rd:SchemaPath>
+        <rd:DataSetName>ProcedimientoDataSet</rd:DataSetName>
+        <rd:SchemaPath>E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\ProcedimientoDataSet.xsd</rd:SchemaPath>
         <rd:TableName>sp_reporte_venta</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

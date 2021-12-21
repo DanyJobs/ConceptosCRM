@@ -12,18 +12,19 @@ namespace WebFacturaMvc.Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class RFQItem
+    public partial class ventaDetalle
     {
-        public int idRFQItem { get; set; }
-        public Nullable<int> idRfq { get; set; }
+        public int idDetalleVenta { get; set; }
+        public int idVenta { get; set; }
         public Nullable<int> idProveedor { get; set; }
         public string idProducto { get; set; }
-        public Nullable<float> precio { get; set; }
+        public Nullable<decimal> precio { get; set; }
         public Nullable<int> cantidad { get; set; }
+        public string unidadMedida { get; set; }
         public string notas { get; set; }
     
         public virtual producto producto { get; set; }
         public virtual proveedor proveedor { get; set; }
-        public virtual RFQ RFQ { get; set; }
+        public virtual venta venta { get; set; }
     }
 }

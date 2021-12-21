@@ -354,7 +354,7 @@
       <Parameter Name="IdVenta" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_consultaProducto" ReturnType="Collection(crmconceptoseModel.sp_consultaProducto_Result)">
-      <Parameter Name="IdProducto" Mode="In" Type="Int32" />
+      <Parameter Name="IdProducto" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_CotizacionDetalleConsulta" ReturnType="Collection(crmconceptoseModel.sp_CotizacionDetalleConsulta_Result)">
       <Parameter Name="IdVenta" Mode="In" Type="Int32" />
@@ -528,24 +528,6 @@
       <Parameter Name="idVenta" Mode="In" Type="Decimal" />
       <Parameter Name="idVendedor" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="RFQ" EntityType="crmconceptoseModel.RFQ" />
-    <EntitySet Name="RFQItem" EntityType="crmconceptoseModel.RFQItem" />
-    <AssociationSet Name="fk_idVendedorRFQ" Association="crmconceptoseModel.fk_idVendedorRFQ">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="RFQ" EntitySet="RFQ" />
-    </AssociationSet>
-    <AssociationSet Name="fk_IdProductoRFQItem" Association="crmconceptoseModel.fk_IdProductoRFQItem">
-      <End Role="producto" EntitySet="producto" />
-      <End Role="RFQItem" EntitySet="RFQItem" />
-    </AssociationSet>
-    <AssociationSet Name="fk_IdProveedorRFQItem" Association="crmconceptoseModel.fk_IdProveedorRFQItem">
-      <End Role="proveedor" EntitySet="proveedor" />
-      <End Role="RFQItem" EntitySet="RFQItem" />
-    </AssociationSet>
-    <AssociationSet Name="fk_RFQItemRFQ" Association="crmconceptoseModel.fk_RFQItemRFQ">
-      <End Role="RFQ" EntitySet="RFQ" />
-      <End Role="RFQItem" EntitySet="RFQItem" />
-    </AssociationSet>
     <FunctionImport Name="sp_cargarEstado" ReturnType="Collection(crmconceptoseModel.sp_cargarEstado_Result)">
       <Parameter Name="IdEstado" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -597,6 +579,133 @@
     </AssociationSet>
     <FunctionImport Name="consultaEmailMarketing" ReturnType="Collection(crmconceptoseModel.consultaEmailMarketing_Result)">
       <Parameter Name="idUsuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="envio" EntityType="crmconceptoseModel.envio" />
+    <EntitySet Name="paqueteria" EntityType="crmconceptoseModel.paqueteria" />
+    <AssociationSet Name="FK_EnvioUsuario" Association="crmconceptoseModel.FK_EnvioUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="envio" EntitySet="envio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_envio_venta" Association="crmconceptoseModel.FK_envio_venta">
+      <End Role="venta" EntitySet="venta" />
+      <End Role="envio" EntitySet="envio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EnvioPaqueteria" Association="crmconceptoseModel.FK_EnvioPaqueteria">
+      <End Role="paqueteria" EntitySet="paqueteria" />
+      <End Role="envio" EntitySet="envio" />
+    </AssociationSet>
+    <FunctionImport Name="sp_agregarEnvio">
+      <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_agregarGuia">
+      <Parameter Name="IdEnvio" Mode="In" Type="Int32" />
+      <Parameter Name="NumeroGuia" Mode="In" Type="String" />
+      <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+      <Parameter Name="Paqueteria" Mode="In" Type="Int32" />
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cargarPaqueterias" ReturnType="Collection(crmconceptoseModel.sp_cargarPaqueterias_Result)" />
+    <FunctionImport Name="sp_consultaEnvio" ReturnType="Collection(crmconceptoseModel.sp_consultaEnvio_Result)">
+      <Parameter Name="IdEnvio" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaEnvios" ReturnType="Collection(crmconceptoseModel.sp_consultaEnvios_Result)">
+      <Parameter Name="IdEnvio" Mode="In" Type="Int32" />
+      <Parameter Name="pMonth" Mode="In" Type="String" />
+      <Parameter Name="pYear" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_consultaEnviosN" ReturnType="Collection(crmconceptoseModel.sp_consultaEnviosN_Result)" />
+    <FunctionImport Name="sp_datosEmail" ReturnType="Collection(crmconceptoseModel.sp_datosEmail_Result)">
+      <Parameter Name="IdEnvio" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_editarEnvio">
+      <Parameter Name="IdEnvio" Mode="In" Type="Int32" />
+      <Parameter Name="NumeroGuia" Mode="In" Type="String" />
+      <Parameter Name="Paqueteria" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_eliminarEnvio">
+      <Parameter Name="IdEnvio" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="RFQConsultas" ReturnType="Collection(crmconceptoseModel.RFQConsultas_Result)">
+      <Parameter Name="opcion" Mode="In" Type="String" />
+      <Parameter Name="idRfq" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="agenda" EntityType="crmconceptoseModel.agenda" />
+    <EntitySet Name="ventaDetalle" EntityType="crmconceptoseModel.ventaDetalle" />
+    <AssociationSet Name="FK_agenda_AspNetUsers" Association="crmconceptoseModel.FK_agenda_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="agenda" EntitySet="agenda" />
+    </AssociationSet>
+    <AssociationSet Name="fkdetalleVentaidProducto" Association="crmconceptoseModel.fkdetalleVentaidProducto">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="ventaDetalle" EntitySet="ventaDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="fkdetalleVentaidProveedor" Association="crmconceptoseModel.fkdetalleVentaidProveedor">
+      <End Role="proveedor" EntitySet="proveedor" />
+      <End Role="ventaDetalle" EntitySet="ventaDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="fkdetalleVentaidVenta" Association="crmconceptoseModel.fkdetalleVentaidVenta">
+      <End Role="venta" EntitySet="venta" />
+      <End Role="ventaDetalle" EntitySet="ventaDetalle" />
+    </AssociationSet>
+    <FunctionImport Name="sp_agregarEventoAgenda">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Titulo" Mode="In" Type="String" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+      <Parameter Name="Hora" Mode="In" Type="String" />
+      <Parameter Name="Link" Mode="In" Type="String" />
+      <Parameter Name="Direccion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cargarAgendaHoy" ReturnType="Collection(crmconceptoseModel.sp_cargarAgendaHoy_Result)">
+      <Parameter Name="IdUsuario" Mode="In" Type="String" />
+      <Parameter Name="Fecha" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cargarEventoAgenda" ReturnType="Collection(crmconceptoseModel.sp_cargarEventoAgenda_Result)">
+      <Parameter Name="IdEvento" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_editarEventoAgenda">
+      <Parameter Name="IdEvento" Mode="In" Type="Int32" />
+      <Parameter Name="Titulo" Mode="In" Type="String" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+      <Parameter Name="Hora" Mode="In" Type="String" />
+      <Parameter Name="Link" Mode="In" Type="String" />
+      <Parameter Name="Direccion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_eliminarEventoAgenda">
+      <Parameter Name="IdEvento" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_filtrarEventos" ReturnType="Collection(crmconceptoseModel.sp_filtrarEventos_Result)">
+      <Parameter Name="pMonth" Mode="In" Type="String" />
+      <Parameter Name="pYear" Mode="In" Type="String" />
+      <Parameter Name="pDay" Mode="In" Type="String" />
+      <Parameter Name="pUsuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_verificarEvento" ReturnType="Collection(crmconceptoseModel.sp_verificarEvento_Result)">
+      <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+      <Parameter Name="Hora" Mode="In" Type="String" />
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_verificarEvento2" ReturnType="Collection(crmconceptoseModel.sp_verificarEvento2_Result)">
+      <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+      <Parameter Name="Hora" Mode="In" Type="String" />
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="IdEvento" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarRFQ">
+      <Parameter Name="opcion" Mode="In" Type="String" />
+      <Parameter Name="estatus" Mode="In" Type="String" />
+      <Parameter Name="idRFQItem" Mode="In" Type="Int32" />
+      <Parameter Name="idRFQ" Mode="In" Type="Int32" />
+      <Parameter Name="idProveedor" Mode="In" Type="Int32" />
+      <Parameter Name="idProducto" Mode="In" Type="String" />
+      <Parameter Name="precio" Mode="In" Type="Decimal" />
+      <Parameter Name="cantidad" Mode="In" Type="Int32" />
+      <Parameter Name="notas" Mode="In" Type="String" />
+      <Parameter Name="fecha" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_RFQ_HISTORIAL" ReturnType="Collection(crmconceptoseModel.SP_RFQ_HISTORIAL_Result)">
+      <Parameter Name="idProducto" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SP_COTIZACION_HISTORIAL_Result">
@@ -661,6 +770,7 @@
     <NavigationProperty Name="compra" Relationship="crmconceptoseModel.fkCOMPRA_DETALLEidCompra" FromRole="compraDetalle" ToRole="compra" />
     <NavigationProperty Name="producto" Relationship="crmconceptoseModel.fkProductoCompra" FromRole="compraDetalle" ToRole="producto" />
     <Property Name="seccion" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="UnidadMedida" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="existencia">
     <Key>
@@ -737,8 +847,9 @@
     <NavigationProperty Name="AspNetRoles" Relationship="crmconceptoseModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
     <NavigationProperty Name="configuracion" Relationship="crmconceptoseModel.FK_ConfiguracionUsuario" FromRole="AspNetUsers" ToRole="configuracion" />
     <NavigationProperty Name="venta" Relationship="crmconceptoseModel.FK_VendedorVenta" FromRole="AspNetUsers" ToRole="venta" />
-    <NavigationProperty Name="RFQ" Relationship="crmconceptoseModel.fk_idVendedorRFQ" FromRole="AspNetUsers" ToRole="RFQ" />
     <NavigationProperty Name="EmailMarketing" Relationship="crmconceptoseModel.FK_EmailMarketingIdUsuario" FromRole="AspNetUsers" ToRole="EmailMarketing" />
+    <NavigationProperty Name="envio" Relationship="crmconceptoseModel.FK_EnvioUsuario" FromRole="AspNetUsers" ToRole="envio" />
+    <NavigationProperty Name="agenda" Relationship="crmconceptoseModel.FK_agenda_AspNetUsers" FromRole="AspNetUsers" ToRole="agenda" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -798,7 +909,8 @@
     <Property Name="email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="compra" Relationship="crmconceptoseModel.fkidProvedoorCompra" FromRole="proveedor" ToRole="compra" />
-    <NavigationProperty Name="RFQItem" Relationship="crmconceptoseModel.fk_IdProveedorRFQItem" FromRole="proveedor" ToRole="RFQItem" />
+    <Property Name="empresa" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ventaDetalle" Relationship="crmconceptoseModel.fkdetalleVentaidProveedor" FromRole="proveedor" ToRole="ventaDetalle" />
   </EntityType>
   <Association Name="fkidProvedoorCompra">
     <End Type="crmconceptoseModel.proveedor" Role="proveedor" Multiplicity="0..1" />
@@ -853,7 +965,7 @@
     <NavigationProperty Name="compraDetalle" Relationship="crmconceptoseModel.fkProductoCompra" FromRole="producto" ToRole="compraDetalle" />
     <NavigationProperty Name="existencia" Relationship="crmconceptoseModel.fkExistenciaidProducto" FromRole="producto" ToRole="existencia" />
     <NavigationProperty Name="detalleCotizacion" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="producto" ToRole="detalleCotizacion" />
-    <NavigationProperty Name="RFQItem" Relationship="crmconceptoseModel.fk_IdProductoRFQItem" FromRole="producto" ToRole="RFQItem" />
+    <NavigationProperty Name="ventaDetalle" Relationship="crmconceptoseModel.fkdetalleVentaidProducto" FromRole="producto" ToRole="ventaDetalle" />
   </EntityType>
   <Association Name="FK__producto__idCate__164452B1">
     <End Type="crmconceptoseModel.categoria" Role="categoria" Multiplicity="1" />
@@ -1098,6 +1210,7 @@
     <NavigationProperty Name="cotizacion" Relationship="crmconceptoseModel.FK__detalleFa__idPed__239E4DCF" FromRole="detalleCotizacion" ToRole="cotizacion" />
     <NavigationProperty Name="factura" Relationship="crmconceptoseModel.FK_detalleFactura_factura" FromRole="detalleCotizacion" ToRole="factura" />
     <NavigationProperty Name="producto" Relationship="crmconceptoseModel.FK_detalleFactura_producto" FromRole="detalleCotizacion" ToRole="producto" />
+    <Property Name="notas" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK__detalleFa__idPed__239E4DCF">
     <End Type="crmconceptoseModel.cotizacion" Role="cotizacion" Multiplicity="1" />
@@ -1247,6 +1360,9 @@
     <Property Name="fecha" Type="DateTime" Precision="0" />
     <Property Name="vendedor" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_VendedorVenta" FromRole="venta" ToRole="AspNetUsers" />
+    <NavigationProperty Name="envio" Relationship="crmconceptoseModel.FK_envio_venta" FromRole="venta" ToRole="envio" />
+    <Property Name="terminos" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ventaDetalle" Relationship="crmconceptoseModel.fkdetalleVentaidVenta" FromRole="venta" ToRole="ventaDetalle" />
   </EntityType>
   <Association Name="fk_CiudadEstado">
     <End Type="crmconceptoseModel.estado" Role="estado" Multiplicity="0..1" />
@@ -1392,80 +1508,6 @@
     <Property Type="Int32" Name="idPais" Nullable="false" />
     <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
   </ComplexType>
-  <EntityType Name="RFQ">
-    <Key>
-      <PropertyRef Name="idRFQ" />
-    </Key>
-    <Property Name="idRFQ" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="idVendedor" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="fecha" Type="DateTime" Precision="0" />
-    <Property Name="estatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.fk_idVendedorRFQ" FromRole="RFQ" ToRole="AspNetUsers" />
-    <NavigationProperty Name="RFQItem" Relationship="crmconceptoseModel.fk_RFQItemRFQ" FromRole="RFQ" ToRole="RFQItem" />
-  </EntityType>
-  <EntityType Name="RFQItem">
-    <Key>
-      <PropertyRef Name="idRFQItem" />
-    </Key>
-    <Property Name="idRFQItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="idRfq" Type="Int32" />
-    <Property Name="idProveedor" Type="Int32" />
-    <Property Name="idProducto" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="precio" Type="Single" />
-    <Property Name="cantidad" Type="Int32" />
-    <Property Name="notas" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="producto" Relationship="crmconceptoseModel.fk_IdProductoRFQItem" FromRole="RFQItem" ToRole="producto" />
-    <NavigationProperty Name="proveedor" Relationship="crmconceptoseModel.fk_IdProveedorRFQItem" FromRole="RFQItem" ToRole="proveedor" />
-    <NavigationProperty Name="RFQ" Relationship="crmconceptoseModel.fk_RFQItemRFQ" FromRole="RFQItem" ToRole="RFQ" />
-  </EntityType>
-  <Association Name="fk_idVendedorRFQ">
-    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-    <End Type="crmconceptoseModel.RFQ" Role="RFQ" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="RFQ">
-        <PropertyRef Name="idVendedor" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_IdProductoRFQItem">
-    <End Type="crmconceptoseModel.producto" Role="producto" Multiplicity="0..1" />
-    <End Type="crmconceptoseModel.RFQItem" Role="RFQItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="producto">
-        <PropertyRef Name="idProducto" />
-      </Principal>
-      <Dependent Role="RFQItem">
-        <PropertyRef Name="idProducto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_IdProveedorRFQItem">
-    <End Type="crmconceptoseModel.proveedor" Role="proveedor" Multiplicity="0..1" />
-    <End Type="crmconceptoseModel.RFQItem" Role="RFQItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="proveedor">
-        <PropertyRef Name="idProveedor" />
-      </Principal>
-      <Dependent Role="RFQItem">
-        <PropertyRef Name="idProveedor" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_RFQItemRFQ">
-    <End Type="crmconceptoseModel.RFQ" Role="RFQ" Multiplicity="0..1" />
-    <End Type="crmconceptoseModel.RFQItem" Role="RFQItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RFQ">
-        <PropertyRef Name="idRFQ" />
-      </Principal>
-      <Dependent Role="RFQItem">
-        <PropertyRef Name="idRfq" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <ComplexType Name="sp_cargarEstado_Result">
     <Property Type="Int32" Name="idEstado" Nullable="false" />
     <Property Type="String" Name="nombre" Nullable="true" MaxLength="40" />
@@ -1573,5 +1615,243 @@
     <Property Type="Int32" Name="dias" Nullable="true" />
     <Property Type="DateTime" Name="fechaComienzo" Nullable="true" />
     <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <EntityType Name="envio">
+    <Key>
+      <PropertyRef Name="idEnvio" />
+    </Key>
+    <Property Name="idEnvio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idVenta" Type="Int32" Nullable="false" />
+    <Property Name="fecha" Type="DateTime" Precision="0" />
+    <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="numeroGuia" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="paqueteria" Type="Int32" />
+    <Property Name="usuarioEnvio" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_EnvioUsuario" FromRole="envio" ToRole="AspNetUsers" />
+    <NavigationProperty Name="venta" Relationship="crmconceptoseModel.FK_envio_venta" FromRole="envio" ToRole="venta" />
+    <NavigationProperty Name="paqueteria1" Relationship="crmconceptoseModel.FK_EnvioPaqueteria" FromRole="envio" ToRole="paqueteria" />
+  </EntityType>
+  <EntityType Name="paqueteria">
+    <Key>
+      <PropertyRef Name="idPaqueteria" />
+    </Key>
+    <Property Name="idPaqueteria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="envio" Relationship="crmconceptoseModel.FK_EnvioPaqueteria" FromRole="paqueteria" ToRole="envio" />
+    <Property Name="link" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_EnvioUsuario">
+    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.envio" Role="envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="envio">
+        <PropertyRef Name="usuarioEnvio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_envio_venta">
+    <End Type="crmconceptoseModel.venta" Role="venta" Multiplicity="1" />
+    <End Type="crmconceptoseModel.envio" Role="envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="envio">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EnvioPaqueteria">
+    <End Type="crmconceptoseModel.paqueteria" Role="paqueteria" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.envio" Role="envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="paqueteria">
+        <PropertyRef Name="idPaqueteria" />
+      </Principal>
+      <Dependent Role="envio">
+        <PropertyRef Name="paqueteria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_cargarPaqueterias_Result">
+    <Property Type="Int32" Name="idPaqueteria" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaEnvio_Result">
+    <Property Type="Int32" Name="idEnvio" Nullable="false" />
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="30" />
+    <Property Type="Int32" Name="paqueteria" Nullable="true" />
+    <Property Type="String" Name="numeroGuia" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaEnvios_Result">
+    <Property Type="Int32" Name="idEnvio" Nullable="false" />
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="numeroGuia" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="paqueteria" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Usuario" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="sp_consultaEnviosN_Result">
+    <Property Type="Int32" Name="idEnvio" Nullable="false" />
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_datosEmail_Result">
+    <Property Type="Int32" Name="idEnvio" Nullable="false" />
+    <Property Type="Int32" Name="idVenta" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="numeroGuia" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="paqueteria" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="RFQConsultas_Result">
+    <Property Type="Int32" Name="idRFQ" Nullable="false" />
+    <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="estatus" Nullable="true" MaxLength="1" />
+  </ComplexType>
+  <EntityType Name="agenda">
+    <Key>
+      <PropertyRef Name="idEvento" />
+    </Key>
+    <Property Name="idEvento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idUsuario" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="titulo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="fecha" Type="DateTime" Precision="0" />
+    <Property Name="hora" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="link_reunion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="crmconceptoseModel.FK_agenda_AspNetUsers" FromRole="agenda" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="ventaDetalle">
+    <Key>
+      <PropertyRef Name="idDetalleVenta" />
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idDetalleVenta" Type="Int32" Nullable="false" />
+    <Property Name="idVenta" Type="Int32" Nullable="false" />
+    <Property Name="idProveedor" Type="Int32" />
+    <Property Name="idProducto" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="precio" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="unidadMedida" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="notas" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="producto" Relationship="crmconceptoseModel.fkdetalleVentaidProducto" FromRole="ventaDetalle" ToRole="producto" />
+    <NavigationProperty Name="proveedor" Relationship="crmconceptoseModel.fkdetalleVentaidProveedor" FromRole="ventaDetalle" ToRole="proveedor" />
+    <NavigationProperty Name="venta" Relationship="crmconceptoseModel.fkdetalleVentaidVenta" FromRole="ventaDetalle" ToRole="venta" />
+  </EntityType>
+  <Association Name="FK_agenda_AspNetUsers">
+    <End Type="crmconceptoseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+    <End Type="crmconceptoseModel.agenda" Role="agenda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="agenda">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdetalleVentaidProducto">
+    <End Type="crmconceptoseModel.producto" Role="producto" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.ventaDetalle" Role="ventaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="ventaDetalle">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdetalleVentaidProveedor">
+    <End Type="crmconceptoseModel.proveedor" Role="proveedor" Multiplicity="0..1" />
+    <End Type="crmconceptoseModel.ventaDetalle" Role="ventaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="ventaDetalle">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkdetalleVentaidVenta">
+    <End Type="crmconceptoseModel.venta" Role="venta" Multiplicity="1" />
+    <End Type="crmconceptoseModel.ventaDetalle" Role="ventaDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="ventaDetalle">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_cargarAgendaHoy_Result">
+    <Property Type="Int32" Name="idEvento" Nullable="false" />
+    <Property Type="String" Name="idUsuario" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="titulo" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="200" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="hora" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="link_reunion" Nullable="true" />
+    <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="sp_cargarEventoAgenda_Result">
+    <Property Type="Int32" Name="idEvento" Nullable="false" />
+    <Property Type="String" Name="idUsuario" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="titulo" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="200" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="hora" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="link_reunion" Nullable="true" />
+    <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="sp_filtrarEventos_Result">
+    <Property Type="Int32" Name="idEvento" Nullable="false" />
+    <Property Type="String" Name="idUsuario" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="titulo" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="200" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="hora" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="link_reunion" Nullable="true" />
+    <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="sp_verificarEvento_Result">
+    <Property Type="Int32" Name="idEvento" Nullable="false" />
+    <Property Type="String" Name="idUsuario" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="titulo" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="200" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="hora" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="link_reunion" Nullable="true" />
+    <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="sp_verificarEvento2_Result">
+    <Property Type="Int32" Name="idEvento" Nullable="false" />
+    <Property Type="String" Name="idUsuario" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="titulo" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="descripcion" Nullable="true" MaxLength="200" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="hora" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="link_reunion" Nullable="true" />
+    <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="SP_RFQ_HISTORIAL_Result">
+    <Property Type="DateTime" Name="fechaRFQ" Nullable="true" />
+    <Property Type="String" Name="Comprador" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Productos" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="precio" Nullable="true" Precision="19" />
+    <Property Type="String" Name="empresa" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="nombreProveedor" Nullable="false" MaxLength="46" />
   </ComplexType>
 </Schema>
