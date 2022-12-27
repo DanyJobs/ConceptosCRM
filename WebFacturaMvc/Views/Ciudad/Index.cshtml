@@ -22,28 +22,37 @@
             </div>
         </div>
         <input type="submit" value="Buscar" />
-    }</center>
-    <center>
-        <br />
-        <a class="btn btn-success" href="~/Ciudad/AgregarCiudad?idEstado=@ViewData["EstadoPrincipal"]">Agregar</a> <a class="btn btn-info" href="~/Estado/Index?idPais=@ViewData["Estado"]">Regresar</a>
-        <table class="table">
-            <thead>
-                <tr class="bg-primary">
-                    <th>ID Ciudad</th>
-                    <th>Nombre</th>
+    }
+</center>
+<center>
+    <br />
+    <a class="btn btn-success" href="~/Ciudad/AgregarCiudad?idEstado=@ViewData["EstadoPrincipal"]">Agregar</a> <a class="btn btn-info" href="~/Estado/Index?idPais=@ViewData["Estado"]">Regresar</a>
+    <table id="table_id" class="display responsive nowrap">
+        <thead>
+            <tr class="bg-primary">
+                <th>ID Ciudad</th>
+                <th>Nombre</th>
+                <th>Operaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var objCiudad in Model)
+            {
+                <tr>
+                    <td>@objCiudad.IdCiudad</td>
+                    <td>@objCiudad.NombreCiudad</td>
+                    <td><a class="btn btn-warning" href="~/Ciudad/EditarCiudad?idCiudad=@objCiudad.IdCiudad"><span class="glyphicon glyphicon-pencil">|Editar</span></a>
+                    <a class="btn btn-danger" href="~/Ciudad/EliminarCiudad?idCiudad=@objCiudad.IdCiudad"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var objCiudad in Model)
-                {
-                    <tr>
-                        <td>@objCiudad.IdCiudad</td>
-                        <td>@objCiudad.NombreCiudad</td>
-                        <td><a class="btn btn-warning" href="~/Ciudad/EditarCiudad?idCiudad=@objCiudad.IdCiudad"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
-                        <td><a class="btn btn-danger" href="~/Ciudad/EliminarCiudad?idCiudad=@objCiudad.IdCiudad"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
-                    </tr>
-                }
+            }
 
-            </tbody>
-        </table>
-    </center>
+        </tbody>
+    </table>
+</center>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

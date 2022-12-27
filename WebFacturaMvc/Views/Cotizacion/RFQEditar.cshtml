@@ -11,11 +11,11 @@
 <script type="text/javascript">
     var ultimo = 0;
     var eje = 0;
-    var eliminados="";
-    function cloneRow(id) {      
+    var eliminados = "";
+    function cloneRow(id) {
         eje = eje + 1;
         ultimo = ultimo + 1;
-    /*    console.log(id);*/
+        /*    console.log(id);*/
         var idProducto = document.getElementById("idProducto" + id.toString()).innerText;
         var detalleProducto = document.getElementById("detalleProducto" + id.toString()).innerText;
         var marca = document.getElementById("marca" + id.toString()).innerText;
@@ -23,20 +23,22 @@
         var nombreEmpresa = document.getElementById("nombreEmpresa" + id.toString()).innerText;
         var nombreProveedor = document.getElementById("nombreProveedor" + id.toString()).innerText;
         var cantidad = document.getElementById("cantidad" + id.toString()).innerText;
+        var udm = document.getElementById("udm" + id.toString()).innerText;
         var precio = document.getElementById("precio" + id.toString()).innerText;
         var notas = document.getElementById("notas" + id.toString()).innerText;
         cadena = "<tr id='row" + eje.toString() + "'>";
         cadena = cadena + "<td id='ln" + eje.toString() + "'>" + ultimo.toString() + "</td>";
-        cadena = cadena + "<td id='idProducto" + eje.toString() + "'>"  + idProducto + "</td>";
-        cadena = cadena + "<td id='detalleProducto" + eje.toString() + "'>"  + detalleProducto + "</td>";
+        cadena = cadena + "<td id='idProducto" + eje.toString() + "'>" + idProducto + "</td>";
+        cadena = cadena + "<td id='detalleProducto" + eje.toString() + "'>" + detalleProducto + "</td>";
         cadena = cadena + "<td id='marca" + eje.toString() + "'>" + marca + "</td> ";
         cadena = cadena + "<td id='idProveedor" + eje.toString() + "'>" + idProveedor + "</td>";
         cadena = cadena + "<td id='nombreEmpresa" + eje.toString() + "'>" + nombreEmpresa + "</td>";
         cadena = cadena + "<td id='nombreProveedor" + eje.toString() + "'>" + nombreProveedor + "</td>";
         cadena = cadena + "<td id='cantidad" + eje.toString() + "'>" + cantidad + "</td>";
-        cadena = cadena + "<td id='precio" + eje.toString() + "'>"  + precio + "</td> ";
-        cadena = cadena + "<td id='notas" + eje.toString() + "'>" + notas + "</td> ";
-        cadena = cadena + "<td> " + (precio * cantidad) + "</td> ";        
+        cadena = cadena + "<td id='udm" + eje.toString() + "'>" + udm + "</td>";
+        cadena = cadena + "<td id='precio" + eje.toString() + "'>" + precio + "</td>";
+        cadena = cadena + "<td id='notas" + eje.toString() + "'>" + notas + "</td>";
+        cadena = cadena + "<td> " + (precio * cantidad) + "</td>";
         var y = 0;
         var x = 0;
         y = $("#cantidad").val();
@@ -65,13 +67,14 @@
         $("#nombreproducto").val(Producto.Nombre);
         $("#marca").val(Producto.Marca);
         $("#precio").val(Producto.Precio);
+        $("#udm").val(Producto.unidadMedida);
         $("#descuento").val("0");
         $("#cantidad").val("1");
     }
     var renglon = 0;
 
-    function editar(row) {    
-        var ln = document.getElementById("ln"+row.toString()).innerText;
+    function editar(row) {
+        var ln = document.getElementById("ln" + row.toString()).innerText;
         var id = document.getElementById("idProducto" + row.toString()).innerText;
         var detalleProducto = document.getElementById("detalleProducto" + row.toString()).innerText;
         var marca = document.getElementById("marca" + row.toString()).innerText;
@@ -79,13 +82,14 @@
         var nombreEmpresa = document.getElementById("nombreEmpresa" + row.toString()).innerText;
         var nombreProveedor = document.getElementById("nombreProveedor" + row.toString()).innerText;
         var cantidad = document.getElementById("cantidad" + row.toString()).innerText;
+        var udm = document.getElementById("udm" + row.toString()).innerText;
         var precio = document.getElementById("precio" + row.toString()).innerText;
         var notas = document.getElementById("notas" + row.toString()).innerText;
         renglon = row;
         $("#editarTabla").show();
         $("#cancelarEditar").show();
         $("#linea").show();
-        $("#linealbl").show();        
+        $("#linealbl").show();
         $("#agregar").hide();
         $("#linea").val(ln);
         $("#idproducto").val(id);
@@ -95,6 +99,7 @@
         $("#txtempresa").val(nombreEmpresa);
         $("#txtnombre").val(nombreProveedor);
         $("#cantidad").val(cantidad);
+        $("#udm").val(udm);
         $("#precio").val(precio);
         $("#notas").val(notas);
     }
@@ -108,8 +113,9 @@
         document.getElementById("nombreEmpresa" + renglon.toString()).innerText = $("#txtempresa").val();
         document.getElementById("nombreProveedor" + renglon.toString()).innerText = $("#txtnombre").val();
         document.getElementById("cantidad" + renglon.toString()).innerText = $("#cantidad").val();
+        document.getElementById("udm" + renglon.toString()).innerText = $("#udm").val();
         document.getElementById("precio" + renglon.toString()).innerText = $("#precio").val();
-        document.getElementById("notas" + renglon.toString()).innerText = $("#notas").val();    
+        document.getElementById("notas" + renglon.toString()).innerText = $("#notas").val();
         limpiar();
         $("#agregar").show();
         $("#editarTabla").hide();
@@ -132,12 +138,13 @@
         cadena = "<tr id='row" + eje.toString() + "'>";
         cadena = cadena + "<td id='ln" + eje.toString() + "'>" + ultimo.toString() + "</td>";
         cadena = cadena + "<td id='idProducto" + eje.toString() + "'>" + $("#idproducto").val() + "</td>";
-        cadena = cadena + "<td id='detalleProducto" + eje.toString() + "'>" + $("#nombreproducto").val()  + "</td>";
+        cadena = cadena + "<td id='detalleProducto" + eje.toString() + "'>" + $("#nombreproducto").val() + "</td>";
         cadena = cadena + "<td id='marca" + eje.toString() + "'>" + $("#marca").val() + "</td> ";
-        cadena = cadena + "<td id='idProveedor" + eje.toString() + "'>" + $("#txtidproveedor").val()+ "</td>";
+        cadena = cadena + "<td id='idProveedor" + eje.toString() + "'>" + $("#txtidproveedor").val() + "</td>";
         cadena = cadena + "<td id='nombreEmpresa" + eje.toString() + "'>" + $("#txtempresa").val() + "</td>";
         cadena = cadena + "<td id='nombreProveedor" + eje.toString() + "'>" + $("#txtnombre").val() + "</td>";
         cadena = cadena + "<td id='cantidad" + eje.toString() + "'>" + $("#cantidad").val() + "</td>";
+        cadena = cadena + "<td id='udm" + eje.toString() + "'>" + $("#udm").val() + "</td>";
         cadena = cadena + "<td id='precio" + eje.toString() + "'>" + $("#precio").val() + "</td>";
         cadena = cadena + "<td id='notas" + eje.toString() + "'>" + $("#notas").val() + "</td>";
         var y = 0;
@@ -157,8 +164,7 @@
         limpiarProveedor();
     };
     var j = 0;
-    function eliminaRow(row) {     
-     
+    function eliminaRow(row) {
         if (row == renglon) {
             limpiar();
             $("#agregar").show();
@@ -173,9 +179,8 @@
         } else {
             eliminados += "," +
                 "'" + document.getElementById("ln" + row.toString()).innerText.toString() + "'";
-           
         }
-        j = 1;       
+        j = 1;
     }
     function limpiar() {
         $("#txtidproveedor").val("");
@@ -187,6 +192,7 @@
         $("#marca").val("");
         $("#ListaProducto").val("");
         $("#cantidad").val("");
+        $("#udm").val("");
         $("#descuento").val("");
         $("#notas").val("");
     }
@@ -292,20 +298,21 @@
             </div>
         </td>
         <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="marca" readonly required /></td>
+        <td>UDM<input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="udm" readonly required /></td>
         <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:12px; font-weight: 700;" type="text" id="precio" class="form-control" /></td>
         <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:12px; font-weight: 700;" class="form-control" type="number" id="cantidad" onfocus="this.value = '';" required /></td>
         <td>Notas<input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="notas" /></td>
 
-        <td><input style="width:100px; font-size:18px;" class="btn btn-warning btn-lg" onclick="fn_editarAceptar()" name="editarTabla" id="editarTabla" value="Editar" /></td>
+        <td><input type="button" style="width:100px; font-size:18px;" class="btn btn-warning btn-lg" onclick="fn_editarAceptar()" name="editarTabla" id="editarTabla" value="Editar" /></td>
         <td name="cancelarEditar" id="cancelarEditar"><a style="width:50px; font-size:18px;" class='btn btn-danger fa fa-remove' onclick="fn_cancelar()" /> </td>
         <td colspan="2">
-            <input style="width:100px; font-size:18px;" class="btn btn-primary btn-lg" onclick="fn_agregar()" name="agregar" id="agregar" value=@Lenguaje.Recurso.Cotizacion_agregar />
+            <input type="button" style="width:100px; font-size:18px;" class="btn btn-primary btn-lg" onclick="fn_agregar()" name="agregar" id="agregar" value=@Lenguaje.Recurso.Cotizacion_agregar />
         </td>
     </tr>
 </table>
 @*</form>*@
 <table id="detalle" class="lista table" border="1">
-    <thead style="font-size:18px;">
+    <thead style="font-size:12px;">
         <tr class="bg-success">
             <td>@Lenguaje.Recurso.Cotizacion_detalleCompra</td>
         </tr>
@@ -318,6 +325,7 @@
             <th>Empresa Proveedor</th>
             <th>Nombre Proveedor</th>
             <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
+            <th>UDM</th>
             <th>@Lenguaje.Recurso.Cotizacion_precio</th>
             <th>Notas</th>
             <th>Total</th>
@@ -348,7 +356,7 @@
                     //$("#idproducto").val(mensaje.Nombre);
                     $(mensaje).each(function (index, item) {
                         //recibir datos json
-                        $("#nombreproducto").val(item.Nombre),
+                            $("#nombreproducto").val(item.Nombre),
                             $("#idproducto").val(item.IdProducto),
                             $("#precio").val(item.PrecioUnitario),
                             $("#marca").val(item.Marca)
@@ -374,18 +382,18 @@
                         "idRFQItem:'" + $(this).find('td').eq(0).text() + "'" +
                         ",idProducto:'" + $(this).find('td').eq(1).text() + "'" +
                         ",idProveedor:'" + $(this).find('td').eq(4).text() + "'" +
-                        ",precio:'" + $(this).find('td').eq(8).text() + "'" +
+                        ",precio:'" + $(this).find('td').eq(9).text() + "'" +
                         ",cantidad:'" + $(this).find('td').eq(7).text() + "'" +
-                        ",notas:'" + $(this).find('td').eq(9).text() + "'" +
+                        ",notas:'" + $(this).find('td').eq(10).text() + "'" +
                         "}";
                 } else {
                     envio += ",{" +
                         "idRFQItem:'" + $(this).find('td').eq(0).text() + "'" +
                         ",idProducto:'" + $(this).find('td').eq(1).text() + "'" +
                         ",idProveedor:'" + $(this).find('td').eq(4).text() + "'" +
-                        ",precio:'" + $(this).find('td').eq(8).text() + "'" +
+                        ",precio:'" + $(this).find('td').eq(9).text() + "'" +
                         ",cantidad:'" + $(this).find('td').eq(7).text() + "'" +
-                        ",notas:'" + $(this).find('td').eq(9).text() + "'" +
+                        ",notas:'" + $(this).find('td').eq(10).text() + "'" +
                         "}";
                 }
                 i = 1;
@@ -441,12 +449,12 @@
         });
         $("#editarTabla").hide();
         $("#cancelarEditar").hide();
-        $("#linea").hide();  
+        $("#linea").hide();
         $("#linealbl").hide();
         $.ajax({
             type: "POST",
             url: "ListaProductosRFQ",
-            data: { idRFQ: $("#idRFQ").val()},
+            data: { idRFQ: $("#idRFQ").val() },
             success: function (mensaje) {
                 //alert(mensaje);
                 //$("#idproducto").val(mensaje.Nombre);
@@ -455,17 +463,18 @@
                     eje = eje + 1;
                     ultimo = item.idRFQItem;
                     cadena = "<tr id='row" + item.idRFQItem + "'>";
-                    cadena = cadena + "<td id='ln" + item.idRFQItem  + "'>" + item.idRFQItem + "</td>";
+                    cadena = cadena + "<td id='ln" + item.idRFQItem + "'>" + item.idRFQItem + "</td>";
                     cadena = cadena + "<td id='idProducto" + item.idRFQItem + "'>" + item.idProducto + "</td>";
                     cadena = cadena + "<td id='detalleProducto" + item.idRFQItem + "'>" + item.nombre + "</td>";
-                    cadena = cadena + "<td id='marca" + item.idRFQItem + "'>" + item.marca  + "</td> ";
+                    cadena = cadena + "<td id='marca" + item.idRFQItem + "'>" + item.marca + "</td> ";
                     cadena = cadena + "<td id='idProveedor" + item.idRFQItem + "'>" + item.idProveedor + "</td>";
                     cadena = cadena + "<td id='nombreEmpresa" + item.idRFQItem + "'>" + item.empresa + "</td>";
                     cadena = cadena + "<td id='nombreProveedor" + item.idRFQItem + "'>" + item.empresaNombre + "</td>";
                     cadena = cadena + "<td id='cantidad" + item.idRFQItem + "'>" + item.cantidad + "</td>";
+                    cadena = cadena + "<td id='udm" + item.idRFQItem + "'>" + item.unidadDeMedida + "</td>";
                     cadena = cadena + "<td id='precio" + item.idRFQItem + "'>" + item.precio + "</td> ";
-                    cadena = cadena + "<td id='notas" + item.idRFQItem + "'>" + item.notas+ "</td> ";
-                    cadena = cadena + "<td> " + (item.precio * item.cantidad) + "</td> ";                
+                    cadena = cadena + "<td id='notas" + item.idRFQItem + "'>" + item.notas + "</td> ";
+                    cadena = cadena + "<td> " + (item.precio * item.cantidad) + "</td> ";
                     var y = 0;
                     var x = 0;
                     y = $("#cantidad").val();

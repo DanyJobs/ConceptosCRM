@@ -1,0 +1,58 @@
+﻿
+<link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+
+@using Model.Entity
+@model List<plantillaCorreo>
+@{
+    ViewBag.Title = "BuscarPorCodigo";
+    Layout = "~/Views/Shared/_LayoutNulo.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tbPlantillaCorreo tbody tr").dblclick(function () {
+            var PlantillaCorreo = {};
+            var n, a, m;
+            n = PlantillaCorreo.Codigo = $(this).children().eq('0').text();
+            a = PlantillaCorreo.DatosPersonales = $(this).children().eq('1').text();
+            m = PlantillaCorreo.Identificacion = $(this).children().eq('2').text();
+            console.info(a, n, m);
+            window.opener.obtenerPlantillaCorreo(PlantillaCorreo);
+            window.close();
+        });
+    });
+</script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Buscar Plantilla Correos en el Sistema</div> 
+</div>
+
+<table id="tbPlantillaCorreo" class="display responsive nowrap">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Descripcion</th>
+            <th>Plantilla</th>          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objPlantillaCorreo in Model)
+        {
+            <tr>
+                <td>@objPlantillaCorreo.idPlantilla</td>
+                <td>@objPlantillaCorreo.DescpPlantilla</td>
+                <td>@objPlantillaCorreo.plantilla</td>               
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbPlantillaCorreo').DataTable();
+        });
+    </script>
+}
+<script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/jquery/jquery.min.js"></script>

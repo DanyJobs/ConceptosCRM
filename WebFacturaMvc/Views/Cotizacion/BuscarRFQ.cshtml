@@ -4,25 +4,36 @@
     ViewBag.Title = "BuscarRFQ";
 }
 
-<table class="table">
-    <tr class="bg-primary">
-        <th>Fecha RFQ</th>
-        <th>Comprador</th>
-        <th>Productos</th>
-        <th>Precio</th>
-        <th>Empresa</th>
-        <th>Proveedor</th>
-    </tr>
-    @foreach (var objHistorial in Model)
-    {
-        <tr>
-            <th>@objHistorial.fechaRFQ.ToString("MM/dd/yyyy")</th>
-            <th>@objHistorial.Comprador</th>
-            <th>@objHistorial.Productos</th>
-            <th>@objHistorial.precio.ToString("C2")</th>
-            <th>@objHistorial.empresa</th>
-            <th>@objHistorial.nombreProveedor</th>
+<table id="tbRFQ" class="display responsive nowrap">
+    <thead>
+        <tr class="bg-primary">
+            <th>Fecha RFQ</th>
+            <th>Comprador</th>
+            <th>Productos</th>
+            <th>Precio</th>
+            <th>Empresa</th>
+            <th>Proveedor</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var objHistorial in Model)
+        {
+            <tr>
+                <th>@objHistorial.fechaRFQ.ToString("MM/dd/yyyy")</th>
+                <th>@objHistorial.Comprador</th>
+                <th>@objHistorial.Productos</th>
+                <th>@objHistorial.precio.ToString("C2")</th>
+                <th>@objHistorial.empresa</th>
+                <th>@objHistorial.nombreProveedor</th>
+            </tr>
+        }
+    </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbRFQ').DataTable();
+        });
+    </script>
+}
 

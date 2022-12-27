@@ -1,8 +1,9 @@
 ﻿@model WebFacturaMvc.Datos.proveedor
 
 @{
- 
+    
 }
+
 
 
 <html>
@@ -82,6 +83,14 @@
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.empresa, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.empresa, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.empresa, "", new { @class = "text-danger" })
                 </div>
             </div>
     

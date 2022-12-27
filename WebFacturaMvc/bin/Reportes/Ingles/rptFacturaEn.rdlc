@@ -6,25 +6,28 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.53764cm</Width>
+              <Width>1.62359cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.31363cm</Width>
+              <Width>2.61329cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.96285cm</Width>
+              <Width>3.00594cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.24789cm</Width>
+              <Width>1.28961cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.98239cm</Width>
+              <Width>2.39157cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.43423cm</Width>
+              <Width>1.44234cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.91932cm</Width>
+              <Width>2.84341cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.3285cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -135,6 +138,40 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox14">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>UOM</Value>
+                              <Style>
+                                <FontFamily>Arial Black</FontFamily>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>#213a5d</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox5">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -169,16 +206,16 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox18">
+                    <Textbox Name="Textbox23">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Quantity</Value>
+                              <Value>Qty</Value>
                               <Style>
-                                <FontFamily>Arial Black</FontFamily>
+                                <FontFamily>Montserrat ExtraBold</FontFamily>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -186,7 +223,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox18</rd:DefaultName>
+                      <rd:DefaultName>Textbox23</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -340,7 +377,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="descripcion">
+                    <Textbox Name="cantidad">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -350,6 +387,72 @@
                               <Value>=Fields!descripcion.Value</Value>
                               <Style>
                                 <FontFamily>Montserrat Light</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>cantidad</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="unidadMedida">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!unidadMedida.Value</Value>
+                              <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>unidadMedida</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="descripcion">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!precioUnitario.Value</Value>
+                              <Style>
+                                <FontFamily>Montserrat Light</FontFamily>
+                                <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                <rd:FormatSymbolCulture>es-MX</rd:FormatSymbolCulture>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -372,40 +475,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="precioUnitario">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!precioUnitario.Value</Value>
-                              <Style>
-                                <FontFamily>Montserrat Light</FontFamily>
-                                <Format>#,0.00;#,0.00-</Format>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>precioUnitario</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="cantidad">
+                    <Textbox Name="cantidad1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -415,13 +485,14 @@
                               <Value>=Fields!cantidad.Value</Value>
                               <Style>
                                 <FontFamily>Montserrat Light</FontFamily>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>cantidad</rd:DefaultName>
+                      <rd:DefaultName>cantidad1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -447,7 +518,8 @@
                               <Value>=Fields!descuento.Value</Value>
                               <Style>
                                 <FontFamily>Montserrat Light</FontFamily>
-                                <Format>#,0.00;#,0.00-</Format>
+                                <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                <rd:FormatSymbolCulture>es-MX</rd:FormatSymbolCulture>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -480,7 +552,8 @@
                               <Value>=Fields!total_Producto.Value</Value>
                               <Style>
                                 <FontFamily>Montserrat Light</FontFamily>
-                                <Format>#,0.00;#,0.00-</Format>
+                                <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                <rd:FormatSymbolCulture>es-MX</rd:FormatSymbolCulture>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -514,6 +587,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -526,9 +600,9 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>7.50274cm</Top>
-        <Left>2.29782cm</Left>
+        <Left>1.98605cm</Left>
         <Height>1.54396cm</Height>
-        <Width>17.39795cm</Width>
+        <Width>17.53825cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -554,7 +628,7 @@
         </Paragraphs>
         <rd:DefaultName>Cliente</rd:DefaultName>
         <Top>5.65947cm</Top>
-        <Left>5.63132cm</Left>
+        <Left>4.21728cm</Left>
         <Height>0.6cm</Height>
         <Width>4.09937cm</Width>
         <ZIndex>1</ZIndex>
@@ -588,8 +662,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>5.58892cm</Top>
-        <Left>3.32954cm</Left>
+        <Top>5.65947cm</Top>
+        <Left>1.98605cm</Left>
         <Height>0.6cm</Height>
         <Width>2.16067cm</Width>
         <ZIndex>2</ZIndex>
@@ -624,40 +698,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>6.4444cm</Top>
-        <Left>12.42968cm</Left>
+        <Left>11.94461cm</Left>
         <Height>0.6cm</Height>
         <Width>1.51223cm</Width>
         <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="direccion">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>direccion</rd:DefaultName>
-        <Top>6.33003cm</Top>
-        <Left>5.63132cm</Left>
-        <Height>0.6cm</Height>
-        <Width>4.09937cm</Width>
-        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -686,10 +730,10 @@
         </Paragraphs>
         <rd:DefaultName>telefono</rd:DefaultName>
         <Top>6.4444cm</Top>
-        <Left>13.97718cm</Left>
+        <Left>13.49211cm</Left>
         <Height>0.6cm</Height>
         <Width>4.92979cm</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -721,11 +765,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>numFactura</rd:DefaultName>
-        <Top>1.55787cm</Top>
-        <Left>16.08312cm</Left>
+        <Top>1.99003cm</Top>
+        <Left>16.09515cm</Left>
         <Height>0.6cm</Height>
         <Width>3.42918cm</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -758,10 +802,10 @@
         </Paragraphs>
         <rd:DefaultName>fecha</rd:DefaultName>
         <Top>10.7133cm</Top>
-        <Left>3.519cm</Left>
+        <Left>4.18619cm</Left>
         <Height>0.6cm</Height>
         <Width>4.95395cm</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -789,11 +833,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Trabajador</rd:DefaultName>
-        <Top>5.70329cm</Top>
-        <Left>15.12805cm</Left>
+        <Top>5.58892cm</Top>
+        <Left>14.67826cm</Left>
         <Height>0.6cm</Height>
         <Width>4.29045cm</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -824,10 +868,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
         <Top>10.7133cm</Top>
-        <Left>2.29782cm</Left>
+        <Left>2.96501cm</Left>
         <Height>0.6cm</Height>
         <Width>1.1859cm</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -858,10 +902,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox30</rd:DefaultName>
         <Top>5.58892cm</Top>
-        <Left>12.38992cm</Left>
+        <Left>11.90485cm</Left>
         <Height>0.6cm</Height>
         <Width>2.70285cm</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1016,11 +1060,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Top>12.6792cm</Top>
-        <Left>2.96501cm</Left>
-        <Height>3.69535cm</Height>
-        <Width>15.62124cm</Width>
-        <ZIndex>11</ZIndex>
+        <Top>16.72873cm</Top>
+        <Left>1.98602cm</Left>
+        <Height>4.21429cm</Height>
+        <Width>17.53828cm</Width>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1053,7 +1097,7 @@
         <Left>15.12806cm</Left>
         <Height>0.6cm</Height>
         <Width>3.80538cm</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1087,7 +1131,7 @@
         <Left>12.52223cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1121,7 +1165,7 @@
         <Left>12.52222cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1154,7 +1198,7 @@
         <Left>15.16333cm</Left>
         <Height>0.6cm</Height>
         <Width>3.80538cm</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1196,7 +1240,7 @@
         <Left>12.48694cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1229,7 +1273,7 @@
         <Left>15.12805cm</Left>
         <Height>0.6cm</Height>
         <Width>2.73971cm</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1264,7 +1308,7 @@
         <Left>17.9736cm</Left>
         <Height>0.6cm</Height>
         <Width>0.95984cm</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1279,11 +1323,11 @@
         <Source>Embedded</Source>
         <Value>logoconceptos</Value>
         <Sizing>FitProportional</Sizing>
-        <Top>0.81705cm</Top>
-        <Left>2.03323cm</Left>
+        <Top>1.31977cm</Top>
+        <Left>1.98605cm</Left>
         <Height>1.34082cm</Height>
         <Width>4.85127cm</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>18</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1324,11 +1368,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox17</rd:DefaultName>
-        <Top>2.59003cm</Top>
+        <Top>3.02219cm</Top>
         <Left>7.96209cm</Left>
         <Height>1.22618cm</Height>
         <Width>6.6368cm</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>19</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1360,11 +1404,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox16</rd:DefaultName>
-        <Top>0.88761cm</Top>
+        <Top>1.31977cm</Top>
         <Left>7.59794cm</Left>
         <Height>1.70242cm</Height>
         <Width>7.49483cm</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>20</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1376,30 +1420,30 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>16.58621cm</Height>
+    <Height>21.11941cm</Height>
     <Style>
       <Border>
         <Color>#213a5d</Color>
-        <Style>Solid</Style>
+        <Style>None</Style>
       </Border>
       <TopBorder>
+        <Style>Solid</Style>
         <Width>20pt</Width>
       </TopBorder>
-      <BottomBorder>
-        <Style>None</Style>
-      </BottomBorder>
       <LeftBorder>
+        <Style>Solid</Style>
         <Width>20pt</Width>
       </LeftBorder>
       <RightBorder>
+        <Style>Solid</Style>
         <Width>20pt</Width>
       </RightBorder>
     </Style>
   </Body>
-  <Width>21.42434cm</Width>
+  <Width>20.67035cm</Width>
   <Page>
     <PageFooter>
-      <Height>2.06375cm</Height>
+      <Height>1.95792cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1408,9 +1452,9 @@
           <Value>logoconceptos</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.10583cm</Top>
-          <Left>8.86905cm</Left>
-          <Height>1.5434cm</Height>
-          <Width>5.41682cm</Width>
+          <Left>9.22888cm</Left>
+          <Height>1.33173cm</Height>
+          <Width>4.53447cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1457,11 +1501,18 @@
       </ConnectionProperties>
       <rd:DataSourceID>b6fabdc5-6034-4b99-a557-ac52966bd55b</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="DataSet1">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>262a29c5-0913-47a5-827c-ccde0b11aaed</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>ProcDataSet</DataSourceName>
+        <DataSourceName>DataSet1</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -1523,7 +1574,7 @@
         </Field>
         <Field Name="cantidad">
           <DataField>cantidad</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="numFactura">
           <DataField>numFactura</DataField>
@@ -1561,10 +1612,14 @@
           <DataField>NoCotizacion</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="unidadMedida">
+          <DataField>unidadMedida</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>ProcedimientoDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\ProcedimientoDataSet.xsd</rd:SchemaPath>
+        <rd:DataSetName>DataSet1</rd:DataSetName>
+        <rd:SchemaPath>E:\Proycto\FACTURA_JHONNYv2\WebFacturaMvc\DataSet12.xsd</rd:SchemaPath>
         <rd:TableName>sp_reporte_venta</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

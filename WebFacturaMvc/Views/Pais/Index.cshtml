@@ -8,43 +8,50 @@
 <center>
     @using (Html.BeginForm())
     {
-    <div class="row col-md-12">
-        <div class="col-md-4">
+        <div class="row col-md-12">
+            <div class="col-md-4">
 
-        </div>
-        <div class="col-md-4">
-            @Html.TextBox("txtParametro", "", new { @class = "form-control" })
-        </div>
-        <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("txtParametro", "", new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
 
+            </div>
         </div>
-    </div>
         <input type="submit" value="Buscar" />
     }
 </center>
 
-    <center>
-        <br />
-        <a class="btn btn-success" href="~/Pais/AgregarPais">Agregar</a>
-        <table class="table">
-            <thead>
-                <tr class="bg-primary">
-                    <th>ID País</th>
-                    <th>Nombre</th>
+<center>
+    <br />
+    <a class="btn btn-success" href="~/Pais/AgregarPais">Agregar</a>
+    <table id="table_id" class="display responsive nowrap">
+        <thead>
+            <tr class="bg-primary">
+                <th>ID País</th>
+                <th>Nombre</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var objPais in Model)
+            {
+                <tr>
+                    <td>@objPais.IdPais</td>
+                    <td>@objPais.NombrePais</td>
+                    <td><a class="btn btn-info" href="~/Estado/Index?idPais=@objPais.IdPais"><span class="glyphicon glyphicon-eye-open">|Estados</span></a>
+                    <a class="btn btn-warning" href="~/Pais/EditarPais?idPais=@objPais.IdPais"><span class="glyphicon glyphicon-pencil">|Editar</span></a>
+                    <a class="btn btn-danger" href="~/Pais/EliminarPais?idPais=@objPais.IdPais"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var objPais in Model)
-                {
-                    <tr>
-                        <td>@objPais.IdPais</td>
-                        <td>@objPais.NombrePais</td>
-                        <td><a class="btn btn-info" href="~/Estado/Index?idPais=@objPais.IdPais"><span class="glyphicon glyphicon-eye-open">|Estados</span></a></td>
-                        <td><a class="btn btn-warning" href="~/Pais/EditarPais?idPais=@objPais.IdPais"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
-                        <td><a class="btn btn-danger" href="~/Pais/EliminarPais?idPais=@objPais.IdPais"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-    </center>
+            }
+        </tbody>
+    </table>
+</center>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

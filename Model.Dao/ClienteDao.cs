@@ -19,12 +19,22 @@ namespace Model.Dao
         }
         public void create1(Cliente objCliente)
         {
-            string create = "insert into cliente(nombre,apellido,direccion,telefono,email) values('" + objCliente.Nombre + "','" + objCliente.Apellido + "','" + objCliente.Direccion + "','" + objCliente.Telefono + "','" + objCliente.Email + "')";
+            //string create = "insert into cliente(nombre,apellido,direccion,telefono,email,cuenta) values('" + objCliente.Nombre + "','" + objCliente.Apellido + "','" + objCliente.Direccion + "','" + objCliente.Telefono + "','" + objCliente.Email + "')";
             try
             {
-                comando = new SqlCommand(create, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
-                comando.ExecuteNonQuery();
+                SqlCommand cmd = new SqlCommand("sp_agregarCliente", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;                
+                cmd.Parameters.AddWithValue("@nombre", objCliente.Nombre);
+                cmd.Parameters.AddWithValue("@apellido", objCliente.Apellido);
+                cmd.Parameters.AddWithValue("@direccion", objCliente.Direccion);
+                cmd.Parameters.AddWithValue("@telefono", objCliente.Telefono);
+                cmd.Parameters.AddWithValue("@email", objCliente.Email); 
+                cmd.Parameters.AddWithValue("@cuenta", objCliente.Cuenta);          
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
+                cmd.ExecuteNonQuery();
 
             }
             catch (Exception e)
@@ -44,7 +54,10 @@ namespace Model.Dao
             try
             {
                 //comando = new SqlCommand(create, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
 
             }
@@ -66,7 +79,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(delete, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception)
@@ -84,13 +100,19 @@ namespace Model.Dao
         public bool find(Cliente objCliente)
         {
             bool hayRegistros;
-            string find = "select*from cliente where idCliente='" + objCliente.IdCliente + "'";
+            //string find = "select*from cliente where idCliente='" + objCliente.IdCliente + "'";
             try
             {
-                comando = new SqlCommand(find, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                SqlCommand cmd = new SqlCommand("sp_ConsultaCliente", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idCliente", objCliente.IdCliente);
+
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 //bool hayRegistros;
-                SqlDataReader reader = comando.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
                 {
@@ -99,6 +121,8 @@ namespace Model.Dao
                     objCliente.Direccion = reader[3].ToString();
                     objCliente.Telefono = reader[4].ToString();
                     objCliente.Email = reader[5].ToString();
+                    objCliente.Cuenta = Convert.ToInt32(reader[6].ToString());
+                    objCliente.NombreCuenta = reader[7].ToString();
                     objCliente.Estado = 99;
                 }
                 else
@@ -126,7 +150,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(findAll, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
@@ -158,11 +185,14 @@ namespace Model.Dao
 
         public void update(Cliente objCliente)
         {
-            string update = "update cliente set nombre='" + objCliente.Nombre + "',apellido='" + objCliente.Apellido + "',direccion='" + objCliente.Direccion + "',telefono='" + objCliente.Telefono + "',email='" + objCliente.Email + "' where idCliente='" + objCliente.IdCliente + "'";
+            string update = "update cliente set nombre='" + objCliente.Nombre + "',apellido='" + objCliente.Apellido + "',direccion='" + objCliente.Direccion + "',telefono='" + objCliente.Telefono + "',email='" + objCliente.Email + "',cuenta='" + objCliente.Cuenta + "' where idCliente='" + objCliente.IdCliente + "'";
             try
             {
                 comando = new SqlCommand(update, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -184,7 +214,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(find, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 //bool hayRegistros;
                 SqlDataReader reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
@@ -231,7 +264,10 @@ namespace Model.Dao
                 cmd.Parameters.AddWithValue("@apellido", objCLiente.Apellido);
                 cmd.Parameters.AddWithValue("@email", objCLiente.Email);
 
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

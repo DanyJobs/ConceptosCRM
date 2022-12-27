@@ -35,27 +35,37 @@
 }
 <center><a class="btn btn-success" href="~/Agenda/AgregarEvento">Agregar evento</a></center>
 <h4 style="text-align:center; font-family:Arial; ">Pendientes de hoy:</h4>
-<table class="table">
+<table id="table_id" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th>ID Evento</th>
             <th>Titulo</th>
             <th>Fecha</th>
             <th>Hora</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var objAgenda in Model)
         {
-        <tr>
-            <td>@objAgenda.IdEvento</td>
-            <td>@objAgenda.Titulo</td>
-            <td>@objAgenda.Fecha.ToString("dd/MM/yyyy")</td>
-            <td>@objAgenda.Hora</td>
-            <td><a class="btn btn-info" href="~/Agenda/VerDetalles?idEvento=@objAgenda.IdEvento"><span class="glyphicon glyphicon-eye-open">|Ver</span></a></td>
-            <td><a class="btn btn-warning" href="~/Agenda/EditarEvento?idEvento=@objAgenda.IdEvento"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
-            <td><a class="btn btn-danger" href="~/Agenda/EliminarEvento?idEvento=@objAgenda.IdEvento"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
-        </tr>
+            <tr>
+                <td>@objAgenda.IdEvento</td>
+                <td>@objAgenda.Titulo</td>
+                <td>@objAgenda.Fecha.ToString("dd/MM/yyyy")</td>
+                <td>@objAgenda.Hora</td>
+                <td><a class="btn btn-info" href="~/Agenda/VerDetalles?idEvento=@objAgenda.IdEvento"><span class="glyphicon glyphicon-eye-open">|Ver</span></a></td>
+                <td><a class="btn btn-warning" href="~/Agenda/EditarEvento?idEvento=@objAgenda.IdEvento"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
+                <td><a class="btn btn-danger" href="~/Agenda/EliminarEvento?idEvento=@objAgenda.IdEvento"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
+            </tr>
         }
     </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

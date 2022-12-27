@@ -10,9 +10,9 @@ namespace Model.Neg
     {
         VentaDao objVentaDao = new VentaDao();
         //Para la parte de mostrar las cotizaciones y editar
-        public List<Cotizacion> buscar()
+        public List<Cotizacion> buscar(string Usuario)
         {
-            return objVentaDao.buscar();
+            return objVentaDao.buscar(Usuario);
         }
         //Para filtrar por año y mes
         public List<Cotizacion> buscar(string Month, string Year)
@@ -76,7 +76,29 @@ namespace Model.Neg
         {
             objVentaDao.editar(objVenta);
         }
-
-
+        public string updateVentaDetalle(VentaDetalle objVenta)
+        {
+            return objVentaDao.updateVentaDetalle(objVenta);
         }
+        public List<VentaDetalle> VerVentaDetalle(int idCotizacion,int IdVenta,string vendedor)
+        {
+            List<VentaDetalle> listVentas = objVentaDao.VerVentaDetalle(idCotizacion, IdVenta,vendedor);
+            return listVentas;
+        }
+        public List<VentaDetalle> VerVentaDetalleInicio(int idCotizacion, string vendedor)
+        {
+            List<VentaDetalle> listVentas = objVentaDao.VerVentaDetalleInicio(idCotizacion, vendedor);
+            return listVentas;
+        }
+
+        public List<VentaDetalle> VerVentaDetalleProveedor(int IdVenta)
+        {
+            List<VentaDetalle> listVentas = objVentaDao.VerVentaDetalleProveedor(IdVenta);
+            return listVentas;
+        }
+        public string eliminadosVenta(VentaItemEliminado objVenta)
+        {
+            return objVentaDao.eliminadosVentaDetalle(objVenta);
+        }
+    }
 }

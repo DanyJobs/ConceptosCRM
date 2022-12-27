@@ -9,9 +9,13 @@
 
         private double subTotal;
         private double descuento;
-        private int cantidad;
+        private decimal cantidad;
         private int estado;
         public string notas { get; set; }     
+        public string nombreProducto { get; set; }     
+        public string unidadMedida { get; set; }     
+        public string marca { get; set; }   
+      
         public long NumFacura
         {
             get
@@ -75,7 +79,7 @@
             }
         }
 
-        public int Cantidad
+        public decimal Cantidad
         {
             get
             {

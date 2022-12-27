@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
+
 namespace Model.Dao
 {
     public class CotizacionDao
@@ -24,7 +25,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
-               objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
 
                 //RECUPERAR EL CODIGO AUTOGENERADO
                 reader = comando.ExecuteReader();
@@ -52,7 +56,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(update, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -71,7 +78,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(delete, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception)
@@ -92,7 +102,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(find, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
@@ -121,15 +134,19 @@ namespace Model.Dao
             }
             return hayRegistros;
         }
-        public List<Cotizacion> findAll()
+        public List<Cotizacion> findAll(string Usuario)
         {
             List<Cotizacion> listaVentas = new List<Cotizacion>();
 
             try
             {
                 comando = new SqlCommand("SP_Buscar_Cotizacion", objConexinDB.getCon());
+                comando.Parameters.AddWithValue("@idUsuario", Usuario);
                 comando.CommandType = CommandType.StoredProcedure;
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
@@ -159,7 +176,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(find, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
@@ -190,7 +210,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(find, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
@@ -220,7 +243,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(create, objConexinDB.getCon());
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -256,7 +282,10 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtCotizacion = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -271,6 +300,7 @@ namespace Model.Dao
                 c.IdVenta = int.Parse(dtCotizacion.Rows[i]["idVenta"].ToString());
                 c.Total = Convert.ToDouble(dtCotizacion.Rows[i]["total"].ToString());
                 c.Cliente = dtCotizacion.Rows[i]["Cliente"].ToString();
+                c.IdVendedor = dtCotizacion.Rows[i]["UserName"].ToString();
                 c.FechaCotizacion = Convert.ToDateTime(dtCotizacion.Rows[i]["fecha"].ToString());
                 c.Iva = Convert.ToDouble(dtCotizacion.Rows[i]["IVA"].ToString());
                 listaVentas.Add(c);
@@ -298,7 +328,10 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtCotizacion = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -313,6 +346,7 @@ namespace Model.Dao
                 c.IdVenta = int.Parse(dtCotizacion.Rows[i]["idVenta"].ToString());
                 c.Total = Convert.ToDouble(dtCotizacion.Rows[i]["total"].ToString());
                 c.Cliente = dtCotizacion.Rows[i]["Cliente"].ToString();
+                c.IdVendedor = dtCotizacion.Rows[i]["UserName"].ToString();
                 c.FechaCotizacion = Convert.ToDateTime(dtCotizacion.Rows[i]["fecha"].ToString());
                 c.Iva = Convert.ToDouble(dtCotizacion.Rows[i]["IVA"].ToString());                
                 listaVentas.Add(c);
@@ -339,7 +373,10 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtCotizacion = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -391,7 +428,10 @@ namespace Model.Dao
             //Se crea el adaptador de datos
             SqlDataAdapter adapter = new SqlDataAdapter();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
             //Se ejecuta el comando
             command.ExecuteNonQuery();
             //Se cierra la conexión
@@ -414,7 +454,10 @@ namespace Model.Dao
             //Se crea el adaptador de datos
             SqlDataAdapter adapter = new SqlDataAdapter();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
             //Se ejecuta el comando
             command.ExecuteNonQuery();
             //Se cierra la conexión
@@ -433,7 +476,10 @@ namespace Model.Dao
                 cmd.Parameters.AddWithValue("@Month", Month);
                 cmd.Parameters.AddWithValue("@Year", Year);
                 cmd.Parameters.AddWithValue("@Estatus", Estatus);
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -467,7 +513,10 @@ namespace Model.Dao
                 //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
                 SqlCommand cmd = new SqlCommand("sp_consultaCotizacionEstatus", objConexinDB.getCon());
                 cmd.CommandType = CommandType.StoredProcedure;
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -502,7 +551,10 @@ namespace Model.Dao
                 SqlCommand cmd = new SqlCommand("consultaEmailMarketing", objConexinDB.getCon());
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@idUsuario", id);
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -538,7 +590,10 @@ namespace Model.Dao
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@idVenta", Convert.ToInt32(idVenta));
                 cmd.Parameters.AddWithValue("@idVendedor", idVendedor);
-                objConexinDB.getCon().Open();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -595,7 +650,16 @@ namespace Model.Dao
                     objRFQ.empresaNombre = "N/A";
                 }
                 objRFQ.marca = reader[9].ToString();
-                objListaRFQItem.Add(objRFQ);
+                if (!reader.IsDBNull(10))
+                {
+                    objRFQ.unidadDeMedida = reader[10].ToString();
+                }
+                else
+                {
+                    objRFQ.unidadDeMedida = "N/A";
+                }
+
+                    objListaRFQItem.Add(objRFQ);
                 }
 
             //}
@@ -620,8 +684,11 @@ namespace Model.Dao
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@opcion", "R");
             cmd.Parameters.AddWithValue("@idRfq",int.Parse(id));
-            objConexinDB.getCon().Open();
-            reader = cmd.ExecuteReader();
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
+                reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                 objRFQ.idRFQ = int.Parse(reader[0].ToString());
@@ -651,8 +718,11 @@ namespace Model.Dao
                 //string findAll = "select*from cliente where nombre='" + objCLiente.Nombre + "' or dni='" + objCLiente.Dni + "' or idCliente=" + objCLiente.IdCliente + " or apPaterno='" + objCLiente.Appaterno + "'";
                 SqlCommand cmd = new SqlCommand("RFQConsultas", objConexinDB.getCon());
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@opcion", "T");            
-                objConexinDB.getCon().Open();
+                cmd.Parameters.AddWithValue("@opcion", "T");
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -685,8 +755,11 @@ namespace Model.Dao
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@opcion", "R");
                 cmd.Parameters.AddWithValue("@estatus", rfq.estatus);
-                cmd.Parameters.AddWithValue("@idRFQ", Convert.ToInt32(rfq.idRFQ)); 
-                objConexinDB.getCon().Open();
+                cmd.Parameters.AddWithValue("@idRFQ", Convert.ToInt32(rfq.idRFQ));
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 mensaje = "Actualizado Correctamente";
             }
@@ -717,8 +790,11 @@ namespace Model.Dao
                 cmd.Parameters.AddWithValue("@precio", rfqItem.precio);
                 cmd.Parameters.AddWithValue("@cantidad", rfqItem.cantidad);
                 cmd.Parameters.AddWithValue("@notas", rfqItem.notas);
-                cmd.Parameters.AddWithValue("@fecha", rfqItem.fecha);        
-                objConexinDB.getCon().Open();
+                cmd.Parameters.AddWithValue("@fecha", rfqItem.fecha);
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 mensaje = "Actualizado Correctamente";
             }
@@ -743,8 +819,11 @@ namespace Model.Dao
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@opcion", "E");
                 cmd.Parameters.AddWithValue("@idRFQ", rfqItem.idRfq);
-                cmd.Parameters.AddWithValue("@idRFQItem", rfqItem.idRFQItem);                
-                objConexinDB.getCon().Open();
+                cmd.Parameters.AddWithValue("@idRFQItem", rfqItem.idRFQItem);
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 mensaje = "Actualizado Correctamente";
             }

@@ -17,9 +17,7 @@
         <EntityTypeShape EntityType="crmconceptoseModel.tipoEmpleado" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="crmconceptoseModel.FK_factura_modoPago" ManuallyRouted="false" />
         <EntityTypeShape EntityType="crmconceptoseModel.compra" Width="1.5" PointX="16.125" PointY="9.875" />
-        <EntityTypeShape EntityType="crmconceptoseModel.compraDetalle" Width="1.5" PointX="14" PointY="11.625" />
         <EntityTypeShape EntityType="crmconceptoseModel.existencia" Width="1.5" PointX="16" PointY="13.875" />
-        <AssociationConnector Association="crmconceptoseModel.fkCOMPRA_DETALLEidCompra" />
         <EntityTypeShape EntityType="crmconceptoseModel.AspNetUsers" Width="1.5" PointX="3" PointY="3.75" />
         <AssociationConnector Association="crmconceptoseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="crmconceptoseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
@@ -31,7 +29,6 @@
         <AssociationConnector Association="crmconceptoseModel.FK_venta_cliente" />
         <EntityTypeShape EntityType="crmconceptoseModel.producto" Width="1.5" PointX="13.25" PointY="14.625" />
         <AssociationConnector Association="crmconceptoseModel.FK__producto__idCate__164452B1" />
-        <AssociationConnector Association="crmconceptoseModel.fkProductoCompra" />
         <AssociationConnector Association="crmconceptoseModel.fkExistenciaidProducto" />
         <EntityTypeShape EntityType="crmconceptoseModel.Moneda" Width="1.5" PointX="6" PointY="9.375" />
         <EntityTypeShape EntityType="crmconceptoseModel.texto" Width="1.5" PointX="8.375" PointY="0.75" />
@@ -63,11 +60,27 @@
         <AssociationConnector Association="crmconceptoseModel.FK_envio_venta" />
         <AssociationConnector Association="crmconceptoseModel.FK_EnvioPaqueteria" />
         <EntityTypeShape EntityType="crmconceptoseModel.agenda" Width="1.5" PointX="5.25" PointY="12.25" />
-        <EntityTypeShape EntityType="crmconceptoseModel.ventaDetalle" Width="1.5" PointX="20.75" PointY="8" />
         <AssociationConnector Association="crmconceptoseModel.FK_agenda_AspNetUsers" />
+        <EntityTypeShape EntityType="crmconceptoseModel.cuenta" Width="1.5" PointX="10.375" PointY="7" />
+        <EntityTypeShape EntityType="crmconceptoseModel.RFQ" Width="1.5" PointX="18.5" PointY="13.625" />
+        <EntityTypeShape EntityType="crmconceptoseModel.RFQItem" Width="1.5" PointX="20.75" PointY="12.125" />
+        <AssociationConnector Association="crmconceptoseModel.fk_idVendedorRFQ" />
+        <AssociationConnector Association="crmconceptoseModel.FK_VentaCotizacion" />
+        <AssociationConnector Association="crmconceptoseModel.fk_IdProductoRFQItem" />
+        <AssociationConnector Association="crmconceptoseModel.fk_IdProveedorRFQItem" />
+        <AssociationConnector Association="crmconceptoseModel.fk_RFQItemRFQ" />
+        <EntityTypeShape EntityType="crmconceptoseModel.compraDetalle" Width="1.5" PointX="23.375" PointY="13" />
+        <EntityTypeShape EntityType="crmconceptoseModel.ventaDetalle" Width="1.5" PointX="20.75" PointY="8.125" />
+        <AssociationConnector Association="crmconceptoseModel.fkCOMPRA_DETALLEidCompra" />
+        <AssociationConnector Association="crmconceptoseModel.fkProductoCompra" />
         <AssociationConnector Association="crmconceptoseModel.fkdetalleVentaidProducto" />
         <AssociationConnector Association="crmconceptoseModel.fkdetalleVentaidProveedor" />
         <AssociationConnector Association="crmconceptoseModel.fkdetalleVentaidVenta" />
+        <EntityTypeShape EntityType="crmconceptoseModel.oportunidad" Width="1.5" PointX="16.125" PointY="5.5" />
+        <AssociationConnector Association="crmconceptoseModel.fkOportunidadUsuario" />
+        <AssociationConnector Association="crmconceptoseModel.fkCuentaCliente" />
+        <AssociationConnector Association="crmconceptoseModel.fkOportunidadCotizacion" />
+        <EntityTypeShape EntityType="crmconceptoseModel.PlantillaCorreo" Width="1.5" PointX="7.375" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

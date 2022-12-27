@@ -5,13 +5,13 @@
 
 <h2 class="text-center text-success">Listado de Categorias</h2>
 <div class="well well-sm"><a class="btn btn-primary" href="~/Categoria/Create">Nuevo</a></div>
-<table class="table table-hover table-striped">
+<table id="table_id" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th>Código</th>
             <th>Nombre</th>
-            <th>Descripcion</th>            
-            <th colspan="3">Operaciones</th>
+            <th>Descripcion</th>
+            <th >Operaciones</th>        
         </tr>
     </thead>
     <tbody>
@@ -21,14 +21,20 @@
                 <td>@objCategoria.IdCategoria</td>
                 <td>@objCategoria.Nombre</td>
                 <td>@objCategoria.Descripcion</td>
-                <td><a class="btn btn-success" href="~/Categoria/Find/@objCategoria.IdCategoria"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-                <td><a class="btn btn-info" href="~/Categoria/Update/@objCategoria.IdCategoria"><span class="fa fa-edit"></span></a></td>
-                <td><a class="btn btn-danger" href="~/Categoria/Delete/@objCategoria.IdCategoria"><span class="fa fa-book"></span></a></td>
+                <td><a class="btn btn-success" href="~/Categoria/Find/@objCategoria.IdCategoria"><span class="glyphicon glyphicon-eye-open"></span></a>
+                 <a class="btn btn-info" href="~/Categoria/Update/@objCategoria.IdCategoria"><span class="fa fa-edit"></span></a>
+                 <a class="btn btn-danger" href="~/Categoria/Delete/@objCategoria.IdCategoria"><span class="fa fa-book"></span></a></td>
             </tr>
         }
     </tbody>
-
 </table>
 <div class="text-primary text-danger text-center">
     @ViewBag.MensajeError;
 </div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Model.Entity;
+using Model.Neg;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -57,6 +59,36 @@ namespace WebFacturaMvc.Controllers
             }
 
             return View(marca);
+        }
+        public ActionResult CreateProducto()
+        {
+            return View();
+        }
+
+        // POST: Marca/Create
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
+        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateProducto([Bind(Include = "idMarca,descripcion")] marca marca)
+        {
+            if (ModelState.IsValid)
+            {
+                db.marca.Add(marca);
+                db.SaveChanges();
+                return RedirectToAction("ObtenerMarca");
+            }
+            CategoriaNeg objCategoriaNeg = new CategoriaNeg();
+            List<Categoria> data = objCategoriaNeg.findAll();
+            SelectList lista = new SelectList(data, "idCategoria", "nombre");
+            ViewBag.ListaCategorias = lista;
+
+            MarcaNeg objMarcaNeg = new MarcaNeg();
+            List<Marca> dataMarca = objMarcaNeg.findAll();
+            SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion");
+            ViewBag.ListaMarcas = ListaMarca;
+
+            return RedirectToAction("ObtenerMarca");
         }
 
         // GET: Marca/Edit/5
@@ -123,6 +155,12 @@ namespace WebFacturaMvc.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpGet]
+        public ActionResult ObtenerMarca()
+        {
+            return View(db.marca.ToList());
         }
     }
 }

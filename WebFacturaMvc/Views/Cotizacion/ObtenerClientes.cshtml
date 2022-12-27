@@ -6,7 +6,7 @@
 @model List<Cliente>
 @{
     ViewBag.Title = "BuscarPorCodigo";
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutNulo.cshtml";
 }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
@@ -15,7 +15,7 @@
             var Cliente = {};
             var n, a, m;
             n = Cliente.Codigo = $(this).children().eq('0').text();
-            a = Cliente.DatosPersonales = $(this).children().eq('1').text() +" " +$(this).children().eq('2').text();
+            a = Cliente.DatosPersonales = $(this).children().eq('1').text() + " " + $(this).children().eq('2').text();
             m = Cliente.Identificacion = $(this).children().eq('5').text();
             console.info(a, n, m);
             window.opener.obtenerCliente(Cliente);
@@ -65,8 +65,7 @@
     </div>
 </div>
 
-<table class="table table-striped" id="tbcliente">
-
+<table id="tbcliente" class="display responsive nowrap">
     <thead>
         <tr>
             <th>Codigo</th>
@@ -80,16 +79,23 @@
     <tbody>
         @foreach (var objCliente in Model)
         {
-        <tr>
-            <td>@objCliente.IdCliente</td>
-            <td>@objCliente.Nombre</td>
-            <td>@objCliente.Apellido</td>
-            <td>@objCliente.Direccion</td>
-            <td>@objCliente.Telefono</td>
-            <td>@objCliente.Email</td>
-        </tr>
+            <tr>
+                <td>@objCliente.IdCliente</td>
+                <td>@objCliente.Nombre</td>
+                <td>@objCliente.Apellido</td>
+                <td>@objCliente.Direccion</td>
+                <td>@objCliente.Telefono</td>
+                <td>@objCliente.Email</td>
+            </tr>
         }
     </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbcliente').DataTable();
+        });
+    </script>
+}
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>

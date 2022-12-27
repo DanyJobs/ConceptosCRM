@@ -36,6 +36,10 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtPaises = new DataTable();
             //Se abre la conexión
+            if (command.Connection.State == ConnectionState.Open)
+            {
+                command.Connection.Close();
+            }
             objConexinDB.getCon().Open();
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;

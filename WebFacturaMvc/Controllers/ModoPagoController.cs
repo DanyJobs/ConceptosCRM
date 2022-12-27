@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Model.Neg;
 using Model.Entity;
+using Lenguaje;
 
 namespace WebFacturaMvc.Controllers
 {
@@ -45,7 +46,7 @@ namespace WebFacturaMvc.Controllers
             switch (objModoPago.Estado)
             {
                 case 1000://campo codigo vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_error1;
+                    ViewBag.MensajeError = Recurso.ProductoM_error1;
                     break;
                 //case 10://campo codigo vacio
                 //    ViewBag.MensajeError = "Ingrese Código del ModoPago";
@@ -54,29 +55,29 @@ namespace WebFacturaMvc.Controllers
                 //    ViewBag.MensajeError = "Ingrese solo numeros";
                 //    break;
                 //case 1://error campo cadigo
-                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_codigoError;
+                    ViewBag.MensajeError = Recurso.ProductoM_codigoError;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_ingrese;
+                    ViewBag.MensajeError = Recurso.ModoPago_ingrese;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_nombreError;
+                    ViewBag.MensajeError = Recurso.ProductoM_nombreError;
                     break;
 
                 case 30://campo descripcion vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detalles;
+                    ViewBag.MensajeError = Recurso.ModoPago_detalles;
                     break;
 
                 case 3://error de Apellido Paterno
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detallesError;
+                    ViewBag.MensajeError = Recurso.ModoPago_detallesError;
                     break;
 
                 case 8://error de duplicidad
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_m1 + objModoPago.NumPago + Lenguaje.Recurso.ModoPago_m2;
+                    ViewBag.MensajeError = Recurso.ModoPago_m1 + objModoPago.NumPago + Recurso.ModoPago_m2;
                     break;
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = Lenguaje.Recurso.ModoPago_m1 + objModoPago.Nombre + Lenguaje.Recurso.ModoPago_m3;
+                    ViewBag.MensajeExito = Recurso.ModoPago_m1 + objModoPago.Nombre + Recurso.ModoPago_m3;
                     break;
 
             }
@@ -84,7 +85,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicioRegistrar()
         {
-            ViewBag.MensajeInicio = Lenguaje.Recurso.ModoPago_mensajeInicio;
+            ViewBag.MensajeInicio = Recurso.ModoPago_mensajeInicio;
         }
 
         public ActionResult Update(int id)
@@ -110,32 +111,32 @@ namespace WebFacturaMvc.Controllers
             switch (objModoPago.Estado)
             {
                 case 1000://campo codigo vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_error2;
+                    ViewBag.MensajeError = Recurso.ProductoM_error2;
                     break;
                 case 10://campo codigo vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_codigo;
+                    ViewBag.MensajeError = Recurso.ModoPago_codigo;
                     break;
                 case 1://error campo cadigo
-                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_codigoError;
+                    ViewBag.MensajeError = Recurso.ProductoM_codigoError;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_ingrese;
+                    ViewBag.MensajeError = Recurso.ModoPago_ingrese;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = Lenguaje.Recurso.ProductoM_nombreError;
+                    ViewBag.MensajeError = Recurso.ProductoM_nombreError;
                     break;
 
                 case 30://campo descripcion vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detalles;
+                    ViewBag.MensajeError = Recurso.ModoPago_detalles;
                     break;
 
                 case 3://error de precio Unitario
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_detallesError;
+                    ViewBag.MensajeError = Recurso.ModoPago_detallesError;
                     break;
 
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = Lenguaje.Recurso.ModoPago_m4 + objModoPago.NumPago + Lenguaje.Recurso.ModoPago_m5;
+                    ViewBag.MensajeExito = Recurso.ModoPago_m4 + objModoPago.NumPago + Recurso.ModoPago_m5;
                     break;
 
             }
@@ -143,7 +144,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicioActualizar()
         {
-            ViewBag.MensajeInicio = Lenguaje.Recurso.ModoPago_mensajeInicio;
+            ViewBag.MensajeInicio = Recurso.ModoPago_mensajeInicio;
         }
 
         [HttpGet]
@@ -172,20 +173,20 @@ namespace WebFacturaMvc.Controllers
             switch (objModoPago.Estado)
             {
                 case 1000://campo codigo vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_eliminar;
+                    ViewBag.MensajeError = Recurso.ModoPago_eliminar;
                     break;
                 case 1: //ERROR DE EXISTENCIA
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_m1 + objModoPago.NumPago + Lenguaje.Recurso.ProductoM_mensajeE1;
+                    ViewBag.MensajeError = Recurso.ModoPago_m1 + objModoPago.NumPago + Recurso.ProductoM_mensajeE1;
                     break;
 
                 case 33://CLIENTE NO EXISTE
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_m1 + objModoPago.Nombre + Lenguaje.Recurso.ProductoM_mensajeE2;
+                    ViewBag.MensajeError = Recurso.ModoPago_m1 + objModoPago.Nombre + Recurso.ProductoM_mensajeE2;
                     break;
                 case 34:
-                    ViewBag.MensajeError = Lenguaje.Recurso.ModoPago_eliminarMensaje + objModoPago.Nombre + Lenguaje.Recurso.ModoPago_eliminarMensaje2;
+                    ViewBag.MensajeError = Recurso.ModoPago_eliminarMensaje + objModoPago.Nombre + Recurso.ModoPago_eliminarMensaje2;
                     break;
                 case 99: //EXITO
-                    ViewBag.MensajeExito = Lenguaje.Recurso.ModoPago_m1 + objModoPago.Nombre + Lenguaje.Recurso.ProductoM_mensajeE5;
+                    ViewBag.MensajeExito = Recurso.ModoPago_m1 + objModoPago.Nombre + Recurso.ProductoM_mensajeE5;
                     break;
 
                 default:
@@ -195,7 +196,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicialEliminar()
         {
-            ViewBag.MensajeInicialEliminar = Lenguaje.Recurso.MensajeE_inicial;
+            ViewBag.MensajeInicialEliminar = Recurso.MensajeE_inicial;
         }
         public ActionResult Find(int id)
         {

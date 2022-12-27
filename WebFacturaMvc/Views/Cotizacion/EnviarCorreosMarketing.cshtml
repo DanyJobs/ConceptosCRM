@@ -180,7 +180,7 @@
 <br />
 <br />
 
-<table class="table" id="table">
+<table id="tbDetalleCotizacion" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th><input type="checkbox" id="checkTodos" value="checkTodos"></th>
@@ -205,7 +205,7 @@
                 <td>
                     <a href="~/EmailMarketing/Edit?id=@objEmailMarketing.idMarketing" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>Edit</a>
                     <a href="~/EmailMarketing/Details?id=@objEmailMarketing.idMarketing" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span>Details</a>
-                    <a href="~/EmailMarketing/Delete?id=@objEmailMarketing.idMarketing" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span>Delete</a>                  
+                    <a href="~/EmailMarketing/Delete?id=@objEmailMarketing.idMarketing" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span>Delete</a>
                 </td>
             </tr>
         }
@@ -229,6 +229,12 @@
         </div>
     </div>
 </div>
-
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbDetalleCotizacion').DataTable();
+        });
+    </script>
+}
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>

@@ -1,0 +1,98 @@
+﻿@using Model.Entity
+@model List<Oportunidad>
+@{
+    ViewBag.Title = "Oportunidades";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table id="table_id" class="display responsive nowrap">
+        <tr>
+            <th>
+              Id Oportunidad
+            </th>
+            <th>
+                cotizacion              
+            </th>
+            <th>
+                Usuario               
+            </th>
+            <th>
+              notas
+            </th>
+            <th>
+                acciones
+            </th>
+            <th>
+               venta
+            </th>
+            <th>
+               costo
+            </th>
+            <th>
+              porcentaje
+            </th>
+            <th>
+               estatus
+            </th>
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idOportunidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cotizacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idUsuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.notas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.acciones)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.venta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.costo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.porcentaje)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estatus)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.idOportunidad }) |
+            @Html.ActionLink("Details", "Details", new { id = item.idOportunidad }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.idOportunidad })
+        </td>
+    </tr>
+        }
+
+    </table>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

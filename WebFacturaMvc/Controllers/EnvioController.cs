@@ -292,11 +292,8 @@ namespace WebFacturaMvc.Controllers
             string msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
             string from = objConfiguracion.email;
             string displayName = objConfiguracion.displayName;
-
             DateTime fechaActual = DateTime.Today;
             string fechaQuote = string.Format("{0}{1}{2}", fechaActual.Month, fechaActual.Day, fechaActual.Year);
-
-
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress(from, displayName);
             mail.To.Add(e.Correo);

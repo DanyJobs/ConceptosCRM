@@ -4,6 +4,40 @@
     ViewBag.Title = "Nuevo Producto";
 
 }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+<script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("a[rel='pop-up']").click(function () {
+            var caracteristicas = "height=550,width=1000,scrollTo,resizable=1,scrollbars=1,location=0";
+            nueva = window.open(this.href, 'popup', caracteristicas);
+            return false;
+        });
+    });
+
+    function recargar() {
+        $("#Categoria").val('@ViewData["ListaCategorias"]');
+        $("#Marca").val('@ViewData["ListaMarcas"]');
+    }
+
+    function obtenerMarca(Marca) {
+        /*       var watchclose = setInterval(function () {*/
+        $("#txtmarca").val(Marca.Nombre);
+        $("#Marca").val(Marca.Codigo);
+        /*       });*/
+    }
+    function obtenerCategoria(Categoria) {
+        /*       var watchclose = setInterval(function () {*/
+        $("#txtcategoria").val(Categoria.Nombre);
+        $("#Categoria").val(Categoria.Codigo);
+        /*       });*/
+    } 
+
+</script>
 
 <div class="well well-sm text-primary text-center">
     @ViewBag.MensajeInicio
@@ -17,7 +51,6 @@
 {
     <div class="form-horizontal">
         <fieldset>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.IdProducto, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-2">
@@ -49,18 +82,44 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-6 dropdown">
-                    @*  @Html.DropDownListFor(model => model.Categoria, new SelectList(Model.Categoria,"idCategoria"), new { htmlAttributes = new { @class = "form-control" } })*@
-                    @*@Html.DropDownList("ListaCategorias", ViewBag.ListaCategorias as SelectList, "Seleccione una Categoria", htmlAttributes: new { @class= "form-control" })*@
-                    @Html.DropDownListFor(model => model.Categoria, ViewBag.ListaCategorias as SelectList, "Seleccione una Categoria", htmlAttributes: new { @class = "form-control" })
+                    <div class="input-group">
+                        @*@Html.DropDownListFor(model => model.Categoria, new SelectList(Model.Categoria,"idCategoria"), new { htmlAttributes = new { @class = "form-control" } })*@
+                        @*@Html.DropDownList("ListaCategorias", ViewBag.ListaCategorias as SelectList, "Seleccione una Categoria", htmlAttributes: new { @class= "form-control" })*@
+                        @Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control" type="text" id="txtcategoria" readonly required />
+                        <span class="input-group-btn"><a class="btn btn-success" rel="pop-up" href="~/Categoria/CreateProducto"><span class="fa fa-plus fa-fw"></span></a></span>
+                    </div>
+                    <br />
+                    <a href="~/Categoria/ObtenerCategoria" rel="pop-up">
+                        <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cuenta" value="Obtener Categoria" />
+                    </a>
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-6 dropdown">
-                    @*@Html.DropDownListFor(model => model.Categoria, new SelectList(Model.Categoria,"idCategoria"), new { htmlAttributes = new { @class = "form-control" } })
-                @Html.DropDownList("ListaCategorias", ViewBag.ListaCategorias as SelectList, "Seleccione una Categoria", htmlAttributes: new { @class= "form-control" })*@
-                    @Html.DropDownListFor(model => model.Marca, ViewBag.ListaMarcas as SelectList, "Seleccione una Marca", htmlAttributes: new { @class = "form-control" })
+                    <div class="input-group">
+                        @*@Html.DropDownListFor(model => model.Categoria, new SelectList(Model.Categoria,"idCategoria"), new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("ListaCategorias", ViewBag.ListaCategorias as SelectList, "Seleccione una Categoria", htmlAttributes: new { @class= "form-control" })*@
+                        @Html.EditorFor(model => model.Marca, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control" type="text" id="txtmarca" readonly required />
+                        <span class="input-group-btn"><a class="btn btn-success" rel="pop-up" href="~/Marca/CreateProducto"><span class="fa fa-plus fa-fw"></span></a></span>
+                    </div>
+                    <br />
+                    <a href="~/Marca/ObtenerMarca" rel="pop-up">
+                        <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cuenta" value="Obtener Marca" />
+                    </a>
+                </div>
+                </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.unidadMedida, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6 dropdown">
+                    @*@Html.DropDownListFor(model => model.Categoria, new SelectList(Model.Categoria,"idCategoria"), new { htmlAttributes = new { @class = "form-control" } })*@
+                    @*@Html.DropDownList("ListaCategorias", ViewBag.ListaCategorias as SelectList, "Seleccione una Categoria", htmlAttributes: new { @class= "form-control" })*@
+                    @Html.DropDownListFor(model => model.unidadMedida, ViewBag.UnidadMedida as SelectList, "Seleccione una Unidad de Medida", htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -69,14 +128,12 @@
                     @Html.EditorFor(model => model.BandaAncha, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.Channels, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-6">
                     @Html.EditorFor(model => model.Channels, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
-
         </fieldset>
 
         <div class="form-actions col-md-offset-2">

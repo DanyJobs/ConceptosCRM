@@ -80,8 +80,10 @@
     <Compile Include="FacturaNeg.cs" />
     <Compile Include="ModoPagoNeg.cs" />
     <Compile Include="CotizacionNeg.cs" />
+    <Compile Include="OportunidadNeg.cs" />
     <Compile Include="PaisNeg.cs" />
     <Compile Include="PaqueteriaNeg.cs" />
+    <Compile Include="PlantillaCorreoNeg.cs" />
     <Compile Include="ProductoNeg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SucursalNeg.cs" />

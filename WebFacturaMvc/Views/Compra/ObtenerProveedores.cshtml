@@ -5,12 +5,12 @@
 @model List<WebFacturaMvc.Datos.proveedor>
 @{
     ViewBag.Title = "BuscarPorCodigo";
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutNulo.cshtml";
 }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#tbcliente tbody tr").dblclick(function () {
+        $("#tbProveedor tbody tr").dblclick(function (){
             var Cliente = {};
             var n, a, m;
             n = Cliente.Codigo = $(this).children().eq('0').text();
@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<table class="table table-striped" id="tbcliente">
+<table id="tbProveedor" class="display responsive nowrap">
 
     <thead>
         <tr>
@@ -77,24 +77,31 @@
             <th>Telefono</th>
         </tr>
     </thead>
-    <tbody>        
-            @foreach (var objProveedor in Model)
-            {
-        <tr>
-            <td>@objProveedor.idProveedor</td>
-            <td>@objProveedor.nombre</td>
-            <td>@objProveedor.apellido</td>
-            <td>@objProveedor.empresa</td>
-            <td>@objProveedor.calle</td>
-            <td>@objProveedor.numExt</td>
-            <td>@objProveedor.colonia</td>
-            <td>@objProveedor.cp</td>
-            <td>@objProveedor.email</td>
-            <td>@objProveedor.telefono</td>
-        </tr>
-            }        
+    <tbody>
+        @foreach (var objProveedor in Model)
+        {
+            <tr>
+                <td>@objProveedor.idProveedor</td>
+                <td>@objProveedor.nombre</td>
+                <td>@objProveedor.apellido</td>
+                <td>@objProveedor.empresa</td>
+                <td>@objProveedor.calle</td>
+                <td>@objProveedor.numExt</td>
+                <td>@objProveedor.colonia</td>
+                <td>@objProveedor.cp</td>
+                <td>@objProveedor.email</td>
+                <td>@objProveedor.telefono</td>
+            </tr>
+        }
 
     </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbProveedor').DataTable();
+        });
+    </script>
+}
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>

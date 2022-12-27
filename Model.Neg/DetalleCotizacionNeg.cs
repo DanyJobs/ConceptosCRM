@@ -16,7 +16,7 @@ namespace Model.Neg
         {
             bool verificacion = true;
 
-            //inicio verificacion de cantidaa estado=1
+            //inicio verificacion de cantida estado=1
             int cant = 0;
             string cantidad = objDetalleCotizacion.Cantidad.ToString();
             if (cantidad == null)
@@ -71,13 +71,13 @@ namespace Model.Neg
         {
             return objDetalleCotizacionDao.VerProductos(IdVenta);
         }
-        public Producto VerProducto(int IdProducto)
+        public Producto VerProducto(string IdProducto)
         {
             return objDetalleCotizacionDao.VerProducto(IdProducto);
         }
-        public void Actualizar(int idVenta, decimal SubTotal, string IdProducto, decimal Descuento, int Cantidad)
+        public void Actualizar(int idVenta,decimal codigoFactura, decimal SubTotal, string IdProducto, decimal Descuento, int Cantidad,string Notas)
         {
-            objDetalleCotizacionDao.Actualizar(idVenta, SubTotal, IdProducto, Descuento, Cantidad);
+            objDetalleCotizacionDao.Actualizar(idVenta, codigoFactura, SubTotal, IdProducto, Descuento, Cantidad,Notas);
         }
         //Elimina los valores de los DetalleCotizacion de una Cotizacion
         public void preEliminar(int idVenta)

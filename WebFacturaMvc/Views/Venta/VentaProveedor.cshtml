@@ -1,0 +1,37 @@
+﻿@model List<Model.Entity.VentaDetalle>
+@{
+    ViewBag.Title = "Lista de Ventas";
+}
+<h2 style="text-align:center; font-family:Arial; font-weight:700;">Ventas realizadas</h2>
+
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>ID Venta</th>
+            <th>Proveedor</th>
+            <th>Empresa Proveedor</th>
+            <th>Cantidad de Productos</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objVenta in Model)
+        {
+            <tr>
+                <td>@objVenta.idVenta</td>
+                <td>@objVenta.proveedor</td>
+                <td>@objVenta.empresa</td>
+                <td>@objVenta.cantidad</td>                
+                <td><a class="btn btn-success" href="~/Reportes/Ingles/frmReportePo.aspx?idVenta=@objVenta.idVenta&idProveedor=@objVenta.idProveedor" target="_blank" rel="noopener noreferrer"><span class="glyphicon glyphicon-eye-open"></span>Reporte PO</a></td>
+                <td><a class="btn btn-info" href="~/Venta/VerVenta?idVenta=@objVenta.idVenta"><span class="glyphicon glyphicon-eye-open">|Ver</span></a></td>
+                <td><a class="btn btn-warning" href="~/Venta/EditarVenta?idVenta=@objVenta.idVenta"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
+                <td><a class="btn btn-danger" href="~/Venta/EliminarPreview?idVenta=@objVenta.idVenta"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

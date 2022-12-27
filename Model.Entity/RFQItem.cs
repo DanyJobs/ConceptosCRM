@@ -43,6 +43,7 @@ namespace Model.Entity
         public string empresa { get; set; }
         public string empresaNombre { get; set; }
         public string marca { get; set; }
+        public string unidadDeMedida { get; set; }
 
     }
 }

@@ -10,7 +10,6 @@ using WebFacturaMvc.Datos;
 
 namespace WebFacturaMvc.Controllers
 {
-    [Authorize(Roles = "ADMIN,STANDARD")]
     public class ProveedorController : Controller
     {
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
@@ -47,7 +46,7 @@ namespace WebFacturaMvc.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idProveedor,nombre,apellido,calle,numExt,colonia,cp,email,telefono")] proveedor proveedor)
+        public ActionResult Create([Bind(Include = "idProveedor,nombre,apellido,calle,numExt,colonia,cp,email,telefono,empresa")] proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +78,7 @@ namespace WebFacturaMvc.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idProveedor,nombre,apellido,calle,numExt,colonia,cp,email,telefono")] proveedor proveedor)
+        public ActionResult Edit([Bind(Include = "idProveedor,nombre,apellido,calle,numExt,colonia,cp,email,telefono,empresa")] proveedor proveedor)
         {
             if (ModelState.IsValid)
             {

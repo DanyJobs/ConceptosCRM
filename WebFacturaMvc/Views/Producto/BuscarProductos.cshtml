@@ -24,7 +24,7 @@
     });
 </script>
 
-
+<div class="well well-sm"><a class="btn btn-primary" href="~/Producto/Create">Nuevo</a></div>
 <div class="panel-heading" style="background:#2C3E50; color:#ffffff;"><h2 style="text-align:center; font-family:Arial; font-weight:100;">Buscar Producto por:</h2></div>
 <div class="panel-body">
     @using (Html.BeginForm())
@@ -70,39 +70,55 @@
 </div>
 
 
-<table class="table table-striped" id="tbproducto">
-    <tr>
-        <th>Codigo</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Categoria</th>
-        <th>Precio Unitario</th>
-        <th>Marca</th>
-        <th>Banda Ancha</th>
-        <th>Canales</th>
-        <th>Acciones</th>
-    </tr>
-    @foreach (var objProducto in Model)
-    {
+<table id="tbproducto" class="display responsive nowrap">
+    <thead>
         <tr>
-            <th>@objProducto.IdProducto</th>
-            <th>@objProducto.Nombre</th>
-            <th>@objProducto.Descripcion</th>
-            <th>@objProducto.Categoria</th>
-            <th>@objProducto.PrecioUnitario</th>
-            <th>@objProducto.Marca</th>
-            <th>@objProducto.BandaAncha</th>
-            <th>@objProducto.Channels</th>
-            <td><a class="ver" href="BuscarHistorial?idproducto=@objProducto.IdProducto" target="_blank"><span class="fa fa-edit"></span>Ver</a></td>
-            @*<td><a class="btn btn-success" href="~/Cotizacion/CargaProducto/@objProducto.IdProducto"><span class="glyphicon glyphicon-eye-open"></span></a></td>*@
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Categoria</th>
+            <th>Precio Unitario</th>
+            <th>Marca</th>
+            <th>Banda Ancha</th>
+            <th>Canales</th>
+            <th>UM</th>
+            <th>Acciones</th>
         </tr>
-    }
-    <tr></tr>
+    </thead>
+    <tbody>
+        @foreach (var objProducto in Model)
+        {
+            <tr>
+                <th>@objProducto.IdProducto</th>
+                <th>@objProducto.Nombre</th>
+                <th>@objProducto.Descripcion</th>
+                <th>@objProducto.Categoria</th>
+                <th>@objProducto.PrecioUnitario</th>
+                <th>@objProducto.Marca</th>
+                <th>@objProducto.BandaAncha</th>
+                <th>@objProducto.Channels</th>
+                <th>@objProducto.unidadMedida</th>
+                <td><a class="btn btn-primary" href="BuscarHistorial?idproducto=@objProducto.IdProducto" target="_blank"><span class="fa fa-edit"></span>Ver</a>
+                <a class="btn btn-success" href="BuscarRFQ?idproducto=@objProducto.IdProducto" target="_blank"><span class="fa fa-edit"></span>RFQ</a>
+                <a class="btn btn-success" href="~/Producto/Find/@objProducto.IdProducto"><span class="glyphicon glyphicon-eye-open"></span>Ver Productos</a>
+                <a class="btn btn-info" href="~/Producto/Update/@objProducto.IdProducto"><span class="fa fa-edit"></span></a>
+                <a class="btn btn-danger" href="~/Producto/Delete/@objProducto.IdProducto"><span class="fa fa-remove"></span></a></td>
+                @*<td><a class="btn btn-success" href="~/Cotizacion/CargaProducto/@objProducto.IdProducto"><span class="glyphicon glyphicon-eye-open"></span></a></td>*@
+            </tr>
+        }
+    </tbody>
 </table>
 
 <div class="text-primary text-danger text-center">
     @ViewBag.MensajeError;
 </div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbproducto').DataTable();
+        });
+    </script>
+}
 
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>

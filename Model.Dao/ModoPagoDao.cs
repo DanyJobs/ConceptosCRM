@@ -106,15 +106,14 @@ namespace Model.Dao
                     objModoPago.NumPago = Convert.ToInt32(reader[0].ToString());
                     objModoPago.Nombre = reader[1].ToString();
                     objModoPago.Otros = reader[2].ToString();
-
                     listaModoPagos.Add(objModoPago);
                 }
 
             }
             catch (Exception)
             {
-
-                throw;
+                objConexionDB.getCon().Close();
+                objConexionDB.closeDB();               
             }
             finally
             {

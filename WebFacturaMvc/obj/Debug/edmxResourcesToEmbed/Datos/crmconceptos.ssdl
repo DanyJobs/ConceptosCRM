@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="crmconceptoseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="PlantillaCorreo">
+    <Key>
+      <PropertyRef Name="idPlantilla" />
+    </Key>
+    <Property Name="idPlantilla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DescpPlantilla" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="plantilla" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="__MigrationHistory">
     <Key>
       <PropertyRef Name="MigrationId" />
@@ -99,10 +107,11 @@
     </Key>
     <Property Name="idCliente" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
-    <Property Name="apellido" Type="varchar" MaxLength="30" Nullable="false" />
-    <Property Name="direccion" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="telefono" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="apellido" Type="varchar" MaxLength="30" />
+    <Property Name="direccion" Type="varchar" MaxLength="100" />
+    <Property Name="telefono" Type="varchar" MaxLength="30" />
     <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="cuenta" Type="int" />
   </EntityType>
   <EntityType Name="compra">
     <Key>
@@ -120,11 +129,10 @@
       <PropertyRef Name="idProducto" />
     </Key>
     <Property Name="idCompra" Type="int" Nullable="false" />
-    <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="13" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="precio" Type="money" Nullable="false" />
     <Property Name="seccion" Type="varchar" MaxLength="9" />
-    <Property Name="UnidadMedida" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="configuracion">
     <Key>
@@ -165,6 +173,13 @@
     <Property Name="estatusSeguimiento" Type="varchar" MaxLength="1" />
     <Property Name="fechaComienzoSeguimiento" Type="date" />
   </EntityType>
+  <EntityType Name="cuenta">
+    <Key>
+      <PropertyRef Name="idCuenta" />
+    </Key>
+    <Property Name="idCuenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreCuenta" Type="nvarchar" MaxLength="80" />
+  </EntityType>
   <EntityType Name="detalleCotizacion">
     <Key>
       <PropertyRef Name="idDetalle" />
@@ -174,9 +189,9 @@
     <Property Name="numFactura" Type="numeric" Precision="18" Scale="0" Nullable="false" />
     <Property Name="idVenta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
     <Property Name="subTotal" Type="real" Nullable="false" />
-    <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="13" Nullable="false" />
     <Property Name="descuento" Type="money" Nullable="false" />
-    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="15" Scale="4" />
     <Property Name="notas" Type="varchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="EmailMarketing">
@@ -215,7 +230,7 @@
       <PropertyRef Name="idProducto" />
       <PropertyRef Name="idSucursal" />
     </Key>
-    <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="13" Nullable="false" />
     <Property Name="idSucursal" Type="int" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
     <Property Name="seccion" Type="varchar" MaxLength="9" />
@@ -253,6 +268,20 @@
     <Property Name="abreviatura" Type="nvarchar" MaxLength="3" Nullable="false" />
     <Property Name="simbolo" Type="nvarchar" MaxLength="4" />
   </EntityType>
+  <EntityType Name="oportunidad">
+    <Key>
+      <PropertyRef Name="idOportunidad" />
+    </Key>
+    <Property Name="idOportunidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cotizacion" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="notas" Type="nvarchar" MaxLength="150" />
+    <Property Name="acciones" Type="nvarchar" MaxLength="150" />
+    <Property Name="venta" Type="money" />
+    <Property Name="costo" Type="money" />
+    <Property Name="estatus" Type="varchar" MaxLength="1" />
+    <Property Name="idUsuario" Type="nvarchar" MaxLength="128" />
+    <Property Name="porcentaje" Type="int" />
+  </EntityType>
   <EntityType Name="pais">
     <Key>
       <PropertyRef Name="idPais" />
@@ -272,7 +301,7 @@
     <Key>
       <PropertyRef Name="idProducto" />
     </Key>
-    <Property Name="idProducto" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="13" Nullable="false" />
     <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="descripcion" Type="varchar" MaxLength="60" />
     <Property Name="precioUnitario" Type="money" Nullable="false" />
@@ -280,6 +309,7 @@
     <Property Name="idMarca" Type="varchar" MaxLength="5" />
     <Property Name="bandaAncha" Type="nvarchar" MaxLength="30" />
     <Property Name="channels" Type="int" />
+    <Property Name="unidadMedida" Type="nvarchar" MaxLength="20" />
   </EntityType>
   <EntityType Name="proveedor">
     <Key>
@@ -295,6 +325,29 @@
     <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="telefono" Type="char" MaxLength="10" />
     <Property Name="empresa" Type="nvarchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="RFQ">
+    <Key>
+      <PropertyRef Name="idRFQ" />
+    </Key>
+    <Property Name="idRFQ" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idVendedor" Type="nvarchar" MaxLength="128" />
+    <Property Name="fecha" Type="date" />
+    <Property Name="estatus" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="RFQItem">
+    <Key>
+      <PropertyRef Name="idRFQItem" />
+      <PropertyRef Name="idRfq" />
+    </Key>
+    <Property Name="idRFQItem" Type="int" Nullable="false" />
+    <Property Name="idRfq" Type="int" Nullable="false" />
+    <Property Name="idProveedor" Type="int" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="13" Nullable="false" />
+    <Property Name="precio" Type="money" />
+    <Property Name="cantidad" Type="int" />
+    <Property Name="notas" Type="nvarchar" MaxLength="128" />
+    <Property Name="fecha" Type="date" />
   </EntityType>
   <EntityType Name="sucursal">
     <Key>
@@ -351,10 +404,9 @@
     <Property Name="idDetalleVenta" Type="int" Nullable="false" />
     <Property Name="idVenta" Type="int" Nullable="false" />
     <Property Name="idProveedor" Type="int" />
-    <Property Name="idProducto" Type="nvarchar" MaxLength="5" />
+    <Property Name="idProducto" Type="nvarchar" MaxLength="13" Nullable="false" />
     <Property Name="precio" Type="money" />
-    <Property Name="cantidad" Type="int" />
-    <Property Name="unidadMedida" Type="nvarchar" MaxLength="20" />
+    <Property Name="cantidad" Type="decimal" Precision="10" Scale="2" />
     <Property Name="notas" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <Association Name="FK__detalleFa__idPed__239E4DCF">
@@ -569,6 +621,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_IdProductoRFQItem">
+    <End Role="producto" Type="Self.producto" Multiplicity="1" />
+    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_IdProveedorRFQItem">
+    <End Role="proveedor" Type="Self.proveedor" Multiplicity="0..1" />
+    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_idVendedorRFQ">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="RFQ" Type="Self.RFQ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RFQ">
+        <PropertyRef Name="idVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_PaisEstado">
     <End Role="pais" Type="Self.pais" Multiplicity="0..1" />
     <End Role="estado" Type="Self.estado" Multiplicity="*" />
@@ -578,6 +666,18 @@
       </Principal>
       <Dependent Role="estado">
         <PropertyRef Name="idPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RFQItemRFQ">
+    <End Role="RFQ" Type="Self.RFQ" Multiplicity="1" />
+    <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RFQ">
+        <PropertyRef Name="idRFQ" />
+      </Principal>
+      <Dependent Role="RFQItem">
+        <PropertyRef Name="idRfq" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -641,6 +741,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_VentaCotizacion">
+    <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cotizacion">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="idCotizacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkCOMPRA_DETALLEidCompra">
     <End Role="compra" Type="Self.compra" Multiplicity="1" />
     <End Role="compraDetalle" Type="Self.compraDetalle" Multiplicity="*" />
@@ -653,8 +765,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkCuentaCliente">
+    <End Role="cuenta" Type="Self.cuenta" Multiplicity="0..1" />
+    <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cuenta">
+        <PropertyRef Name="idCuenta" />
+      </Principal>
+      <Dependent Role="cliente">
+        <PropertyRef Name="cuenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkdetalleVentaidProducto">
-    <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+    <End Role="producto" Type="Self.producto" Multiplicity="1" />
     <End Role="ventaDetalle" Type="Self.ventaDetalle" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="producto">
@@ -737,6 +861,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fkOportunidadCotizacion">
+    <End Role="cotizacion" Type="Self.cotizacion" Multiplicity="0..1" />
+    <End Role="oportunidad" Type="Self.oportunidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cotizacion">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="oportunidad">
+        <PropertyRef Name="cotizacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkOportunidadUsuario">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="oportunidad" Type="Self.oportunidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="oportunidad">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fkProductoCompra">
     <End Role="producto" Type="Self.producto" Multiplicity="1" />
     <End Role="compraDetalle" Type="Self.compraDetalle" Multiplicity="*" />
@@ -812,6 +960,7 @@
     <Parameter Name="pYear" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_consultaEnviosN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master" />
+  <Function Name="sp_consultaOportunidad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master" />
   <Function Name="sp_consultaSalesPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdCotizacion" Type="int" Mode="In" />
   </Function>
@@ -819,6 +968,7 @@
     <Parameter Name="IdCotizacion" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_consultaVentas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="idUsuario" Type="nvarchar" Mode="In" />
     <Parameter Name="pMonth" Type="varchar" Mode="In" />
     <Parameter Name="pYear" Type="varchar" Mode="In" />
   </Function>
@@ -908,6 +1058,7 @@
     <Parameter Name="Parametro" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_guardarVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
     <Parameter Name="IdCotizacion" Type="int" Mode="In" />
     <Parameter Name="IdCliente" Type="int" Mode="In" />
     <Parameter Name="CP" Type="char" Mode="In" />
@@ -920,6 +1071,7 @@
     <Parameter Name="Archivo" Type="varbinary(max)" Mode="In" />
     <Parameter Name="Fecha" Type="date" Mode="In" />
     <Parameter Name="Vendedor" Type="nvarchar" Mode="In" />
+    <Parameter Name="Terminos" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_hayCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="clouderp_master">
     <Parameter Name="IdCiudad" Type="int" Mode="In" />
@@ -973,12 +1125,24 @@
   </Function>
   <Function Name="sp_actualizarDetalleCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
+    <Parameter Name="codigoFactura" Type="numeric" Mode="In" />
     <Parameter Name="SubTotal" Type="real" Mode="In" />
     <Parameter Name="IdProducto" Type="nvarchar" Mode="In" />
     <Parameter Name="Descuento" Type="money" Mode="In" />
     <Parameter Name="Cantidad" Type="int" Mode="In" />
+    <Parameter Name="Notas" Type="nvarchar" Mode="In" />
   </Function>
-  <Function Name="SP_Buscar_Cotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_agregarCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="nombre" Type="varchar" Mode="In" />
+    <Parameter Name="apellido" Type="varchar" Mode="In" />
+    <Parameter Name="direccion" Type="varchar" Mode="In" />
+    <Parameter Name="telefono" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="cuenta" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_Buscar_Cotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsuario" Type="nvarchar(max)" Mode="In" />
+  </Function>
   <Function Name="sp_CompraAlta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="total" Type="money" Mode="In" />
     <Parameter Name="fechaCompra" Type="date" Mode="In" />
@@ -1022,6 +1186,9 @@
     <Parameter Name="pMonth" Type="varchar" Mode="In" />
     <Parameter Name="pYear" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_ConsultaCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idCliente" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_consultaCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="pMonth" Type="varchar" Mode="In" />
     <Parameter Name="pYear" Type="varchar" Mode="In" />
@@ -1054,6 +1221,12 @@
     <Parameter Name="idSucursal" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_consultaSucursales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_consultaventaDetalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdCotizacion" Type="numeric" Mode="In" />
+    <Parameter Name="IdVenta" Type="int" Mode="In" />
+    <Parameter Name="Vendedor" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="IdDetalleVenta" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_correosEnvioMarketing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idMarketing" Type="decimal" Mode="In" />
   </Function>
@@ -1075,6 +1248,16 @@
     <Parameter Name="cantidad" Type="int" Mode="In" />
     <Parameter Name="notas" Type="nvarchar" Mode="In" />
     <Parameter Name="fecha" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_EditarVentaDetalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opcion" Type="varchar" Mode="In" />
+    <Parameter Name="idDetalleVenta" Type="int" Mode="In" />
+    <Parameter Name="idVenta" Type="int" Mode="In" />
+    <Parameter Name="idProveedor" Type="int" Mode="In" />
+    <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
+    <Parameter Name="precio" Type="decimal" Mode="In" />
+    <Parameter Name="cantidad" Type="int" Mode="In" />
+    <Parameter Name="notas" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_eliminarCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="IdVenta" Type="int" Mode="In" />
@@ -1113,11 +1296,18 @@
     <Parameter Name="categoria" Type="nvarchar" Mode="In" />
     <Parameter Name="idMarca" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="sp_reporte_po" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idVenta" Type="int" Mode="In" />
+    <Parameter Name="idProveedor" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_reporte_venta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idVenta" Type="numeric" Mode="In" />
   </Function>
   <Function Name="SP_RFQ_HISTORIAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idProducto" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_VentaProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idVenta" Type="int" Mode="In" />
   </Function>
   <Function Name="spAgregarCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />
@@ -1128,7 +1318,7 @@
   </Function>
   <Function Name="spAgregarCompraDetalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idCompra" Type="int" Mode="In" />
-    <Parameter Name="idProducto" Type="int" Mode="In" />
+    <Parameter Name="idProducto" Type="nvarchar" Mode="In" />
     <Parameter Name="cantidad" Type="int" Mode="In" />
     <Parameter Name="precio" Type="int" Mode="In" />
   </Function>
@@ -1143,6 +1333,7 @@
   </Function>
   <Function Name="spusuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="crmconceptoseModelStoreContainer">
+    <EntitySet Name="PlantillaCorreo" EntityType="Self.PlantillaCorreo" Schema="clouderp_master" store:Type="Tables" />
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="agenda" EntityType="Self.agenda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -1157,6 +1348,7 @@
     <EntitySet Name="compraDetalle" EntityType="Self.compraDetalle" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="configuracion" EntityType="Self.configuracion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cotizacion" EntityType="Self.cotizacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cuenta" EntityType="Self.cuenta" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="detalleCotizacion" EntityType="Self.detalleCotizacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmailMarketing" EntityType="Self.EmailMarketing" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="envio" EntityType="Self.envio" Schema="dbo" store:Type="Tables" />
@@ -1166,10 +1358,13 @@
     <EntitySet Name="marca" EntityType="Self.marca" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="modoPago" EntityType="Self.modoPago" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Moneda" EntityType="Self.Moneda" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="oportunidad" EntityType="Self.oportunidad" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="pais" EntityType="Self.pais" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="paqueteria" EntityType="Self.paqueteria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="proveedor" EntityType="Self.proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RFQ" EntityType="Self.RFQ" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RFQItem" EntityType="Self.RFQItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sucursal" EntityType="Self.sucursal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="texto" EntityType="Self.texto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tipoEmpleado" EntityType="Self.tipoEmpleado" Schema="dbo" store:Type="Tables" />
@@ -1243,9 +1438,25 @@
       <End Role="modoPago" EntitySet="modoPago" />
       <End Role="factura" EntitySet="factura" />
     </AssociationSet>
+    <AssociationSet Name="fk_IdProductoRFQItem" Association="Self.fk_IdProductoRFQItem">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_IdProveedorRFQItem" Association="Self.fk_IdProveedorRFQItem">
+      <End Role="proveedor" EntitySet="proveedor" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_idVendedorRFQ" Association="Self.fk_idVendedorRFQ">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="RFQ" EntitySet="RFQ" />
+    </AssociationSet>
     <AssociationSet Name="fk_PaisEstado" Association="Self.fk_PaisEstado">
       <End Role="pais" EntitySet="pais" />
       <End Role="estado" EntitySet="estado" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RFQItemRFQ" Association="Self.fk_RFQItemRFQ">
+      <End Role="RFQ" EntitySet="RFQ" />
+      <End Role="RFQItem" EntitySet="RFQItem" />
     </AssociationSet>
     <AssociationSet Name="FK_VendedorVenta" Association="Self.FK_VendedorVenta">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1267,9 +1478,17 @@
       <End Role="cliente" EntitySet="cliente" />
       <End Role="venta" EntitySet="venta" />
     </AssociationSet>
+    <AssociationSet Name="FK_VentaCotizacion" Association="Self.FK_VentaCotizacion">
+      <End Role="cotizacion" EntitySet="cotizacion" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
     <AssociationSet Name="fkCOMPRA_DETALLEidCompra" Association="Self.fkCOMPRA_DETALLEidCompra">
       <End Role="compra" EntitySet="compra" />
       <End Role="compraDetalle" EntitySet="compraDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="fkCuentaCliente" Association="Self.fkCuentaCliente">
+      <End Role="cuenta" EntitySet="cuenta" />
+      <End Role="cliente" EntitySet="cliente" />
     </AssociationSet>
     <AssociationSet Name="fkdetalleVentaidProducto" Association="Self.fkdetalleVentaidProducto">
       <End Role="producto" EntitySet="producto" />
@@ -1298,6 +1517,14 @@
     <AssociationSet Name="fkidSucursalCompra" Association="Self.fkidSucursalCompra">
       <End Role="sucursal" EntitySet="sucursal" />
       <End Role="compra" EntitySet="compra" />
+    </AssociationSet>
+    <AssociationSet Name="fkOportunidadCotizacion" Association="Self.fkOportunidadCotizacion">
+      <End Role="cotizacion" EntitySet="cotizacion" />
+      <End Role="oportunidad" EntitySet="oportunidad" />
+    </AssociationSet>
+    <AssociationSet Name="fkOportunidadUsuario" Association="Self.fkOportunidadUsuario">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="oportunidad" EntitySet="oportunidad" />
     </AssociationSet>
     <AssociationSet Name="fkProductoCompra" Association="Self.fkProductoCompra">
       <End Role="producto" EntitySet="producto" />

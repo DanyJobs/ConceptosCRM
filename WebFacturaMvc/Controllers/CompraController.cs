@@ -85,10 +85,16 @@ namespace WebFacturaMvc.Controllers
         [HttpGet]
         public ActionResult ObtenerProductos()
         {
-            List<Producto> lista = objProductoNeg.findAll();
+            //List<Producto> lista = objProductoNeg.findAll();
+            Producto objProducto = new Producto();
+            objProducto.IdProducto = null;
+            objProducto.Nombre = null;
+            objProducto.Categoria = "-1";
+            objProducto.Marca = "-1";
+            List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
             cargarCategoria();
-            cargarMarca();
-            return View(lista);
+            cargarMarca(); 
+            return View(ListaProducto);
         }
         [HttpPost]//para buscar clientes
         public ActionResult ObtenerProductos(string txtcodigo, string txtnombre, string txtCategoria, string txtMarca)

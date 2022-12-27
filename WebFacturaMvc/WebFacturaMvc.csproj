@@ -208,9 +208,13 @@
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\bootstrap\js\bootstrap.js" />
     <Content Include="Assets\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Assets\bootstrap\js\popper.js" />
+    <Content Include="Assets\bootstrap\js\popper.min.js" />
+    <Content Include="Assets\bootstrap\js\tooltip.js" />
     <Content Include="Assets\font-awesome\css\font-awesome.css" />
     <Content Include="Assets\font-awesome\css\font-awesome.min.css" />
     <Content Include="Assets\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\jquery\jquery-3.2.1.min.js" />
     <Content Include="Assets\jquery\jquery.js" />
     <Content Include="Assets\jquery\jquery.min.js" />
     <Content Include="Assets\metisMenu\metisMenu.css" />
@@ -220,6 +224,7 @@
     <Content Include="Assets\morrisjs\morris.css" />
     <Content Include="Assets\morrisjs\morris.js" />
     <Content Include="Assets\morrisjs\morris.min.js" />
+    <Content Include="Assets\tilt\tilt.jquery.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -241,9 +246,18 @@
     <Content Include="Css\alertify.bootstrap.css" />
     <Content Include="Css\alertify.core.css" />
     <Content Include="Css\alertify.default.css" />
+    <Content Include="Css\animate\animate.css" />
+    <Content Include="Css\css-hamburgers\hamburgers.css" />
+    <Content Include="Css\css-hamburgers\hamburgers.min.css" />
     <Content Include="Css\Error404.css" />
+    <Content Include="Css\main.css" />
     <Content Include="Css\sb-admin-2.css" />
     <Content Include="Css\sb-admin-2.min.css" />
+    <Content Include="Css\select2\select2.css" />
+    <Content Include="Css\select2\select2.js" />
+    <Content Include="Css\select2\select2.min.css" />
+    <Content Include="Css\select2\select2.min.js" />
+    <Content Include="Css\util.css" />
     <Content Include="Datos\crmconceptos.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>crmconceptos.edmx</DependentUpon>
@@ -256,16 +270,22 @@
     </Content>
     <Content Include="Error404.html" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\montserrat\OFL.txt" />
     <Content Include="Global.asax" />
+    <Content Include="Img\astronauta.PNG" />
     <Content Include="Img\CRM Logo.jpg" />
     <Content Include="Img\logo conceptos.png" />
+    <Content Include="Img\logoconceptoslogin.png" />
+    <Content Include="Img\moon.png" />
     <Content Include="Img\noimage.jpg" />
     <Content Include="Img\not-available.png" />
+    <Content Include="Img\rocketConceptos.png" />
     <Content Include="Img\user.jpeg" />
     <Content Include="Js\alertify.js" />
     <Content Include="Js\alertify.min.js" />
     <Content Include="Js\Categoria.js" />
     <Content Include="Js\Error404.js" />
+    <Content Include="Js\main.js" />
     <Content Include="Js\modernizr-2.6.2.js" />
     <Content Include="Js\sb-admin-2.js" />
     <Content Include="Js\sb-admin-2.min.js" />
@@ -344,6 +364,17 @@
     <Content Include="clouderp_conceptoselectronicsDataSet.xss">
       <DependentUpon>clouderp_conceptoselectronicsDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
     <None Include="dbventasDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dbventasDataSet.Designer.cs</LastGenOutput>
@@ -370,6 +401,42 @@
     <Content Include="ProcDataSet.xsc">
       <DependentUpon>ProcDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="fonts\montserrat\Montserrat-Black.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-BlackItalic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-Bold.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-BoldItalic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-ExtraBold.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-ExtraBoldItalic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-ExtraLight.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-ExtraLightItalic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-Italic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-Light.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-LightItalic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-Medium.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-MediumItalic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-Regular.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-SemiBold.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-SemiBoldItalic.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-Thin.ttf" />
+    <Content Include="fonts\montserrat\Montserrat-ThinItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-Black.ttf" />
+    <Content Include="fonts\poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-Bold.ttf" />
+    <Content Include="fonts\poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="fonts\poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-Italic.ttf" />
+    <Content Include="fonts\poppins\Poppins-Light.ttf" />
+    <Content Include="fonts\poppins\Poppins-LightItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-Medium.ttf" />
+    <Content Include="fonts\poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-Regular.ttf" />
+    <Content Include="fonts\poppins\Poppins-SemiBold.ttf" />
+    <Content Include="fonts\poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="fonts\poppins\Poppins-Thin.ttf" />
+    <Content Include="fonts\poppins\Poppins-ThinItalic.ttf" />
     <None Include="ProcDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ProcDataSet.Designer.cs</LastGenOutput>
@@ -390,6 +457,17 @@
       <DependentUpon>ProcedimientoDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
+    <Content Include="PuchaseOrderDataSet.xsc">
+      <DependentUpon>PuchaseOrderDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="PuchaseOrderDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PuchaseOrderDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="PuchaseOrderDataSet.xss">
+      <DependentUpon>PuchaseOrderDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="ReporteDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ReporteDataSet.Designer.cs</LastGenOutput>
@@ -463,6 +541,7 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Utilidades\Imagenes\58e9117beb97430e819064d6.cur" />
     <Content Include="Utilidades\Imagenes\logo conceptos Icon.png" />
     <Content Include="Utilidades\Imagenes\logo conceptos.png" />
     <Content Include="Web.config">
@@ -492,6 +571,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ConfiguracionController.cs" />
+    <Compile Include="Controllers\CuentaController.cs" />
     <Compile Include="Controllers\DetalleCotizacionController.cs" />
     <Compile Include="Controllers\EmailMarketingController.cs" />
     <Compile Include="Controllers\EnvioController.cs" />
@@ -501,12 +581,19 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\ModoPagoController.cs" />
+    <Compile Include="Controllers\OportunidadController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
+    <Compile Include="Controllers\PlantillaCorreoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\VentaController.cs" />
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Datos\agenda.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -561,6 +648,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>crmconceptos.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Datos\cuenta.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\C__MigrationHistory.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -592,10 +682,16 @@
     <Compile Include="Datos\Moneda.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\oportunidad.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\pais.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\paqueteria.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\PlantillaCorreo.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\producto.cs">
@@ -604,7 +700,13 @@
     <Compile Include="Datos\proveedor.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\RFQ.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\RFQConsultas_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\RFQItem.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\spusuario_Result.cs">
@@ -658,6 +760,9 @@
     <Compile Include="Datos\sp_CompraFiltrado_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_ConsultaCliente_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_consultaCotizacionEstatus_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -688,6 +793,9 @@
     <Compile Include="Datos\sp_consultaExistencias_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_consultaOportunidad_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\sp_consultaProducto_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
@@ -701,6 +809,9 @@
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_consultaVC_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_consultaventaDetalle_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_consultaVentas_Result.cs">
@@ -775,7 +886,13 @@
     <Compile Include="Datos\SP_PRODUCTO_CONSULTA_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sp_reporte_po_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\SP_RFQ_HISTORIAL_Result.cs">
+      <DependentUpon>crmconceptos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\sp_VentaProveedor_Result.cs">
       <DependentUpon>crmconceptos.tt</DependentUpon>
     </Compile>
     <Compile Include="Datos\sp_verificarEvento2_Result.cs">
@@ -830,6 +947,11 @@
       <DependentUpon>ProcedimientoDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuchaseOrderDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PuchaseOrderDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ReporteDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -948,11 +1070,6 @@
     <Content Include="Views\Sucursal\Edit.cshtml" />
     <Content Include="Views\Sucursal\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Proveedor\Create.cshtml" />
-    <Content Include="Views\Proveedor\Delete.cshtml" />
-    <Content Include="Views\Proveedor\Details.cshtml" />
-    <Content Include="Views\Proveedor\Edit.cshtml" />
-    <Content Include="Views\Proveedor\Index.cshtml" />
     <Content Include="Views\Configuracion\Details.cshtml" />
     <Content Include="Views\Configuracion\Edit.cshtml" />
     <Content Include="Views\Configuracion\ConfigurarCorreo.cshtml" />
@@ -1020,6 +1137,38 @@
     <Content Include="Views\Envio\EnviosCompletados.cshtml" />
     <Content Include="Views\Envio\HacerGuia.cshtml" />
     <Content Include="Views\Envio\Index.cshtml" />
+    <Content Include="Views\DetalleCotizacion\BuscarRFQ.cshtml" />
+    <Content Include="Views\DetalleCotizacion\Historial.cshtml" />
+    <Content Include="Views\DetalleCotizacion\BuscarHistorial.cshtml" />
+    <Content Include="Views\Venta\VentaProveedor.cshtml" />
+    <Content Include="Views\Proveedor\Create.cshtml" />
+    <Content Include="Views\Proveedor\Delete.cshtml" />
+    <Content Include="Views\Proveedor\Details.cshtml" />
+    <Content Include="Views\Proveedor\Edit.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutNulo.cshtml" />
+    <Content Include="Views\Cuenta\Create.cshtml" />
+    <Content Include="Views\Cuenta\Delete.cshtml" />
+    <Content Include="Views\Cuenta\Details.cshtml" />
+    <Content Include="Views\Cuenta\Edit.cshtml" />
+    <Content Include="Views\Cuenta\Index.cshtml" />
+    <Content Include="Views\Cliente\ObtenerCuenta.cshtml" />
+    <Content Include="Views\Categoria\CreateProducto.cshtml" />
+    <Content Include="Views\Marca\CreateProducto.cshtml" />
+    <Content Include="Views\Marca\ObtenerMarca.cshtml" />
+    <Content Include="Views\Categoria\ObtenerCategoria.cshtml" />
+    <Content Include="Views\Oportunidad\Create.cshtml" />
+    <Content Include="Views\Oportunidad\Delete.cshtml" />
+    <Content Include="Views\Oportunidad\Details.cshtml" />
+    <Content Include="Views\Oportunidad\Edit.cshtml" />
+    <Content Include="Views\Oportunidad\Index.cshtml" />
+    <Content Include="Views\Configuracion\CorreoEditar.cshtml" />
+    <Content Include="Views\PlantillaCorreo\Create.cshtml" />
+    <Content Include="Views\PlantillaCorreo\Delete.cshtml" />
+    <Content Include="Views\PlantillaCorreo\Details.cshtml" />
+    <Content Include="Views\PlantillaCorreo\Edit.cshtml" />
+    <Content Include="Views\PlantillaCorreo\Index.cshtml" />
+    <Content Include="Views\Cotizacion\ObtenerPlantillas.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

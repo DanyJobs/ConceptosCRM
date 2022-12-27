@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lenguaje;
 using Model.Dao;
 using Model.Entity;
 using Model.Neg;
 
 namespace WebFacturaMvc.Controllers
 {
-    [Authorize(Roles = "ADMIN")]
+    [Authorize(Roles = "ADMIN,STANDARD")]
     public class ProductoController : Controller
     {
         private ProductoNeg objProductoNeg;
@@ -18,6 +19,7 @@ namespace WebFacturaMvc.Controllers
         private ProductoDao objProductoDao;
         private static string categoria;
         private static string marca;
+        private static string unidadMedida;
 
         public ProductoController()
         {
@@ -29,14 +31,19 @@ namespace WebFacturaMvc.Controllers
         // GET: Producto
         public ActionResult Index()
         {
-
             CategoriaNeg objCategoriaNeg = new CategoriaNeg();
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList lista = new SelectList(data, "idCategoria", "nombre");
             ViewBag.ListaCategorias = lista;
 
-            List<Producto> listaProductos = objProductoNeg.findAll();
-            return View(listaProductos);
+            Producto objProducto = new Producto();
+            objProducto.IdProducto = null;
+            objProducto.Nombre = null;
+            objProducto.Categoria = "-1";
+            objProducto.Marca = "-1";
+            List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
+
+            return View(ListaProducto);
         }
         [HttpGet]
         public ActionResult Create()
@@ -51,6 +58,8 @@ namespace WebFacturaMvc.Controllers
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion");
             ViewBag.ListaMarcas = ListaMarca;
 
+            LlenarUnidadMedida();
+
 
             mensajeInicioRegistrar();
             return View();
@@ -58,7 +67,11 @@ namespace WebFacturaMvc.Controllers
         [HttpPost]
         public ActionResult Create(Producto objProducto)
         {
-            mensajeInicioRegistrar();
+            mensajeInicioRegistrar();      
+            LlenarUnidadMedida();
+            objProductoNeg.create(objProducto);
+            MensajeErrorRegistrar(objProducto);
+
             CategoriaNeg objCategoriaNeg = new CategoriaNeg();
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList lista = new SelectList(data, "idCategoria", "nombre");
@@ -69,9 +82,22 @@ namespace WebFacturaMvc.Controllers
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion");
             ViewBag.ListaMarcas = ListaMarca;
 
-            objProductoNeg.create(objProducto);
-            MensajeErrorRegistrar(objProducto);
             return View("Create");
+        }
+        public List<SelectListItem> LlenarUnidadMedida()
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem() { Text = Recurso.Pieza, Value = Recurso.PiezaAv });         
+            lst.Add(new SelectListItem() { Text = Recurso.Litros, Value = Recurso.LitrosAv });
+            lst.Add(new SelectListItem() { Text = Recurso.Kilogramos, Value = Recurso.KilogramosAv });
+            lst.Add(new SelectListItem() { Text = Recurso.Metros, Value = Recurso.MetrosAv });
+            lst.Add(new SelectListItem() { Text = Recurso.Galon, Value = Recurso.GalonAv });
+            lst.Add(new SelectListItem() { Text = Recurso.Millas, Value = Recurso.MillasAv });
+            lst.Add(new SelectListItem() { Text = Recurso.Yardas, Value = Recurso.YardasAv });
+            lst.Add(new SelectListItem() { Text = Recurso.Pies, Value = Recurso.PiesAv });
+            lst.Add(new SelectListItem() { Text = Recurso.Libras, Value = Recurso.LibrasAv });        
+            ViewBag.UnidadMedida = lst;
+            return lst;
         }
 
         //mensaje de error
@@ -139,6 +165,7 @@ namespace WebFacturaMvc.Controllers
 
             marca = objProducto.Marca;
             categoria = objProducto.Categoria;
+            unidadMedida = objProducto.unidadMedida;
            
             List <Categoria> data = objCategoriaNeg.findAll();     
             ViewBag.Categoria = new SelectList(data, "idCategoria", "nombre", categoria);
@@ -147,8 +174,10 @@ namespace WebFacturaMvc.Controllers
             List<Marca> dataMarca = objMarcaNeg.findAll();
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
             ViewBag.Marca = ListaMarca;
-
-
+            List<SelectListItem> ListaUnidades = LlenarUnidadMedida();
+            SelectList ListaUnidadMedida = new SelectList(ListaUnidades, "Value", "Text", unidadMedida);
+            ViewBag.unidadMedida = ListaUnidadMedida;
+            //SelectList ListaUnidadMedida = new SelectList(dataMarca, "unidadMedida", "unidadMedida", marca);
             mensajeInicioActualizar();
             return View(objProducto);
         }
@@ -161,7 +190,7 @@ namespace WebFacturaMvc.Controllers
             List<Categoria> data = objCategoriaNeg.findAll();
             SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion", marca);
             SelectList lista = new SelectList(data, "idCategoria", "nombre", categoria);
-
+            LlenarUnidadMedida();
             mensajeInicioActualizar();
             try
             {
@@ -316,10 +345,15 @@ namespace WebFacturaMvc.Controllers
         [HttpGet]
         public ActionResult BuscarProductos()
         {
-            List<Producto> lista = objProductoNeg.findAll();
+            Producto objProducto = new Producto();
+            objProducto.IdProducto = null;
+            objProducto.Nombre = null;
+            objProducto.Categoria = "-1";
+            objProducto.Marca = "-1";
+            List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
             cargarCategoria();
             cargarMarca();
-            return View(lista);
+            return View(ListaProducto);
         }
 
         [HttpPost]//para buscar clientes

@@ -7,45 +7,53 @@
 <center>
     @using (Html.BeginForm())
     {
-    <div class="row col-md-12">
-        <div class="col-md-2">
-            @Html.Label("ID Pais:", new { @class = "control-label col-md-2" })
-        </div>
-        <div class="col-md-2">
-            @Html.TextBox("txtPais", ViewData["Pais"], new { @class = "form-control",@readonly="readonly" })
-        </div>
-        <div class="col-md-4">
-            @Html.TextBox("txtParametro", "", new { @class = "form-control" })
-        </div>
-        <div class="col-md-4">
+        <div class="row col-md-12">
+            <div class="col-md-2">
+                @Html.Label("ID Pais:", new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-md-2">
+                @Html.TextBox("txtPais", ViewData["Pais"], new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("txtParametro", "", new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
 
+            </div>
         </div>
-    </div>
         <input type="submit" value="Buscar" />
     }
 </center>
 <center>
     <br />
     <a class="btn btn-success" href="~/Estado/AgregarEstado?idPais=@ViewData["Pais"]">Agregar</a> <a class="btn btn-info" href="~/Pais/Index">Regresar</a>
-    <table class="table">
+    <table id="table_id" class="display responsive nowrap">
         <thead>
-            <tr class="bg-primary">                
+            <tr class="bg-primary">
                 <th>ID Estado</th>
                 <th>Nombre</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var objEstado in Model)
             {
-            <tr>                
-                <td>@objEstado.IdEstado</td>
-                <td>@objEstado.NombreEstado</td>
-                <td><a class="btn btn-info" href="~/Ciudad/Index?idEstado=@objEstado.IdEstado"><span class="glyphicon glyphicon-eye-open">|Ciudades</span></a></td>
-                <td><a class="btn btn-warning" href="~/Estado/EditarEstado?idEstado=@objEstado.IdEstado"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
-                <td><a class="btn btn-danger" href="~/Estado/EliminarEstado?idEstado=@objEstado.IdEstado"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
-            </tr>
+                <tr>
+                    <td>@objEstado.IdEstado</td>
+                    <td>@objEstado.NombreEstado</td>
+                    <td><a class="btn btn-info" href="~/Ciudad/Index?idEstado=@objEstado.IdEstado"><span class="glyphicon glyphicon-eye-open">|Ciudades</span></a>
+                    <a class="btn btn-warning" href="~/Estado/EditarEstado?idEstado=@objEstado.IdEstado"><span class="glyphicon glyphicon-pencil">|Editar</span></a>
+                    <a class="btn btn-danger" href="~/Estado/EliminarEstado?idEstado=@objEstado.IdEstado"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>
+                </tr>
             }
 
         </tbody>
     </table>
 </center>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

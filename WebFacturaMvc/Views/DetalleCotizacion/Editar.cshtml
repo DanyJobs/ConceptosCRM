@@ -15,24 +15,27 @@
         $("a[rel='pop-up']").click(function () {
             var caracteristicas = "height=550,width=1000,scrollTo,resizable=1,scrollbars=1,location=0";
             nueva = window.open(this.href, 'popup', caracteristicas);
-
             return false;
         });
         //botones
         $("#finalizar").click(function () {
             var i = 0;
-            var envio = "{Fecha:'" + $("#id_fecha").val() + "',ModoPago:'" + $("#modoPago").val() + "',IdCliente:'" + cliente + "',IdCabecera:'2',Total:'" + $('#TotalaPagar').val() + "',notas:'" + $('#notas').val() + "',notasCompras:'" + $('#notasCompras').val() + "',estatus:'" + $('#estatus').val() + "',idVenta:'" + $('#id_venta').val() + "',";
+            var envio = "{Fecha:'" + $("#id_fecha").val() + "',ModoPago:'" + $("#modoPago").val() + "',IdCliente:'" + cliente + "',IdCabecera:'2',Total:'" + $('#TotalaPagar').val() + "',notas:'" + $('#notasInternas').val() + "',notasCompras:'" + $('#notasCompras').val() + "',estatus:'" + $('#estatus').val() + "',idVenta:'" + $('#id_venta').val() + "',";
             $("#detalle tbody tr").each(function (index) {
                 if (i == 0) {
                     envio += "ListadoDetalle:[{IdProducto:'" + $(this).find('td').eq(0).text() +
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
-                        "',Descuento:'" + $(this).find('td').eq(4).text() +
-                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}";
+                        "',Descuento:'" + $(this).find('td').eq(5).text() +
+                        "',SubTotal:'" + $(this).find('td').eq(4).text() +
+                        "',notas:'" + $(this).find('td').eq(6).text() +
+                        "'}";
                 } else {
                     envio += ",{IdProducto:'" + $(this).find('td').eq(0).text() +
                         "',Cantidad:'" + $(this).find('td').eq(2).text() +
-                        "',Descuento:'" + $(this).find('td').eq(4).text() +
-                        "',SubTotal:'" + $(this).find('td').eq(5).text() + "'}"
+                        "',Descuento:'" + $(this).find('td').eq(5).text() +
+                        "',SubTotal:'" + $(this).find('td').eq(4).text() +
+                        "',notas:'" + $(this).find('td').eq(6).text() +
+                        "'}";
                 }
                 i = 1;
             });
@@ -51,12 +54,12 @@
                 success: function (response) {
                     alertify.alert(response);
                     valid = response.valid;
-                    
+
                 },
                 error: function (error) {
                     alertify.alert(error);
                 }
-            });                        
+            });
         });
 
     });
@@ -68,20 +71,21 @@
     var cliente = @ViewData["IdCliente"];
     function obtenerCliente(Cliente) {
  /*       var watchclose = setInterval(function () {*/
-            $("#txtnombre").val(Cliente.DatosPersonales);
-            $("#idCliente").val(Cliente.Identificacion);
+        $("#txtnombre").val(Cliente.DatosPersonales);
+        $("#idCliente").val(Cliente.Identificacion);
         $("#codigoCliente").val(Cliente.Codigo);
         cliente = $("#codigoCliente").val();
  /*       });*/
     }
 
     function obtenerProductos(Producto) {
-            $("#idproducto").val(Producto.Codigo);
-            $("#nombreproducto").val(Producto.Nombre);
-            $("#marca").val(Producto.Marca);
-            $("#precio").val(Producto.Precio);
-            $("#descuento").val("0");
-            $("#cantidad").val("1");
+        $("#idproducto").val(Producto.Codigo);
+        $("#nombreproducto").val(Producto.Nombre);
+        $("#marca").val(Producto.Marca);
+        $("#precio").val(Producto.Precio);
+        $("#udm").val(Producto.unidadMedida);
+        $("#descuento").val("0");
+        $("#cantidad").val("1");
     }
 
     function fn_agregar() {
@@ -89,8 +93,10 @@
         cadena = cadena + "<td>" + $("#idproducto").val() + "</td>";
         cadena = cadena + "<td>" + $("#nombreproducto").val() + "</td>";
         cadena = cadena + "<td>" + $("#cantidad").val() + "</td>";
+        cadena = cadena + "<td>" + $("#udm").val() + "</td>";
         cadena = cadena + "<td>" + $("#precio").val() + "</td>";
         cadena = cadena + "<td>" + $("#descuento").val() + "</td>";
+        cadena = cadena + "<td>" + $("#notas").val() + "</td>";
         var y = 0;
         var x = 0;
         var des = 0;
@@ -99,7 +105,8 @@
         des = $("#descuento").val();
         subtotal = (x * y) - des;
         cadena = cadena + "<td>" + subtotal + "</td>"
-        cadena = cadena + "<td><a class='ver' href='BuscarHistorial?idproducto=" + $("#idproducto").val() + "' target='_blank' " + "><span class='fa fa-edit'></span>Ver</a></td>"
+        cadena = cadena + "<td><a class='btn btn-primary' href='BuscarHistorial?idproducto=" + $("#idproducto").val() + "' target='_blank'><span class='fa fa-edit'></span>Ver</a></td>";
+        cadena = cadena + "<td><a class='btn btn-success' href='BuscarRFQ?idproducto=" + $("#idproducto").val() + "' target='_blank'><span class='fa fa-edit'></span>RFQ</a></td>";
         cadena = cadena + "<td><a class ='elimina'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td>";
         $("#detalle tbody").append(cadena);
         sumar();
@@ -114,6 +121,8 @@
         $("#ListaProducto").val("");
         $("#cantidad").val("");
         $("#descuento").val("");
+        $("#notas").val("");
+        $("#udm").val("");
     }
     function limpiarCliente() {
         $("tbody tr #txtnombre").val('');
@@ -164,8 +173,8 @@
 @Html.Raw(TempData["msg"])
 <a style="float:right;" class="btn btn-success" href="~/Cotizacion/SendEmail" target="_blank" rel="noopener noreferrer">Enviar Email</a>
 <a style="float:right;" class="btn btn-success" href="~/Cotizacion/VentaFactura" target="_blank" rel="noopener noreferrer">Mas Facturas</a>
-<a style="float:right;" class="btn btn-success" href="~/Cotizacion/reporteActual" target="_blank" rel="noopener noreferrer"> Español</a>
-<a style="float:right;" class="btn btn-success" href="~/Cotizacion/reporteActualIngles" target="_blank" rel="noopener noreferrer">Ingles</a>
+<a style="float:right;" class="btn btn-success" href="~/DetalleCotizacion/reporteActual" target="_blank" rel="noopener noreferrer"> Español</a>
+<a style="float:right;" class="btn btn-success" href="~/DetalleCotizacion/reporteActualIngles" target="_blank" rel="noopener noreferrer">Ingles</a>
 
 <table id="encabezado" class="table">
     <thead>
@@ -213,19 +222,21 @@
 </table>
 <form action="javascript:fn_agregar()" ; method="post" id="frm_usu" class="form-horizontal">
     <table class="table">
-        <tr style="font-size:20px;">
-            <td>Id <input style="font-size:20px; font-weight:700;" type="text" id="idproducto" class="form-control" readonly required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_nombreProducto <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:20px; font-weight:700;" type="number" id="precio" class="form-control" required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="descuento" onfocus="this.value = '';" required /></td>
-            <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:20px; font-weight:700;" class="form-control" type="number" id="cantidad" onfocus="this.value = '';" required /></td>
+        <tr style="font-size:12px;">
+            <td>Id <input style="font-size:12px; font-weight:700;" type="text" id="idproducto" class="form-control" readonly required /></td>
+            <td>Producto<input style="font-size:12px; font-weight:700;" class="form-control" type="text" id="nombreproducto" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:12px; font-weight:700;" class="form-control" type="text" id="marca" readonly required /></td>
+            <td>UDM <input style="font-size:12px; font-weight:700;" class="form-control" type="text" id="udm" readonly required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:12px; font-weight:700;" type="number" id="precio" class="form-control" required /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_descuento <input style="font-size:12px; font-weight:700;" class="form-control" type="number" id="descuento" onfocus="this.value = '';" required /></td>
+            <td>Notas<input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="notas" /></td>
+            <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:12px; font-weight:700;" class="form-control" type="number" id="cantidad" onfocus="this.value = '';" required /></td>
             <td colspan="2"><input class="btn btn-primary btn-lg" type="submit" name="agregar" id="agregar" value=@Lenguaje.Recurso.Cotizacion_agregar /></td>
         </tr>
     </table>
 </form>
 <table id="detalle" class="lista table" border="1">
-    <thead style="font-size:18px;">
+    <thead style="font-size:12px;">
         <tr class="bg-success">
             <td>@Lenguaje.Recurso.Cotizacion_detalleCompra</td>
         </tr>
@@ -233,14 +244,15 @@
             <th>Id</th>
             <th>@Lenguaje.Recurso.Cotizacion_detalleProducto</th>
             <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
+            <th>UDM</th>
             <th>@Lenguaje.Recurso.Cotizacion_precio</th>
             <th>@Lenguaje.Recurso.Cotizacion_descuento</th>
+            <th>Notas</th>
             <th>Total</th>
         </tr>
     </thead>
     <tbody></tbody>
 </table>
-
 <table class="table">
     <tr>
         <td style="font-size:20px; font-weight: 700;">@Lenguaje.Recurso.Cotizacion_totalPagar</td>
@@ -250,7 +262,7 @@
     </tr>
     <tr>
         <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly value="@ViewData["Total"]" /></td>
-        <td><textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="notas" id="notas"></textarea></td>
+        <td><textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="notas" id="notasInternas"></textarea></td>
         <td><textarea style="font-size:20px; font-weight: 700;" class="form-control" rows="5" cols="50" name="notasCompras" id="notasCompras"></textarea></td>
         <td>
             @Html.DropDownList("estatus", (IEnumerable<SelectListItem>)ViewBag.Estatus, new { @class = "form-control" })
@@ -312,11 +324,13 @@
 
                     cadena = "<tr>"
                     cadena = cadena + "<td>" + item.IdProducto + "</td>";
-                    cadena = cadena + "<td>" + item.Nombre + "</td>";
+                    cadena = cadena + "<td>" + item.nombreProducto + "</td>";
                     cadena = cadena + "<td>" + item.Cantidad + "</td>";
-                    cadena = cadena + "<td>" + item.PrecioUnitario + "</td>";
+                    cadena = cadena + "<td>" + item.unidadMedida + "</td>";
+                    cadena = cadena + "<td>" + item.SubTotal + "</td>";
                     cadena = cadena + "<td>" + item.Descuento + "</td>";
-                    cadena = cadena + "<td>" + ((item.Cantidad * item.PrecioUnitario) - item.Descuento) + "</td>";
+                    cadena = cadena + "<td>" + item.notas + "</td>";
+                    cadena = cadena + "<td>" + ((item.Cantidad * item.SubTotal) - item.Descuento) + "</td>";
                     var y = 0;
                     var x = 0;
                     var des = 0;
@@ -324,7 +338,8 @@
                     x = $("#precio").val();
                     des = $("#descuento").val();
                     subtotal = (x * y) - des;
-                    cadena = cadena + "<td><a class='ver' href='/Cotizacion/BuscarHistorial?idproducto=" + item.IdProducto + "' target='_blank' " + "><span class='fa fa-edit'></span>Ver</a></td>"
+                    cadena = cadena + "<td><a class='btn btn-primary' href='BuscarHistorial?idproducto=" + item.IdProducto+"' target='_blank'><span class='fa fa-edit'></span>Ver</a></td>";
+                    cadena = cadena + "<td><a class='btn btn-success' href='BuscarRFQ?idproducto=" + item.IdProducto+"' target='_blank'><span class='fa fa-edit'></span>RFQ</a></td>";                   
                     cadena = cadena + "<td><a class ='elimina'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td>";
                     $("#detalle tbody").append(cadena);
                     fn_dar_eliminar2();
@@ -335,10 +350,9 @@
 </script>
 <script>
     $(document).ready(function () {
-        $("#notas").val('@ViewData["Notas"]');
+        $("#notasInternas").val('@ViewData["Notas"]');
         $("#notasCompras").val('@ViewData["NotasCompras"]');
         $("#estatus").val('@ViewData["Status"]');
-
     });
 </script>
 

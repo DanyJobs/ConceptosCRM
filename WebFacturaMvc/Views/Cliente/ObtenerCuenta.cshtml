@@ -1,0 +1,62 @@
+﻿
+@model IEnumerable<WebFacturaMvc.Datos.cuenta>
+@{
+    ViewBag.Title = "Buscar Cuenta";
+    Layout = "~/Views/Shared/_LayoutNulo.cshtml";
+}
+<link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tbcuenta tbody tr").dblclick(function () {
+            var Cuenta = {};
+            var n, a;
+            n = Cuenta.Codigo = $(this).children().eq('0').text();
+            a = Cuenta.Nombre = $(this).children().eq('1').text();
+            window.opener.obtenerCuenta(Cuenta);
+            window.close();
+        });
+    });
+</script>
+
+
+<div class="panel-heading" style="background:#2C3E50; color:#ffffff;"><h2 style="text-align:center; font-family:Arial; font-weight:100;">Buscar Cuenta por:</h2></div>
+<br />
+<table class="display responsive nowrap" id="tbcuenta">
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objCuenta in Model)
+        {
+            <tr>
+                <th>@objCuenta.idCuenta</th>
+                <th>@objCuenta.nombreCuenta</th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-primary text-danger text-center">
+    @ViewBag.MensajeError;
+</div>
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbcuenta').DataTable();
+        });
+    </script>
+}
+
+<script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/jquery/jquery.min.js"></script>

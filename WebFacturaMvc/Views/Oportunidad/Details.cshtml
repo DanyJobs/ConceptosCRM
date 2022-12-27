@@ -1,0 +1,90 @@
+﻿@model WebFacturaMvc.Datos.oportunidad
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>oportunidad</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.notas)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.notas)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.acciones)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.acciones)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.venta)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.venta)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.costo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.costo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.estatus)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.estatus)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.porcentaje)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.porcentaje)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AspNetUsers.Email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cotizacion1.idVendedor)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cotizacion1.idVendedor)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.idOportunidad }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

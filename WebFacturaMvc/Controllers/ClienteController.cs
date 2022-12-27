@@ -1,13 +1,19 @@
 ﻿using Model.Entity;
+using Lenguaje;
 using Model.Neg;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using WebFacturaMvc.Datos;
+using System.Linq;
+using System;
+using Microsoft.Ajax.Utilities;
 
 namespace WebFacturaMvc.Controllers
 {
     [Authorize(Roles = "ADMIN,STANDARD")]
     public class ClienteController : Controller
     {
+        private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         ClienteNeg objClienteNeg;
         public ClienteController()
         {
@@ -30,6 +36,9 @@ namespace WebFacturaMvc.Controllers
         public ActionResult Create(Cliente objCliente)
         {
             mensajeInicioRegistrar();
+            if (String.IsNullOrWhiteSpace(objCliente.Cuenta.ToString())) {
+                objCliente.Cuenta = 0;
+            }
             objClienteNeg.create(objCliente);
             MensajeErrorRegistrar(objCliente);
             ModelState.Clear();
@@ -39,7 +48,6 @@ namespace WebFacturaMvc.Controllers
         //mensaje de error
         public void MensajeErrorRegistrar(Cliente objCliente)
         {
-
             switch (objCliente.Estado)
             {
                 //case 10://campo codigo vacio
@@ -49,58 +57,58 @@ namespace WebFacturaMvc.Controllers
                 //    ViewBag.MensajeError = "No se permiten mas de 5 caracteres en al campo Codigo";
                 //    break;
                 case 1000://campo nombre vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE;
+                    ViewBag.MensajeError = Recurso.Mensaje_DNIE;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_NC;
+                    ViewBag.MensajeError = Recurso.Mensaje_NC;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_NCE;
+                    ViewBag.MensajeError = Recurso.Mensaje_NCE;
                     break;
 
                 case 30://campo Apellido Paterno vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AP;
+                    ViewBag.MensajeError = Recurso.Mensaje_AP;
                     break;
 
                 case 3://error de Apellido Paterno
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_APE;
+                    ViewBag.MensajeError = Recurso.Mensaje_APE;
                     break;
 
                 case 40://campo Apellido Materno vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AM;
+                    ViewBag.MensajeError = Recurso.Mensaje_AM;
                     break;
 
                 case 4://error de Apellido Materno
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AME;
+                    ViewBag.MensajeError = Recurso.Mensaje_AME;
                     break;
 
                 case 50://campo dni vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNI;
+                    ViewBag.MensajeError = Recurso.Mensaje_DNI;
                     break;
                 case 5://error de dni
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE2;
+                    ViewBag.MensajeError = Recurso.Mensaje_DNIE2;
                     break;
                 case 60://campo de direccion vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DC;
+                    ViewBag.MensajeError = Recurso.Mensaje_DC;
                     break;
                 case 6://error de direccion
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DCE;
+                    ViewBag.MensajeError = Recurso.Mensaje_DCE;
                     break;
                 case 70://campo telefono vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TC;
+                    ViewBag.MensajeError = Recurso.Mensaje_TC;
                     break;
                 case 7://error de direccion
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TCE;
+                    ViewBag.MensajeError = Recurso.Mensaje_TCE;
                     break;
                 case 8://error de duplicidad
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_dup1 + objCliente.IdCliente + Lenguaje.Recurso.Mensaje_dup2;
+                    ViewBag.MensajeError = Recurso.Mensaje_dup1 + objCliente.IdCliente + Recurso.Mensaje_dup2;
                     break;
                 case 9://error de duplicidad
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_dup3 + objCliente.Email + Lenguaje.Recurso.Mensaje_dup4;
+                    ViewBag.MensajeError = Recurso.Mensaje_dup3 + objCliente.Email + Recurso.Mensaje_dup4;
                     break;
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = Lenguaje.Recurso.Mensaje_dup5 + objCliente.Nombre + " " + objCliente.Apellido + Lenguaje.Recurso.Mensaje_dup6;
+                    ViewBag.MensajeExito = Recurso.Mensaje_dup5 + objCliente.Nombre + " " + objCliente.Apellido + Recurso.Mensaje_dup6;
                     break;
 
             }
@@ -109,7 +117,7 @@ namespace WebFacturaMvc.Controllers
 
         public void mensajeInicioRegistrar()
         {
-            ViewBag.MensajeInicio = Lenguaje.Recurso.MensajeInicio_cliente;
+            ViewBag.MensajeInicio = Recurso.MensajeInicio_cliente;
         }
 
 
@@ -138,59 +146,59 @@ namespace WebFacturaMvc.Controllers
             switch (objCliente.Estado)
             {
                 case 10://campo codigo vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_CC;
+                    ViewBag.MensajeError = Recurso.MensajeA_CC;
                     break;
                 case 1://error campo cadigo
-                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_CCE;
+                    ViewBag.MensajeError = Recurso.MensajeA_CCE;
                     break;
                 case 20://campo nombre vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_NC;
+                    ViewBag.MensajeError = Recurso.MensajeA_NC;
                     break;
 
                 case 2://error de nombre
-                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeA_NCE;
+                    ViewBag.MensajeError = Recurso.MensajeA_NCE;
                     break;
 
                 case 30://campo Apellido Paterno vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AP;
+                    ViewBag.MensajeError = Recurso.Mensaje_AP;
                     break;
 
                 case 3://error de Apellido Paterno
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_APE;
+                    ViewBag.MensajeError = Recurso.Mensaje_APE;
                     break;
 
                 case 40://campo Apellido Materno vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AM;
+                    ViewBag.MensajeError = Recurso.Mensaje_AM;
                     break;
 
                 case 4://error de Apellido Materno
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_AME;
+                    ViewBag.MensajeError = Recurso.Mensaje_AME;
                     break;
 
                 //case 50://campo dni vacio
-                //    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNI;
+                //    ViewBag.MensajeError = Recurso.Mensaje_DNI;
                 //    break;
                 //case 5://error de dni
-                //    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DNIE2;
+                //    ViewBag.MensajeError = Recurso.Mensaje_DNIE2;
                 //    break;
                 case 60://campo de direccion vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DC;
+                    ViewBag.MensajeError = Recurso.Mensaje_DC;
                     break;
                 case 6://error de direccion
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_DCE;
+                    ViewBag.MensajeError = Recurso.Mensaje_DCE;
                     break;
                 case 70://campo telefono vacio
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TC;
+                    ViewBag.MensajeError = Recurso.Mensaje_TC;
                     break;
                 case 7://error de direccion
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_TCE;
+                    ViewBag.MensajeError = Recurso.Mensaje_TCE;
                     break;
                 case 9://error de duplicidad
-                    ViewBag.MensajeError = Lenguaje.Recurso.Mensaje_dup3 + objCliente.Email + Lenguaje.Recurso.Mensaje_dup4;
+                    ViewBag.MensajeError = Recurso.Mensaje_dup3 + objCliente.Email + Recurso.Mensaje_dup4;
                     break;
 
                 case 99://carrera registrada con exito
-                    ViewBag.MensajeExito = Lenguaje.Recurso.MensajeA_dup1 + objCliente.IdCliente + Lenguaje.Recurso.MensajeA_dup2;
+                    ViewBag.MensajeExito = Recurso.MensajeA_dup1 + objCliente.IdCliente + Recurso.MensajeA_dup2;
                     break;
 
             }
@@ -199,7 +207,7 @@ namespace WebFacturaMvc.Controllers
         //mensjae inicial actualizar
         public void mensajeInicialActualizar()
         {
-            ViewBag.MensajeInicialActualizar = Lenguaje.Recurso.MensajeA_inicial;
+            ViewBag.MensajeInicialActualizar = Recurso.MensajeA_inicial;
         }
 
         [HttpGet]
@@ -248,17 +256,17 @@ namespace WebFacturaMvc.Controllers
             switch (objCliente.Estado)
             {
                 case 1: //ERROR DE EXISTENCIA
-                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeE_1 + objCliente.IdCliente + Lenguaje.Recurso.MensajeE_2;
+                    ViewBag.MensajeError = Recurso.MensajeE_1 + objCliente.IdCliente + Recurso.MensajeE_2;
                     break;
 
                 case 33://CLIENTE NO EXISTE
-                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeE_1 + objCliente.Apellido + ", " + objCliente.Nombre + Lenguaje.Recurso.MensajeE_3;
+                    ViewBag.MensajeError = Recurso.MensajeE_1 + objCliente.Apellido + ", " + objCliente.Nombre + Recurso.MensajeE_3;
                     break;
                 case 34:
-                    ViewBag.MensajeError = Lenguaje.Recurso.MensajeE_4 + objCliente.Apellido + ", " + objCliente.Nombre + Lenguaje.Recurso.MensajeE_5;
+                    ViewBag.MensajeError = Recurso.MensajeE_4 + objCliente.Apellido + ", " + objCliente.Nombre + Recurso.MensajeE_5;
                     break;
                 case 99: //EXITO
-                    ViewBag.MensajeExito = Lenguaje.Recurso.MensajeE_1 + objCliente.Apellido + ", " + objCliente.Nombre + Lenguaje.Recurso.MensajeE_6;
+                    ViewBag.MensajeExito = Recurso.MensajeE_1 + objCliente.Apellido + ", " + objCliente.Nombre + Recurso.MensajeE_6;
                     break;
 
                 default:
@@ -268,7 +276,7 @@ namespace WebFacturaMvc.Controllers
         }
         public void mensajeInicialEliminar()
         {
-            ViewBag.MensajeInicialEliminar = Lenguaje.Recurso.MensajeE_inicial;
+            ViewBag.MensajeInicialEliminar = Recurso.MensajeE_inicial;
         }
 
         public ActionResult Find(long id)
@@ -309,6 +317,12 @@ namespace WebFacturaMvc.Controllers
 
             List<Cliente> cliente = objClienteNeg.findAllClientes(objCliente);
             return View(cliente);
+        }
+
+        [HttpGet]
+        public ActionResult ObtenerCuenta()
+        {
+            return View(db.cuenta.ToList());
         }
     }
 }

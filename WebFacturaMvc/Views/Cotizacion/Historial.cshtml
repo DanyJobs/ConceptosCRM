@@ -47,12 +47,12 @@
     });
 
     function Envio() {
-        if ($("#dias").val()!=null) {
+        if ($("#dias").val() != null) {
             ListaDetalle += "Dias:'" + $("#dias").val() + "'";
 
         } else {
             ListaDetalle += "Dias:'3'";
-        }        
+        }
         ListaDetalle += "}";
         console.log(ListaDetalle);
         var json = eval("(" + ListaDetalle + ')'); //
@@ -133,8 +133,8 @@
 
         } else {
             alertify.error("Se debe seleccionar un registro");
-        }  
-        $('input').filter(':checkbox').prop('checked', false);     
+        }
+        $('input').filter(':checkbox').prop('checked', false);
     }
 
 
@@ -196,17 +196,17 @@
 <a class="btn btn-primary" onclick="refrescar()"><span class="glyphicon glyphicon-refresh"></span>Refrescar</a>
 <input class="btn btn-primary" type="button" id="preEnvio" onclick="preEnvio()" value="Enviar Correos" />
 
-<br/>
-<br/>
+<br />
+<br />
 
-<table class="table" id="table">
+<table id="tbTable" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th><input type="checkbox" id="checkTodos" value="checkTodos"></th>
             <th>Id Venta</th>
             <th>Total</th>
-            <th>Cliente</th>     
-            <th>Fecha</th>       
+            <th>Cliente</th>
+            <th>Fecha</th>
             <th>Estatus</th>
             <th></th>
         </tr>
@@ -215,17 +215,17 @@
         @foreach (var objCotizacion in Model)
         {
             <tr align="center" id="tabla">
-                <td> @Html.CheckBox("Accion", new { @class = "control-label col-md-7", @value = @objCotizacion.IdVenta}) </td>
+                <td> @Html.CheckBox("Accion", new { @class = "control-label col-md-7", @value = @objCotizacion.IdVenta }) </td>
                 <td>@objCotizacion.IdVenta</td>
                 <td>@objCotizacion.Total</td>
                 <td>@objCotizacion.Cliente</td>
-                <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>             
+                <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>
                 <td>@objCotizacion.estatus</td>
                 <td>
                     <a class="btn btn-danger" onclick="EditarEstatusSeguimiento(@objCotizacion.IdVenta)">
                         <span class="glyphicon glyphicon-remove"> Cancelar Seguimiento</span>
-                    </a>                
-                </td>               
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
@@ -239,15 +239,22 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <input class="form-control" type="number" id="dias" min="0" max="30" placeholder="0"/>
+                <input class="form-control" type="number" id="dias" min="0" max="30" placeholder="0" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <input class="btn btn-primary" type="button" id="Envio" onclick="Envio()" value="Aceptar" />
+                <input class="btn btn-primary" type="button" id="Envio" onclick="Envio()" value="Aceptar"/>
             </div>
         </div>
     </div>
 </div>
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbTable').DataTable();
+        });
+    </script>
+}
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>

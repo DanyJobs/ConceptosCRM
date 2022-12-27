@@ -26,6 +26,8 @@ namespace WebFacturaMvc.Datos
             this.EmailMarketing = new HashSet<EmailMarketing>();
             this.envio = new HashSet<envio>();
             this.agenda = new HashSet<agenda>();
+            this.RFQ = new HashSet<RFQ>();
+            this.oportunidad = new HashSet<oportunidad>();
         }
     
         public string Id { get; set; }
@@ -62,5 +64,9 @@ namespace WebFacturaMvc.Datos
         public virtual ICollection<envio> envio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<agenda> agenda { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RFQ> RFQ { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<oportunidad> oportunidad { get; set; }
     }
 }

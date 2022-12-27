@@ -1,151 +1,156 @@
 ﻿@using WebFacturaMvc.Models
-
-
 @model LoginViewModel
 @{
     ViewBag.Title = "Iniciar sesión";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-    
+
 <head>
-    <link rel="shortcut icon" href="~/Utilidades/Imagenes/logo conceptos Icon.png">
+    <title>Login V1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Css/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Css/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Css/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Css/main.css">
+    <link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <style>
+        html, body {
+            height: 100%;
+            overflow: hidden
+        }
+
+
+        .password-icon {
+            float: right;
+            position: relative;
+            margin: -25px 15px 0 0;
+            cursor: pointer;
+        }
+        .custom-input-group-style-1 .input-group-append {
+            position: absolute;
+            right: 5px;
+            top: 8px;
+            height: 100%;
+        }
+
+            .custom-input-group-style-1 .input-group-append .input-group-text {
+                background: transparent;
+                border: none;
+            }
+    </style>
 </head>
 
-<!--<link href="~/Content/login.css" rel="stylesheet" type="text/css">-->
-<center><h2>@Lenguaje.Recurso.Inicio_de_sesion</h2></center>
-<style>
-    body {
-        background-color: #E1DCDC;
-        background-size: cover;
-    }
+<body>
 
-    .main-section {
-        margin: 0 auto;
-        margin-top: 5%;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .modal-content {
-        background-color: #000000;
-        opacity: .85;
-        padding: 0 20px;
-        box-shadow: 0px 0px 3px #848484;
-    }
-
-    .user-img {
-        margin-top: -50px;
-        margin-bottom: 35px;
-    }
-
-        .user-img img {
-            width: 100px;
-            height: 100px;
-            box-shadow: 0px 0px 3px #848484;
-            border-radius: 50%;
-        }
-
-    .form-group input {
-        height: 42px;
-        font-size: 18px;
-        border: 0;
-        padding-left: 54px;
-        border-radius: 5px;
-    }
-
-    .form-group::before {
-        font-family: "Font Awesome\ 5 Free";
-        position: absolute;
-        left: 28px;
-        font-size: 22px;
-        padding-top: 4px;
-    }
-
-    .form-group#user-group::before {
-        content: "\f007";
-    }
-
-    .form-group#contrasena-group::before {
-        content: "\f023";
-    }
-
-    button {
-        width: 40%;
-        margin-bottom: 5%;
-    }
-
-    .btn {
-        width: 40%;
-        margin-top: 5%;
-        margin-bottom: 5%;
-    }
-
-    .forgot {
-        padding: 5px 0;
-    }
-
-        .forgot a {
-            color: white;
-        }
-
-    .checkbox {
-        color: aliceblue;
-    }
-</style>
-<center>
-    <h2>@Lenguaje.Recurso.Cuenta_Local</h2>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-</center>
-<div class="container">
-    <center>
-        <div class="row">
-            <!--<div class="modal-dialog text-center">-->
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <div class="col-12 main-section">
-                    <div class="modal-content">
-                        <div class="col-12 user-img">
-                            <img src="~/Img/user.jpeg" />
-                        </div>
-                        <form class="col-12">
-                            <div class="form-group" id="user-group">
-                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group" id="contrasena-group">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.RememberMe)
-                                    @Html.LabelFor(m => m.RememberMe)
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>@Lenguaje.Recurso.Ingresar</button>
-                        </form>
-                    </div>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="~/Img/logoconceptoslogin.png" />
                 </div>
-            }
-            <!--</div>-->
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-10">
-                <img src="~/Img/logo conceptos.png" />
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <span class="login100-form-title">
+                        @Lenguaje.Recurso.Inicio_de_sesion
+                    </span>                    
+
+                    <div class="wrap-input100 validate-input">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "input100", @placeholder = @Lenguaje.Recurso.Usuario })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+                    <div class="input-group custom-input-group-style-1">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        @Html.PasswordFor(m => m.Password, new { @class = "input100", @placeholder = @Lenguaje.Recurso.Contrasena })
+                        <span class="input-group-append">
+                            <span class="input-group-text">
+                                <a id="show_password" class="btn btn-outline-secondary" onclick="mostrarPassword()"><span class="fa fa-eye-slash icon"></span></a>
+                            </span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    <div class="txt3">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "txt3" })
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>  
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-12">
+                        <span class="txt1">
+                            Forgot
+                        </span>
+                        <a class="txt2" href="#">
+                            Username / Password?
+                        </a>
+                    </div>
+
+                    <div class="text-center p-t-136">
+                        <a class="txt2" href="#">
+                            Create your Account
+                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                }
             </div>
         </div>
-    </center>
-</div>
+    </div>
+    <!--===============================================================================================-->
+    <script src="~/Assets/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/bootstrap/js/popper.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Css/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/Js/main.js"></script>
+    <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function mostrarPassword() {
+            var cambio = document.getElementById("Password");
+            if (cambio.type == "password") {
+                cambio.type = "text";
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            } else {
+                cambio.type = "password";
+                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        }
 
+        $(document).ready(function () {
+            //CheckBox mostrar contraseña
+            $('#ShowPassword').click(function () {
+                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+            });
+        });
+    </script>
+      
 
-<!--<div class="col-md-4">
-    <section id="socialLoginForm">
-        Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-    </section>
-</div>-->
-@*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@
+</body>

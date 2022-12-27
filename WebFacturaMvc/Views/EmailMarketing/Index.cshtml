@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebFacturaMvc.Datos.EmailMarketing>
 
 @{
-  
+
 }
 
 <!DOCTYPE html>
@@ -15,45 +15,55 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dias)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fechaComienzo)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dias)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fechaComienzo)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.idMarketing }) |
-                @Html.ActionLink("Details", "Details", new { id=item.idMarketing }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.idMarketing })
-            </td>
-        </tr>
-    }
-    
+    <table id="tbEmailMarketing" class="display responsive nowrap">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.dias)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaComienzo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dias)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaComienzo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.idMarketing }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.idMarketing }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.idMarketing })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </body>
 </html>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbEmailMarketing').DataTable();
+        });
+    </script>
+}

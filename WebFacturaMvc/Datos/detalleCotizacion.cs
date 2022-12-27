@@ -20,7 +20,7 @@ namespace WebFacturaMvc.Datos
         public float subTotal { get; set; }
         public string idProducto { get; set; }
         public decimal descuento { get; set; }
-        public int cantidad { get; set; }
+        public Nullable<int> cantidad { get; set; }
         public string notas { get; set; }
     
         public virtual cotizacion cotizacion { get; set; }

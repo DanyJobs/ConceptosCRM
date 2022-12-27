@@ -14,8 +14,12 @@ namespace Model.Entity
         public string bandaAncha;
         public int channels;
         //Para la parte de editar
-        private int cantidad;
+        private decimal cantidad;
         private decimal descuento;
+        [Display(Name = "Unidad de Medida:")]
+        public string unidadMedida { get; set; }
+        public string notas { get; set; }
+        
 
 
         public int Estado
@@ -29,7 +33,7 @@ namespace Model.Entity
                 estado = value;
             }
         }
-        public int Cantidad
+        public decimal Cantidad
         {
             get
             {
@@ -153,7 +157,7 @@ namespace Model.Entity
         {
             this.idProducto = idProducto;
         }
-        public Producto(string idProducto, string nombre, double precioUnitario, string categoria, string marca, string bandaAncha, int channels)
+        public Producto(string idProducto, string nombre, double precioUnitario, string categoria, string marca, string bandaAncha, int channels,string unidadMedida)
         {
             this.idProducto = idProducto;
             this.Nombre = nombre;
@@ -162,6 +166,7 @@ namespace Model.Entity
             this.Marca = marca;
             this.BandaAncha = bandaAncha;
             this.Channels = channels;
+            this.unidadMedida = unidadMedida;
         }
     }
 }

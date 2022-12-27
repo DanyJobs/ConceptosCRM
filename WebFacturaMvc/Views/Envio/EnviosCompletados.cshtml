@@ -27,7 +27,7 @@
     <input type="submit" value="Filtrar" />
 }
 <center><button onclick="exportTableToExcel('tblData')">Export Excel</button></center>
-<table class="table" id="tblData">
+<table id="tblData" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th>ID Envio</th>
@@ -37,6 +37,7 @@
             <th>No.Tracking</th>
             <th>Fecha</th>
             <th>Responsable</th>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -50,8 +51,8 @@
                 <td>@objEnvios.NumeroGuia</td>
                 <td>@objEnvios.Fecha.ToString("MM/dd/yyyy")</td>
                 <td>@objEnvios.UsuarioEnvio</td>
-                <td><a class="btn btn-warning" href="~/Envio/Editar?idEnvio=@objEnvios.IdEnvio"><span class="glyphicon glyphicon-map-marker">Editar-Guia</span></a></td>
-                <td><a class="btn btn-danger" href="~/Envio/EliminarPreview?idEnvio=@objEnvios.IdEnvio"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
+                <td><a class="btn btn-warning" href="~/Envio/Editar?idEnvio=@objEnvios.IdEnvio"><span class="glyphicon glyphicon-map-marker">Editar-Guia</span></a>
+                <a class="btn btn-danger" href="~/Envio/EliminarPreview?idEnvio=@objEnvios.IdEnvio"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
             </tr>
         }
 
@@ -89,3 +90,10 @@
         }
     }
 </script>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+        });
+    </script>
+}

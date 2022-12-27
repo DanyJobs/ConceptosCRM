@@ -39,6 +39,34 @@ namespace WebFacturaMvc.Controllers
             MensajeErrorRegistrar(objCategoria);
             return View("Create");
         }
+
+
+        [HttpGet]
+        public ActionResult CreateProducto()
+        {
+            mensajeInicioRegistrar();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProducto(Categoria objCategoria)
+        {
+            mensajeInicioRegistrar();
+            objCategoriaNeg.create(objCategoria);
+            MensajeErrorRegistrar(objCategoria);
+        
+            List<Categoria> data = objCategoriaNeg.findAll();
+            SelectList lista = new SelectList(data, "idCategoria", "nombre");
+            ViewBag.ListaCategorias = lista;
+
+            MarcaNeg objMarcaNeg = new MarcaNeg();
+            List<Marca> dataMarca = objMarcaNeg.findAll();
+            SelectList ListaMarca = new SelectList(dataMarca, "idMarca", "descripcion");
+            ViewBag.ListaMarcas = ListaMarca;
+
+            return RedirectToAction("ObtenerCategoria");
+        }
+
         //mensaje de error
         public void MensajeErrorRegistrar(Categoria objCategoria)
         {
@@ -211,6 +239,14 @@ namespace WebFacturaMvc.Controllers
                     ViewBag.MensajeError = "ERROR DE SERVIDOR DE SQL SERVER";
                     break;
             }
+        }
+        //[HttpGet]
+        public ActionResult ObtenerCategoria()
+        {
+            Categoria objCategoria = new Categoria();
+            List<Categoria> lista = objCategoriaNeg.findAll();
+            mensajeErrorServidor(objCategoria);
+            return View(lista);
         }
 
 

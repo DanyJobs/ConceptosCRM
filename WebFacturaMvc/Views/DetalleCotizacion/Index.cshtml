@@ -63,14 +63,16 @@
 
     <input type="submit" value="Buscar" />
 }
-<table class="table">
+<table id="tbTable" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th>Id Venta</th>
             <th>Total</th>
             <th>Cliente</th>
+            <th>Vendedor</th>
             <th>Fecha</th>
             <th>IVA(%)</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -80,16 +82,22 @@
                 <td>@objCotizacion.IdVenta</td>
                 <td>@objCotizacion.Total</td>
                 <td>@objCotizacion.Cliente</td>
+                <td>@objCotizacion.IdVendedor</td>
                 <td>@objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy")</td>
                 <td>@objCotizacion.Iva</td>
-
-                <td><a class="btn btn-info" href="~/DetalleCotizacion/DetalleCotizacion?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-eye-open">|Verdetalles</span></a></td>
-                <td><a class="btn btn-warning" href="~/DetalleCotizacion/Editar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
-                <td><a class="btn btn-danger" href="~/DetalleCotizacion/PreEliminar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
-                <td><a class="btn btn-info" onclick="RFQ(@objCotizacion.IdVenta)"><span class="glyphicon glyphicon-check">Enviar a RFQ</span></a></td>
+                <td><a class="btn btn-info" href="~/DetalleCotizacion/DetalleCotizacion?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-eye-open">|Verdetalles</span></a>
+                <a class="btn btn-warning" href="~/DetalleCotizacion/Editar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-pencil">|Editar</span></a>
+                <a class="btn btn-danger" href="~/DetalleCotizacion/PreEliminar?idVenta=@objCotizacion.IdVenta"><span class="glyphicon glyphicon-remove">|Eliminar</span></a>
+                <a class="btn btn-info" onclick="RFQ(@objCotizacion.IdVenta)"><span class="glyphicon glyphicon-check">Enviar a RFQ</span></a></td>
             </tr>
         }
 
     </tbody>
 </table>
-
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tbTable').DataTable();
+        });
+    </script>
+}

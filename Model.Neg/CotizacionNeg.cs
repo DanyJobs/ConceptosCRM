@@ -167,9 +167,9 @@ namespace Model.Neg
         {
             return objCotizacionDao.find(objCotizacion);
         }
-        public List<Cotizacion> findAll()
+        public List<Cotizacion> findAll(string Usuario)
         {
-            return objCotizacionDao.findAll();
+            return objCotizacionDao.findAll(Usuario);
         }
         //Para la parte de mostrar las cotizaciones y editar
         public List<Cotizacion> buscar()
@@ -260,6 +260,6 @@ namespace Model.Neg
         public string eliminadosRFQ(RFQItemEliminado objRFQ)
         {
             return objCotizacionDao.eliminadosRFQ(objRFQ);
-        }
+        }      
     }
 }

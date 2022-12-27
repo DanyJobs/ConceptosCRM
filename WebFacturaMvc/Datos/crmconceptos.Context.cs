@@ -38,7 +38,6 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<modoPago> modoPago { get; set; }
         public virtual DbSet<tipoEmpleado> tipoEmpleado { get; set; }
         public virtual DbSet<compra> compra { get; set; }
-        public virtual DbSet<compraDetalle> compraDetalle { get; set; }
         public virtual DbSet<existencia> existencia { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<proveedor> proveedor { get; set; }
@@ -57,7 +56,13 @@ namespace WebFacturaMvc.Datos
         public virtual DbSet<envio> envio { get; set; }
         public virtual DbSet<paqueteria> paqueteria { get; set; }
         public virtual DbSet<agenda> agenda { get; set; }
+        public virtual DbSet<cuenta> cuenta { get; set; }
+        public virtual DbSet<RFQ> RFQ { get; set; }
+        public virtual DbSet<RFQItem> RFQItem { get; set; }
+        public virtual DbSet<compraDetalle> compraDetalle { get; set; }
         public virtual DbSet<ventaDetalle> ventaDetalle { get; set; }
+        public virtual DbSet<oportunidad> oportunidad { get; set; }
+        public virtual DbSet<PlantillaCorreo> PlantillaCorreo { get; set; }
     
         public virtual int reporte_factura(string idPedido)
         {
@@ -139,9 +144,13 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
         }
     
-        public virtual ObjectResult<SP_Buscar_Cotizacion_Result> SP_Buscar_Cotizacion()
+        public virtual ObjectResult<SP_Buscar_Cotizacion_Result> SP_Buscar_Cotizacion(string idUsuario)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Buscar_Cotizacion_Result>("SP_Buscar_Cotizacion");
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("idUsuario", idUsuario) :
+                new ObjectParameter("idUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Buscar_Cotizacion_Result>("SP_Buscar_Cotizacion", idUsuarioParameter);
         }
     
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -251,15 +260,15 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAgregarCompra", idCompraParameter, totalParameter, fechaCompraParameter, idSucursalParameter, idProveedorParameter);
         }
     
-        public virtual int spAgregarCompraDetalle(Nullable<int> idCompra, Nullable<int> idProducto, Nullable<int> cantidad, Nullable<int> precio)
+        public virtual int spAgregarCompraDetalle(Nullable<int> idCompra, string idProducto, Nullable<int> cantidad, Nullable<int> precio)
         {
             var idCompraParameter = idCompra.HasValue ?
                 new ObjectParameter("idCompra", idCompra) :
                 new ObjectParameter("idCompra", typeof(int));
     
-            var idProductoParameter = idProducto.HasValue ?
+            var idProductoParameter = idProducto != null ?
                 new ObjectParameter("idProducto", idProducto) :
-                new ObjectParameter("idProducto", typeof(int));
+                new ObjectParameter("idProducto", typeof(string));
     
             var cantidadParameter = cantidad.HasValue ?
                 new ObjectParameter("cantidad", cantidad) :
@@ -522,11 +531,15 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarCotizacion", idVentaParameter, totalParameter, idClienteParameter, idVendedorParameter, fechaParameter, iVAParameter, notasParameter, notasComprasParameter, estatusParameter);
         }
     
-        public virtual int sp_actualizarDetalleCotizacion(Nullable<int> idVenta, Nullable<float> subTotal, string idProducto, Nullable<decimal> descuento, Nullable<int> cantidad)
+        public virtual int sp_actualizarDetalleCotizacion(Nullable<int> idVenta, Nullable<decimal> codigoFactura, Nullable<float> subTotal, string idProducto, Nullable<decimal> descuento, Nullable<int> cantidad, string notas)
         {
             var idVentaParameter = idVenta.HasValue ?
                 new ObjectParameter("IdVenta", idVenta) :
                 new ObjectParameter("IdVenta", typeof(int));
+    
+            var codigoFacturaParameter = codigoFactura.HasValue ?
+                new ObjectParameter("codigoFactura", codigoFactura) :
+                new ObjectParameter("codigoFactura", typeof(decimal));
     
             var subTotalParameter = subTotal.HasValue ?
                 new ObjectParameter("SubTotal", subTotal) :
@@ -544,7 +557,11 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("Cantidad", cantidad) :
                 new ObjectParameter("Cantidad", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarDetalleCotizacion", idVentaParameter, subTotalParameter, idProductoParameter, descuentoParameter, cantidadParameter);
+            var notasParameter = notas != null ?
+                new ObjectParameter("Notas", notas) :
+                new ObjectParameter("Notas", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarDetalleCotizacion", idVentaParameter, codigoFacturaParameter, subTotalParameter, idProductoParameter, descuentoParameter, cantidadParameter, notasParameter);
         }
     
         public virtual ObjectResult<sp_CompraConsulta_Result> sp_CompraConsulta()
@@ -799,8 +816,12 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cargarPaises_Result>("sp_cargarPaises");
         }
     
-        public virtual ObjectResult<sp_consultaVentas_Result> sp_consultaVentas(string pMonth, string pYear)
+        public virtual ObjectResult<sp_consultaVentas_Result> sp_consultaVentas(string idUsuario, string pMonth, string pYear)
         {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("idUsuario", idUsuario) :
+                new ObjectParameter("idUsuario", typeof(string));
+    
             var pMonthParameter = pMonth != null ?
                 new ObjectParameter("pMonth", pMonth) :
                 new ObjectParameter("pMonth", typeof(string));
@@ -809,7 +830,7 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("pYear", pYear) :
                 new ObjectParameter("pYear", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaVentas_Result>("sp_consultaVentas", pMonthParameter, pYearParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaVentas_Result>("sp_consultaVentas", idUsuarioParameter, pMonthParameter, pYearParameter);
         }
     
         public virtual ObjectResult<sp_consultaSalesPerson_Result> sp_consultaSalesPerson(Nullable<int> idCotizacion)
@@ -911,8 +932,12 @@ namespace WebFacturaMvc.Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarVenta", idVentaParameter);
         }
     
-        public virtual int sp_guardarVenta(Nullable<int> idCotizacion, Nullable<int> idCliente, string cP, Nullable<int> idCiudad, string calle, string numExt, string numInt, string colonia, string telefono, byte[] archivo, Nullable<System.DateTime> fecha, string vendedor)
+        public virtual int sp_guardarVenta(Nullable<int> idVenta, Nullable<int> idCotizacion, Nullable<int> idCliente, string cP, Nullable<int> idCiudad, string calle, string numExt, string numInt, string colonia, string telefono, byte[] archivo, Nullable<System.DateTime> fecha, string vendedor, string terminos)
         {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
             var idCotizacionParameter = idCotizacion.HasValue ?
                 new ObjectParameter("IdCotizacion", idCotizacion) :
                 new ObjectParameter("IdCotizacion", typeof(int));
@@ -961,7 +986,11 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("Vendedor", vendedor) :
                 new ObjectParameter("Vendedor", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_guardarVenta", idCotizacionParameter, idClienteParameter, cPParameter, idCiudadParameter, calleParameter, numExtParameter, numIntParameter, coloniaParameter, telefonoParameter, archivoParameter, fechaParameter, vendedorParameter);
+            var terminosParameter = terminos != null ?
+                new ObjectParameter("Terminos", terminos) :
+                new ObjectParameter("Terminos", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_guardarVenta", idVentaParameter, idCotizacionParameter, idClienteParameter, cPParameter, idCiudadParameter, calleParameter, numExtParameter, numIntParameter, coloniaParameter, telefonoParameter, archivoParameter, fechaParameter, vendedorParameter, terminosParameter);
         }
     
         public virtual ObjectResult<byte[]> sp_traerBytes(Nullable<int> idVenta)
@@ -1515,6 +1544,129 @@ namespace WebFacturaMvc.Datos
                 new ObjectParameter("idProducto", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RFQ_HISTORIAL_Result>("SP_RFQ_HISTORIAL", idProductoParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaventaDetalle_Result> sp_consultaventaDetalle(Nullable<decimal> idCotizacion, Nullable<int> idVenta, string vendedor, Nullable<int> idDetalleVenta)
+        {
+            var idCotizacionParameter = idCotizacion.HasValue ?
+                new ObjectParameter("IdCotizacion", idCotizacion) :
+                new ObjectParameter("IdCotizacion", typeof(decimal));
+    
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("IdVenta", idVenta) :
+                new ObjectParameter("IdVenta", typeof(int));
+    
+            var vendedorParameter = vendedor != null ?
+                new ObjectParameter("Vendedor", vendedor) :
+                new ObjectParameter("Vendedor", typeof(string));
+    
+            var idDetalleVentaParameter = idDetalleVenta.HasValue ?
+                new ObjectParameter("IdDetalleVenta", idDetalleVenta) :
+                new ObjectParameter("IdDetalleVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaventaDetalle_Result>("sp_consultaventaDetalle", idCotizacionParameter, idVentaParameter, vendedorParameter, idDetalleVentaParameter);
+        }
+    
+        public virtual int sp_EditarVentaDetalle(string opcion, Nullable<int> idDetalleVenta, Nullable<int> idVenta, Nullable<int> idProveedor, string idProducto, Nullable<decimal> precio, Nullable<int> cantidad, string notas)
+        {
+            var opcionParameter = opcion != null ?
+                new ObjectParameter("opcion", opcion) :
+                new ObjectParameter("opcion", typeof(string));
+    
+            var idDetalleVentaParameter = idDetalleVenta.HasValue ?
+                new ObjectParameter("idDetalleVenta", idDetalleVenta) :
+                new ObjectParameter("idDetalleVenta", typeof(int));
+    
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("idVenta", idVenta) :
+                new ObjectParameter("idVenta", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("idProveedor", idProveedor) :
+                new ObjectParameter("idProveedor", typeof(int));
+    
+            var idProductoParameter = idProducto != null ?
+                new ObjectParameter("idProducto", idProducto) :
+                new ObjectParameter("idProducto", typeof(string));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("precio", precio) :
+                new ObjectParameter("precio", typeof(decimal));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var notasParameter = notas != null ?
+                new ObjectParameter("notas", notas) :
+                new ObjectParameter("notas", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarVentaDetalle", opcionParameter, idDetalleVentaParameter, idVentaParameter, idProveedorParameter, idProductoParameter, precioParameter, cantidadParameter, notasParameter);
+        }
+    
+        public virtual ObjectResult<sp_reporte_po_Result> sp_reporte_po(Nullable<int> idVenta, Nullable<int> idProveedor)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("idVenta", idVenta) :
+                new ObjectParameter("idVenta", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("idProveedor", idProveedor) :
+                new ObjectParameter("idProveedor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_reporte_po_Result>("sp_reporte_po", idVentaParameter, idProveedorParameter);
+        }
+    
+        public virtual ObjectResult<sp_VentaProveedor_Result> sp_VentaProveedor(Nullable<int> idVenta)
+        {
+            var idVentaParameter = idVenta.HasValue ?
+                new ObjectParameter("idVenta", idVenta) :
+                new ObjectParameter("idVenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_VentaProveedor_Result>("sp_VentaProveedor", idVentaParameter);
+        }
+    
+        public virtual int sp_agregarCliente(string nombre, string apellido, string direccion, string telefono, string email, Nullable<int> cuenta)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("apellido", apellido) :
+                new ObjectParameter("apellido", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("direccion", direccion) :
+                new ObjectParameter("direccion", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("telefono", telefono) :
+                new ObjectParameter("telefono", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var cuentaParameter = cuenta.HasValue ?
+                new ObjectParameter("cuenta", cuenta) :
+                new ObjectParameter("cuenta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarCliente", nombreParameter, apellidoParameter, direccionParameter, telefonoParameter, emailParameter, cuentaParameter);
+        }
+    
+        public virtual ObjectResult<sp_ConsultaCliente_Result> sp_ConsultaCliente(Nullable<int> idCliente)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("idCliente", idCliente) :
+                new ObjectParameter("idCliente", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ConsultaCliente_Result>("sp_ConsultaCliente", idClienteParameter);
+        }
+    
+        public virtual ObjectResult<sp_consultaOportunidad_Result> sp_consultaOportunidad()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_consultaOportunidad_Result>("sp_consultaOportunidad");
         }
     }
 }

@@ -1,0 +1,85 @@
+﻿
+@{
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vista previa</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        hr {
+            margin: 20px;
+        }
+
+        .mitad {
+            float: left;
+            width: 50%
+        }
+
+        .unestilo {
+            font-size: 20px;
+            text-decoration: underline;
+            ;
+        }
+
+        .otroestilo {
+            border: 1px solid grey;
+            padding: 20px;
+            color: red;
+            font-style: italic;
+        }
+    </style>
+    <script type="text/javascript">
+        function VistaPrevia1() {           
+            $("#campo1").val($("#campo2").val());           
+        }
+        function VistaPrevia2(entrada, salida) {
+            $("#campo1").val($("#campo2").val());
+            document.getElementById(salida).innerHTML = document.getElementById('campo1').value.replace(/\r?\n/g, "<br>");
+        }
+    </script>
+</head>
+<body>
+    <div class="mitad">
+        Vista:
+        <input type="text" name="campo1" id="campo1" />
+        <br />
+        Textarea:
+        <textarea style="font-size: 12px; WIDTH: 1100px; HEIGHT: 500px" id="campo2" name="txt" onkeyup="javascript:VistaPrevia2(this, 'vp1');"></textarea>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />  
+ 
+    <div id="vp1" class="unestilo"></div>
+    <hr />
+
+
+</body>
+</html>

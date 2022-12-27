@@ -19,7 +19,7 @@ namespace Model.Dao
         }
         //Para la parte de mostrar las cotizaciones y generar la venta
         //Trae las cotizaciones sin necesitar ningun parametro
-        public List<Cotizacion> buscar()
+        public List<Cotizacion> buscar(string Usuario)
         {
             List<Cotizacion> listaVentas = new List<Cotizacion>();
             //Comando de uso
@@ -30,7 +30,9 @@ namespace Model.Dao
             command.CommandText = "sp_consultaVentas";
             //Se le asigna la conexión a utilizar al comando
             command.Connection = objConexinDB.getCon();
-            //Se le pasan los parametros            
+            //Se le pasan los parametros
+            System.Diagnostics.Debug.WriteLine(Usuario);
+            command.Parameters.AddWithValue("idUsuario", Usuario);
             command.Parameters.AddWithValue("pMonth", "");
             command.Parameters.AddWithValue("pYear", "");
             //Se crea el adaptador de datos
@@ -38,7 +40,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtCotizacion = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }       
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -81,7 +87,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtCotizacion = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -123,7 +133,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtCotizacion = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -153,7 +167,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtCotizacion = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -175,8 +193,9 @@ namespace Model.Dao
             command.CommandText = "sp_guardarVenta";
             //Se le asigna la conexión a utilizar al comando
             command.Connection = objConexinDB.getCon();
-            //Se le pasan los parametros            
-            command.Parameters.AddWithValue("IdCotizacion", objVenta.IdCotizacion);
+            //Se le pasan los parametros           
+            command.Parameters.AddWithValue("IdVenta", objVenta.IdVenta);
+            command.Parameters.AddWithValue("IdCotizacion", objVenta.IdCotizacion);            
             command.Parameters.AddWithValue("IdCliente", objVenta.IdCliente);
             command.Parameters.AddWithValue("CP", objVenta.CP);
             command.Parameters.AddWithValue("IdCiudad", objVenta.IdCiudad);
@@ -189,7 +208,11 @@ namespace Model.Dao
             command.Parameters.AddWithValue("Fecha", objVenta.Fecha);
             command.Parameters.AddWithValue("Vendedor", objVenta.Vendedor);
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se ejecuta el comando
             command.ExecuteNonQuery();
             //Se cierra la conexión
@@ -218,7 +241,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtVenta = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -262,7 +289,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtVenta = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -305,7 +336,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtVenta = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -344,7 +379,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtVenta = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -376,7 +415,11 @@ namespace Model.Dao
             //Se crea la tabla
             DataTable dtVenta = new DataTable();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se le da el comando al adaptador
             adapter.SelectCommand = command;
             //Se llena la tabla con el adaptador
@@ -422,9 +465,13 @@ namespace Model.Dao
             //Se le pasan los parametros            
             command.Parameters.AddWithValue("IdVenta", idVenta);
             //Se le asigna la conexión a utilizar al comando
-            command.Connection = objConexinDB.getCon();            
+            command.Connection = objConexinDB.getCon();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se ejecuta el comando
             command.ExecuteNonQuery();
             //Se cierra la conexión
@@ -447,7 +494,11 @@ namespace Model.Dao
             //Se le asigna la conexión a utilizar al comando
             command.Connection = objConexinDB.getCon();
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se ejecuta el comando
             command.ExecuteNonQuery();
             //Se cierra la conexión
@@ -476,9 +527,13 @@ namespace Model.Dao
             command.Parameters.AddWithValue("NumInt", objVenta.NumInterior);
             command.Parameters.AddWithValue("Colonia", objVenta.Colonia);
             command.Parameters.AddWithValue("Telefono", objVenta.Telefono);
-            command.Parameters.AddWithValue("Archivo", objVenta.Archivo);            
+            command.Parameters.AddWithValue("Archivo", objVenta.Archivo);
             //Se abre la conexión
-            objConexinDB.getCon().Open();
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
             //Se ejecuta el comando
             command.ExecuteNonQuery();
             //Se cierra la conexión
@@ -486,6 +541,248 @@ namespace Model.Dao
             command.Connection.Close();
 
         }
+        public List<VentaDetalle> VerVentaDetalle(int idCotizacion,int IdVenta,string vendedor)
+        {
+            List<VentaDetalle> listaCotizaciones = new List<VentaDetalle>();
+            //try
+            //{
+                comando = new SqlCommand("sp_consultaventaDetalle", objConexinDB.getCon());
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@IdCotizacion", idCotizacion);
+                comando.Parameters.AddWithValue("@IdVenta", IdVenta);
+                comando.Parameters.AddWithValue("@Vendedor", vendedor);
+                
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    comando.Connection = objConexinDB.getCon();
+                    objConexinDB.getCon().Open();
+                }
+                SqlDataReader reader = comando.ExecuteReader();
+            while (reader.Read())
+            {
+                VentaDetalle c = new VentaDetalle();
+                c.idVentaNuevo = Convert.ToInt32(reader[12].ToString());              
+                if (!reader.IsDBNull(0))
+                {
+                    c.idDetalleVenta = int.Parse(reader[0].ToString());
+                    c.idVenta = int.Parse(reader[1].ToString());
+                    if (!reader.IsDBNull(2))
+                    {
+                        c.idProveedor = int.Parse(reader[2].ToString());
+                        c.proveedor = reader[3].ToString();
+                        c.empresa = reader[4].ToString();
+                    }
+                    else
+                    {
+                        c.proveedor = "N/A";
+                        c.idProveedor = 0;
+                        c.empresa = "N/A";
+                    }
+
+                    c.idProducto = reader[5].ToString();
+                    c.nombreProducto = reader[6].ToString();
+                    c.marca = reader[7].ToString();
+                    c.unidadMedida = reader[8].ToString();
+                    if (!reader.IsDBNull(9))
+                    {
+                        c.precio = Convert.ToDouble(reader[9].ToString());
+                    }
+                    c.cantidad = Convert.ToDecimal(reader[10].ToString());
+                    c.notas = reader[11].ToString();
+                    listaCotizaciones.Add(c);
+                }
+            }
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+                objConexinDB.getCon().Close();
+                //objConexionDB.getCon().Close();
+                objConexinDB.closeDB();
+            //}
+            return listaCotizaciones;
+        }
+        public List<VentaDetalle> VerVentaDetalleInicio(int idCotizacion, string vendedor)
+        {
+            List<VentaDetalle> listaCotizaciones = new List<VentaDetalle>();
+            //try
+            //{
+            comando = new SqlCommand("sp_consultaventaDetalle", objConexinDB.getCon());
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@IdCotizacion", idCotizacion);        
+            comando.Parameters.AddWithValue("@Vendedor", vendedor);
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                comando.Connection = objConexinDB.getCon();
+                objConexinDB.getCon().Open();
+            }
+            SqlDataReader reader = comando.ExecuteReader();
+            while (reader.Read())
+            {               
+                VentaDetalle c = new VentaDetalle();
+                c.idVentaNuevo = Convert.ToInt32(reader[12].ToString());
+                System.Diagnostics.Debug.WriteLine(c.idVentaNuevo);
+                if (!reader.IsDBNull(0))
+                {
+                    c.idDetalleVenta = int.Parse(reader[0].ToString());
+                    c.idVenta = int.Parse(reader[1].ToString());
+                    if (!reader.IsDBNull(2))
+                    {
+                        c.idProveedor = int.Parse(reader[2].ToString());
+                        c.proveedor = reader[3].ToString();
+                        c.empresa = reader[4].ToString();
+                    }
+                    else
+                    {
+                        c.proveedor = "N/A";
+                        c.idProveedor = 0;
+                        c.empresa = "N/A";
+                    }
+
+                    c.idProducto = reader[5].ToString();
+                    c.nombreProducto = reader[6].ToString();
+                    c.marca = reader[7].ToString();
+                    c.unidadMedida = reader[8].ToString();
+                    if (!reader.IsDBNull(9))
+                    {
+                        c.precio = Convert.ToDouble(reader[9].ToString());
+                    }
+                    c.cantidad = Convert.ToDecimal(reader[10].ToString());
+                    c.notas = reader[11].ToString();
+                }
+                listaCotizaciones.Add(c);           
+            }
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            objConexinDB.getCon().Close();
+            //objConexionDB.getCon().Close();
+            objConexinDB.closeDB();
+            //}
+            return listaCotizaciones;
+        }
+        public string updateVentaDetalle(VentaDetalle objVenta)
+        {
+            string mensaje = "";
+            //try
+            //{
+                SqlCommand cmd = new SqlCommand("sp_EditarVentaDetalle", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@opcion", "I");
+                cmd.Parameters.AddWithValue("@idDetalleVenta", objVenta.idDetalleVenta);
+                cmd.Parameters.AddWithValue("@idVenta", objVenta.idVenta);
+                cmd.Parameters.AddWithValue("@idProveedor", objVenta.idProveedor);
+                cmd.Parameters.AddWithValue("@idProducto", objVenta.idProducto);
+                cmd.Parameters.AddWithValue("@precio", objVenta.precio);
+                cmd.Parameters.AddWithValue("@cantidad", objVenta.cantidad);
+                cmd.Parameters.AddWithValue("@notas", objVenta.notas);      
+            
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                objConexinDB.getCon().Open();
+            }
+
+            reader = cmd.ExecuteReader();
+                mensaje = "Actualizado Correctamente";
+            //}
+            //catch (Exception e)
+            //{
+                //mensaje = e.ToString();
+            //}
+            //finally
+            //{
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            //}
+            return mensaje;
+        }
+
+        public string eliminadosVentaDetalle(VentaItemEliminado objVentaDetalle)
+        {
+            string mensaje = "";
+            try
+            {
+                SqlCommand cmd = new SqlCommand("sp_EditarVentaDetalle", objConexinDB.getCon());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@opcion", "E");
+                cmd.Parameters.AddWithValue("@idDetalleVenta", objVentaDetalle.idDetalleVenta);
+                cmd.Parameters.AddWithValue("@idVenta", objVentaDetalle.idVenta);
+                if (objConexinDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexinDB.getCon().Open();
+                }
+
+                reader = cmd.ExecuteReader();
+                mensaje = "Actualizado Correctamente";
+            }
+            catch (Exception e)
+            {
+                mensaje = e.ToString();
+            }
+            finally
+            {
+                objConexinDB.getCon().Close();
+                objConexinDB.closeDB();
+            }
+            return mensaje;
+        }
+
+        public List<VentaDetalle> VerVentaDetalleProveedor(int IdVenta)
+        {
+            List<VentaDetalle> listaCotizaciones = new List<VentaDetalle>();
+            //try
+            //{
+            comando = new SqlCommand("sp_VentaProveedor", objConexinDB.getCon());
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@IdVenta", IdVenta);            
+
+            if (objConexinDB.getCon().State == ConnectionState.Closed)
+            {
+                comando.Connection = objConexinDB.getCon();
+                objConexinDB.getCon().Open();
+            }
+            SqlDataReader reader = comando.ExecuteReader();
+            while (reader.Read())
+            {
+                VentaDetalle c = new VentaDetalle();
+               
+                c.idVenta = int.Parse(reader[0].ToString());
+                if (!reader.IsDBNull(1))
+                {            
+                    c.idProveedor = Convert.ToInt32(reader[1].ToString());
+                    c.proveedor = reader[2].ToString();
+                    c.empresa = reader[3].ToString();
+                }
+                else
+                {
+                    c.idProveedor = 0;
+                    c.proveedor = "N/A";               
+                    c.empresa = "N/A";
+                }                                           
+                c.cantidad = Convert.ToInt32(reader[4].ToString());             
+                listaCotizaciones.Add(c);
+            }
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            objConexinDB.getCon().Close();
+            //objConexionDB.getCon().Close();
+            objConexinDB.closeDB();
+            //}
+            return listaCotizaciones;
+        }
+
 
     }
 }

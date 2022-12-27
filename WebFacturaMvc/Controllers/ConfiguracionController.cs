@@ -24,6 +24,11 @@ namespace WebFacturaMvc.Controllers
             var configuracion = db.configuracion.Include(c => c.AspNetUsers).Include(c => c.Moneda1);
             return View(configuracion.ToList());
         }
+        public ActionResult CorreoEditar()
+        {
+            return View();
+        }
+
 
         // GET: Configuracion/Details/5
         public ActionResult Details()

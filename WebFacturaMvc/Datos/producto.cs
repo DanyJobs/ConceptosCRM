@@ -17,9 +17,10 @@ namespace WebFacturaMvc.Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public producto()
         {
-            this.compraDetalle = new HashSet<compraDetalle>();
             this.existencia = new HashSet<existencia>();
             this.detalleCotizacion = new HashSet<detalleCotizacion>();
+            this.RFQItem = new HashSet<RFQItem>();
+            this.compraDetalle = new HashSet<compraDetalle>();
             this.ventaDetalle = new HashSet<ventaDetalle>();
         }
     
@@ -31,14 +32,17 @@ namespace WebFacturaMvc.Datos
         public string idMarca { get; set; }
         public string bandaAncha { get; set; }
         public Nullable<int> channels { get; set; }
+        public string unidadMedida { get; set; }
     
         public virtual categoria categoria { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<compraDetalle> compraDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<existencia> existencia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalleCotizacion> detalleCotizacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RFQItem> RFQItem { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<compraDetalle> compraDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ventaDetalle> ventaDetalle { get; set; }
     }

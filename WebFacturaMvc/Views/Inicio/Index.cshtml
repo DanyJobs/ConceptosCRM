@@ -13,6 +13,7 @@
     }
 </style>
 
+
 <div class="row">
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">
@@ -93,7 +94,7 @@
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-red">
             <div class="panel-heading">
-                <a href="~/Vendedor/Index">
+                <a href="~/Account/Index">
                     <div class="row">
                         <div class="col-xs-12 text-center">
                             <i class="fa fa-users fa-5x"></i>
@@ -106,7 +107,7 @@
                     </div>
                 </a>
             </div>
-            <a href="~/Vendedor/Index">
+            <a href="~/Account/Index">
                 <div class="panel-footer">
                     <span class="pull-left">@Lenguaje.Recurso.Reporte_de_Vendedores</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -115,6 +116,34 @@
             </a>
         </div>
     </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <a href="~/Oportunidad/Index">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <div class="huge">Oportunidad</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <a href="~/Account/Index">
+                <div class="panel-footer">
+                    <span class="pull-left">Reporte Oportunidades</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
 </div>
 
 @{
@@ -122,7 +151,7 @@
 }
 <h2>@Lenguaje.Recurso.Cotizaciones_recientes</h2>
 
-<table class="table">
+<table id="table_id" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th>@Lenguaje.Recurso.Cotizacion_idVenta</th>
@@ -131,6 +160,8 @@
             <th>@Lenguaje.Recurso.Cotizacion_vendedor</th>
             <th>@Lenguaje.Recurso.Cotizacion_IVA</th>
             <th>Total</th>
+            <th></th>
+          
         </tr>
     </thead>
     <tbody>
@@ -143,15 +174,21 @@
                 <td>@objVenta.IdVendedor</td>
                 <td>@objVenta.Iva</td>
                 <td>@objVenta.Total</td>
-
-                <td><a class="btn btn-success" href="~/Venta/DetallesVenta/@objVenta.IdVenta"><span class="glyphicon glyphicon-eye-open"></span>|@Lenguaje.Recurso.Ver_detalles</a></td>
-                <td><a class="btn btn-info" href="~/Cliente/Update/@objVenta.IdVenta"><span class="fa fa-edit"></span>|@Lenguaje.Recurso.Editar</a></td>
-                <td><a class="btn btn-danger" href="~/Cliente/Eliminar/@objVenta.IdVenta"><span class="glyphicon glyphicon-remove">|@Lenguaje.Recurso.Eliminar</span></a></td>
+                <td><a class="btn btn-success" href="~/Venta/DetallesVenta/@objVenta.IdVenta"><span class="glyphicon glyphicon-eye-open"></span>|@Lenguaje.Recurso.Ver_detalles</a>
+                <a class="btn btn-info" href="~/Cliente/Update/@objVenta.IdVenta"><span class="fa fa-edit"></span>|@Lenguaje.Recurso.Editar</a>
+                <a class="btn btn-danger" href="~/Cliente/Eliminar/@objVenta.IdVenta"><span class="glyphicon glyphicon-remove">|@Lenguaje.Recurso.Eliminar</span></a></td>
             </tr>
         }
 
     </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}
 
 
 

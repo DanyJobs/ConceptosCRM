@@ -26,9 +26,9 @@ namespace WebFacturaMvc.Datos
         public Nullable<int> idSucursal { get; set; }
         public Nullable<int> idProveedor { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<compraDetalle> compraDetalle { get; set; }
         public virtual proveedor proveedor { get; set; }
         public virtual sucursal sucursal { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<compraDetalle> compraDetalle { get; set; }
     }
 }

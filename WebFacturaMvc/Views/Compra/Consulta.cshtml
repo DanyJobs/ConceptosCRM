@@ -3,19 +3,19 @@
     ViewBag.Title = "Compras realizadas";
 }
 @*<script>
-    $(document).ready(function () {
-        $("#tbcliente tbody tr").dblclick(function () {
-            var Compras = {};
-            var n, a, m;
-            n = Compras.Codigo = $(this).children().eq('0').text();
-            a = Compras.DatosPersonales = $(this).children().eq('1').text() + " " + $(this).children().eq('2').text();
-            m = Compras.Identificacion = $(this).children().eq('5').text();
-            /*       console.info(a, n, m);*/
-            window.opener.Consulta(Compras);
-            window.close();
+        $(document).ready(function () {
+            $("#tbcliente tbody tr").dblclick(function () {
+                var Compras = {};
+                var n, a, m;
+                n = Compras.Codigo = $(this).children().eq('0').text();
+                a = Compras.DatosPersonales = $(this).children().eq('1').text() + " " + $(this).children().eq('2').text();
+                m = Compras.Identificacion = $(this).children().eq('5').text();
+                /*       console.info(a, n, m);*/
+                window.opener.Consulta(Compras);
+                window.close();
+            });
         });
-    });
-</script>*@
+    </script>*@
 <h2 style="text-align:center; font-family:Arial; font-weight:700;">Compras realizadas</h2>
 @using (Html.BeginForm())
 {
@@ -25,8 +25,8 @@
         <div class="form-group col-md-3">
             @Html.Label("Mes", new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.DropDownList("txtMes",(IEnumerable<SelectListItem>)ViewBag.ListaMeses,
-                    "Seleccionar",htmlAttributes: new { @class = "form-control"})
+                @Html.DropDownList("txtMes", (IEnumerable<SelectListItem>)ViewBag.ListaMeses,
+                    "Seleccionar", htmlAttributes: new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group col-md-3">
@@ -41,7 +41,7 @@
 
     <input type="submit" value="Buscar" />
 }
-<table class="table table-striped" id="tbcliente">
+<table id="table_id" class="display responsive nowrap">
     <thead>
         <tr class="bg-primary">
             <th>ID Compra</th>
@@ -49,23 +49,31 @@
             <th>Fecha de compra</th>
             <th>Sucursal</th>
             <th>Proveedor</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var objCompra in Model)
         {
-        <tr>
-            <td>@objCompra.IdCompra</td>
-            <td>@objCompra.Total</td>
-            <td>@objCompra.Fecha.ToString("MM/dd/yyyy")</td>
-            <td>@objCompra.NombreSucursal</td>
-            <td>@objCompra.NombreProveedor</td>
-            <td><a class="btn btn-info" href="~/Compra/CompraDetalle?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-eye-open">|Verdetalles</span></a></td>
-            <td><a class="btn btn-warning" href="~/Compra/Editar?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
-            <td><a class="btn btn-danger" href="~/Compra/EliminarCompraPreview?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
+            <tr>
+                <td>@objCompra.IdCompra</td>
+                <td>@objCompra.Total</td>
+                <td>@objCompra.Fecha.ToString("MM/dd/yyyy")</td>
+                <td>@objCompra.NombreSucursal</td>
+                <td>@objCompra.NombreProveedor</td>
+                <td><a class="btn btn-info" href="~/Compra/CompraDetalle?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-eye-open">|Verdetalles</span></a>
+                <a class="btn btn-warning" href="~/Compra/Editar?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-pencil">|Editar</span></a>
+                <a class="btn btn-danger" href="~/Compra/EliminarCompraPreview?idCompra=@objCompra.IdCompra"><span class="glyphicon glyphicon-remove">|Eliminar</span></a></td>
 
-        </tr>
+            </tr>
         }
 
     </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

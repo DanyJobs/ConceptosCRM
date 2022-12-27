@@ -32,6 +32,7 @@ namespace WebFacturaMvc.Controllers
         private MarcaNeg objMarcaNeg;
         private static int Paso = 0;        
         private static string idVentaMail;
+        private static string idVentaReporte;
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         public DetalleCotizacionController()
         {
@@ -207,11 +208,13 @@ namespace WebFacturaMvc.Controllers
         }        
         public ActionResult reporteActual()
         {
-            if (Paso == 1)
-            {
-                if (Session["idVenta"].ToString() != null)
+            //System.Diagnostics.Debug.WriteLine(idVentaReporte+"Aqui deberia estar");
+            //if (Paso == 1)
+            //{
+                if (Session["idVenta"].ToString() != null || idVentaReporte!=null)
                 {
-                    string idVenta = Session["idVenta"].ToString();
+                    
+                    string idVenta = idVentaReporte;
                     Paso = 0;
                     return Redirect("~/Reportes/Espanol/frmReporteEs.aspx?IdVenta=" + idVenta);
                 }
@@ -220,26 +223,28 @@ namespace WebFacturaMvc.Controllers
                     cargarModoPagocmb();
                     cargarProductocmb();
                     TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
-                    return View("NuevaCotizacion");
+                    return RedirectToAction("NuevaCotizacion", "Cotizacion");
                 }
-            }
-            else
-            {
-                cargarModoPagocmb();
-                cargarProductocmb();
-                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
-                return View("NuevaCotizacion");
-            }
+            //}
+            //else
+            //{
+            //    cargarModoPagocmb();
+            //    cargarProductocmb();
+            //    TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+            //    return RedirectToAction("NuevaCotizacion", "Cotizacion");
+            //}
 
         }
 
         public ActionResult reporteActualIngles()
         {
-            if (Paso == 1)
-            {
-                if (Session["idVenta"].ToString() != null)
+           
+            //if (Paso == 1)
+            //{
+
+                if (Session["idVenta"].ToString() != null || idVentaReporte != null)
                 {
-                    string idVenta = Session["idVenta"].ToString();
+                    string idVenta = idVentaReporte;
                     Paso = 0;
                     return Redirect("~/Reportes/Ingles/frmReporteEn.aspx?IdVenta=" + idVenta);
                 }
@@ -248,22 +253,22 @@ namespace WebFacturaMvc.Controllers
                     cargarModoPagocmb();
                     cargarProductocmb();
                     TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
-                    return View("NuevaCotizacion");
+                    return RedirectToAction("NuevaCotizacion", "Cotizacion");
                 }
-            }
-            else
-            {
-                cargarModoPagocmb();
-                cargarProductocmb();
-                TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
-                return View("NuevaCotizacion");
-            }
+            //}
+            //else
+            //{
+            //    cargarModoPagocmb();
+            //    cargarProductocmb();
+            //    TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
+            //    return RedirectToAction("NuevaCotizacion", "Cotizacion");
+            //}
         }
 
 
         public ActionResult ReporteCotizacion()
         {
-            List<Cotizacion> lista = objCotizacionNeg.findAll();
+            List<Cotizacion> lista = objCotizacionNeg.findAll(User.Identity.GetUserId());
             return View(lista);
         }
 
@@ -277,7 +282,7 @@ namespace WebFacturaMvc.Controllers
 
         public ActionResult VentaFactura()
         {
-            List<Cotizacion> lista = objCotizacionNeg.findAll();
+            List<Cotizacion> lista = objCotizacionNeg.findAll(User.Identity.GetUserId());
             return View(lista);
         }
 
@@ -466,24 +471,23 @@ namespace WebFacturaMvc.Controllers
             List<DetalleCotizacion> listDetalles = dc.VerProductos(int.Parse(idVenta));
             
             //Asignar los productos
-            foreach (var item in listDetalles)
-            {
+            //foreach (var item in listDetalles)
+            //{
                 
-                Producto objProducto = new Producto();
-                //LINQ para traer el producto                
-                DetalleCotizacionNeg dcn = new DetalleCotizacionNeg();
-                objProducto = dcn.VerProducto(int.Parse(item.IdProducto));
-                listProductos.Add(objProducto);
-                //Debug
-                //Debug.WriteLine("Descuento#"+i+": "+objProducto.Descuento);
-                   
-            }            
-            return Json(listProductos, JsonRequestBehavior.AllowGet);
+            //    Producto objProducto = new Producto();
+            //    //LINQ para traer el producto                
+            //    DetalleCotizacionNeg dcn = new DetalleCotizacionNeg();
+            //    objProducto = dcn.VerProducto(item.IdProducto);
+            //    listProductos.Add(objProducto);
+            //    //Debug
+            //    //Debug.WriteLine("Descuento#"+i+": "+objProducto.Descuento);                   
+            //}            
+            return Json(listDetalles, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult Editar(int idVenta)
         {
-            Llenar();
+            
             cargarModoPagocmb();
             cargarProductocmb();
             Cotizacion c = new Cotizacion();
@@ -491,7 +495,9 @@ namespace WebFacturaMvc.Controllers
             CotizacionNeg cn = new CotizacionNeg();
             Cotizacion objCotizacion = cn.buscarIdVenta(idVenta);
             //para obtener al cliente
-
+            Session["idVenta"] = objCotizacion.IdVenta.ToString();
+            idVentaReporte = objCotizacion.IdVenta.ToString();
+            System.Diagnostics.Debug.WriteLine(Session["idVenta"].ToString());
             ViewData["IdVenta"] = objCotizacion.IdVenta.ToString();
             ViewData["Cliente"] = objCotizacion.Cliente.ToString();
             ViewData["idCliente"] = objCotizacion.IdCliente.ToString();
@@ -501,11 +507,10 @@ namespace WebFacturaMvc.Controllers
             ViewData["Notas"] = objCotizacion.notas.ToString();
             ViewData["NotasCompras"] = objCotizacion.notasCompras.ToString();
             ViewData["FechaCotizacion"] = objCotizacion.FechaCotizacion.ToString("MM/dd/yyyy");
-            //Para el estatus
-            
+            //Para el estatus            
             ViewData["Status"] = objCotizacion.estatus.ToString();
             string e = objCotizacion.estatus.ToString();
-                                       
+            Llenar();
             return View();
         }
         [HttpPost]
@@ -519,6 +524,7 @@ namespace WebFacturaMvc.Controllers
             long codigoCliente = 0;
             decimal total = 0;
             int Venta = int.Parse(idVenta);
+            string nota;
 
 
             if (Fecha == "" || modoPago == "" || IdCliente == "" || Total == "")
@@ -539,19 +545,19 @@ namespace WebFacturaMvc.Controllers
                 string codigoVenta="";
                 //REGISTRO DE Actualzacion
                 CotizacionNeg c = new CotizacionNeg();
-                
-                try
-                {
+
+            try
+            {
                     c.Actualizar(Venta, total, int.Parse(IdCliente), idVendedor, Fecha, Convert.ToDecimal(iva), notas, notasCompras, estatus);
                     codigoVenta = "TRUE";
-                    //mensaje += "Cotización registrada correctamente";
-                }
-                catch(Exception ex)
-                {
-                    mensaje += ex.Message.ToString();
-                }    
-                
-                if (codigoVenta == "" || codigoVenta == null)
+                mensaje += "Cotización registrada correctamente";
+            }
+            catch (Exception ex)
+            {
+                mensaje += ex.Message.ToString();
+            }
+
+            if (codigoVenta == "" || codigoVenta == null)
                 {
                     mensaje = "ERROR AL REGISTRAR LA VENTA";
                 }
@@ -579,16 +585,26 @@ namespace WebFacturaMvc.Controllers
                             int cantidad = Convert.ToInt32(data.Cantidad.ToString());
                             decimal descuento = Convert.ToDecimal(data.Descuento.ToString());
                             decimal subtotal = Convert.ToDecimal(data.SubTotal.ToString());
+                           
+                            if (data.notas == null)
+                            {
+                                nota = null;
+
+                            }
+                            else
+                            {
+                               nota = data.notas.ToString();
+                            }
                             try
                             {
-                                cd.Actualizar(Venta, subtotal, idProducto, descuento, cantidad);
-                                //mensaje += "Detalle registrado correctamente";
+                                cd.Actualizar(Venta,Convert.ToDecimal(codigoFactura),subtotal, idProducto, descuento, cantidad,nota);
+                                mensaje += "Detalle registrado correctamente";
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 mensaje += ex.Message.ToString();
                             }
-                            
+
                         }
                         mensaje = "Venta modificada correctamente!";
                     }
@@ -654,5 +670,14 @@ namespace WebFacturaMvc.Controllers
             }
             return Json(mensaje);
         }
+        public ActionResult BuscarRFQ(string idProducto)
+        {
+            RFQHistorial objHistorial = new RFQHistorial();
+            objHistorial.idProducto = idProducto;
+            List<RFQHistorial> Cotizacion = objCotizacionNeg.findRFQ(objHistorial);
+            return View(Cotizacion);
+        }
+
+
     }
 }

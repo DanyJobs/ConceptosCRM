@@ -27,10 +27,12 @@ namespace WebFacturaMvc.Datos
         public string direccion { get; set; }
         public string telefono { get; set; }
         public string email { get; set; }
+        public Nullable<int> cuenta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cotizacion> cotizacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<venta> venta { get; set; }
+        public virtual cuenta cuenta1 { get; set; }
     }
 }

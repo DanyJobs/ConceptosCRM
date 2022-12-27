@@ -1,0 +1,92 @@
+﻿@model WebFacturaMvc.Datos.PlantillaCorreo
+
+@{
+   
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        hr {
+            margin: 20px;
+        }
+
+        .mitad {
+            float: left;
+            width: 50%
+        }
+
+        .unestilo {
+            font-size: 20px;
+            text-decoration: underline;
+            ;
+        }
+
+        .otroestilo {
+            border: 1px solid grey;
+            padding: 20px;
+            color: red;
+            font-style: italic;
+        }
+    </style>
+    <script type="text/javascript">
+        function VistaPrevia1() {
+            $("#campo1").val($("#campo2").val());
+        }
+        function VistaPrevia2(entrada, salida) {
+            $("#plantilla").val($("#campo2").val());
+            document.getElementById(salida).innerHTML = document.getElementById('plantilla').value.replace(/\r?\n/g, "<br>");
+        }
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        
+    <div class="form-horizontal">
+        <h4>PlantillaCorreo</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DescpPlantilla, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DescpPlantilla, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescpPlantilla, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.plantilla, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.plantilla, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.plantilla, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <textarea style="font-size: 12px; WIDTH: 1100px; HEIGHT: 500px" id="campo2" name="txt" onkeyup="javascript:VistaPrevia2(this, 'vp1');"></textarea>
+
+        <div id="vp1" class="unestilo"></div>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

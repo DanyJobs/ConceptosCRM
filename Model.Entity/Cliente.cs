@@ -14,7 +14,10 @@ namespace Model.Entity
         private string direccion;
         private string telefono;
         private List<Cotizacion> ventas;
+        public int Cuenta { get; set; }
+        public string NombreCuenta { get; set; }
         private int estado;
+
 
         public int Estado
         {

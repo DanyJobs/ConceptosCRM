@@ -3,22 +3,24 @@
 @model List<Producto>
 @{
     ViewBag.Title = "BuscarPorCodigo";
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutNulo.cshtml";
 }
 <link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Js/alertify.min.js"></script>
 <link href="~/Css/alertify.core.css" rel="stylesheet" />
 <link href="~/Css/alertify.default.css" rel="stylesheet" />
+
 <script>
     $(document).ready(function () {
-        $("#tbproducto tbody tr").dblclick(function () {
+        $("#table_id tbody tr").dblclick(function () {
             var Producto = {};
             var n, a, m, p;
             n = Producto.Codigo = $(this).children().eq('0').text();
             a = Producto.Nombre = $(this).children().eq('1').text();
             p = Producto.Precio = $(this).children().eq('4').text();
             m = Producto.Marca = $(this).children().eq('5').text();
+            m = Producto.unidadMedida = $(this).children().eq('8').text();
             console.info(a, n, m, p);
             window.opener.obtenerProductos(Producto);
             window.close();
@@ -72,42 +74,55 @@
 </div>
 
 
-<table class="table table-striped" id="tbproducto">
-    <tr>
-        <th>Codigo</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Categoria</th>
-        <th>Precio Unitario</th>
-        <th>Marca</th>
-        <th>Banda Ancha</th>
-        <th>Canales</th>
-        <th>Acciones</th>
-        <th></th> 
-    </tr>
-    @foreach (var objProducto in Model)
-    {
-<tr>
-    <th>@objProducto.IdProducto</th>
-    <th>@objProducto.Nombre</th>
-    <th>@objProducto.Descripcion</th>
-    <th>@objProducto.Categoria</th>
-    <th>@objProducto.PrecioUnitario</th>
-    <th>@objProducto.Marca</th>
-    <th>@objProducto.BandaAncha</th>
-    <th>@objProducto.Channels</th>  
-    <td><a class="btn btn-primary" href="BuscarHistorial?idproducto=@objProducto.IdProducto" target="_blank"><span class="fa fa-edit"></span>Ver</a></td>
-    <td><a class="btn btn-success" href="BuscarRFQ?idproducto=@objProducto.IdProducto" target="_blank"><span class="fa fa-edit"></span>RFQ</a></td>
-    @*<td><a class="btn btn-success" href="~/Cotizacion/CargaProducto/@objProducto.IdProducto"><span class="glyphicon glyphicon-eye-open"></span></a></td>*@
-</tr>
-    }
-    <tr></tr>
+<table id="table_id" class="display responsive nowrap">
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Categoria</th>
+            <th>Precio Unitario</th>
+            <th>Marca</th>
+            <th>Banda Ancha</th>
+            <th>Canales</th>
+            <th>UM</th>
+            <th>Acciones</th>
+        </tr>
+    <thead>
+    <tbody>
+        @foreach (var objProducto in Model)
+        {
+            <tr>
+                <th>@objProducto.IdProducto</th>
+                <th>@objProducto.Nombre</th>
+                <th>@objProducto.Descripcion</th>
+                <th>@objProducto.Categoria</th>
+                <th>@objProducto.PrecioUnitario</th>
+                <th>@objProducto.Marca</th>
+                <th>@objProducto.BandaAncha</th>
+                <th>@objProducto.Channels</th>
+                <th>@objProducto.unidadMedida</th>
+                <td>
+                    <a class="btn btn-primary" href="BuscarHistorial?idproducto=@objProducto.IdProducto" target="_blank"><span class="fa fa-edit"></span>Ver</a>
+                    <a class="btn btn-success" href="BuscarRFQ?idproducto=@objProducto.IdProducto" target="_blank"><span class="fa fa-edit"></span>RFQ</a>
+                </td>
+                @*<td><a class="btn btn-success" href="~/Cotizacion/CargaProducto/@objProducto.IdProducto"><span class="glyphicon glyphicon-eye-open"></span></a></td>*@
+            </tr>
+        }
+    </tbody>
 </table>
 
 <div class="text-primary text-danger text-center">
     @ViewBag.MensajeError;
 </div>
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}
 <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/jquery/jquery.min.js"></script>
 

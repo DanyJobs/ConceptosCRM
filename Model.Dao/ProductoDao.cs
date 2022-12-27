@@ -18,11 +18,14 @@ namespace Model.Dao
         }
         public void create(Producto objProducto)
         {
-            string create = "insert into producto values('" + objProducto.IdProducto + "','" + objProducto.Nombre + "','" + objProducto.Descripcion + "'," + objProducto.PrecioUnitario + ",'" + objProducto.Categoria + "','" + objProducto.Marca + "','" + objProducto.BandaAncha + "'," + objProducto.Channels + ")";
+            string create = "insert into producto values('" + objProducto.IdProducto + "','" + objProducto.Nombre + "','" + objProducto.Descripcion + "'," + objProducto.PrecioUnitario + ",'" + objProducto.Categoria + "','" + objProducto.Marca + "','" + objProducto.BandaAncha + "'," + objProducto.Channels + ",'"+objProducto.unidadMedida+"')";
             try
             {
                 comando = new SqlCommand(create, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception)
@@ -42,7 +45,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(delete, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception)
@@ -67,7 +73,10 @@ namespace Model.Dao
 
                 cmd.Parameters.AddWithValue("@idProducto", objProducto.IdProducto);
 
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
 
                 reader = cmd.ExecuteReader();
 
@@ -81,6 +90,7 @@ namespace Model.Dao
                     objProducto.Marca = reader[5].ToString();
                     objProducto.BandaAncha = reader[6].ToString();
                     objProducto.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProducto.unidadMedida = reader[8].ToString();
                     objProducto.Estado = 99;
                 }
                 else
@@ -111,7 +121,10 @@ namespace Model.Dao
 
                 cmd.Parameters.AddWithValue("@idProducto", objProducto.IdProducto);
 
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
 
                 reader = cmd.ExecuteReader();
 
@@ -125,6 +138,7 @@ namespace Model.Dao
                     objProducto.Marca = reader[5].ToString();
                     objProducto.BandaAncha = reader[6].ToString();
                     objProducto.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProducto.unidadMedida = reader[8].ToString();
                     objProducto.Estado = 99;
                 }
                 else
@@ -144,19 +158,22 @@ namespace Model.Dao
 
             return hayRegistros;
         }
-        public List<Producto> findAll()
+        public List<Model.Entity.Producto> findAll()
         {
-            List<Producto> listaVendedores = new List<Producto>();
+            List<Model.Entity.Producto> listaProducto = new List<Model.Entity.Producto>();
             //string find = "select*from producto order by nombre asc";
             try
             {
                 comando = new SqlCommand("SP_PRODUCTO_CONSULTA", objConexionDB.getCon());
                 comando.CommandType = CommandType.StoredProcedure;
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
-                    Producto objProducto = new Producto();
+                    Model.Entity.Producto objProducto = new Model.Entity.Producto();
                     objProducto.IdProducto = reader[0].ToString();
                     objProducto.Nombre = reader[1].ToString();
                     objProducto.Descripcion = reader[2].ToString();
@@ -165,7 +182,8 @@ namespace Model.Dao
                     objProducto.Marca = reader[5].ToString();
                     objProducto.BandaAncha = reader[6].ToString();
                     objProducto.Channels = Convert.ToInt32(reader[7].ToString());
-                    listaVendedores.Add(objProducto);
+                    objProducto.unidadMedida = reader[8].ToString();
+                    listaProducto.Add(objProducto);
                 }
             }
             catch (Exception)
@@ -178,16 +196,19 @@ namespace Model.Dao
                 objConexionDB.getCon().Close();
                 objConexionDB.closeDB();
             }
-            return listaVendedores;
+            return listaProducto;
         }
 
         public void update(Producto objProducto)
         {
-            string update = "update producto set  nombre='" + objProducto.Nombre + "',descripcion='" + objProducto.Descripcion + "' ,precioUnitario=" + objProducto.PrecioUnitario + ",idCategoria='" + objProducto.Categoria + "' ,idMarca='" + objProducto.Marca + "' where idProducto='" + objProducto.IdProducto + "'";
+            string update = "update producto set  nombre='" + objProducto.Nombre + "',descripcion='" + objProducto.Descripcion + "' ,precioUnitario=" + objProducto.PrecioUnitario + ",idCategoria='" + objProducto.Categoria + "' ,idMarca='" + objProducto.Marca + "',unidadMedida='"+objProducto.unidadMedida+"' where idProducto='" + objProducto.IdProducto + "'";
             try
             {
                 comando = new SqlCommand(update, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception)
@@ -209,7 +230,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(find, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
@@ -240,7 +264,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(find, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 hayRegistros = reader.Read();
                 if (hayRegistros)
@@ -274,7 +301,10 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(findAll, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
@@ -284,9 +314,10 @@ namespace Model.Dao
                     objProductos.Descripcion = reader[2].ToString();
                     objProductos.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
                     objProductos.Categoria = reader[4].ToString();
-                    objProducto.Marca = reader[5].ToString();
-                    objProducto.BandaAncha = reader[6].ToString();
-                    objProducto.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProductos.Marca = reader[5].ToString();
+                    objProductos.BandaAncha = reader[6].ToString();
+                    objProductos.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProductos.unidadMedida = reader[8].ToString();
                     listaProductos.Add(objProductos);
 
                 }
@@ -317,7 +348,10 @@ namespace Model.Dao
                 cmd.Parameters.AddWithValue("@nombre", objProducto.Nombre);
                 cmd.Parameters.AddWithValue("@categoria", objProducto.Categoria);
                 cmd.Parameters.AddWithValue("@idMarca", objProducto.Marca);
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -330,6 +364,7 @@ namespace Model.Dao
                     objProductoT.Marca = reader[5].ToString();
                     objProductoT.BandaAncha = reader[6].ToString();
                     objProductoT.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProductoT.unidadMedida = reader[8].ToString();
                     objListaProducto.Add(objProductoT);
                 }
             }
@@ -355,17 +390,23 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(findAll, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
                     Producto objProductos = new Producto();
                     objProductos.IdProducto = reader[0].ToString();
                     objProductos.Nombre = reader[1].ToString();
-                    objProductos.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
-                    objProductos.Categoria = reader[3].ToString();
-                    objProducto.Marca = reader[4].ToString();
-                    objProducto.BandaAncha = reader[5].ToString();
+                    objProductos.Descripcion = reader[2].ToString();
+                    objProductos.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
+                    objProductos.Categoria = reader[4].ToString();
+                    objProductos.Marca = reader[5].ToString();
+                    objProductos.BandaAncha = reader[6].ToString();
+                    objProductos.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProductos.unidadMedida = reader[8].ToString();
                     listaProductos.Add(objProductos);
 
                 }
@@ -392,17 +433,23 @@ namespace Model.Dao
             try
             {
                 comando = new SqlCommand(find, objConexionDB.getCon());
-                objConexionDB.getCon().Open();
+                if (objConexionDB.getCon().State == ConnectionState.Closed)
+                {
+                    objConexionDB.getCon().Open();
+                }
                 reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
                     Producto objProducto = new Producto();
-                    objProducto.IdProducto = reader[0].ToString();
-                    objProducto.Nombre = reader[1].ToString();
-                    objProducto.PrecioUnitario = Convert.ToDouble(reader[2].ToString());
-                    objProducto.Categoria = reader[3].ToString();
-                    objProducto.Marca = reader[4].ToString();
-                    objProducto.BandaAncha = reader[5].ToString();
+                    objProductos.IdProducto = reader[0].ToString();
+                    objProductos.Nombre = reader[1].ToString();
+                    objProductos.Descripcion = reader[2].ToString();
+                    objProductos.PrecioUnitario = Convert.ToDouble(reader[3].ToString());
+                    objProductos.Categoria = reader[4].ToString();
+                    objProductos.Marca = reader[5].ToString();
+                    objProductos.BandaAncha = reader[6].ToString();
+                    objProductos.Channels = Convert.ToInt32(reader[7].ToString());
+                    objProductos.unidadMedida = reader[8].ToString();
                     listaVendedores.Add(objProducto);
                 }
 

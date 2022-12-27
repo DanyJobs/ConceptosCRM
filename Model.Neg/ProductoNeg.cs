@@ -27,7 +27,7 @@ namespace Model.Neg
             else
             {
                 codigo = objProducto.IdProducto.Trim();
-                verificacion = codigo.Length > 0 && codigo.Length <= 5;
+                verificacion = codigo.Length > 0 && codigo.Length <= 13;
                 if (!verificacion)
                 {
                     objProducto.Estado = 1;
@@ -83,7 +83,6 @@ namespace Model.Neg
 
             }
             //fin verificacion de precioUnitario
-
             //inicio verificacion de categoria estado=4
             string categoria = objProducto.Categoria;
             if (categoria == null)

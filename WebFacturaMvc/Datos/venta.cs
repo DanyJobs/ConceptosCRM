@@ -41,6 +41,7 @@ namespace WebFacturaMvc.Datos
         public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<envio> envio { get; set; }
+        public virtual cotizacion cotizacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ventaDetalle> ventaDetalle { get; set; }
     }

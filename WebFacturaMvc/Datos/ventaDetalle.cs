@@ -19,8 +19,7 @@ namespace WebFacturaMvc.Datos
         public Nullable<int> idProveedor { get; set; }
         public string idProducto { get; set; }
         public Nullable<decimal> precio { get; set; }
-        public Nullable<int> cantidad { get; set; }
-        public string unidadMedida { get; set; }
+        public Nullable<decimal> cantidad { get; set; }
         public string notas { get; set; }
     
         public virtual producto producto { get; set; }

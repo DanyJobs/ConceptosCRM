@@ -2,6 +2,30 @@
 @{
     ViewBag.Title = "Modulo de Actualizacion de Clientes";
 }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Js/alertify.min.js"></script>
+<link href="~/Css/alertify.core.css" rel="stylesheet" />
+<link href="~/Css/alertify.default.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    function obtenerCuenta(Cuenta) {
+        /*       var watchclose = setInterval(function () {*/
+        $("#NombreCuenta").val(Cuenta.Nombre);
+        $("#Cuenta").val(Cuenta.Codigo);
+        /*       });*/
+    }
+
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("a[rel='pop-up']").click(function () {
+            var caracteristicas = "height=550,width=1000,scrollTo,resizable=1,scrollbars=1,location=0";
+            nueva = window.open(this.href, 'popup', caracteristicas);
+            return false;
+        });
+    });
+</script>
 
 <h2>@ViewBag.MensajeInicialActualizar</h2>
 @using (Html.BeginForm())
@@ -11,7 +35,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.IdCliente, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-2">
-                    @Html.EditorFor(model => model.IdCliente, new { htmlAttributes = new { @class = "form-control", @readonly= "readonly" } })
+                    @Html.EditorFor(model => model.IdCliente, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
             </div>
             <div class="form-group">
@@ -25,7 +49,7 @@
                 <div class="col-md-6">
                     @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
-            </div>            
+            </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -45,16 +69,35 @@
                     @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
+            <div class="form-group">
+                <p class="control-label col-md-2">Codigo Cuenta</p>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.Cuenta, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        <span class="input-group-btn"><a class="btn btn-success" rel="pop-up" href="~/Cuenta/Create"><span class="fa fa-plus fa-fw"></span></a></span>
+
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <p class="control-label col-md-2">Cuenta</p>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.NombreCuenta, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    <a href="~/Cliente/ObtenerCuenta" rel="pop-up">
+                        <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="@Lenguaje.Recurso.Cotizacion_obtenerCliente" />
+                    </a>
+                </div>
+            </div>
             <div class="form-actions col-md-offset-2">
                 <input class="btn btn-primary" type="submit" name="btnguardar" value=@Lenguaje.Recurso.Guardar />|
                 @Html.ActionLink(Lenguaje.Recurso.Regresar_al_Listado, "Index")
             </div>
 
+
         </fieldset>
     </div>
-
 }
-
 <div class="text-primary text-success text-center">
     @ViewBag.MensajeExito;
 </div>
@@ -68,7 +111,7 @@
             codigo.disabled = true;
         }
     }
-
 </script>
-
+<script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/jquery/jquery.min.js"></script>
 

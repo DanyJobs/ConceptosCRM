@@ -22,7 +22,7 @@
     <link href="~/Css/sb-admin-2.css" rel="stylesheet" />
     <!-- Morris Charts CSS -->
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     @*<link href="~/Assets/morrisjs/morris.css" rel="stylesheet" />*@
     <!-- Custom Fonts -->
     <link href="~/Assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -32,7 +32,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-       
+    <style type="text/css">
+        body, a, a:hover {
+            cursor: url("https://conceptoselectronics.com/wp-content/uploads/2022/06/astronauta-2-e1656433701546.png"), auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,7 +44,7 @@
 
     <div id="wrapper">
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">          
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -49,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-             @Html.ActionLink("                           ", "Inicio", "Index", new { area = "" }, new { @class = "navbar-brand" })     
+                @Html.ActionLink("                           ", "Index", "Inicio", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
@@ -119,7 +123,7 @@
                 </li>
                 <!-- /.dropdown -->
                 @if (User.Identity.IsAuthenticated)
-                {               
+                {
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -133,9 +137,9 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                @Html.ActionLink(@Lenguaje.Recurso.Cerrar_sesion, "LogOff","Account")
+                                @Html.ActionLink(@Lenguaje.Recurso.Cerrar_sesion, "LogOff", "Account")
                             </li>
-                        </ul>               
+                        </ul>
                     </li>
                 }
                 else
@@ -154,137 +158,169 @@
                             <div class="input-group custom-search-form">
                                 @*<input type="text" id="inputSearch" placeholder="¿Qué deseas buscar?">*@
                                 @*<span class="input-group-btn">*@
-
                                 <!--<ul id="box-search">
-                <li><a href="articulo.html"><i class="fas fa-search"></i>HTML</a></li>
-                <li><a href="articulo.html"><i class="fas fa-search"></i>CSS</a></li>
-                <li><a href="articulo.html"><i class="fas fa-search"></i>JavaScript</a></li>
-                <li><a href="articulo.html"><i class="fas fa-search"></i>PHP</a></li>
-                <li><a href="articulo.html"><i class="fas fa-search"></i>NODEJS</a></li>
-                <li><a href="articulo.html"><i class="fas fa-search"></i>VUEJS</a></li>
-                <li><a href="articulo.html"><i class="fas fa-search"></i>Como hacer</a></li>
-                <li><a href="articulo.html"><i class="fas fa-search"></i>Como crear</a></li>
-            </ul>
-            <div id="cover-ctn-search"></div>-->
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>HTML</a></li>
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>CSS</a></li>
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>JavaScript</a></li>
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>PHP</a></li>
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>NODEJS</a></li>
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>VUEJS</a></li>
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>Como hacer</a></li>
+                                    <li><a href="articulo.html"><i class="fas fa-search"></i>Como crear</a></li>
+                                </ul>
+                                <div id="cover-ctn-search"></div>-->
                                 @*</span>*@
                             </div>
                             @*/input-group*@
                         </li>
                         <li>
-                            <a href="~/"><i class="fa fa-home fa-fw"></i> Principal</a>
+                            <a href="~/"><i class="fa fa-home fa-fw"></i>  @Lenguaje.Recurso.Principal</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-square fa-fw"></i> Artículos<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-square fa-fw"></i>@Lenguaje.Recurso.Equipo <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="~/Marca/Index"><i class="fa fa-tags fa-fw" style="color:#f0ad4e"></i>Marca</a>
+                                    <a href="~/Marca/Index"><i class="fa fa-tags fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Cotizacion_marca</a>
                                 </li>
                                 <li>
-                                    <a href="~/Categoria/Index"><i class="fa fa-check fa-fw" style="color:#f0ad4e"></i>Categorías</a>
+                                    <a href="~/Categoria/Index"><i class="fa fa-check fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Categorias</a>
                                 </li>
                                 <li>
-                                    <a href="~/Producto/BuscarProductos"><i class="fa fa-search fa-fw" style="color:#f0ad4e"></i>Buscar Producto</a>
+                                    <a href="~/Producto/BuscarProductos"><i class="fa fa-search fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Buscar_Producto</a>
                                 </li>
 
                                 <li>
-                                    <a href="~/Producto/Index"><i class="fa fa-product-hunt fa-fw" style="color:#f0ad4e"></i>Artículos</a>
+                                    <a href="~/Producto/Index"><i class="fa fa-product-hunt fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Equipo</a>
                                 </li>
                                 <li>
-                                    <a href="~/Existencia/Filtrado"><i class="fa fa-sort-numeric-asc fa-fw" style="color:#f0ad4e"></i>Inventario</a>
+                                    <a href="~/Existencia/Filtrado"><i class="fa fa-sort-numeric-asc fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Inventario</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-dollar fa-fw"></i> Cotizaciones<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-dollar fa-fw"></i> @Lenguaje.Recurso.Cotizaciones<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="~/Cotizacion/VentaFactura"><i class="fa fa-archive fa-fw" style="color:#f0ad4e"></i>Generar Factura</a>
+                                    <a href="~/Cotizacion/VentaFactura"><i class="fa fa-archive fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Generar_Cotizacion</a>
                                 </li>
                                 <li>
-                                    <a href="~/Cotizacion/NuevaCotizacion"><i class="fa fa-shopping-cart fa-fw" style="color:#f0ad4e"></i>Nueva Cotizacion</a>
+                                    <a href="~/Cotizacion/NuevaCotizacion"><i class="fa fa-shopping-cart fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Nueva_Cotizacion</a>
                                 </li>
                                 <li>
-                                    <a href="~/DetalleCotizacion/Index"><i class="fa fa-info-circle fa-fw" style="color:#f0ad4e"></i>Detalle Cotizacion</a>
+                                    <a href="~/DetalleCotizacion/Index"><i class="fa fa-info-circle fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Detalle_Cotizacion</a>
                                 </li>
                                 <li>
-                                    <a href="~/Cotizacion/ReporteCotizacion"><i class="fa fa-book fa-fw" style="color:#f0ad4e"></i>Reportes</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="#"><i class="fa fa-dollar fa-fw"></i> Ventas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="~/Venta/Index"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Hacer Venta</a>
-                                </li>
-                                <li>
-                                    <a href="~/Venta/Consulta"><i class="fa fa-address-book fa-fw" style="color:#f0ad4e"></i>Consulta Ventas</a>
+                                    <a href="~/Cotizacion/ReporteCotizacion"><i class="fa fa-book fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Reportes</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-mail-forward fa-fw"></i>Seguimiento<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-dollar fa-fw"></i> @Lenguaje.Recurso.Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="~/Cotizacion/Historial"><i class="fa fa-book fa-fw" style="color:#f0ad4e"></i>Historial</a>
+                                    <a href="~/Venta/Index"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Hacer_Venta</a>
                                 </li>
                                 <li>
-                                    <a href="~/Cotizacion/EnviarCorreosMarketing"><i class="fa fa-at fa-fw" style="color:#f0ad4e"></i>Correos Marketing</a>
+                                    <a href="~/Venta/Consulta"><i class="fa fa-book fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Consulta_Ventas</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-plane fa-fw"></i> @Lenguaje.Recurso.Envios<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="~/Envio/EnviosCompletados"><i class="fa fa-check-circle fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Envios_Completados</a>
                                 </li>
                                 <li>
+                                    <a href="~/Envio/Index"><i class="fa fa-hourglass fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Envios_Pendientes</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-mail-forward fa-fw"></i>@Lenguaje.Recurso.Seguimiento<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="~/Cotizacion/Historial"><i class="fa fa-book fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Historial</a>
+                                </li>
+                                <li>
+                                    <a href="~/Cotizacion/EnviarCorreosMarketing"><i class="fa fa-at fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Correos_Marketing</a>
+                                </li>
+                                @*<li>
                                     <a href="#"><i class="fa fa-archive fa-fw" style="color:#f0ad4e"></i>Seguimientos Activos</a>
-                                </li>
+                                </li>*@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-shopping-bag fa-fw"></i> Compra<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-shopping-bag fa-fw"></i>@Lenguaje.Recurso.Compra<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="~/Compra/Consulta"><i class="fa fa-archive fa-fw" style="color:#f0ad4e"></i>Detalle Compra</a>
+                                    <a href="~/Compra/Consulta"><i class="fa fa-archive fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Detalle_Compra</a>
                                 </li>
                                 <li>
-                                    <a href="~/Compra/Index"><i class="fa fa-shopping-cart fa-fw" style="color:#f0ad4e"></i>Nueva Compra</a>
+                                    <a href="~/Compra/Index"><i class="fa fa-shopping-cart fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Nueva_Compra</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li>
                             <a href="#"><i class="fa fa-ticket fa-fw"></i>RFQ<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">                             
+                            <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="~/Cotizacion/RFQLista/"><i class="fa fa-file-text fa-fw" style="color:#f0ad4e"></i>Lista RFQ</a>
+                                    <a href="~/Cotizacion/RFQLista/"><i class="fa fa-file-text fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Lista_RFQ</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li>
-                            <a href="~/Cliente/Index"><i class="fa fa-user fa-fw"></i> Clientes</a>
+                            <a href="~/Cliente/Index"><i class="fa fa-user fa-fw"></i> @Lenguaje.Recurso.Clientes</a>
                         </li>
                         <li>
-                            <a href="~/Account/Index"><i class="fa fa-user fa-fw"></i> Empledos</a>
+                            <a href="~/Account/Index"><i class="fa fa-user fa-fw"></i> @Lenguaje.Recurso.Empleados</a>
                             @*<ul class="nav nav-second-level">
-                <li>
-                    <a href="~/ModoPago/Index"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Modos de Pago</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Pagos</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Cobros</a>
-                </li>
-            </ul>*@
+                                    <li>
+                                        <a href="~/ModoPago/Index"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Modos de Pago</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Pagos</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Cobros</a>
+                                    </li>
+                                </ul>*@
                         </li>
                         <li>
-                            <a href="~/Sucursal/Index"><i class="fa fa-home fa-fw"></i> Sucursal</a>
+                            <a href="~/Sucursal/Index"><i class="fa fa-home fa-fw"></i>@Lenguaje.Recurso.Sucursal</a>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="~/Proveedor/Index"><i class="fa fa-shopping-cart fa-fw"></i> Proveedor</a>
+                            <a href="~/Proveedor/Index"><i class="fa fa-shopping-cart fa-fw"></i>@Lenguaje.Recurso.Proveedor</a>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
+                            <a href="~/Agenda/Index"><i class="fa fa-calendar-plus-o fa-fw"></i> Agenda</a>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> @Lenguaje.Recurso.Cobros_y_Pagos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="~/ModoPago/Index"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>@Lenguaje.Recurso.Modos_de_Pago</a>
+                                </li>
+                                @*<li>
+                                    <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Pagos</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Cobros</a>
+                                </li>*@
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="~/Pais/Index"><i class="fa fa-map-marker fa-fw"></i>@Lenguaje.Recurso.Ciudades</a>
+                        </li>
+                        @*<li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Cobros y Pagos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -297,11 +333,11 @@
                                     <a href="#"><i class="fa fa-dollar fa-fw" style="color:#f0ad4e"></i>Cobros</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>*@
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Administración<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
+                                @*<li>
                                     <a href="#">Empresa</a>
                                 </li>
                                 <li>
@@ -314,8 +350,8 @@
                                     <a href="#">Cargos</a>
                                 </li>
                                 <li>
-                                    <a href="#"> Usuarios</a>
-                                </li>
+                                    <a href="#">Usuarios</a>
+                                </li>*@
                                 <li>
                                     <a href="~/Pais/Index"><i class="fa fa-map fa-fw" style="color:#f0ad4e"></i>Configurar regiones</a>
                                 </li>
@@ -333,8 +369,8 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-        <div id="page-wrapper">           
-            <!-- /.row -->           
+        <div id="page-wrapper">
+            <!-- /.row -->
             <div class="row">
                 @RenderBody()
             </div>
@@ -348,10 +384,15 @@
     <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="~/Assets/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->    
-    <script src="~/Assets/morrisjs/morris.min.js"></script>       
+    <!-- Morris Charts JavaScript -->
+    <script src="~/Assets/morrisjs/morris.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="~/Js/sb-admin-2.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
 

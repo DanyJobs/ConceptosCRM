@@ -13,7 +13,239 @@
 
 
 <script type="text/javascript">
-   $(document).ready(function () {
+     var ultimo = 0;
+    var eje = 0;
+    var eliminados = "";
+    function cloneRow(id) {
+        eje = eje + 1;
+        ultimo = ultimo + 1;
+        /*console.log(id);*/
+        var idProducto = document.getElementById("idProducto" + id.toString()).innerText;
+        var detalleProducto = document.getElementById("detalleProducto" + id.toString()).innerText;
+        var marca = document.getElementById("marca" + id.toString()).innerText;
+        var idProveedor = document.getElementById("idProveedor" + id.toString()).innerText;
+        var nombreEmpresa = document.getElementById("nombreEmpresa" + id.toString()).innerText;
+        var nombreProveedor = document.getElementById("nombreProveedor" + id.toString()).innerText;
+        var cantidad = document.getElementById("cantidad" + id.toString()).innerText;
+        var udm = document.getElementById("udm" + id.toString()).innerText;
+        var precio = document.getElementById("precio" + id.toString()).innerText;
+        var notas = document.getElementById("notas" + id.toString()).innerText;
+        cadena = "<tr id='row" + eje.toString() + "'>";
+        cadena = cadena + "<td id='ln" + eje.toString() + "'>" + ultimo.toString() + "</td>";
+        cadena = cadena + "<td id='idProducto" + eje.toString() + "'>" + idProducto + "</td>";
+        cadena = cadena + "<td id='detalleProducto" + eje.toString() + "'>" + detalleProducto + "</td>";
+        cadena = cadena + "<td id='marca" + eje.toString() + "'>" + marca + "</td> ";
+        cadena = cadena + "<td id='idProveedor" + eje.toString() + "'>" + idProveedor + "</td>";
+        cadena = cadena + "<td id='nombreEmpresa" + eje.toString() + "'>" + nombreEmpresa + "</td>";
+        cadena = cadena + "<td id='nombreProveedor" + eje.toString() + "'>" + nombreProveedor + "</td>";
+        cadena = cadena + "<td id='cantidad" + eje.toString() + "'>" + cantidad + "</td>";
+        cadena = cadena + "<td id='udm" + eje.toString() + "'>" + udm + "</td>";
+        cadena = cadena + "<td id='precio" + eje.toString() + "'>" + precio + "</td> ";
+        cadena = cadena + "<td id='notas" + eje.toString() + "'>" + notas + "</td> ";
+        cadena = cadena + "<td> " + (precio * cantidad) + "</td> ";
+        var y = 0;
+        var x = 0;
+        y = $("#cantidad").val();
+        x = $("#precio").val();
+        subtotal = (x * y);
+        cadena = cadena + "<td> <a class='editar' onclick='editar(" + eje + ")'><button class='btn btn-warning' type='button'><span class='glyphicon glyphicon-pencil'></span></button></a></td>";
+        cadena = cadena + "<td> <a class='agregaDuplicado' onclick='cloneRow(" + eje + ")'><button class='btn btn-success' type='button'><span class='glyphicon glyphicon-plus'></span></button></a></td> ";
+        cadena = cadena + "<td> <a class='elimina' onclick='eliminaRow(" + eje + ")'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td> ";
+        $("#detallePO tbody").append(cadena);
+        fn_dar_eliminar2();
+    }
+    //variables
+    var total = 0;
+    var valor = 0;
+    var subtotal = 0;
+
+    function obtenerCliente(Cliente) {
+        $("#txtnombreproveedor").val(Cliente.DatosPersonales);
+        $("#txtidproveedor").val(Cliente.Codigo);
+        $("#txtempresa").val(Cliente.Identificacion);
+        $("#codigoCliente").val(Cliente.Codigo);
+    }
+
+    function obtenerProductos(Producto) {
+        $("#idproducto").val(Producto.Codigo);
+        $("#nombreproducto").val(Producto.Nombre);
+        $("#marca").val(Producto.Marca);
+        $("#precio").val(Producto.Precio);
+        $("#descuento").val("0");
+        $("#cantidad").val("1");
+    }
+    var renglon = 0;
+
+    function editar(row) {
+        var ln = document.getElementById("ln" + row.toString()).innerText;
+        var id = document.getElementById("idProducto" + row.toString()).innerText;
+        var detalleProducto = document.getElementById("detalleProducto" + row.toString()).innerText;
+        var marca = document.getElementById("marca" + row.toString()).innerText;
+        var idProveedor = document.getElementById("idProveedor" + row.toString()).innerText;
+        var unidadMedida = document.getElementById("udm" + row.toString()).innerText;
+        var nombreEmpresa = document.getElementById("nombreEmpresa" + row.toString()).innerText;
+        var nombreProveedor = document.getElementById("nombreProveedor" + row.toString()).innerText;
+        var cantidad = document.getElementById("cantidad" + row.toString()).innerText;
+        var precio = document.getElementById("precio" + row.toString()).innerText;
+        var notas = document.getElementById("notas" + row.toString()).innerText;
+        renglon = row;
+        $("#editarTabla").show();
+        $("#cancelarEditar").show();
+        $("#linea").show();
+        $("#linealbl").show();
+        $("#agregar").hide();
+        $("#linea").val(ln);
+        $("#idproducto").val(id);
+        $("#nombreproducto").val(detalleProducto);
+        $("#marca").val(marca);
+        $("#txtidproveedor").val(idProveedor);
+        $("#txtempresa").val(nombreEmpresa);
+        $("#txtnombreproveedor").val(nombreProveedor);
+        $("#cantidad").val(cantidad);
+        $("#precio").val(precio);
+        $("#notas").val(notas);
+        $("#udm").val(unidadMedida);
+    }
+
+    function fn_editarAceptar() {
+        document.getElementById("ln" + renglon.toString()).innerText = $("#linea").val();
+        document.getElementById("idProducto" + renglon.toString()).innerText = $("#idproducto").val();
+        document.getElementById("detalleProducto" + renglon.toString()).innerText = $("#nombreproducto").val();
+        document.getElementById("marca" + renglon.toString()).innerText = $("#marca").val();
+        document.getElementById("idProveedor" + renglon.toString()).innerText = $("#txtidproveedor").val();
+        document.getElementById("nombreEmpresa" + renglon.toString()).innerText = $("#txtempresa").val();
+        document.getElementById("nombreProveedor" + renglon.toString()).innerText = $("#txtnombreproveedor").val();
+        document.getElementById("cantidad" + renglon.toString()).innerText = $("#cantidad").val();
+        document.getElementById("udm" + renglon.toString()).innerText = $("#udm").val();
+        document.getElementById("precio" + renglon.toString()).innerText = $("#precio").val();
+        document.getElementById("notas" + renglon.toString()).innerText = $("#notas").val();
+        limpiar();
+        $("#agregar").show();
+        $("#editarTabla").hide();
+        $("#cancelarEditar").hide();
+        $("#linea").hide();
+        $("#linealbl").hide();
+    }
+    function fn_cancelar() {
+        limpiar();
+        $("#agregar").show();
+        $("#editarTabla").hide();
+        $("#cancelarEditar").hide();
+        $("#linea").hide();
+        $("#linealbl").hide();
+    }
+
+    function fn_agregar() {
+        eje = eje + 1;
+        ultimo = ultimo + 1;
+        cadena = "<tr id='row" + eje.toString() + "'>";
+        cadena = cadena + "<td id='ln" + eje.toString() + "'>" + ultimo.toString() + "</td>";
+        cadena = cadena + "<td id='idProducto" + eje.toString() + "'>" + $("#idproducto").val() + "</td>";
+        cadena = cadena + "<td id='detalleProducto" + eje.toString() + "'>" + $("#nombreproducto").val() + "</td>";
+        cadena = cadena + "<td id='marca" + eje.toString() + "'>" + $("#marca").val() + "</td> ";
+        cadena = cadena + "<td id='idProveedor" + eje.toString() + "'>" + $("#txtidproveedor").val() + "</td>";
+        cadena = cadena + "<td id='nombreEmpresa" + eje.toString() + "'>" + $("#txtempresa").val() + "</td>";
+        cadena = cadena + "<td id='nombreProveedor" + eje.toString() + "'>" + $("#txtnombreproveedor").val() + "</td>";
+        cadena = cadena + "<td id='cantidad" + eje.toString() + "'>" + $("#cantidad").val() + "</td>";
+        cadena = cadena + "<td id='udm" + eje.toString() + "'>" + $("#udm").val() + "</td>";
+        cadena = cadena + "<td id='precio" + eje.toString() + "'>" + $("#precio").val() + "</td>";
+        cadena = cadena + "<td id='notas" + eje.toString() + "'>" + $("#notas").val() + "</td>";
+        var y = 0;
+        var x = 0;
+        var des = 0;
+        y = $("#cantidad").val();
+        x = $("#precio").val();
+        subtotal = (x * y);
+        cadena = cadena + "<td>" + subtotal + "</td>"
+        cadena = cadena + "<td><a class ='editar' onclick='editar(" + eje + ")'><button class='btn btn-warning' type='button'><span class='glyphicon glyphicon-pencil'></span></button></a></td>";
+        cadena = cadena + "<td><a class ='agregaDuplicado' onclick='cloneRow(" + eje + ")'><button class='btn btn-success' type='button'><span class='glyphicon glyphicon-plus'></span></button></a></td>";
+        cadena = cadena + "<td><a class ='elimina'  onclick='eliminaRow(" + eje + ")'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td>";
+        $("#detallePO tbody").append(cadena);
+        sumar();
+        fn_dar_eliminar();
+        limpiar();
+        limpiarProveedor();
+    };
+    var j = 0;
+    function eliminaRow(row) {
+
+        if (row == renglon) {
+            limpiar();
+            $("#agregar").show();
+            $("#editarTabla").hide();
+            $("#cancelarEditar").hide();
+            $("#linea").hide();
+            $("#linealbl").hide();
+        }
+        if (j == 0) {
+            eliminados += "'ListaEliminados':[" +
+                "'" + document.getElementById("ln" + row.toString()).innerText.toString() + "'";
+        } else {
+            eliminados += "," +
+                "'" + document.getElementById("ln" + row.toString()).innerText.toString() + "'";
+
+        }
+        j = 1;
+    }
+    function limpiar() {
+        $("#txtidproveedor").val("");
+        $("#txtempresa").val("");
+        $("#txtnombreproveedor").val("");
+        $("#nombreproducto").val("");
+        $("#idproducto").val("");
+        $("#precio").val("");
+        $("#marca").val("");
+/*        $("#ListaProducto").val("");*/
+        $("#cantidad").val("");
+        $("#udm").val("");
+        $("#descuento").val("");
+        $("#notas").val("");
+    }
+    function limpiarProveedor() {
+        $("#txtidproveedor").val('');
+        $("#txtempresa").val('');
+        $("#txtnombreproveedor").val('');
+    }
+    function limpiarDetalle() {
+        $("#detallePO tbody tr").val("");
+    }
+    function sumar() {
+        total = parseFloat($("#TotalaPagar").val()) + subtotal;
+        console.info(total);
+        $("#TotalaPagar").val(total);
+    }
+    function restar() {
+        total = total - parseFloat(valor);
+        $("#TotalaPagar").val(total);
+    }
+    function fn_dar_eliminar() {
+        $("a.elimina").click(function () {
+
+            valor = $(this).parents("tr").find("td").eq(9).html();
+            $(this).parents("tr").fadeOut("normal", function () {
+                $(this).remove();
+                restar();
+            });
+        });
+    };
+
+
+    function restar2() {
+        total = parseFloat($("#TotalaPagar").val());
+        total = total - parseFloat(valor);
+        $("#TotalaPagar").val(total);
+    }
+    function fn_dar_eliminar2() {
+        $("a.elimina").click(function () {
+            valor = $(this).parents("tr").find("td").eq(4).html();
+            $(this).parents("tr").fadeOut("normal", function () {
+                $(this).remove();
+                restar2();
+            });
+        });
+    };
+
+    $(document).ready(function () {
 
         $("a[rel='pop-up']").click(function () {
             var caracteristicas = "height=550,width=1000,scrollTo,resizable=1,scrollbars=1,location=0";
@@ -38,84 +270,177 @@
                 });
             };
             const fileInput = document.querySelector('#files');
-            if (fileInput.files.length == 0) {                
-                
-                var envio = "{IdVenta:'" + $("#id_venta").val() +
+            if (fileInput.files.length == 0) {
+
+                var envio = "{idVenta:'" + $("#id_venta").val() +"', Fecha:'" + $("#id_fecha").val() + "',IdCotizacion:'" + $("#id_cotizacion").val() + "',IdCliente:'" + @ViewData["Cliente"] +
                     "',CP:'" + $("#cp").val() + "',IdCiudad:'" + $("#txtCiudad").val() + "',Colonia:'" + $("#colonia").val() + "',Calle:'" + $("#calle").val() +
-                    "',NumExt:'" + $("#numExt").val() + "',NumInt:'" + $("#numInt").val() + "',Telefono:'" + $("#telefono").val() + "',OrdenCompra:'" + 'Vacio' + "'";
-
-                envio += "}";
-
-                
-
-                var json = eval("(" + envio + ')');
-
-                
-
-                $.ajax({
-                    url: "EditarVenta",
-                    data: JSON.stringify(json),
-                    type: "POST",
-                    async: false,//this makes the ajax-call blocking
-                    contentType: 'application/json;charset=UTF-8',
-                    dataType: 'json',
-                    success: function (response) {
-                        alertify.alert(response);
-                        valid = response.valid;
-                    },
-                    error: function (error) {
-                        alertify.alert(error);
-
+                    "',NumExt:'" + $("#numExt").val() + "',NumInt:'" + $("#numInt").val() + "',Telefono:'" + $("#telefono").val() + "',OrdenCompra:'" + 'Vacio' + "',";
+                var i = 0;
+                $("#detallePO tbody tr").each(function (index) {
+                    if (i == 0) {
+                        envio += "ListaItems:[{" +
+                            "idDetalleVenta:'" + $(this).find('td').eq(0).text() + "'" +
+                            ",idProducto:'" + $(this).find('td').eq(1).text() + "'" +
+                            ",idProveedor:'" + $(this).find('td').eq(4).text() + "'" +
+                            ",precio:'" + $(this).find('td').eq(9).text() + "'" +
+                            ",cantidad:'" + $(this).find('td').eq(7).text() + "'" +
+                            ",notas:'" + $(this).find('td').eq(10).text() + "'" +
+                            "}";
+                    } else {
+                        envio += ",{" +
+                            "idDetalleVenta:'" + $(this).find('td').eq(0).text() + "'" +
+                            ",idProducto:'" + $(this).find('td').eq(1).text() + "'" +
+                            ",idProveedor:'" + $(this).find('td').eq(4).text() + "'" +
+                            ",precio:'" + $(this).find('td').eq(9).text() + "'" +
+                            ",cantidad:'" + $(this).find('td').eq(7).text() + "'" +
+                            ",notas:'" + $(this).find('td').eq(10).text() + "'" +
+                            "}";
                     }
+                    i = 1;
                 });
+                envio += "]";
+                if (eliminados != "") {
+                    envio += ",";
+                    eliminados += "]}";
+                    envio += eliminados;
+                    var json = eval('(' + envio + ')');
+                    console.log(json);
+                    console.info(json);
+                    $.ajax({
+                        url: "VentaEditarConEliminados",
+                        data: JSON.stringify(json),
+                        type: "POST",
+                        async: false,//this makes the ajax-call blocking
+                        contentType: 'application/json;charset=UTF-8',
+                        dataType: 'json',
+                        success: function (response) {
+                            alertify.alert(response);
+                            valid = response.valid;
+                        },
+                        error: function (error) {
+                            alertify.alert(error);
+                        }
+                    });
+                } else {
+                    envio += "}";
+                    var json = eval('(' + envio + ')');
+                    console.log(json);
+                    console.info(json);
+                    $.ajax({
+                        url: "VentaEditarSinEliminados",
+                        data: JSON.stringify(json),
+                        type: "POST",
+                        async: false,//this makes the ajax-call blocking
+                        contentType: 'application/json;charset=UTF-8',
+                        dataType: 'json',
+                        success: function (response) {
+                            alertify.alert(response);
+                            valid = response.valid;
+                        },
+                        error: function (error) {
+                            alertify.alert(error);
+                        }
+                    });
+                }
+                eliminados = "";
                 btnTob64.disabled = true;
             }
             else {
-
-
-                //const btnTob64 = document.querySelector('#btnprueba');
-                //btnTob64.addEventListener('click', async (e) => {
                 console.log(btnTob64.innerText);
                 console.log('Convirtiendo mi blob');
                 const myBlob = fileInput.files[0];
                 const myB64 = await blobToBase64(myBlob);
                 console.log(myB64);
                 //});
-                var envio = "{IdVenta:'" + $("#id_venta").val() +
+                var envio = "{idVenta:'" + $("#id_venta").val() +"',Fecha:'" + $("#id_fecha").val() + "',IdCotizacion:'" + $("#id_cotizacion").val() + "',IdCliente:'" + @ViewData["Cliente"] +
                     "',CP:'" + $("#cp").val() + "',IdCiudad:'" + $("#txtCiudad").val() + "',Colonia:'" + $("#colonia").val() + "',Calle:'" + $("#calle").val() +
                     "',NumExt:'" + $("#numExt").val() + "',NumInt:'" + $("#numInt").val() + "',Telefono:'" + $("#telefono").val() + "',OrdenCompra:'" + myB64 + "'";
 
-                envio += "}";
-
-                console.log(envio);
-
-                var json = eval("(" + envio + ')');
-
-                //alertify.alert("INGRESE DATOS");
-                console.info(json);
-
-                $.ajax({
-                    url: "EditarVenta",
-                    data: JSON.stringify(json),
-                    type: "POST",
-                    async: false,//this makes the ajax-call blocking
-                    contentType: 'application/json;charset=UTF-8',
-                    dataType: 'json',
-                    success: function (response) {
-                        alertify.alert(response);
-                        valid = response.valid;
-                    },
-                    error: function (error) {
-                        alertify.alert(error);
-
+                var i = 0;
+                $("#detallePO tbody tr").each(function (index) {
+                    if (i == 0) {
+                        envio += "ListaItems:[{" +
+                            "idDetalleVenta:'" + $(this).find('td').eq(0).text() + "'" +
+                            ",idProducto:'" + $(this).find('td').eq(1).text() + "'" +
+                            ",idProveedor:'" + $(this).find('td').eq(4).text() + "'" +
+                            ",precio:'" + $(this).find('td').eq(9).text() + "'" +
+                            ",cantidad:'" + $(this).find('td').eq(7).text() + "'" +
+                            ",notas:'" + $(this).find('td').eq(10).text() + "'" +
+                            "}";
+                    } else {
+                        envio += ",{" +
+                            "idDetalleVenta:'" + $(this).find('td').eq(0).text() + "'" +
+                            ",idProducto:'" + $(this).find('td').eq(1).text() + "'" +
+                            ",idProveedor:'" + $(this).find('td').eq(4).text() + "'" +
+                            ",precio:'" + $(this).find('td').eq(9).text() + "'" +
+                            ",cantidad:'" + $(this).find('td').eq(7).text() + "'" +
+                            ",notas:'" + $(this).find('td').eq(10).text() + "'" +
+                            "}";
                     }
+                    i = 1;
                 });
+                envio += "]";
+                if (eliminados != "") {
+                    envio += ",";
+                    eliminados += "]}";
+                    envio += eliminados;
+                    var json = eval('(' + envio + ')');
+                    console.log(json);
+                    console.info(json);
+                    $.ajax({
+                        url: "VentaEditarConEliminados",
+                        data: JSON.stringify(json),
+                        type: "POST",
+                        async: false,//this makes the ajax-call blocking
+                        contentType: 'application/json;charset=UTF-8',
+                        dataType: 'json',
+                        success: function (response) {
+                            alertify.alert(response);
+                            valid = response.valid;
+                        },
+                        error: function (error) {
+                            alertify.alert(error);
+                        }
+                    });
+                } else {
+                    envio += "}";
+                    var json = eval('(' + envio + ')');
+                    console.log(json);
+                    console.info(json);
+                    $.ajax({
+                        url: "VentaEditarSinEliminados",
+                        data: JSON.stringify(json),
+                        type: "POST",
+                        async: false,//this makes the ajax-call blocking
+                        contentType: 'application/json;charset=UTF-8',
+                        dataType: 'json',
+                        success: function (response) {
+                            alertify.alert(response);
+                            valid = response.valid;
+                        },
+                        error: function (error) {
+                            alertify.alert(error);
+                        }
+                    });
+                }
+                eliminados = "";
                 btnTob64.disabled = true;
             }
             });
     });
+    //variables
+    var total = 0;
+    var valor = 0;
+    var subtotal = 0;
+    function obtenerCliente(Cliente) {
+        $("#txtnombreproveedor").val(Cliente.DatosPersonales);
+        $("#txtidproveedor").val(Cliente.Codigo);
+        $("#txtempresa").val(Cliente.Identificacion);
+        $("#codigoCliente").val(Cliente.Codigo);
+    }
 </script>
 
+<h2>Detalles del destino de articulos</h2>
 <table id="encabezado" class="table">
     <thead>
 
@@ -175,7 +500,9 @@
         <tr class="bg-danger">
             <th>Id</th>
             <th>@Lenguaje.Recurso.Cotizacion_detalleProducto</th>
+            <th>@Lenguaje.Recurso.Cotizacion_marca</th>
             <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
+            <th>UDM</th>
             <th>@Lenguaje.Recurso.Cotizacion_precio</th>
             <th>@Lenguaje.Recurso.Cotizacion_descuento</th>
             <th>Total</th>
@@ -186,15 +513,99 @@
 <table class="table">
     <tr>
         <td style="float:right;font-size:20px;">Total</td>
-        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly value="@ViewData["TotalVenta"]" /></td>
+        <th></th>
+        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="text" name="TotalaPagar" id="TotalaPagar" required readonly value="@ViewData["TotalVendido"]" /></td>
     </tr>
     <tr style="font-size:20px;">
         <td>Orden de compra </td>
-        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="file" name="files" id="files" accept="application/pdf"/></td>
+        <td><input style="font-size:20px; font-weight:700;" class="form-control" type="file" name="files" id="files" accept="application/pdf" /></td>
     </tr>
 </table>
+<hr width=50% size=3>
+<h2>Detalle de compra de articulos</h2>
+<table id="encabezado" class="table">
+    <tbody>
+        <tr style="font-size:14px;">
+            <td>Vendedor <input style="font-size:20px; font-weight:700;" class="form-control" type="text" id="idVendedor" name="idVendedor" readonly required value="@ViewData["Vendedor"]" /></td>
+            <td>
+                @*Estatus:
+                    <div class="col-md-12 dropdown">
+                        @Html.DropDownList("txtEstatus", (IEnumerable<SelectListItem>)ViewBag.Estatus, "Seleccione estatus", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    </div>*@
+            </td>
+        </tr>
+        <tr style="font-size:14px;">
+            <td>
+                @Lenguaje.Recurso.Cotizacion_detalleProducto:
+                <a href="~/Cotizacion/ObtenerProductos" rel="pop-up">
+                    <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="Obtener Producto" />
+                </a>
+            </td>
+            <td>
+                Proveedor:
+                <a href="~/Compra/ObtenerProveedores" rel="pop-up">
+                    <input class="btn btn-warning btn-lg col-md-12" type="button" name="enlace_cliente" value="Obtener proveedor" />
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@*<form action="javascript:fn_agregar()" ; method="post" id="frm_usu" class="form-horizontal">*@
+<table class="table">
+    <tr style="font-size:12px;">
+        <td id="linealbl">Ln <input style="font-size:12px; font-weight: 700;" type="text" id="linea" class="form-control" readonly required /></td>
+        <td>Id <input style="font-size:12px; font-weight: 700;" type="text" id="idproducto" class="form-control" readonly required /></td>
+        <td>
+            Producto <input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="nombreproducto" readonly required />
+            Proveedor
+            <div class="input-group">
+                <input style="width:50px; font-size:12px; font-weight: 100;" class="form-control" type="text" id="txtidproveedor" readonly required />
+                <span class="input-group-addon">-</span>
+                <input style="width:100px; font-size: 12px; font-weight: 700;" class="form-control" type="text" id="txtnombreproveedor" readonly required />
+                <span class="input-group-addon">-</span>
+                <input style="width: 100px; font-size: 12px; font-weight: 700;" class="form-control" type="text" id="txtempresa" readonly required />
+            </div>
+        </td>
+        <td>@Lenguaje.Recurso.Cotizacion_marca <input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="marca" readonly required /></td>
+        <td>UDM<input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="udm" readonly required /></td>
+        <td>@Lenguaje.Recurso.Cotizacion_precio <input style="font-size:12px; font-weight: 700;" type="text" id="precio" class="form-control" /></td>
+        <td>@Lenguaje.Recurso.Cotizacion_cantidad <input style="font-size:12px; font-weight: 700;" class="form-control" type="number" id="cantidad" onfocus="this.value = '';" required /></td>
+        <td>Notas<input style="font-size:12px; font-weight: 700;" class="form-control" type="text" id="notas" /></td>
+
+        <td><input style="width:100px; font-size:18px;" class="btn btn-warning btn-lg" onclick="fn_editarAceptar()" name="editarTabla" id="editarTabla" value="Editar" /></td>
+        <td name="cancelarEditar" id="cancelarEditar"><a style="width:50px; font-size:18px;" class='btn btn-danger fa fa-remove' onclick="fn_cancelar()" /> </td>
+        <td colspan="2">
+            <input style="width:100px; font-size:18px;" class="btn btn-primary btn-lg" onclick="fn_agregar()" name="agregar" id="agregar" value=@Lenguaje.Recurso.Cotizacion_agregar />
+        </td>
+    </tr>
+</table>
+@*</form>*@
+<table id="detallePO" class="lista table" border="1">
+    <thead style="font-size:18px;">
+        <tr class="bg-success">
+            <td>@Lenguaje.Recurso.Cotizacion_detalleCompra</td>
+        </tr>
+        <tr class="bg-danger">
+            <th>Ln</th>
+            <th>Codigo</th>
+            <th>@Lenguaje.Recurso.Cotizacion_detalleProducto</th>
+            <th>Marca</th>
+            <th>Id Proveedor</th>
+            <th>Empresa Proveedor</th>
+            <th>Nombre Proveedor</th>
+            <th>@Lenguaje.Recurso.Cotizacion_cantidad</th>
+            <th>UDM</th>
+            <th>@Lenguaje.Recurso.Cotizacion_precio</th>
+            <th>Notas</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
 <input class="btn btn-success btn-lg" type="button" id="finalizar" value=@Lenguaje.Recurso.Cotizacion_guardar />
-<a href="~/Venta/Consulta"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>
+<a href="~/Venta/Index"><input class="btn btn-success btn-lg" type="button" id="regresar" value="Regresar" /></a>
 
 <script type="text/javascript">
     $("#txtPais").val('@ViewData["Pais"]');
@@ -204,6 +615,10 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        $("#editarTabla").hide();
+        $("#cancelarEditar").hide();
+        $("#linea").hide();
+        $("#linealbl").hide();
         //Dropdownlist Selectedchange event
         $("#txtPais").change(function () {
             $("#txtCiudad").empty();
@@ -217,9 +632,7 @@
                     // states contains the JSON formatted list
                     // of states passed from the controller
                     $.each(citys, function (i, city) {
-                        $("#txtEstado").append('<option value="'
-+ city.Value + '">'
-+ city.Text + '</option>');
+                        $("#txtEstado").append('<option value="' + city.Value + '">' + city.Text + '</option>');
                     });
                 },
                 error: function (ex) {
@@ -245,9 +658,7 @@
                     // states contains the JSON formatted list
                     // of states passed from the controller
                     $.each(citys, function (i, city) {
-                        $("#txtCiudad").append('<option value="'
-+ city.Value + '">'
-+ city.Text + '</option>');
+                        $("#txtCiudad").append('<option value="'+ city.Value + '">' + city.Text + '</option>');
                     });
                 },
                 error: function (ex) {
@@ -259,33 +670,73 @@
     });
 </script>
 <script type="text/javascript">
+    var eje = 0;
     $(document).ready(function () {
+        /*  $.when(*/
         $.ajax({
             type: "POST",
             url: "ListaProductos",
-            data: { idVenta: $("#id_cotizacion").val() },
+            data: { idVenta: $("#id_venta").val(), NoCotizacion: $("#id_cotizacion").val()},
             success: function (mensaje) {
                 //alert(mensaje);
                 //$("#idproducto").val(mensaje.Nombre);
                 $(mensaje).each(function (index, item) {
                     //recibir datos json
-                    cadena = "<tr>"
-                    cadena = cadena + "<td>" + item.IdProducto + "</td>";
-                    cadena = cadena + "<td>" + item.Nombre + "</td>";
-                    cadena = cadena + "<td>" + item.Cantidad + "</td>";
-                    cadena = cadena + "<td>" + item.PrecioUnitario + "</td>";
-                    cadena = cadena + "<td>" + item.Descuento + "</td>";
-                    cadena = cadena + "<td>" + ((item.Cantidad * item.PrecioUnitario) - item.Descuento) + "</td>";
-                    var y = 0;
-                    var x = 0;
-                    var des = 0;
-                    y = $("#cantidad").val();
-                    x = $("#precio").val();
-                    des = $("#descuento").val();
-                    subtotal = (x * y) - des;
-                    $("#detalle tbody").append(cadena);
+                    for (var i of item.ListaVenta) {
+                        cadena = "<tr>";
+                        cadena = cadena + "<td>" + i.IdProducto + "</td>";
+                        cadena = cadena + "<td>" + i.Nombre + "</td>";
+                        cadena = cadena + "<td>" + i.Marca + "</td>";
+                        cadena = cadena + "<td>" + i.Cantidad + "</td>";
+                        cadena = cadena + "<td>" + i.unidadMedida + "</td>";
+                        cadena = cadena + "<td>" + i.PrecioUnitario + "</td>";
+                        cadena = cadena + "<td>" + i.Descuento + "</td>";
+                        cadena = cadena + "<td>" + ((i.Cantidad * i.PrecioUnitario) - i.Descuento) + "</td>";
+                        cadena = cadena + "<td> <a class='editar' onclick='editar(" + i.IdProducto + ")'><button class='btn btn-warning' type='button'><span class='glyphicon glyphicon-pencil'></span></button></a></td>";
+                        cadena = cadena + "<td> <a class='agregaDuplicado' onclick='cloneRow(" + i.IdProducto + ")'><button class='btn btn-success' type='button'><span class='glyphicon glyphicon-plus'></span></button></a></td> ";
+                        cadena = cadena + "<td> <a class='elimina' onclick='eliminaRow(" + i.IdProducto + ")'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td> ";
+
+                        var y = 0;
+                        var x = 0;
+                        var des = 0;
+                        y = $("#cantidad").val();
+                        x = $("#precio").val();
+                        des = $("#descuento").val();
+                        subtotal = (x * y) - des;
+                        $("#detalle tbody").append(cadena);
+                    }
+                    console.log(item);
+                    for (var j of item.ListaCompra) {
+                        eje = eje + 1;
+                        ultimo = j.idDetalleVenta;
+                        cadena = "<tr id='row" + j.idDetalleVenta + "'>";
+                        cadena = cadena + "<td id='ln" + j.idDetalleVenta + "'>" + j.idDetalleVenta + "</td>";
+                        cadena = cadena + "<td id='idProducto" + j.idDetalleVenta + "'>" + j.idProducto + "</td>";
+                        cadena = cadena + "<td id='detalleProducto" + j.idDetalleVenta + "'>" + j.nombreProducto + "</td>";
+                        cadena = cadena + "<td id='marca" + j.idDetalleVenta + "'>" + j.marca + "</td> ";
+                        cadena = cadena + "<td id='idProveedor" + j.idDetalleVenta + "'>" + j.idProveedor + "</td>";
+                        cadena = cadena + "<td id='nombreEmpresa" + j.idDetalleVenta + "'>" + j.proveedor + "</td>";
+                        cadena = cadena + "<td id='nombreProveedor" + j.idDetalleVenta + "'>" + j.empresa + "</td>";
+                        cadena = cadena + "<td id='cantidad" + j.idDetalleVenta + "'>" + j.cantidad + "</td>";
+                        cadena = cadena + "<td id='udm" + j.idDetalleVenta + "'>" + j.unidadMedida + "</td>";
+                        cadena = cadena + "<td id='precio" + j.idDetalleVenta + "'>" + j.precio + "</td> ";
+                        cadena = cadena + "<td id='notas" + j.idDetalleVenta + "'>" + j.notas + "</td> ";
+                        cadena = cadena + "<td> " + (j.precio * j.cantidad) + "</td> ";
+                        var y = 0;
+                        var x = 0;
+                        y = $("#cantidad").val();
+                        x = $("#precio").val();
+                        subtotal = (x * y);
+                        cadena = cadena + "<td> <a class='editar' onclick='editar(" + j.idDetalleVenta + ")'><button class='btn btn-warning' type='button'><span class='glyphicon glyphicon-pencil'></span></button></a></td>";
+                        cadena = cadena + "<td> <a class='agregaDuplicado' onclick='cloneRow(" + j.idDetalleVenta + ")'><button class='btn btn-success' type='button'><span class='glyphicon glyphicon-plus'></span></button></a></td> ";
+                        cadena = cadena + "<td> <a class='elimina' onclick='eliminaRow(" + j.idDetalleVenta + ")'><button class='btn btn-danger' type='button'><span class='fa fa-remove'></span></button></a></td> ";
+                        $("#detallePO tbody").append(cadena);
+                    }
+
+
                 });
             }
         });
     });
+
 </script>

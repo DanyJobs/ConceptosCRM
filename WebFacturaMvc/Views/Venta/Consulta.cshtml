@@ -47,6 +47,7 @@
             <td>@objVenta.Total</td>
             <td>@objVenta.NombreCliente</td>
             <td>@objVenta.Fecha.ToString("MM/dd/yyyy")</td>
+            <td><a class="btn btn-info" href="~/Venta/VentaProveedor?idVenta=@objVenta.IdVenta"><span class="glyphicon glyphicon-eye-open">|Ver PO</span></a></td>
             <td><a class="btn btn-info" href="~/Venta/VerVenta?idVenta=@objVenta.IdVenta"><span class="glyphicon glyphicon-eye-open">|Ver</span></a></td>
             <td><a class="btn btn-warning" href="~/Venta/EditarVenta?idVenta=@objVenta.IdVenta"><span class="glyphicon glyphicon-pencil">|Editar</span></a></td>
             <td><a class="btn btn-danger" href="~/Venta/EliminarPreview?idVenta=@objVenta.IdVenta"><span class="glyphicon glyphicon-alert">|Eliminar</span></a></td>

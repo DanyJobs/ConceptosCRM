@@ -25,6 +25,7 @@ namespace WebFacturaMvc.Controllers
     {
         private CotizacionNeg objCotizacionNeg = new CotizacionNeg();
         private VentaNeg objVentaNeg = new VentaNeg();
+        private static int idVentaNuevo;
         // GET: Venta
         private void cargarFechas()
         {
@@ -55,7 +56,7 @@ namespace WebFacturaMvc.Controllers
         //Pagina principal
         public ActionResult Index()
         {
-            List<Cotizacion> lista = objVentaNeg.buscar();
+            List<Cotizacion> lista = objVentaNeg.buscar(User.Identity.GetUserId());
             cargarFechas();
             return View(lista);
         }
@@ -120,6 +121,16 @@ namespace WebFacturaMvc.Controllers
             //Obtener Salesperson y ID
             DataTable dtSP = objVenta.consulta_SalesPerson(idCotizacion);            
             ViewData["SalesPerson"] = dtSP.Rows[0]["Nombre"].ToString();
+
+            string id = User.Identity.GetUserId();
+            List<VentaDetalle> listDetalles2 = new List<VentaDetalle>();
+
+            listDetalles2 = objVenta.VerVentaDetalleInicio(idCotizacion, id);
+         
+           ViewData["idVenta"] = listDetalles2[0].idVentaNuevo;
+           idVentaNuevo = Convert.ToInt32(ViewData["idVenta"]);
+           
+
             return View();
         }
         public void cargarPaises()
@@ -133,7 +144,7 @@ namespace WebFacturaMvc.Controllers
         [HttpPost]
         public JsonResult cargarEstados(string IdPais)
         {
-            System.Diagnostics.Debug.WriteLine("Pais: "+IdPais);
+            //System.Diagnostics.Debug.WriteLine("Pais: "+IdPais);
             List<Estado> listEstados = new List<Estado>();
             EstadoNeg e = new EstadoNeg();
             Estado es = new Estado();
@@ -160,8 +171,7 @@ namespace WebFacturaMvc.Controllers
         }
         [HttpPost]
         public JsonResult cargarCiudades(string IdEstado)
-        {
-            System.Diagnostics.Debug.WriteLine("Estado: "+IdEstado);
+        {     
             List<Ciudad> listCiudades = new List<Ciudad>();
             CiudadNeg c = new CiudadNeg();
             Ciudad ci = new Ciudad();
@@ -179,108 +189,130 @@ namespace WebFacturaMvc.Controllers
             return Json(new SelectList(lista, "Value", "Text"));
         }
         [HttpPost]
-        public ActionResult ListaProductos(string idVenta)
+        public ActionResult ListaProductos(string idVenta,string NoCotizacion)
         {
-            List<Producto> listProductos = new List<Producto>();
+            string id = User.Identity.GetUserId();
+            VentaCarga ventaCarga = new VentaCarga();
+            List<DetalleCotizacion> listDetalles = new List<DetalleCotizacion>();
+            List<VentaDetalle> listDetalles2 = new List<VentaDetalle>();
+            VentaNeg objVenta = new VentaNeg();
             //Para traer los productos del detalle cotizacion de la base de datos
             DetalleCotizacionNeg dc = new DetalleCotizacionNeg();
-            List<DetalleCotizacion> listDetalles = dc.VerProductos(int.Parse(idVenta));
-
+            //if (String.IsNullOrWhiteSpace(idVenta))
+            //{
+            //    listDetalles = dc.VerProductos(idVentaNuevo);
+            //    listDetalles2 = objVenta.VerVentaDetalle(idVentaNuevo, id);
+            //}
+            //else {
+               listDetalles = dc.VerProductos(int.Parse(NoCotizacion));
+               listDetalles2 = objVenta.VerVentaDetalle(int.Parse(NoCotizacion), int.Parse(idVenta), id);
+               idVentaNuevo = Convert.ToInt32(ViewData["idVenta"]);
+            //}         
             //Asignar los productos
-            foreach (var item in listDetalles)
-            {
+            //foreach (var item in listDetalles)
+            //{
+            //    Producto objProducto = new Producto();
+            //    //LINQ para traer el producto                
+            //    DetalleCotizacionNeg dcn = new DetalleCotizacionNeg();
+            //    objProducto = dcn.VerProducto(item.IdProducto);
+            //    ventaCarga.ListaVenta.Add(objProducto);
+            //    //Debug
+            //    //Debug.WriteLine("Descuento#"+i+": "+objProducto.Descuento);
+            //}
+            //Para traer los productos del detalle cotizacion de la base de datos    
+            //Asignar los productos
+            //foreach (var item in listDetalles2)
+            //{
+            //    Producto objProducto2 = new Producto();
+            //    //LINQ para traer el producto                
+            //    DetalleCotizacionNeg dcn2 = new DetalleCotizacionNeg();
+            //    objProducto2 = dcn2.VerProducto(int.Parse(item.IdProducto));
+            ventaCarga.ListaVenta = listDetalles;
+            ventaCarga.ListaCompra=listDetalles2;
 
-                Producto objProducto = new Producto();
-                //LINQ para traer el producto                
-                DetalleCotizacionNeg dcn = new DetalleCotizacionNeg();
-                objProducto = dcn.VerProducto(int.Parse(item.IdProducto));
-                listProductos.Add(objProducto);
-                //Debug
-                //Debug.WriteLine("Descuento#"+i+": "+objProducto.Descuento);
-
-            }
-            return Json(listProductos, JsonRequestBehavior.AllowGet);
-
+            //}          
+            return Json(ventaCarga, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public ActionResult GuardarVenta(string Fecha, string IdCotizacion, string IdCliente, string CP, string IdCiudad, string Colonia,string Calle, string NumExt, string NumInt, string Telefono, string OrdenCompra)
-        {
 
-            string mensaje = "";
+        //[HttpPost]
+        //public ActionResult GuardarVenta(string Fecha, string IdCotizacion, string IdCliente, string CP, string IdCiudad, string Colonia,string Calle, string NumExt, string NumInt, string Telefono, string OrdenCompra)
+        //{
+
+        //    string mensaje = "";
             
-            if (CP=="" || CP==null)
-            {
-                mensaje = "Código Postal vacío o inválido";
-            }
-            else if (IdCiudad == null || IdCiudad == "" || IdCiudad=="0")
-            {
-                mensaje = "Seleccione una ciudad";
-            }
-            else if (Colonia == null || Colonia == "")
-            {
-                mensaje = "Campo colonia vacío";
-            }
-            else if (Calle == null || Calle == "")
-            {
-                mensaje = "Campo calle vacío";
-            }
-            else if (NumExt == null || NumExt == "")
-            {
-                mensaje = "El número exterior es necesario";
-            }
-            else if (Telefono == null || Telefono == "")
-            {
-                mensaje = "Campo télefono vacío";
-            }
-            else if (OrdenCompra == null)
-            {
-                mensaje = "No se ha seleccionado una orden de compra";
-            }
-            else
-            {
-               try
-               {
-                    //Obtener Salesperson y ID
-                    VentaNeg objVentaNeg = new VentaNeg();
-                    DataTable dtSP = objVentaNeg.consulta_SalesPerson(int.Parse(IdCotizacion));                    
-                    Venta objVenta = new Venta();
-                    objVenta.Vendedor = dtSP.Rows[0]["Id"].ToString();
-                    objVenta.IdCotizacion = int.Parse(IdCotizacion);
-                    objVenta.IdCliente = int.Parse(IdCliente);
-                    objVenta.CP = CP.ToString();
-                //Convertir IdCiudad a int
-                    int ciudad = int.Parse(IdCiudad);
-                    objVenta.IdCiudad = ciudad;
-                    objVenta.Calle = Calle.ToString();
-                    objVenta.NumExterior = NumExt.ToString();
-                    objVenta.NumInterior = NumInt.ToString();
-                    objVenta.Colonia = Colonia.ToString();
-                    objVenta.Telefono = Telefono.ToString();
-                    //Transformar archivo a bytes
-                    byte [] archivoData = null;
-                    if (OrdenCompra == "Vacio" || OrdenCompra == null)
-                    {
-                        objVenta.Archivo = archivoData;
-                    }
-                    else
-                    {
-                        archivoData = Convert.FromBase64String(OrdenCompra);
-                        objVenta.Archivo = archivoData;
-                    }                    
-                    //objVenta.ArchivoTemporal = OrdenCompra;
-                    objVenta.Fecha = Convert.ToDateTime(Fecha);
-                    objVentaNeg.create(objVenta);
-                    //Cambia el estado de cotizaicon a G (ganada)
-                    objVentaNeg.cambiarEstatus(objVenta.IdCotizacion);
-                    mensaje = "Venta registrada correctamente";
-               }
-               catch(Exception ex)
-               {
-                    mensaje = "Error, ha ocurrido algo: " + ex.Message.ToString();
-                }
-            }
-            return Json(mensaje);
-        }
+        //    if (CP=="" || CP==null)
+        //    {
+        //        mensaje = "Código Postal vacío o inválido";
+        //    }
+        //    else if (IdCiudad == null || IdCiudad == "" || IdCiudad=="0")
+        //    {
+        //        mensaje = "Seleccione una ciudad";
+        //    }
+        //    else if (Colonia == null || Colonia == "")
+        //    {
+        //        mensaje = "Campo colonia vacío";
+        //    }
+        //    else if (Calle == null || Calle == "")
+        //    {
+        //        mensaje = "Campo calle vacío";
+        //    }
+        //    else if (NumExt == null || NumExt == "")
+        //    {
+        //        mensaje = "El número exterior es necesario";
+        //    }
+        //    else if (Telefono == null || Telefono == "")
+        //    {
+        //        mensaje = "Campo télefono vacío";
+        //    }
+        //    else if (OrdenCompra == null)
+        //    {
+        //        mensaje = "No se ha seleccionado una orden de compra";
+        //    }
+        //    else
+        //    {
+        //       try
+        //       {
+        //            //Obtener Salesperson y ID
+        //            VentaNeg objVentaNeg = new VentaNeg();
+        //            DataTable dtSP = objVentaNeg.consulta_SalesPerson(int.Parse(IdCotizacion));                    
+        //            Venta objVenta = new Venta();
+        //            objVenta.Vendedor = dtSP.Rows[0]["Id"].ToString();
+        //            objVenta.IdCotizacion = int.Parse(IdCotizacion);
+        //            objVenta.IdCliente = int.Parse(IdCliente);
+        //            objVenta.CP = CP.ToString();
+        //        //Convertir IdCiudad a int
+        //            int ciudad = int.Parse(IdCiudad);
+        //            objVenta.IdCiudad = ciudad;
+        //            objVenta.Calle = Calle.ToString();
+        //            objVenta.NumExterior = NumExt.ToString();
+        //            objVenta.NumInterior = NumInt.ToString();
+        //            objVenta.Colonia = Colonia.ToString();
+        //            objVenta.Telefono = Telefono.ToString();
+        //            //Transformar archivo a bytes
+        //            byte [] archivoData = null;
+        //            if (OrdenCompra == "Vacio" || OrdenCompra == null)
+        //            {
+        //                objVenta.Archivo = archivoData;
+        //            }
+        //            else
+        //            {
+        //                archivoData = Convert.FromBase64String(OrdenCompra);
+        //                objVenta.Archivo = archivoData;
+        //            }                    
+        //            //objVenta.ArchivoTemporal = OrdenCompra;
+        //            objVenta.Fecha = Convert.ToDateTime(Fecha);
+        //            objVentaNeg.create(objVenta);
+        //            //Cambia el estado de cotizaicon a G (ganada)
+        //            objVentaNeg.cambiarEstatus(objVenta.IdCotizacion);
+        //            mensaje = "Venta registrada correctamente";
+        //       }
+        //       catch(Exception ex)
+        //       {
+        //            mensaje = "Error, ha ocurrido algo: " + ex.Message.ToString();
+        //        }
+        //    }
+        //    return Json(mensaje);
+        //}
         //Trae las ventas disponibles
         public ActionResult Consulta()
         {
@@ -405,8 +437,10 @@ namespace WebFacturaMvc.Controllers
             //Obtener información
             VentaNeg objVenta = new VentaNeg();
             Venta v = objVenta.VerVenta(idVenta);
+             
             //Mostrar información
             ViewData["Vendedor"] = v.Vendedor;
+            ViewData["Cliente"] = v.IdCliente;            
             ViewData["IDC"] = v.IdCotizacion;
             ViewData["FechaVenta"] = v.Fecha.ToString("MM/dd/yyyy");
             ViewData["NC"] = v.NombreCliente;
@@ -425,6 +459,8 @@ namespace WebFacturaMvc.Controllers
             cargarPaises();
             cargarEstado(Convert.ToString(v.IdPais));
             cargarCiudad(Convert.ToString(v.IdEstado));
+            idVentaNuevo = idVenta;       
+            idVentaNuevo = Convert.ToInt32(ViewData["IDV"]);            
             return View();
         }
         //Ver PreView de la venta
@@ -521,5 +557,278 @@ namespace WebFacturaMvc.Controllers
             list = objCotizacionNeg.buscarListaProductosRFQ(idVenta);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult ListaProductosPO(string idVenta)
+        {
+            List<Producto> listProductos = new List<Producto>();
+            //Para traer los productos del detalle cotizacion de la base de datos
+            DetalleCotizacionNeg dc = new DetalleCotizacionNeg();
+            List<DetalleCotizacion> listDetalles = dc.VerProductos(int.Parse(idVenta));
+
+            //Asignar los productos
+            foreach (var item in listDetalles)
+            {
+                Producto objProducto = new Producto();
+                //LINQ para traer el producto                
+                DetalleCotizacionNeg dcn = new DetalleCotizacionNeg();
+                objProducto = dcn.VerProducto(item.IdProducto);
+                listProductos.Add(objProducto);
+                //Debug
+                //Debug.WriteLine(objProducto.IdProducto.ToString());
+                //Debug.WriteLine(objProducto.Nombre.ToString());
+                //Debug.WriteLine(objProducto.Marca.ToString());
+                //Debug.WriteLine(objProducto.Cantidad.ToString());
+                //System.Diagnostics.Debug.WriteLine("You click me ..................");
+            }
+            return Json(listProductos, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult VentaEditarSinEliminados(string idVenta, string Fecha, string IdCotizacion, string IdCliente, string CP, string IdCiudad, string Colonia, string Calle, string NumExt, string NumInt, string Telefono, string OrdenCompra, List<Model.Entity.VentaDetalle> ListaItems)
+        {
+            string mensaje = "";        
+            string notas;
+         
+            if (CP == "" || CP == null)
+            {
+                mensaje = "Código Postal vacío o inválido";
+            }
+            else if (IdCiudad == null || IdCiudad == "" || IdCiudad == "0")
+            {
+                mensaje = "Seleccione una ciudad";
+            }
+            else if (Colonia == null || Colonia == "")
+            {
+                mensaje = "Campo colonia vacío";
+            }
+            else if (Calle == null || Calle == "")
+            {
+                mensaje = "Campo calle vacío";
+            }
+            else if (NumExt == null || NumExt == "")
+            {
+                mensaje = "El número exterior es necesario";
+            }
+            else if (Telefono == null || Telefono == "")
+            {
+                mensaje = "Campo télefono vacío";
+            }
+            else if (OrdenCompra == null)
+            {
+                mensaje = "No se ha seleccionado una orden de compra";
+            }
+            else
+            {             
+                //try
+                //{
+                    //Obtener Salesperson y ID
+                    VentaNeg objVentaNeg = new VentaNeg();
+                    DataTable dtSP = objVentaNeg.consulta_SalesPerson(int.Parse(IdCotizacion));
+                    Venta objVenta = new Venta();                   
+                    objVenta.IdVenta = Convert.ToInt32(idVenta);
+                    //idVentaNuevo = Convert.ToInt32(ViewData["IDV"]);                 
+                    objVenta.Vendedor = dtSP.Rows[0]["Id"].ToString();
+                    objVenta.IdCotizacion = int.Parse(IdCotizacion);                   
+                    objVenta.IdCliente = int.Parse(IdCliente);
+                    objVenta.CP = CP.ToString();
+                    //Convertir IdCiudad a int
+                    int ciudad = int.Parse(IdCiudad);
+                    objVenta.IdCiudad = ciudad;
+                    objVenta.Calle = Calle.ToString();
+                    objVenta.NumExterior = NumExt.ToString();
+                    objVenta.NumInterior = NumInt.ToString();
+                    objVenta.Colonia = Colonia.ToString();
+                    objVenta.Telefono = Telefono.ToString();
+                    //Transformar archivo a bytes
+                    byte[] archivoData = null;
+                    if (OrdenCompra == "Vacio" || OrdenCompra == null)
+                    {
+                        objVenta.Archivo = archivoData;
+                    }
+                    else
+                    {
+                        archivoData = Convert.FromBase64String(OrdenCompra);
+                        objVenta.Archivo = archivoData;
+                    }
+                    //objVenta.ArchivoTemporal = OrdenCompra;
+                    objVenta.Fecha = Convert.ToDateTime(Fecha);
+                    objVentaNeg.create(objVenta);
+                    //Cambia el estado de cotizaicon a G (ganada)
+                    objVentaNeg.cambiarEstatus(objVenta.IdCotizacion);
+                    //mensaje = "Venta registrada correctamente";
+                //}
+                //catch (Exception ex)
+                //{
+                //    mensaje = "Error, ha ocurrido algo: " + ex.Message.ToString();
+                //}
+       
+                foreach (var data in ListaItems)
+                {
+                    int idDetalleVenta = Convert.ToInt32(data.idDetalleVenta);                    
+                    int? idProveedor = Convert.ToInt32(data.idProveedor);
+                    if (idProveedor == 0)
+                    {
+                        idProveedor = null;
+                    }
+                    string idProducto = data.idProducto.ToString();
+                    double precio = Convert.ToDouble(data.precio.ToString());
+                    int pCantidad = Convert.ToInt32(data.cantidad.ToString());
+                    if (data.notas == null)
+                    {
+                        notas = null;
+
+                    }
+                    else
+                    {
+                        notas = data.notas.ToString();
+                    }
+                   
+                    Model.Entity.VentaDetalle objVentaDetalle = new Model.Entity.VentaDetalle(idDetalleVenta,Convert.ToInt32(idVenta), idProveedor, idProducto, precio, pCantidad, notas,0);
+                    //try
+                    //{
+                        mensaje = objVentaNeg.updateVentaDetalle(objVentaDetalle);                  
+
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    mensaje = ex.Message.ToString();
+                    //}
+                }
+            }       
+            return Json(mensaje);
+        }
+
+        [HttpPost]
+        public ActionResult VentaEditarConEliminados(string idVenta, string Fecha, string IdCotizacion, string IdCliente, string CP, string IdCiudad, string Colonia, string Calle, string NumExt, string NumInt, string Telefono, string OrdenCompra, List<Model.Entity.VentaDetalle> ListaItems, List<string> ListaEliminados)
+        {
+            string mensaje = "";
+            string notas;
+
+            if (CP == "" || CP == null)
+            {
+                mensaje = "Código Postal vacío o inválido";
+            }
+            else if (IdCiudad == null || IdCiudad == "" || IdCiudad == "0")
+            {
+                mensaje = "Seleccione una ciudad";
+            }
+            else if (Colonia == null || Colonia == "")
+            {
+                mensaje = "Campo colonia vacío";
+            }
+            else if (Calle == null || Calle == "")
+            {
+                mensaje = "Campo calle vacío";
+            }
+            else if (NumExt == null || NumExt == "")
+            {
+                mensaje = "El número exterior es necesario";
+            }
+            else if (Telefono == null || Telefono == "")
+            {
+                mensaje = "Campo télefono vacío";
+            }
+            else if (OrdenCompra == null)
+            {
+                mensaje = "No se ha seleccionado una orden de compra";
+            }
+            else
+            {
+            try
+            {
+                    //Obtener Salesperson y ID
+                    VentaNeg objVentaNeg = new VentaNeg();
+                    DataTable dtSP = objVentaNeg.consulta_SalesPerson(int.Parse(IdCotizacion));
+                    Venta objVenta = new Venta();
+                    objVenta.Vendedor = dtSP.Rows[0]["Id"].ToString();
+                    objVenta.IdCotizacion = int.Parse(IdCotizacion);
+                    objVenta.IdCliente = int.Parse(IdCliente);
+                    objVenta.CP = CP.ToString();
+                    //Convertir IdCiudad a int
+                    int ciudad = int.Parse(IdCiudad);
+                    objVenta.IdCiudad = ciudad;
+                    objVenta.Calle = Calle.ToString();
+                    objVenta.NumExterior = NumExt.ToString();
+                    objVenta.NumInterior = NumInt.ToString();
+                    objVenta.Colonia = Colonia.ToString();
+                    objVenta.Telefono = Telefono.ToString();
+                    //Transformar archivo a bytes
+                    byte[] archivoData = null;
+                    if (OrdenCompra == "Vacio" || OrdenCompra == null)
+                    {
+                        objVenta.Archivo = archivoData;
+                    }
+                    else
+                    {
+                        archivoData = Convert.FromBase64String(OrdenCompra);
+                        objVenta.Archivo = archivoData;
+                    }
+                    //objVenta.ArchivoTemporal = OrdenCompra;
+                    objVenta.Fecha = Convert.ToDateTime(Fecha);
+                    objVentaNeg.create(objVenta);
+                    //Cambia el estado de cotizaicon a G (ganada)
+                    objVentaNeg.cambiarEstatus(objVenta.IdCotizacion);
+                    mensaje = "Venta registrada correctamente";
+                }
+                catch (Exception ex)
+                {
+                    mensaje = "Error, ha ocurrido algo: " + ex.Message.ToString();
+                }
+
+                foreach (var data in ListaItems)
+                {
+                    int idDetalleVenta = Convert.ToInt32(data.idDetalleVenta);                           
+                    int? idProveedor = Convert.ToInt32(data.idProveedor);
+                    if (idProveedor == 0)
+                    {
+                        idProveedor = null;
+                    }
+                    string idProducto = data.idProducto.ToString();
+                    double precio = Convert.ToDouble(data.precio.ToString());
+                    int pCantidad = Convert.ToInt32(data.cantidad.ToString());
+                    if (data.notas == null)
+                    {
+                        notas = null;
+
+                    }
+                    else
+                    {
+                        notas = data.notas.ToString();
+                    }
+                    string fecha = DateTime.Now.ToString();
+
+                    Model.Entity.VentaDetalle objVentaDetalle = new Model.Entity.VentaDetalle(idDetalleVenta,Convert.ToInt32(idVenta), idProveedor, idProducto, precio, pCantidad, notas,0);
+                    try
+                    {
+                        mensaje = objVentaNeg.updateVentaDetalle(objVentaDetalle);
+                    }
+                    catch (Exception ex)
+                    {
+                        mensaje = ex.Message.ToString();
+                    }
+                }
+                foreach (var data in ListaEliminados)
+                {
+                    int idDetalleVenta = Convert.ToInt32(data);
+                    idVentaNuevo= Convert.ToInt32(idVenta);
+                    VentaItemEliminado objVentaItemEliminados = new VentaItemEliminado(idDetalleVenta, Convert.ToInt32(idVenta));
+                    try
+                    {
+                        mensaje = objVentaNeg.eliminadosVenta(objVentaItemEliminados);
+                    }
+                    catch (Exception ex)
+                    {
+                        mensaje = ex.Message.ToString();
+                    }
+                }               
+            }
+            return Json(mensaje);
+        }
+
+        public ActionResult VentaProveedor(int IdVenta)
+        {
+            List<VentaDetalle> lista = objVentaNeg.VerVentaDetalleProveedor(IdVenta);     
+            return View(lista);
+        }
     }
-    }
+}

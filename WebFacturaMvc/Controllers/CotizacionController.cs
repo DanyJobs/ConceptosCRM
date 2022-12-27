@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Lenguaje;
+using Microsoft.AspNet.Identity;
 using Microsoft.Reporting.WebForms;
 using MimeKit;
 using Model.Dao;
@@ -46,6 +47,8 @@ namespace WebFacturaMvc.Controllers
         private cotizacion objCotizacion;
         private EmailMarketing objMarketing;
         private Model.Entity.RFQItem objRFQItem;
+        private PlantillaCorreoNeg objPlantillaCorreoNeg;
+
         private crmconceptoseEntities1 db = new crmconceptoseEntities1();
         public CotizacionController()
         {
@@ -59,6 +62,7 @@ namespace WebFacturaMvc.Controllers
             objModoPagoNeg = new ModoPagoNeg();
             objFacturaNeg = new FacturaNeg();
             objDetalleVentaNeg = new DetalleCotizacionNeg();
+            objPlantillaCorreoNeg = new PlantillaCorreoNeg();
 
         }
 
@@ -274,7 +278,6 @@ namespace WebFacturaMvc.Controllers
             string[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo","Junio","Julio","Agosto","Septiembre",
             "Octubre","Noviembre","Diciembre"};
             List<SelectListItem> listMeses = new List<SelectListItem>();
-
             for (int i = 0; i < 12; i++)
             {
                 int j = i + 1;
@@ -509,8 +512,6 @@ namespace WebFacturaMvc.Controllers
             double total = 0;
             string nota;
 
-
-
             if (Fecha == "" || modoPago == "" || IdCliente == "" || Total == "")
             {
                 if (Fecha == "") mensaje = "ERROR EN EL CAMPO FECHA";
@@ -565,7 +566,6 @@ namespace WebFacturaMvc.Controllers
                         mensaje = "VENTA " + codigoVenta + " GUARDADA CON EXITO...";
                     }
                 }
-
             }
             return Json(mensaje);
         }
@@ -574,6 +574,7 @@ namespace WebFacturaMvc.Controllers
         {
             if (Paso == 1)
             {
+                Llenar();
                 if (Session["idVenta"].ToString() != null)
                 {
                     string idVenta = Session["idVenta"].ToString();
@@ -581,25 +582,28 @@ namespace WebFacturaMvc.Controllers
                     return Redirect("~/Reportes/Espanol/frmReporteEs.aspx?IdVenta=" + idVenta);
                 }
                 else
-                {                    cargarModoPagocmb();
+                {   
+                    cargarModoPagocmb();
                     cargarProductocmb();
                     TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
                     return View("NuevaCotizacion");
                 }
+
             }
             else {
+                Llenar();
                 cargarModoPagocmb();
                 cargarProductocmb();
                 TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
                 return View("NuevaCotizacion");
             }
-           
+            
         }
-
         public ActionResult reporteActualIngles()
         {
             if (Paso == 1)
             {
+                Llenar();
                 if (Session["idVenta"].ToString() != null)
                 {
                     string idVenta = Session["idVenta"].ToString();
@@ -614,6 +618,7 @@ namespace WebFacturaMvc.Controllers
                     return View("NuevaCotizacion");
                 }
             } else{
+                Llenar();
                 cargarModoPagocmb();
                 cargarProductocmb();
                 TempData["msg"] = "<script>alert('Debes guardar la cotizacion');</script>";
@@ -624,7 +629,7 @@ namespace WebFacturaMvc.Controllers
 
         public ActionResult ReporteCotizacion()
         {
-            List<Cotizacion> lista = objCotizacionNeg.findAll();
+            List<Cotizacion> lista = objCotizacionNeg.findAll(User.Identity.GetUserId());
             return View(lista);
         }
 
@@ -638,7 +643,7 @@ namespace WebFacturaMvc.Controllers
 
         public ActionResult VentaFactura()
         {
-            List<Cotizacion> lista = objCotizacionNeg.findAll();
+            List<Cotizacion> lista = objCotizacionNeg.findAll(User.Identity.GetUserId());
             return View(lista);
         }
 
@@ -919,11 +924,16 @@ namespace WebFacturaMvc.Controllers
 
         [HttpGet]
         public ActionResult ObtenerProductos()
-        {            
-            List<Producto> lista = objProductoNeg.findAll();
+        {
+            Producto objProducto = new Producto();
+            objProducto.IdProducto = null;
+            objProducto.Nombre = null;
+            objProducto.Categoria = "-1";
+            objProducto.Marca = "-1";
+            List<Producto> ListaProducto = objProductoNeg.findAllProductosCotizacion(objProducto);
             cargarCategoria();
             cargarMarca();
-            return View(lista);
+            return View(ListaProducto);
         }
 
         public void Llenar()
@@ -933,7 +943,8 @@ namespace WebFacturaMvc.Controllers
             lst.Add(new SelectListItem() { Text = "Medio", Value = "M" });
             lst.Add(new SelectListItem() { Text = "Bajo", Value = "B" });
             ViewBag.Estatus = lst;
-        }     
+        }
+       
 
         [HttpPost]//para buscar clientes
         public ActionResult ObtenerProductos(string txtcodigo, string txtnombre, string txtCategoria, string txtMarca)
@@ -1034,7 +1045,13 @@ namespace WebFacturaMvc.Controllers
                         stCuerpoHTML += "<td align='center' style='padding:0;'><table role='presentation' style='width:390px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:0px 0 0px 0;background:white;'>";
                         stCuerpoHTML += "<img src='cid:Fondo' alt='' width='520' style='height:auto;display:block;' /></td></tr><tr>";
                         stCuerpoHTML += "<td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'>";
-                        stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + email.Cliente + ".</h1>";
+                        if (String.IsNullOrWhiteSpace(email.Cliente))
+                        {
+                            stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello.</h1>";
+                        }
+                        else{
+                            stCuerpoHTML += "<h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello " + email.Cliente + ".</h1>";
+                        }                        
                         stCuerpoHTML += "<p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'>I hope you are well. <br /><br /> I am an " + objConfiguracion.puesto + " with Conceptos Electronics. <br /> <br /> We buy and sell reconditioned and new test equipment. <br /> <br /> We have over 20 years experience and can help you with your application specific needs.";
                         stCuerpoHTML += "<br/> <br />We also can train, install, and service your equipment.<br/><br/>We have an accredited test laboratory.<br/><br/>Please take a look at our website and please let me know how we can help.<br/><br/>I look forward to working with you.<br/><br/> <center><a href='https://conceptoselectronics.com/reconditioned/'>Test Equipment Reconditioned</a><center/></p>";
                         stCuerpoHTML += firma(objConfiguracion);
@@ -1060,22 +1077,110 @@ namespace WebFacturaMvc.Controllers
                         mail.Body = stCuerpoHTML;
                         mail.IsBodyHtml = true;
                         SmtpClient client = new SmtpClient(objConfiguracion.servidorSmtp, objConfiguracion.puerto); //Aquí debes sustituir tu servidor SMTP y el puerto
-                        client.Credentials = new NetworkCredential(from, EncriptacionSha.DesEncriptar(objConfiguracion.contrasena));
-                        client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
-                        NEVER_EAT_POISON_Disable_CertificateValidation();
-                        client.Send(mail);
-                        msge = "¡Correo enviado exitosamente!";
-                    return (msge);
-                }
+                        client.Credentials = new NetworkCredential("AKIATTRE76YXUR7SQAEH", "BMnIbAvS6XQZuNhiySqTRCKuQweYr/um6uz6UF52DcdZ");
+                        client.EnableSsl = true;//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false   
+                        try
+                        {                           
+                            client.Send(mail);                           
+                            System.Diagnostics.Debug.WriteLine("Email sent!");                         
+                        }
+                        catch (Exception ex)
+                        {                           
+                            System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                            return (ex.Message.ToString());
+                        }
+              
+                    }
                     catch (Exception e)
                 {
-                    msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
+                        RedirectToAction("HttpNotFound");
+                        msge = "Error al enviar este correo. Por favor verifique los datos o intente más tarde.";
                     return (msge);
                 }
-
             }
             }
             return (msge);
+        }
+
+        private string EnviarCorreosMarketing2(List<string> ListadoDetalle, configuracion objConfiguracion)
+        {
+            // Replace sender@example.com with your "From" address. 
+            // This address must be verified with Amazon SES.
+            String FROM = "daniel.conceptoselectronics@cloudserviceserp.site";
+            String FROMNAME = "Daniel";
+
+            // Replace recipient@example.com with a "To" address. If your account 
+            // is still in the sandbox, this address must be verified.
+            String TO = "juan100mata@gmail.com";
+
+            // Replace smtp_username with your Amazon SES SMTP user name.
+            String SMTP_USERNAME = "AKIATTRE76YXUR7SQAEH";
+
+            // Replace smtp_password with your Amazon SES SMTP password.
+            String SMTP_PASSWORD = "BMnIbAvS6XQZuNhiySqTRCKuQweYr/um6uz6UF52DcdZ";
+
+            // (Optional) the name of a configuration set to use for this message.
+            // If you comment out this line, you also need to remove or comment out
+            // the "X-SES-CONFIGURATION-SET" header below.
+            //String CONFIGSET = "ConfigSet";
+
+            // If you're using Amazon SES in a region other than US West (Oregon), 
+            // replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP  
+            // endpoint in the appropriate AWS Region.
+            String HOST = "email-smtp.us-east-1.amazonaws.com";
+
+            // The port you will connect to on the Amazon SES SMTP endpoint. We
+            // are choosing port 587 because we will use STARTTLS to encrypt
+            // the connection.
+            int PORT = 587;
+
+            // The subject line of the email
+            String SUBJECT =
+                "Amazon SES test (SMTP interface accessed using C#)";
+
+            // The body of the email
+            String BODY =
+                "<h1>Amazon SES Test</h1>" +
+                "<p>This email was sent through the " +
+                "<a href='https://aws.amazon.com/ses'>Amazon SES</a> SMTP interface " +
+                "using the .NET System.Net.Mail library.</p>";
+
+            // Create and build a new MailMessage object
+            MailMessage message = new MailMessage();
+            message.IsBodyHtml = true;
+            message.From = new MailAddress(FROM, FROMNAME);
+            message.To.Add(new MailAddress(TO));
+            message.Subject = SUBJECT;
+            message.Body = BODY;
+            // Comment or delete the next line if you are not using a configuration set
+            //message.Headers.Add("X-SES-CONFIGURATION-SET", CONFIGSET);
+
+            using (var client = new System.Net.Mail.SmtpClient(HOST, PORT))
+            {
+                // Pass SMTP credentials
+                client.Credentials =
+                    new NetworkCredential(SMTP_USERNAME, SMTP_PASSWORD);
+
+                // Enable SSL encryption
+                client.EnableSsl = true;
+
+                // Try to send the message. Show status in console.
+                try
+                {
+                    Console.WriteLine("Attempting to send email...");
+                    client.Send(message);
+                    Console.WriteLine("Email sent!");
+                    System.Diagnostics.Debug.WriteLine("Email sent!");
+                    return ("Email sent!");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("The email was not sent.");
+                    Console.WriteLine("Error message: " + ex.Message);
+                    System.Diagnostics.Debug.WriteLine("Error: "+ex.Message);
+                    return (ex.Message.ToString());
+                }
+            }
         }
 
         [HttpPost]
@@ -1143,7 +1248,6 @@ namespace WebFacturaMvc.Controllers
         [HttpPost]
         public ActionResult RFQEditarSinEliminados(string idRFQ, string estatus, List<Model.Entity.RFQItem> ListaItems)
         {
-            
             Model.Entity.RFQ objRFQ = new Model.Entity.RFQ();
             objRFQ.idRFQ = int.Parse(idRFQ);
             objRFQ.estatus = estatus;
@@ -1230,13 +1334,11 @@ namespace WebFacturaMvc.Controllers
                 {
                     notas = data.notas.ToString();
                 }
-
                 string fecha = DateTime.Now.ToString();
                 Model.Entity.RFQItem objCompraDetalle = new Model.Entity.RFQItem(idRFQItem, idRFQLista, idProveedor, idProducto, precio, pCantidad, notas, fecha);
                 try
                 {
                     mensaje = objCotizacionNeg.updateRFQItem(objCompraDetalle);
-
                 }
                 catch (Exception ex)
                 {
@@ -1256,8 +1358,7 @@ namespace WebFacturaMvc.Controllers
                     {
                         mensaje = ex.Message.ToString();
                     }
-            }
-        
+            }        
             return Json(mensaje);
         }
         public ActionResult RFQLista()
@@ -1273,7 +1374,15 @@ namespace WebFacturaMvc.Controllers
             List<Model.Entity.RFQItem> list = new List<Model.Entity.RFQItem>();
             list = objCotizacionNeg.buscarListaProductosRFQ(idRFQ);
             return Json(list,JsonRequestBehavior.AllowGet);
-
         }
+
+        [HttpGet]
+        public ActionResult ObtenerPlantillas()
+        {
+            List<Model.Entity.plantillaCorreo> lista = objPlantillaCorreoNeg.findAll();
+            return View(lista);
+        }
+
+
     }
 }

@@ -21,6 +21,7 @@ C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CopyComplete
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.dll
 C:\Users\Samuel\Documents\Visual Studio 2017\projects\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.pdb
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CoreCompileInputs.cache
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.dll.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Dao.pdb
@@ -64,8 +65,7 @@ E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Microsoft.CodeDom.Providers.DotN
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.pdb
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\Model.Entity.dll.config
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\bin\Debug\en\Model.Entity.resources.dll
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CoreCompileInputs.cache
+E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.AssemblyReference.cache
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.CopyComplete
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.dll
 E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.pdb
-E:\Proycto\FACTURA_JHONNYv2\Model.Dao\obj\Debug\Model.Dao.csproj.AssemblyReference.cache

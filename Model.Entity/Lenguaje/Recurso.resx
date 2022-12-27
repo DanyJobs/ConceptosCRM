@@ -138,6 +138,9 @@
   <data name="Buscar" xml:space="preserve">
     <value>Buscar</value>
   </data>
+  <data name="Buscar_Producto" xml:space="preserve">
+    <value>Buscar Producto</value>
+  </data>
   <data name="Buscar_titulo" xml:space="preserve">
     <value>Buscar Clientes en el Sistema</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="Cerrar sesion" xml:space="preserve">
     <value>Cerrar sesion</value>
+  </data>
+  <data name="Ciudades" xml:space="preserve">
+    <value>Ciudades</value>
   </data>
   <data name="Clientes" xml:space="preserve">
     <value>Clientes</value>
@@ -183,8 +189,23 @@
   <data name="Clientes_telefono" xml:space="preserve">
     <value>Teléfono</value>
   </data>
+  <data name="Cobros_y_Pagos" xml:space="preserve">
+    <value>Cobros y Pagos</value>
+  </data>
   <data name="Codigo" xml:space="preserve">
     <value>Codigo</value>
+  </data>
+  <data name="Compra" xml:space="preserve">
+    <value>Compra</value>
+  </data>
+  <data name="Consulta_Ventas" xml:space="preserve">
+    <value>Consulta Ventas</value>
+  </data>
+  <data name="Contrasena" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="Correos_Marketing" xml:space="preserve">
+    <value>Correos Marketing</value>
   </data>
   <data name="Cotizaciones" xml:space="preserve">
     <value>Cotizaciones</value>
@@ -321,6 +342,15 @@
   <data name="Descripcion" xml:space="preserve">
     <value>Descripcion</value>
   </data>
+  <data name="Detalle_Compra" xml:space="preserve">
+    <value>Detalle Compra</value>
+  </data>
+  <data name="Detalle_Cotizacion" xml:space="preserve">
+    <value>Detalle Cotizacion</value>
+  </data>
+  <data name="Dias" xml:space="preserve">
+    <value>Días</value>
+  </data>
   <data name="Dirección" xml:space="preserve">
     <value>Dirección</value>
   </data>
@@ -339,11 +369,41 @@
   <data name="Email" xml:space="preserve">
     <value>Correo electronico</value>
   </data>
+  <data name="Empleados" xml:space="preserve">
+    <value>Empleados</value>
+  </data>
+  <data name="Envios" xml:space="preserve">
+    <value>Envios</value>
+  </data>
+  <data name="Envios_Completados" xml:space="preserve">
+    <value>Envios Completados</value>
+  </data>
+  <data name="Envios_Pendientes" xml:space="preserve">
+    <value>Envios Pendientes</value>
+  </data>
+  <data name="Equipo" xml:space="preserve">
+    <value>Equipo</value>
+  </data>
   <data name="Find_titulo" xml:space="preserve">
     <value>Información Personal</value>
   </data>
+  <data name="Galon" xml:space="preserve">
+    <value>Galón</value>
+  </data>
+  <data name="GalonAv" xml:space="preserve">
+    <value>Gal</value>
+  </data>
+  <data name="Generar_Cotizacion" xml:space="preserve">
+    <value>Generar Cotizacion</value>
+  </data>
   <data name="Guardar" xml:space="preserve">
     <value>Guardar</value>
+  </data>
+  <data name="Hacer_Venta" xml:space="preserve">
+    <value>Hacer Venta</value>
+  </data>
+  <data name="Historial" xml:space="preserve">
+    <value>Historial</value>
   </data>
   <data name="IdCategoria" xml:space="preserve">
     <value>IdCategoria</value>
@@ -360,11 +420,35 @@
   <data name="Inicio de sesion" xml:space="preserve">
     <value>Inicio de sesión</value>
   </data>
+  <data name="Inventario" xml:space="preserve">
+    <value>Inventario</value>
+  </data>
+  <data name="Kilogramos" xml:space="preserve">
+    <value>Kilogramos</value>
+  </data>
+  <data name="KilogramosAv" xml:space="preserve">
+    <value>Kg</value>
+  </data>
+  <data name="Libras" xml:space="preserve">
+    <value>Libras</value>
+  </data>
+  <data name="LibrasAv" xml:space="preserve">
+    <value>Lb</value>
+  </data>
   <data name="Listado_categorias" xml:space="preserve">
     <value>Listado de categorías</value>
   </data>
   <data name="Listado_clientes" xml:space="preserve">
     <value>Listado de clientes</value>
+  </data>
+  <data name="Lista_RFQ" xml:space="preserve">
+    <value>Lista RFQ</value>
+  </data>
+  <data name="Litros" xml:space="preserve">
+    <value>Litros</value>
+  </data>
+  <data name="LitrosAv" xml:space="preserve">
+    <value>Lts</value>
   </data>
   <data name="MensajeA_CC" xml:space="preserve">
     <value>Ingrese el Código del Cliente</value>
@@ -471,6 +555,18 @@
   <data name="Mensaje_TCE" xml:space="preserve">
     <value>Ingrese un número de Teléfono válido</value>
   </data>
+  <data name="Metros" xml:space="preserve">
+    <value>Metros</value>
+  </data>
+  <data name="MetrosAv" xml:space="preserve">
+    <value>Mts</value>
+  </data>
+  <data name="Millas" xml:space="preserve">
+    <value>Millas</value>
+  </data>
+  <data name="MillasAv" xml:space="preserve">
+    <value>Mi</value>
+  </data>
   <data name="ModoPago_codigo" xml:space="preserve">
     <value>Ingrese el código del Modo Pago</value>
   </data>
@@ -516,11 +612,20 @@
   <data name="ModoPago_numero" xml:space="preserve">
     <value>Numero de modo de pago</value>
   </data>
+  <data name="Modos_de_Pago" xml:space="preserve">
+    <value>Modos de Pago</value>
+  </data>
   <data name="Nombre" xml:space="preserve">
     <value>Nombre</value>
   </data>
   <data name="Nombre_Texto" xml:space="preserve">
     <value>Nombre</value>
+  </data>
+  <data name="Nueva_Compra" xml:space="preserve">
+    <value>Nueva Compra</value>
+  </data>
+  <data name="Nueva_Cotizacion" xml:space="preserve">
+    <value>Nueva Cotizacion</value>
   </data>
   <data name="Nuevo" xml:space="preserve">
     <value>Nuevo</value>
@@ -536,6 +641,21 @@
   </data>
   <data name="Perfil del usuario" xml:space="preserve">
     <value>Perfil del usuario</value>
+  </data>
+  <data name="Pies" xml:space="preserve">
+    <value>Pies</value>
+  </data>
+  <data name="PiesAv" xml:space="preserve">
+    <value>Ft</value>
+  </data>
+  <data name="Pieza" xml:space="preserve">
+    <value>Pieza</value>
+  </data>
+  <data name="PiezaAv" xml:space="preserve">
+    <value>Pz</value>
+  </data>
+  <data name="Principal" xml:space="preserve">
+    <value>Principal</value>
   </data>
   <data name="ProductoM_categoria" xml:space="preserve">
     <value>Ingrese Categoria</value>
@@ -624,6 +744,9 @@
   <data name="Producto_productoUnitario" xml:space="preserve">
     <value>Precio Unitario</value>
   </data>
+  <data name="Proveedor" xml:space="preserve">
+    <value>Proveedor</value>
+  </data>
   <data name="QUIENES SOMOS" xml:space="preserve">
     <value>QUIENES SOMOS</value>
   </data>
@@ -666,16 +789,37 @@
   <data name="Reporte Facturas" xml:space="preserve">
     <value>Reporte Facturas</value>
   </data>
+  <data name="Reportes" xml:space="preserve">
+    <value>Reportes</value>
+  </data>
+  <data name="Seguimiento" xml:space="preserve">
+    <value>Seguimiento</value>
+  </data>
   <data name="SERVICIOS" xml:space="preserve">
     <value>SERVICIOS</value>
+  </data>
+  <data name="Sucursal" xml:space="preserve">
+    <value>Sucursal</value>
   </data>
   <data name="Telefóno" xml:space="preserve">
     <value>Telefóno</value>
   </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
   <data name="Vendedores" xml:space="preserve">
     <value>Vendedores</value>
   </data>
+  <data name="Ventas" xml:space="preserve">
+    <value>Ventas</value>
+  </data>
   <data name="Ver_detalles" xml:space="preserve">
     <value>Ver Detalles</value>
+  </data>
+  <data name="Yardas" xml:space="preserve">
+    <value>Yardas</value>
+  </data>
+  <data name="YardasAv" xml:space="preserve">
+    <value>Yd</value>
   </data>
 </root>
